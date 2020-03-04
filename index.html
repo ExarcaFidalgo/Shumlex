@@ -1,0 +1,40 @@
+<!doctype html>
+
+<title>ShEx-XMI Parser</title>
+<meta charset="utf-8"/>
+
+<link rel=stylesheet href="codemirror-5.51.0/lib/codemirror.css">
+<link rel=stylesheet href="css/app.css">
+<link rel=stylesheet href="css/bootstrap.min.css">
+
+
+
+<style>
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
+  .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
+</style>
+
+<section id=demo>
+  <h2>ShEx</h2>
+<textarea id=shextext>
+:User {
+    :name xsd:string;
+}
+</textarea>
+
+
+<button id="transformbt">Transformar</button>
+
+<textarea id=xmitext>
+
+
+
+</textarea>
+
+    <script src="main.js"></script>
+
+</section>
+
