@@ -1,5 +1,5 @@
 {
-const xmi = require ("../js/xmigen.js");
+const xmi = require ("../xmi/xmigen.js");
 }
 start
   = sh:shape+ { return xmi.createXMIHeader() + sh + xmi.createXMIFooter(); }

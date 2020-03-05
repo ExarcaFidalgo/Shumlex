@@ -5,7 +5,6 @@
 
 <link rel=stylesheet href="codemirror-5.51.0/lib/codemirror.css">
 <link rel=stylesheet href="css/app.css">
-<link rel=stylesheet href="css/bootstrap.min.css">
 
 
 
@@ -22,11 +21,19 @@
 <textarea id=shextext>
 :User {
     :name xsd:string;
+    :age xsd:int;
+    :knows @:User ;
+    :any .;
+}
+
+:Company {
+    :name xsd:string ;
 }
 </textarea>
 
 
-<button id="transformbt">Transformar</button>
+<button id="shextoxmi">Transformar ShEx a XMI</button>
+<button id="xmitoshex">Transformar XMI a ShEx</button>
 
 <textarea id=xmitext>
 

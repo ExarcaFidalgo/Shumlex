@@ -818,7 +818,7 @@ function peg$parse(input, options) {
   }
 
 
-  const xmi = require ("../js/xmigen.js");
+  const xmi = require ("../xmi/xmigen.js");
 
 
   peg$result = peg$startRuleFunction();
