@@ -27,8 +27,8 @@ lastattribute
   = at:baseattribute  ";"? _ { return at; }
 
 baseattribute
-  = ":" name:ID _ type:type _  { return xmi.createXMIAttribute(name, type); }
-    / ":" name:ID _ shapereference _
+  = ":" name:ID _ type:type _  { return xmi.createXMIPrimAttribute(name, type); }
+    / ":" name:ID _ target:shapereference _ { return xmi.createXMIAsocAttribute(name, target); }
 
 shapereference
   = baseshpref
