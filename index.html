@@ -3,17 +3,16 @@
 <title>ShEx-XMI Parser</title>
 <meta charset="utf-8"/>
 
-<link rel=stylesheet href="codemirror-5.51.0/lib/codemirror.css">
-<link rel=stylesheet href="css/app.css">
+<link rel="stylesheet" href="./codemirror-5.51.0/lib/codemirror.css">
+<link rel="stylesheet" href="./codemirror-5.51.0/theme/ayu-mirage.css">
+<link rel="stylesheet" href="./codemirror-5.51.0/theme/dracula.css">
 
-
+<script src="./codemirror-5.51.0/lib/codemirror.js"></script>
+<script src="./codemirror-5.51.0/mode/xml/xml.js"></script>
+<script src="./codemirror-5.51.0/mode/shex/shex.js"></script>
 
 <style>
-  .CodeMirror { height: auto; border: 1px solid #ddd; }
-  .CodeMirror-scroll { max-height: 200px; }
-  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
-  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
-  .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
+    .CodeMirror { border: 1px solid #eee; }
 </style>
 
 <section id=demo>
@@ -36,12 +35,26 @@
 <button id="shextoxmi">Transformar ShEx a XMI</button>
 <button id="xmitoshex">Transformar XMI a ShEx</button>
 
-<textarea id=xmitext>
+<form>
+    <textarea id=xmitext>
+    </textarea>
+</form>
 
 
+    <script>
+        var shExEditor = CodeMirror.fromTextArea(document.getElementById("shextext"), {
+            mode: "shex",
+            lineNumbers: true
+        });
 
-</textarea>
+        var xmiEditor = CodeMirror.fromTextArea(document.getElementById("xmitext"), {
+            mode: "xml",
+            lineNumbers: true
+        });
 
+        xmiEditor.setOption("theme", "ayu-mirage");
+        shExEditor.setOption("theme", "ayu-mirage");
+    </script>
     <script src="main.js"></script>
 
 </section>

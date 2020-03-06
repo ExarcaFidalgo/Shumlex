@@ -10,7 +10,7 @@ class XMIGenerator {
     createXMIHeader() {
         return '<?xml version="1.0" encoding="UTF-8"?>\n' +
             '<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" ' +
-            'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">\n'
+            'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML"\n xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">\n'
     }
 
     createXMIClass(name, attrs) {
@@ -49,7 +49,7 @@ class XMIGenerator {
         return '\n<packagedElement xmi:type="uml:Association" xmi:id="' + ids.id + '" memberEnd="' + ids.idatr
             + ' '  + idown + '">\n' +
             '<ownedEnd xmi:id="' + idown + '" visibility="public" type="' + idcl + '" association="'
-            + ids.id + '"/>\n' + '  </packagedElement>\n'
+            + ids.id + '"/>\n' + '</packagedElement>\n'
     }
 
     createDependentAssociations(idcl){
