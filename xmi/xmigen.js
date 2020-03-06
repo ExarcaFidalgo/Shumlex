@@ -33,15 +33,62 @@ class XMIGenerator {
 
     createXMIAsocAttribute(name, target) {
         let idatr = uniqid();
-        let targetShape = this.findShape(target.pop());
+        let targetShape = this.findShape(target.name);
         let idasoc = uniqid();
         let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + name + '" visibility="public" ' +
-            'type="' + targetShape.id + '" association="' + idasoc + '"/>';
+            'type="' + targetShape.id + '" association="' + idasoc + '">'
+            + this.createXMIAsocCardinality(target.cardinality) + '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
 
         return content;
+    }
+
+    createXMIAsocCardinality(cardinality) {
+        switch(cardinality) {
+            case "1":
+                return "";
+            case "*":
+                return this.getLower0Cardinality() + this.getUpperCardinality("*");
+            case "+":
+                return this.getUpperCardinality("*");
+            case "?":
+                return this.getLower0Cardinality();
+            default:
+                return this.getCustomCardinality(cardinality);
+        }
+    }
+
+    getLower0Cardinality() {
+        return '<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + uniqid() + '"/>';
+    }
+
+    getUpperCardinality(cardinality) {
+        if(cardinality === "1")
+            return "";
+        return '<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
+    }
+
+    getLowerCardinality(cardinality) {
+        if(cardinality === "0")
+            return this.getLower0Cardinality();
+        else if(cardinality === "1")
+            return "";
+        return '<lowerValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
+    }
+
+    getCustomCardinality(cardinality) {
+        if(!cardinality.opt) {
+            return this.getLowerCardinality(cardinality.lower) + this.getUpperCardinality(cardinality.lower);
+        }
+        else if (cardinality.opt[2] === null) {
+            return this.getLowerCardinality(cardinality.lower) + this.getUpperCardinality("*");
+        }
+        else {
+            return this.getLowerCardinality(cardinality.lower)
+                + this.getUpperCardinality(cardinality.opt.pop().toString().replace(" ", "").replace(",", ""));
+        }
     }
 
     createXMIAssociation(ids, idcl) {

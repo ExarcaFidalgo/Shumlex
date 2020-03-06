@@ -22,13 +22,28 @@
     :name xsd:string;
     :age xsd:int;
     :knows @:User ;
-    :any .;
     :worksFor @:Company ;
+    :buys @<Product> {1,10}
 }
 
 :Company {
     :name xsd:string ;
+    :hasEmployee @:User *;
+    :possess @<Product> {5, }
 }
+
+<Product> {
+    :name .;
+    :sku xsd:boolean ;
+    :manufacturer @<Organization> +
+}
+
+<Organization> {
+    :name xsd:string ;
+    :isPartOf @<Organization> ?;
+    :hasDirectives @:User {5}
+}
+
 </textarea>
 
 

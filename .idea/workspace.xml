@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/codemirror-5.51.0/theme/ayu-mirage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/editor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shex/shexgrammar.pegjs" beforeDir="false" afterPath="$PROJECT_DIR$/shex/shexgrammar.pegjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shex/shexparser.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex/shexparser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmi/xmigen.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/xmigen.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,10 +21,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="121">
+              <caret line="14179" column="8" selection-start-line="14179" selection-start-column="8" selection-end-line="14179" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/shex/shexgrammar.pegjs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="331">
+              <caret line="34" column="64" selection-start-line="34" selection-start-column="64" selection-end-line="34" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -33,33 +50,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+            <state relative-caret-position="111">
+              <caret line="44" column="44" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="44" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/editor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="37" lean-forward="true" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/theme/dracula.css">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -81,6 +75,8 @@
       <find>string.split</find>
       <find>,</find>
       <find>createde</find>
+      <find>customca</find>
+      <find>pendingAssociations</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,13 +94,13 @@
         <option value="$PROJECT_DIR$/xmi/xmiparser.js" />
         <option value="$PROJECT_DIR$/shex/shexgen.js" />
         <option value="$PROJECT_DIR$/shex/shexparser.js" />
-        <option value="$PROJECT_DIR$/shex/shexgrammar.pegjs" />
         <option value="$PROJECT_DIR$/wo.html" />
-        <option value="$PROJECT_DIR$/codemirror-5.51.0/theme/ayu-mirage.css" />
-        <option value="$PROJECT_DIR$/xmi/xmigen.js" />
         <option value="$PROJECT_DIR$/js/editor.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/codemirror-5.51.0/theme/dracula.css" />
+        <option value="$PROJECT_DIR$/codemirror-5.51.0/theme/ayu-mirage.css" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/xmi/xmigen.js" />
+        <option value="$PROJECT_DIR$/shex/shexgrammar.pegjs" />
       </list>
     </option>
   </component>
@@ -120,6 +116,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -135,19 +132,12 @@
             <path>
               <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
               <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
-              <item name="codemirror-5.51.0" type="462c0819:PsiDirectoryNode" />
-              <item name="theme" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
-              <item name="xmi" type="462c0819:PsiDirectoryNode" />
+              <item name="shex" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -203,18 +193,19 @@
       <updated>1583311860555</updated>
       <workItem from="1583311865095" duration="10789000" />
       <workItem from="1583396471768" duration="11365000" />
-      <workItem from="1583482657406" duration="3625000" />
+      <workItem from="1583482657406" duration="5946000" />
+      <workItem from="1583488724823" duration="5009000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25779000" />
+    <option name="totallyTimeSpent" value="33109000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -226,7 +217,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.33179724" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.33179724" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -260,8 +251,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/main.js</url>
-          <line>14141</line>
-          <option name="timeStamp" value="4" />
+          <line>14116</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -318,13 +310,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shex/shexgrammar.js" />
     <entry file="file://$PROJECT_DIR$/shexparser.js" />
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="22766" column="4" selection-start-line="22766" selection-start-column="4" selection-end-line="22766" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shex/shexparser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
@@ -350,31 +335,18 @@
     <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgrammar.pegjs">
+    <entry file="file://$PROJECT_DIR$/wo.html" />
+    <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/theme/dracula.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state relative-caret-position="38">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/theme/ayu-mirage.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="48" lean-forward="true" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+        <state relative-caret-position="158">
+          <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -385,15 +357,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="121">
+          <caret line="14179" column="8" selection-start-line="14179" selection-start-column="8" selection-end-line="14179" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/theme/dracula.css">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="44" column="44" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgrammar.pegjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="34" column="64" selection-start-line="34" selection-start-column="64" selection-end-line="34" selection-end-column="64" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

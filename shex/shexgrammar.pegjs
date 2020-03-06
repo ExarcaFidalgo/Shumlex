@@ -2,10 +2,14 @@
 const xmi = require ("../xmi/xmigen.js");
 }
 start
-  = sh:shape+ { return xmi.createXMIHeader() + sh + xmi.createXMIFooter(); }
+  = sh:shape+ { return xmi.createXMIHeader() + sh.join("") + xmi.createXMIFooter(); }
 
 shape
-  = ":" name:ID _ "{" _  attrs:attributes _ "}" _ { return xmi.createXMIClass(name, attrs); }
+  = name:baseshpname _ "{" _  attrs:attributes _ "}" _ { return xmi.createXMIClass(name, attrs); }
+
+baseshpname
+  = ":" name:ID        { return name; }
+    / "<" name:ID ">"  { return name; }
 
 attributes
   =  ats:attribute*
@@ -24,22 +28,23 @@ attribute
   = at:baseattribute ";" _ { return at; }
 
 lastattribute
-  = at:baseattribute  ";"? _ { return at; }
+  = at:baseattribute  ";"? _ { xmi.pendingAssociations.pop(); return at; }
 
 baseattribute
   = ":" name:ID _ type:type _  { return xmi.createXMIPrimAttribute(name, type); }
     / ":" name:ID _ target:shapereference _ { return xmi.createXMIAsocAttribute(name, target); }
 
 shapereference
-  = baseshpref
-  / baseshpref _ "*"
-  / baseshpref _ "+"
-  / baseshpref _ "?"
-  / baseshpref _ "{" _ DIGITS _ ("," _ (DIGITS _ )? )? "}"
+  = ref:baseshpref _ "*"    {return { name: ref, cardinality: "*" }; }
+  / ref:baseshpref _ "+"    {return { name: ref, cardinality: "+" }; }
+  / ref:baseshpref _ "?"    {return { name: ref, cardinality: "?" }; }
+  / ref:baseshpref _ "{" _ lower:DIGITS _ opt:("," _ (DIGITS _ )? )? "}"
+        {return { name: ref, cardinality: {lower: lower, opt: opt }}; }
+  / ref:baseshpref      {return { name: ref, cardinality: "1" }; }
 
 baseshpref
-  = "@:" ID
-    / "@<" ID ">"
+  = "@:" name:ID        { return name; }
+    / "@<" name:ID ">"  { return name; }
 
 type
   = SCHEMA ":" pt:PRIMITIVETYPE { return pt; }
