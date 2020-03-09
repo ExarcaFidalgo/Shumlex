@@ -18,6 +18,12 @@ class XMIParser {
 
         for(let i = 0; i < packagedElements.length; i++) {
             if(packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
+                shexgen.saveClass(packagedElements[i])
+            }
+        }
+
+        for(let i = 0; i < packagedElements.length; i++) {
+            if(packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
                 shExEquivalent += shexgen.createShExClass(packagedElements[i])
             }
         }
