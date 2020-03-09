@@ -13025,7 +13025,7 @@ function peg$parse(input, options) {
       peg$c14 = ";",
       peg$c15 = peg$literalExpectation(";", false),
       peg$c16 = function(at) { return at; },
-      peg$c17 = function(at) { xmi.pendingAssociations.pop(); return at; },
+      peg$c17 = function(at) { xmi.pendingAssociations.splice(xmi.pendingAssociations.length - 2, 1); return at; },
       peg$c18 = function(name, type) { return xmi.createXMIPrimAttribute(name, type); },
       peg$c19 = function(name, target) { return xmi.createXMIAsocAttribute(name, target); },
       peg$c20 = "*",

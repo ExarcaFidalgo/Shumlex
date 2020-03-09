@@ -28,7 +28,7 @@ attribute
   = at:baseattribute ";" _ { return at; }
 
 lastattribute
-  = at:baseattribute  ";"? _ { xmi.pendingAssociations.pop(); return at; }
+  = at:baseattribute  ";"? _ { xmi.pendingAssociations.splice(xmi.pendingAssociations.length - 2, 1); return at; }
 
 baseattribute
   = ":" name:ID _ type:type _  { return xmi.createXMIPrimAttribute(name, type); }
