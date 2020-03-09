@@ -48,7 +48,7 @@ baseshpref
 
 type
   = SCHEMA ":" pt:PRIMITIVETYPE { return pt; }
-    / "." { return "undefined"; }
+    / "." { return "Any"; }
 
 PRIMITIVETYPE
   = "string" / "integer" / "int" / "boolean"

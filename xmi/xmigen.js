@@ -5,6 +5,7 @@ class XMIGenerator {
     constructor () {
         this.pendingAssociations = [];
         this.shapes = [];
+        this.anyTypeId = null
     }
 
     createXMIHeader() {
@@ -25,6 +26,13 @@ class XMIGenerator {
         let uppercaseType = type[0].toUpperCase() + type.substring(1);
         if(uppercaseType === "Int") {
             uppercaseType = "Integer";
+        }
+        if(uppercaseType === "Any") {
+            if(!this.anyTypeId) {
+                this.anyTypeId = uniqid();
+            }
+            return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + name
+                + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false"/>\n'
         }
         return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + name + '" visibility="public" isUnique="false">\n' +
             '  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
@@ -121,7 +129,11 @@ class XMIGenerator {
     }
 
     createXMIFooter() {
-        return '</uml:Model>'
+        let base = '</uml:Model>';
+        if(this.anyTypeId) {
+            base = '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>' + base;
+        }
+        return base
     }
 
     createString(symbols) {

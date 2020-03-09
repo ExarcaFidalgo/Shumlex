@@ -189,7 +189,7 @@ function peg$parse(input, options) {
       peg$c37 = function(pt) { return pt; },
       peg$c38 = ".",
       peg$c39 = peg$literalExpectation(".", false),
-      peg$c40 = function() { return "undefined"; },
+      peg$c40 = function() { return "Any"; },
       peg$c41 = "string",
       peg$c42 = peg$literalExpectation("string", false),
       peg$c43 = "integer",
