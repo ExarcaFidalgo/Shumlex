@@ -14,13 +14,45 @@ class XMIGenerator {
             'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML"\n xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">\n'
     }
 
-    createXMIClass(name, attrs) {
-
-        let shape = this.findShape(name);
-        let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + shape.id + '" name="' + name + '">' +
-            attrs + '</packagedElement>';
-        return classXMI + this.createDependentAssociations(shape.id);
+    createPrefixes () {
+        return "";
     }
+
+    createBase () {
+        return "";
+    }
+
+    createXMIClass(name, shape) {
+        let sh = this.findShape(name);
+        let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="' + name + '">' +
+            this.createXMIAttributes(shape.expression) + '</packagedElement>';
+        return classXMI + this.createDependentAssociations(sh.id);
+    }
+
+    createXMIAttributes(expr) {
+        let attrs = "";
+        if(expr.type === "TripleConstraint") {
+            attrs = this.determineTypeOfExpression(expr);
+        }
+        else if (expr.type === "EachOf") {
+            for(let attr in expr.expressions) {
+                attrs += this.determineTypeOfExpression(expr.expressions[attr]);
+            }
+        }
+        return attrs;
+    }
+
+    determineTypeOfExpression(expr) {
+        if(!expr.valueExpr) {
+            return this.createXMIPrimAttribute(expr.predicate, "Any");
+        }
+        else if(expr.valueExpr.type === "NodeConstraint") {
+            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype);
+        }
+        else if (expr.valueExpr.type === "ShapeRef") {
+            return this.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
+        }
+            }
 
     createXMIPrimAttribute(name, type) {
         let uppercaseType = type[0].toUpperCase() + type.substring(1);
@@ -39,13 +71,15 @@ class XMIGenerator {
             + uppercaseType + '"/>\n' + '</ownedAttribute>\n'
     }
 
-    createXMIAsocAttribute(name, target) {
+    createXMIAsocAttribute(name, target, min, max) {
+        let minimum = min !== undefined ? min : 1;
+        let maximum = max !== undefined ? max : 1;
         let idatr = uniqid();
-        let targetShape = this.findShape(target.name);
+        let targetShape = this.findShape(target);
         let idasoc = uniqid();
         let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + name + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
-            + this.createXMIAsocCardinality(target.cardinality) + '</ownedAttribute>';
+            + this.createXMIAsocCardinality(minimum, maximum) + '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
@@ -53,50 +87,28 @@ class XMIGenerator {
         return content;
     }
 
-    createXMIAsocCardinality(cardinality) {
-        switch(cardinality) {
-            case "1":
-                return "";
-            case "*":
-                return this.getLower0Cardinality() + this.getUpperCardinality("*");
-            case "+":
-                return this.getUpperCardinality("*");
-            case "?":
-                return this.getLower0Cardinality();
-            default:
-                return this.getCustomCardinality(cardinality);
-        }
-    }
-
-    getLower0Cardinality() {
-        return '<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + uniqid() + '"/>';
+    createXMIAsocCardinality(min, max) {
+        return this.getLowerCardinality(min) + this.getUpperCardinality(max);
     }
 
     getUpperCardinality(cardinality) {
-        if(cardinality === "1")
+        if(cardinality === 1)
             return "";
+        if(cardinality === -1)
+            return '<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="*"/>\n';
         return '<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
     }
 
     getLowerCardinality(cardinality) {
-        if(cardinality === "0")
+        if(cardinality === 0)
             return this.getLower0Cardinality();
-        else if(cardinality === "1")
+        else if(cardinality === 1)
             return "";
         return '<lowerValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
     }
 
-    getCustomCardinality(cardinality) {
-        if(!cardinality.opt) {
-            return this.getLowerCardinality(cardinality.lower) + this.getUpperCardinality(cardinality.lower);
-        }
-        else if (cardinality.opt[2] === null) {
-            return this.getLowerCardinality(cardinality.lower) + this.getUpperCardinality("*");
-        }
-        else {
-            return this.getLowerCardinality(cardinality.lower)
-                + this.getUpperCardinality(cardinality.opt.pop().toString().replace(" ", "").replace(",", ""));
-        }
+    getLower0Cardinality() {
+        return '<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + uniqid() + '"/>';
     }
 
     createXMIAssociation(ids, idcl) {

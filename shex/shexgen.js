@@ -1,3 +1,5 @@
+const schema = require ("../schema/schema.js");
+
 class ShExGenerator {
 
     constructor () {
@@ -22,8 +24,7 @@ class ShExGenerator {
     }
 
     createShExClass(element) {
-        let header = ":" + element.$.name + " {";
-        let content = header;
+        let content = ":" + element.$.name + " {";
 
         let attributes = element.ownedAttribute;
         for(let i = 0; i < attributes.length; i++) {
@@ -109,7 +110,8 @@ class ShExGenerator {
         if(type === "Any") {
             return " .";
         } else {
-            return " xsd:" + type.toLowerCase();
+            let typeL = type.toLowerCase();
+            return " " + schema.checkSchema(typeL).prefix + typeL;
         }
     }
 

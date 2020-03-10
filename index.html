@@ -18,18 +18,22 @@
 <section id=demo>
   <h2>ShEx</h2>
 <textarea id=shextext>
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+base <http://example.org/>
+
 :User {
     :name xsd:string;
     :age xsd:int;
     :knows @:User ;
     :worksFor @:Company ;
-    :buys @<Product> {1,10}
+    :buys @<Product> {1,10};
 }
 
 :Company {
     :name xsd:string ;
     :hasEmployee @:User *;
-    :possess @<Product> {5, }
+    :possess @<Product> {5,}
 }
 
 <Product> {

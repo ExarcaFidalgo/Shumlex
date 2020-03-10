@@ -11,8 +11,8 @@ $('#xmitoshex').click(XMIToShEx);
 function shExToXMI() {
 	let text = shExEditor.getValue();
 
-	let parsedToXML = shexparser.parse(text);
-	xmiEditor.setValue(xmlformat(parsedToXML, {}));
+    let parsedToXML = shexparser.parseShEx(text);
+    xmiEditor.setValue(xmlformat(parsedToXML, {}));
 }
 
 function XMIToShEx() {
