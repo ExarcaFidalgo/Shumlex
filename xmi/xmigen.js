@@ -55,9 +55,13 @@ class XMIGenerator {
             }
 
     createXMIPrimAttribute(name, type) {
-        let uppercaseType = type[0].toUpperCase() + type.substring(1);
-        if(uppercaseType === "Int") {
-            uppercaseType = "Integer";
+        let uppercaseType = this.createXMIType(type);
+        console.log(uppercaseType);
+        if(uppercaseType.primitive) {
+            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + name
+                + '" visibility="public" isUnique="false">\n' +
+                '  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
+                + uppercaseType.name + '"/>\n' + '</ownedAttribute>\n'
         }
         if(uppercaseType === "Any") {
             if(!this.anyTypeId) {
@@ -66,9 +70,7 @@ class XMIGenerator {
             return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + name
                 + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false"/>\n'
         }
-        return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + name + '" visibility="public" isUnique="false">\n' +
-            '  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
-            + uppercaseType + '"/>\n' + '</ownedAttribute>\n'
+
     }
 
     createXMIAsocAttribute(name, target, min, max) {
@@ -126,6 +128,30 @@ class XMIGenerator {
         }
         this.pendingAssociations = [];
         return assocs;
+    }
+
+    createXMIType(type) {
+        console.log(type);
+        switch(type) {
+            case "any": //TODO: ver compatibilidad con otros
+                return { primitive: false, name: "Any" };
+            case this.getXSDTypes(type):
+                return { primitive: true, name: type.split("#").pop() };
+            default:
+                return { primitive: false, name: type.substring(0,1).toUpperCase() + type.substring(1) };
+        }
+    }
+
+    getXSDTypes(uri) {
+        let type = uri.split("#").pop();
+        let xstypes = [];
+        xstypes.push("string", "date", "time", "dateTime", "duration",     //Dates
+            "byte", "decimal", "int", "integer", "long", "short",    //Numeric
+            "boolean", "double", "float");
+        if(xstypes.includes(type)) {
+            return "http://www.w3.org/2001/XMLSchema#" + type.substring(0,1).toUpperCase() + type.substring(1);
+        }
+         return ""
     }
 
     findShape(name) {
