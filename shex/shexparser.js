@@ -1,5 +1,5 @@
 const shexp = require('shex').Parser;
-const xmigen = require ("../xmi/xmigen.js");
+const XMIGenerator = require ("../xmi/xmigen.js");
 
 class ShExParser {
 
@@ -9,22 +9,27 @@ class ShExParser {
     this.shexparser = shexp.construct();
     this.shexparser._setBase("Shapes.shex");
     this.shexparser._setFileName("Shapes.shex");
+
+    this.xmigen = new XMIGenerator();
   }
 
   parseShEx(shex) {
     let xmiEquivalent = "";
     this.source = this.shexparser.parse(shex);
 
-    xmiEquivalent += xmigen.createXMIHeader();
-    xmiEquivalent += xmigen.createPrefixes(this.source.prefixes);
-    xmiEquivalent += xmigen.createBase(this.source.base);
+    xmiEquivalent += XMIGenerator.createXMIHeader();
+    xmiEquivalent += XMIGenerator.createPrefixes(this.source.prefixes);
+    xmiEquivalent += XMIGenerator.createBase(this.source.base);
 
     console.log(this.source.shapes);
     for (let shape in this.source.shapes){
-      xmiEquivalent += xmigen.createXMIClass(shape, this.source.shapes[shape]);
+      if(this.source.shapes.hasOwnProperty(shape)) {
+        xmiEquivalent += this.xmigen.createXMIClass(shape, this.source.shapes[shape]);
+      }
+
     }
 
-    xmiEquivalent += xmigen.createXMIFooter();
+    xmiEquivalent += this.xmigen.createXMIFooter();
 
     return xmiEquivalent;
   }
