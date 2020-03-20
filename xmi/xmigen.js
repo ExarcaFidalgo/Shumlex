@@ -1,4 +1,5 @@
 const uniqid = require("uniqid");
+const URIManager = require ("../schema/urimanager.js");
 
 class XMIGenerator {
 
@@ -26,7 +27,7 @@ class XMIGenerator {
     createXMIClass(name, shape) {
         let sh = this.findShape(name);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
-            + XMIGenerator.lastOfUri(name)
+            + URIManager.lastOfUri(name)
             + '">' +
             XMIGenerator.createXMIOwnedComment(name) +
             this.createXMIAttributes(shape.expression) + '</packagedElement>';
@@ -63,7 +64,7 @@ class XMIGenerator {
     createXMIPrimAttribute(name, type) {
         let uppercaseType = XMIGenerator.createXMIType(type);
         if(uppercaseType.primitive) {
-            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + XMIGenerator.lastOfUri(name)
+            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
                 + '" visibility="public" isUnique="false">\n' +
                 ' <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
                 + uppercaseType.name + '">\n' +
@@ -75,15 +76,16 @@ class XMIGenerator {
             if(!this.anyTypeId) {
                 this.anyTypeId = uniqid();
             }
-            return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + name
+            return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
+                + URIManager.lastOfUri(name)
                 + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
-                XMIGenerator.createXMIOwnedComment(uppercaseType.uri) + '</ownedAttribute>\n'
+                XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
         }
 
         let dtype = this.findDataType(uppercaseType.name);
-        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + dtype.name
+        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n' +
-            XMIGenerator.createXMIOwnedComment(uppercaseType.uri) + '</ownedAttribute>\n'
+            XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
 
 
 
@@ -95,9 +97,11 @@ class XMIGenerator {
         let idatr = uniqid();
         let targetShape = this.findShape(target);
         let idasoc = uniqid();
-        let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + name + '" visibility="public" ' +
+        let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + URIManager.lastOfUri(name)
+            + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
-            + XMIGenerator.createXMIAsocCardinality(minimum, maximum) + '</ownedAttribute>';
+            + XMIGenerator.createXMIAsocCardinality(minimum, maximum)
+            +XMIGenerator.createXMIOwnedComment(name)+ '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
@@ -151,15 +155,15 @@ class XMIGenerator {
             case "any": //TODO: ver compatibilidad con otros
                 return { primitive: false, name: "Any" };
             case XMIGenerator.getXSDTypes(type):
-                let last = XMIGenerator.lastOfUri(type);
+                let last = URIManager.lastOfUri(type);
                 return { primitive: true, name: last === "int" ? "integer" : last, uri: type};
             default:
-                return { primitive: false, name: XMIGenerator.lastOfUri(type), uri: type};
+                return { primitive: false, name: URIManager.lastOfUri(type), uri: type};
         }
     }
 
     static getXSDTypes(uri) {
-        let type = XMIGenerator.lastOfUri(uri);
+        let type = URIManager.lastOfUri(uri);
         let xstypes = [];
         xstypes.push("string", "date",     //Dates
             "byte", "int", "integer", "long", "short",    //Numeric
@@ -201,7 +205,7 @@ class XMIGenerator {
         }
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
-                    'name="' + XMIGenerator.lastOfUri(this.datatypes[i].name) + '">\n' +
+                    'name="' + URIManager.lastOfUri(this.datatypes[i].name) + '">\n' +
                      XMIGenerator.createXMIOwnedComment(this.datatypes[i].name) +
                     '</packagedElement>';
         }
@@ -212,14 +216,6 @@ class XMIGenerator {
         return '<ownedComment xmi:id="' + uniqid() + '">\n' +
             '<body>' + comment + '</body>\n' +
             '</ownedComment>\n'
-    }
-
-    static lastOfUri(uri) {
-        let base = uri.split("/").pop();
-        if(base.includes("#")) {
-            return base.split("#").pop();
-        }
-        return base
     }
 
     static createString(symbols) {

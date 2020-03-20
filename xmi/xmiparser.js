@@ -14,6 +14,7 @@ class XMIParser {
             self.source = result;
         });
 
+        console.log(this.source);
         let packagedElements = this.source["uml:Model"]["packagedElement"];
 
         for(let i = 0; i < packagedElements.length; i++) {
@@ -27,6 +28,8 @@ class XMIParser {
                 shExEquivalent += shexgen.createShExClass(packagedElements[i])
             }
         }
+
+        shExEquivalent = shexgen.createShExHeader() + shExEquivalent;
 
         return shExEquivalent;
     }

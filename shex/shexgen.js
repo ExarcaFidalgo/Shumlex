@@ -1,22 +1,31 @@
-const schema = require ("../schema/schema.js");
+const URIManager = require ("../schema/urimanager.js");
 
 class ShExGenerator {
 
     constructor () {
-        this.classes = []
+        this.classes = [];
+        this.urim = new URIManager();
     }
 
     createShExHeader() {
-        //TODO
-        return null
+        let header = "";
+        let prefixes = this.urim.getPrefixesList();
+        for(let prefix in prefixes) {
+            header += "prefix " + prefixes[prefix].prefix + " <" + prefixes[prefix].uri + ">\n"
+        }
+        header += "base <http://example.org/>\n\n";
+        return header
     }
 
     saveClass(element) {
+        let uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         this.classes.push(
             {
                 id: element.$["xmi:id"],
-                name: element.$.name
+                name: element.$.name,
+                schema: uri
             })
+        this.urim.savePrefix(uri)
     }
 
     searchClass(id) {
@@ -41,15 +50,23 @@ class ShExGenerator {
     createShExAttribute(attr) {
         //TODO: Prever la circunstancia de que el tipo venga aparte como packagedelement y no haya un hijo type
         let type = "Any";
+        let tprefix = "";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
+            let turi = attr.type[0].ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
+            tprefix = this.urim.savePrefix(turi);
         }
+        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
+        let nprefix = this.urim.savePrefix(uri);
 
-        return "\n\t:" + attr.$.name + this.createShExType(type) + ";";
+        return "\n\t" + nprefix + attr.$.name + this.createShExType(type, tprefix) + ";";
     }
 
     createShExAssociation(attr) {
-        return "\n\t:" + attr.$.name + " @:" + this.searchClass(attr.$.type).name + this.cardinalityOf(attr) + " ;"
+        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
+        let nprefix = this.urim.savePrefix(uri);
+        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchClass(attr.$.type).name + this.cardinalityOf(attr)
+            + " ;"
     }
 
     cardinalityOf(attr) {
@@ -105,13 +122,11 @@ class ShExGenerator {
         }
     }
 
-    createShExType(type) {
-        //TODO: schemas
+    createShExType(type, prefix) {
         if(type === "Any") {
             return " .";
         } else {
-            let typeL = type.toLowerCase();
-            return " " + schema.checkSchema(typeL).prefix + typeL;
+            return " " + prefix + type;
         }
     }
 
