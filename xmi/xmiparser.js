@@ -21,6 +21,9 @@ class XMIParser {
             if(packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
                 shexgen.saveClass(packagedElements[i])
             }
+            else if(packagedElements[i]["$"]["xmi:type"] === "uml:PrimitiveType") {
+                shexgen.saveType(packagedElements[i])
+            }
         }
 
         for(let i = 0; i < packagedElements.length; i++) {

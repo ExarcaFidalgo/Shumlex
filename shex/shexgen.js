@@ -5,6 +5,7 @@ class ShExGenerator {
     constructor () {
         this.classes = [];
         this.urim = new URIManager();
+        this.types = [];
     }
 
     createShExHeader() {
@@ -28,8 +29,27 @@ class ShExGenerator {
         this.urim.savePrefix(uri)
     }
 
-    searchClass(id) {
-        return this.classes.find(value => value.id === id);
+    saveType(element) {
+        let uri = "";
+        let prefix = "";
+
+        if(element["$"]["name"] !== "Any") {
+            uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
+            prefix = this.urim.savePrefix(uri);
+        }
+
+        this.types.push(
+            {
+                id: element.$["xmi:id"],
+                name: element.$.name,
+                schema: uri,
+                prefix: prefix
+            })
+
+    }
+
+    searchById(list, id) {
+        return list.find(value => value.id === id);
     }
 
     createShExClass(element) {
@@ -56,6 +76,11 @@ class ShExGenerator {
             let turi = attr.type[0].ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
             tprefix = this.urim.savePrefix(turi);
         }
+        else if (attr.$.type) {
+            type = this.searchById(this.types, attr.$.type);
+            tprefix = type.prefix;
+            type = type.name
+        }
         let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         let nprefix = this.urim.savePrefix(uri);
 
@@ -65,7 +90,8 @@ class ShExGenerator {
     createShExAssociation(attr) {
         let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         let nprefix = this.urim.savePrefix(uri);
-        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchClass(attr.$.type).name + this.cardinalityOf(attr)
+        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchById(this.classes, attr.$.type).name
+            + this.cardinalityOf(attr)
             + " ;"
     }
 

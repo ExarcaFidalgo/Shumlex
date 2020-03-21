@@ -118764,6 +118764,7 @@ class ShExGenerator {
     constructor () {
         this.classes = [];
         this.urim = new URIManager();
+        this.types = [];
     }
 
     createShExHeader() {
@@ -118787,8 +118788,27 @@ class ShExGenerator {
         this.urim.savePrefix(uri)
     }
 
-    searchClass(id) {
-        return this.classes.find(value => value.id === id);
+    saveType(element) {
+        let uri = "";
+        let prefix = "";
+
+        if(element["$"]["name"] !== "Any") {
+            uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
+            prefix = this.urim.savePrefix(uri);
+        }
+
+        this.types.push(
+            {
+                id: element.$["xmi:id"],
+                name: element.$.name,
+                schema: uri,
+                prefix: prefix
+            })
+
+    }
+
+    searchById(list, id) {
+        return list.find(value => value.id === id);
     }
 
     createShExClass(element) {
@@ -118815,6 +118835,11 @@ class ShExGenerator {
             let turi = attr.type[0].ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
             tprefix = this.urim.savePrefix(turi);
         }
+        else if (attr.$.type) {
+            type = this.searchById(this.types, attr.$.type);
+            tprefix = type.prefix;
+            type = type.name
+        }
         let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         let nprefix = this.urim.savePrefix(uri);
 
@@ -118824,7 +118849,8 @@ class ShExGenerator {
     createShExAssociation(attr) {
         let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         let nprefix = this.urim.savePrefix(uri);
-        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchClass(attr.$.type).name + this.cardinalityOf(attr)
+        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchById(this.classes, attr.$.type).name
+            + this.cardinalityOf(attr)
             + " ;"
     }
 
@@ -119018,7 +119044,7 @@ class XMIGenerator {
                 XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
         }
 
-        let dtype = this.findDataType(uppercaseType.name);
+        let dtype = this.findDataType(uppercaseType.name, uppercaseType.uri);
         return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n' +
             XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
@@ -119122,14 +119148,14 @@ class XMIGenerator {
         return shape;
     }
 
-    findDataType(name) {
+    findDataType(name, uri) {
         for(let i = 0; i < this.datatypes.length; i++) {
             if(name === this.datatypes[i].name) {
                 return this.datatypes[i];
             }
         }
 
-        let dt = {id: uniqid(), name: name};
+        let dt = {id: uniqid(), name: name, uri: uri};
         this.datatypes.push((dt));
         return dt;
     }
@@ -119141,8 +119167,8 @@ class XMIGenerator {
         }
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
-                    'name="' + URIManager.lastOfUri(this.datatypes[i].name) + '">\n' +
-                     XMIGenerator.createXMIOwnedComment(this.datatypes[i].name) +
+                    'name="' + this.datatypes[i].name + '">\n' +
+                     XMIGenerator.createXMIOwnedComment(this.datatypes[i].uri) +
                     '</packagedElement>';
         }
         return base + '</uml:Model>'
@@ -119183,6 +119209,9 @@ class XMIParser {
         for(let i = 0; i < packagedElements.length; i++) {
             if(packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
                 shexgen.saveClass(packagedElements[i])
+            }
+            else if(packagedElements[i]["$"]["xmi:type"] === "uml:PrimitiveType") {
+                shexgen.saveType(packagedElements[i])
             }
         }
 

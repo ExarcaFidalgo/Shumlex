@@ -82,7 +82,7 @@ class XMIGenerator {
                 XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
         }
 
-        let dtype = this.findDataType(uppercaseType.name);
+        let dtype = this.findDataType(uppercaseType.name, uppercaseType.uri);
         return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n' +
             XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
@@ -186,14 +186,14 @@ class XMIGenerator {
         return shape;
     }
 
-    findDataType(name) {
+    findDataType(name, uri) {
         for(let i = 0; i < this.datatypes.length; i++) {
             if(name === this.datatypes[i].name) {
                 return this.datatypes[i];
             }
         }
 
-        let dt = {id: uniqid(), name: name};
+        let dt = {id: uniqid(), name: name, uri: uri};
         this.datatypes.push((dt));
         return dt;
     }
@@ -205,8 +205,8 @@ class XMIGenerator {
         }
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
-                    'name="' + URIManager.lastOfUri(this.datatypes[i].name) + '">\n' +
-                     XMIGenerator.createXMIOwnedComment(this.datatypes[i].name) +
+                    'name="' + this.datatypes[i].name + '">\n' +
+                     XMIGenerator.createXMIOwnedComment(this.datatypes[i].uri) +
                     '</packagedElement>';
         }
         return base + '</uml:Model>'
