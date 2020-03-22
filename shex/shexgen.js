@@ -14,39 +14,32 @@ class ShExGenerator {
         for(let prefix in prefixes) {
             header += "prefix " + prefixes[prefix].prefix + " <" + prefixes[prefix].uri + ">\n"
         }
-        header += "base <http://example.org/>\n\n";
+        header += this.urim.getBase();
         return header
     }
 
     saveClass(element) {
-        let uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         this.classes.push(
             {
                 id: element.$["xmi:id"],
-                name: element.$.name,
-                schema: uri
+                name: element.$.name
             })
-        this.urim.savePrefix(uri)
     }
 
     saveType(element) {
-        let uri = "";
-        let prefix = "";
-
-        if(element["$"]["name"] !== "Any") {
-            uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-            prefix = this.urim.savePrefix(uri);
-        }
-
         this.types.push(
             {
                 id: element.$["xmi:id"],
-                name: element.$.name,
-                schema: uri,
-                prefix: prefix
+                name: element.$.name
             })
-
     }
+
+    savePrefixes(enm) {
+        let prefixes = enm.ownedLiteral;
+        for(let i = 0; i < prefixes.length; i++) {
+            this.urim.savePrefix(prefixes[i].name)
+        }
+}
 
     searchById(list, id) {
         return list.find(value => value.id === id);

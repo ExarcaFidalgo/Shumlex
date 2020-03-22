@@ -7,7 +7,8 @@ class XMIGenerator {
         this.pendingAssociations = [];
         this.shapes = [];
         this.datatypes = [];
-        this.anyTypeId = null
+        this.anyTypeId = null;
+        this.prefixes = [];
     }
 
     static createXMIHeader() {
@@ -22,6 +23,10 @@ class XMIGenerator {
 
     static createBase () {
         return "";
+    }
+
+    savePrefixes() {
+
     }
 
     createXMIClass(name, shape) {

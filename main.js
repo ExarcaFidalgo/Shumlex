@@ -118692,6 +118692,7 @@ class URIManager {
 
     constructor () {
         this.prefixes = [];
+        this.base = null;
     }
 
     getPrefix(uri) {
@@ -118709,28 +118710,30 @@ class URIManager {
         }
     }
 
-    savePrefix(uri) {
-        let base = URIManager.removeLastOfUri(uri);
-        let prefix = this.checkPrefix(base);
-        if (!prefix) {
-            prefix = this.getPrefix(base);
-            this.prefixes.push({prefix: prefix, uri: base});
-        }
-        return prefix
+    savePrefix(pr) {
+        let fragments = pr.split(" ");
+        let type = fragments[0];
+        let prefix = fragments[1];
+        let uri = fragments[2];
 
-    }
-
-    checkPrefix(uri) {
-        for(let i = 0; i < this.prefixes.length; i++) {
-            if(this.prefixes[i].uri === uri) {
-                return this.prefixes[i].prefix;
-            }
+        if(type === "prefix") {
+            this.prefixes.push({prefix: prefix, uri: uri})
         }
-        return false;
+        else {
+            this.base = {uri: fragments[1]}
+        }
+
     }
 
     getPrefixesList() {
         return this.prefixes;
+    }
+
+    getBase() {
+        if(this.base) {
+            return "base <" + this.base.uri + ">\n\n";;
+        }
+        return "base <http://example.org/>\n\n";
     }
 
     static lastOfUri(uri) {
@@ -118773,39 +118776,32 @@ class ShExGenerator {
         for(let prefix in prefixes) {
             header += "prefix " + prefixes[prefix].prefix + " <" + prefixes[prefix].uri + ">\n"
         }
-        header += "base <http://example.org/>\n\n";
+        header += this.urim.getBase();
         return header
     }
 
     saveClass(element) {
-        let uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
         this.classes.push(
             {
                 id: element.$["xmi:id"],
-                name: element.$.name,
-                schema: uri
+                name: element.$.name
             })
-        this.urim.savePrefix(uri)
     }
 
     saveType(element) {
-        let uri = "";
-        let prefix = "";
-
-        if(element["$"]["name"] !== "Any") {
-            uri = element.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-            prefix = this.urim.savePrefix(uri);
-        }
-
         this.types.push(
             {
                 id: element.$["xmi:id"],
-                name: element.$.name,
-                schema: uri,
-                prefix: prefix
+                name: element.$.name
             })
-
     }
+
+    savePrefixes(enm) {
+        let prefixes = enm.ownedLiteral;
+        for(let i = 0; i < prefixes.length; i++) {
+            this.urim.savePrefix(prefixes[i].name)
+        }
+}
 
     searchById(list, id) {
         return list.find(value => value.id === id);
@@ -119212,6 +119208,10 @@ class XMIParser {
             }
             else if(packagedElements[i]["$"]["xmi:type"] === "uml:PrimitiveType") {
                 shexgen.saveType(packagedElements[i])
+            }
+            else if(packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration" &&
+                packagedElements[i]["$"]["name"] === "Prefixes") {
+                shexgen.savePrefixes(packagedElements[i])
             }
         }
 

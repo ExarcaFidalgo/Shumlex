@@ -2,6 +2,7 @@ class URIManager {
 
     constructor () {
         this.prefixes = [];
+        this.base = null;
     }
 
     getPrefix(uri) {
@@ -19,28 +20,30 @@ class URIManager {
         }
     }
 
-    savePrefix(uri) {
-        let base = URIManager.removeLastOfUri(uri);
-        let prefix = this.checkPrefix(base);
-        if (!prefix) {
-            prefix = this.getPrefix(base);
-            this.prefixes.push({prefix: prefix, uri: base});
-        }
-        return prefix
+    savePrefix(pr) {
+        let fragments = pr.split(" ");
+        let type = fragments[0];
+        let prefix = fragments[1];
+        let uri = fragments[2];
 
-    }
-
-    checkPrefix(uri) {
-        for(let i = 0; i < this.prefixes.length; i++) {
-            if(this.prefixes[i].uri === uri) {
-                return this.prefixes[i].prefix;
-            }
+        if(type === "prefix") {
+            this.prefixes.push({prefix: prefix, uri: uri})
         }
-        return false;
+        else {
+            this.base = {uri: fragments[1]}
+        }
+
     }
 
     getPrefixesList() {
         return this.prefixes;
+    }
+
+    getBase() {
+        if(this.base) {
+            return "base <" + this.base.uri + ">\n\n";;
+        }
+        return "base <http://example.org/>\n\n";
     }
 
     static lastOfUri(uri) {
