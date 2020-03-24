@@ -118793,7 +118793,6 @@ class ShExGenerator {
     createShExAttribute(attr) {
         //TODO: Prever la circunstancia de que el tipo venga aparte como packagedelement y no haya un hijo type
         let type = "Any";
-        let tprefix = "";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
         }
@@ -118806,7 +118805,8 @@ class ShExGenerator {
     }
 
     createShExAssociation(attr) {
-        return "\n\t" + attr.$.name + " @" + this.getShExTerm(this.searchById(this.classes, attr.$.type).name)
+        let name = this.searchById(this.classes, attr.$.type).name;
+        return "\n\t" + attr.$.name + " @" + this.getShExTerm(name)
             + this.cardinalityOf(attr)
             + " ;"
     }
