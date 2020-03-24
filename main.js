@@ -118695,21 +118695,6 @@ class URIManager {
         this.base = null;
     }
 
-    getPrefix(uri) {
-        switch(uri) {
-            case "http://www.w3.org/2001/XMLSchema#":
-                return "xsd:";
-            case "http://xmlns.com/foaf/spec/#term_":
-                return "foaf:";
-            case "http://schema.org/":
-                return "schema:";
-            case "http://example.org/":
-                return ":";
-            default:
-                return uri.split("/")[2].split(".")[0] + ":";
-        }
-    }
-
     savePrefix(pr) {
         let fragments = pr.split(" ");
         let type = fragments[0];
@@ -118731,32 +118716,15 @@ class URIManager {
 
     getBase() {
         if(this.base) {
-            return "base <" + this.base.uri + ">\n\n";;
+            return "base " + this.base.uri + "\n\n";
         }
         return "base <http://example.org/>\n\n";
     }
 
-    static lastOfUri(uri) {
-        let base = uri.split("/").pop();
-        if(base.includes("#")) {
-            return base.split("#").pop();
-        }
-        return base
+    static lastOfUri(baseuri, uri) {
+        return uri.replace(baseuri, "");
     }
 
-    static removeLastOfUri(uri) {
-        let base = [];
-        if(uri.includes("#")) {
-            base = uri.split("#");
-            base.pop();
-            return base.join("#") + "#"
-        } else {
-            base = uri.split("/");
-            base.pop();
-            return base.join("/") + "/"
-        }
-
-    }
 }
 module.exports = URIManager;
 },{}],537:[function(require,module,exports){
@@ -118774,7 +118742,7 @@ class ShExGenerator {
         let header = "";
         let prefixes = this.urim.getPrefixesList();
         for(let prefix in prefixes) {
-            header += "prefix " + prefixes[prefix].prefix + " <" + prefixes[prefix].uri + ">\n"
+            header += "prefix " + prefixes[prefix].prefix + " " + prefixes[prefix].uri + "\n"
         }
         header += this.urim.getBase();
         return header
@@ -118799,7 +118767,7 @@ class ShExGenerator {
     savePrefixes(enm) {
         let prefixes = enm.ownedLiteral;
         for(let i = 0; i < prefixes.length; i++) {
-            this.urim.savePrefix(prefixes[i].name)
+            this.urim.savePrefix(prefixes[i].$.name)
         }
 }
 
@@ -118808,7 +118776,7 @@ class ShExGenerator {
     }
 
     createShExClass(element) {
-        let content = ":" + element.$.name + " {";
+        let content = "" + this.getShExTerm(element.$.name) + " {";
 
         let attributes = element.ownedAttribute;
         for(let i = 0; i < attributes.length; i++) {
@@ -118828,24 +118796,17 @@ class ShExGenerator {
         let tprefix = "";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
-            let turi = attr.type[0].ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-            tprefix = this.urim.savePrefix(turi);
         }
         else if (attr.$.type) {
             type = this.searchById(this.types, attr.$.type);
-            tprefix = type.prefix;
             type = type.name
         }
-        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-        let nprefix = this.urim.savePrefix(uri);
 
-        return "\n\t" + nprefix + attr.$.name + this.createShExType(type, tprefix) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + ";";
     }
 
     createShExAssociation(attr) {
-        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-        let nprefix = this.urim.savePrefix(uri);
-        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchById(this.classes, attr.$.type).name
+        return "\n\t" + attr.$.name + " @" + this.getShExTerm(this.searchById(this.classes, attr.$.type).name)
             + this.cardinalityOf(attr)
             + " ;"
     }
@@ -118903,12 +118864,19 @@ class ShExGenerator {
         }
     }
 
-    createShExType(type, prefix) {
+    createShExType(type) {
         if(type === "Any") {
             return " .";
         } else {
-            return " " + prefix + type;
+            return " " + this.getShExTerm(type);
         }
+    }
+
+    getShExTerm(term) {
+        if(term.includes(":")) {
+            return term;
+        }
+        return "<" + term + ">"
     }
 
 }
@@ -118923,7 +118891,7 @@ class ShExParser {
     this.source = "";
 
     this.shexparser = shexp.construct();
-    this.shexparser._setBase("Shapes.shex");
+    this.shexparser._setBase("http://example.org/");
     this.shexparser._setFileName("Shapes.shex");
 
     this.xmigen = new XMIGenerator();
@@ -118933,9 +118901,11 @@ class ShExParser {
     let xmiEquivalent = "";
     this.source = this.shexparser.parse(shex);
 
+    console.log(this.source);
+
     xmiEquivalent += XMIGenerator.createXMIHeader();
-    xmiEquivalent += XMIGenerator.createPrefixes(this.source.prefixes);
-    xmiEquivalent += XMIGenerator.createBase(this.source.base);
+
+    let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
 
     console.log(this.source.shapes);
     for (let shape in this.source.shapes){
@@ -118944,6 +118914,8 @@ class ShExParser {
       }
 
     }
+
+    xmiEquivalent += prefixes;
 
     xmiEquivalent += this.xmigen.createXMIFooter();
 
@@ -118965,29 +118937,46 @@ class XMIGenerator {
         this.pendingAssociations = [];
         this.shapes = [];
         this.datatypes = [];
-        this.anyTypeId = null
+        this.anyTypeId = null;
+        this.prefixes = [];
+        this.base = "";
     }
 
     static createXMIHeader() {
         return '<?xml version="1.0" encoding="UTF-8"?>\n' +
             '<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" ' +
-            'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML"\n xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">\n'
+            'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML"\n xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">'
     }
 
-    static createPrefixes () {
-        return "";
+    createPrefixes (prefixes, base) {
+        let enumeration = "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"" + uniqid() + "\" name=\"Prefixes\">";
+        for(let prefix in prefixes) {
+            if(prefixes.hasOwnProperty(prefix)) {
+                enumeration += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"prefix " +
+                    prefix + ": &lt;" + prefixes[prefix] + ">\"/>";
+                this.prefixes.push({uri: prefixes[prefix], prefix: prefix})
+            }
+        }
+        enumeration += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"base &lt;" + base + ">\"/>" +
+            "</packagedElement>";
+        this.base = base;
+        return enumeration
     }
 
-    static createBase () {
-        return "";
+    getPrefixedTermOfUri(uri) {
+        for(let i = 0; i < this.prefixes.length; i++) {
+            if(uri.includes(this.prefixes[i].uri)) {
+                return this.prefixes[i].prefix + ":" + URIManager.lastOfUri(this.prefixes[i].uri, uri)
+            }
+        }
+        return URIManager.lastOfUri(this.base, uri)
     }
 
     createXMIClass(name, shape) {
         let sh = this.findShape(name);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
-            + URIManager.lastOfUri(name)
+            + this.getPrefixedTermOfUri(name)
             + '">' +
-            XMIGenerator.createXMIOwnedComment(name) +
             this.createXMIAttributes(shape.expression) + '</packagedElement>';
         return classXMI + this.createDependentAssociations(sh.id);
     }
@@ -119020,14 +119009,12 @@ class XMIGenerator {
             }
 
     createXMIPrimAttribute(name, type) {
-        let uppercaseType = XMIGenerator.createXMIType(type);
+        let uppercaseType = this.createXMIType(type);
         if(uppercaseType.primitive) {
-            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
+            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" isUnique="false">\n' +
                 ' <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
-                + uppercaseType.name + '">\n' +
-                XMIGenerator.createXMIOwnedComment(uppercaseType.uri) + '</type>' +
-                XMIGenerator.createXMIOwnedComment(name)
+                + uppercaseType.name + '">\n' + '</type>'
                 + '</ownedAttribute>\n'
         }
         if(uppercaseType.name === "Any") {
@@ -119035,15 +119022,14 @@ class XMIGenerator {
                 this.anyTypeId = uniqid();
             }
             return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
-                + URIManager.lastOfUri(name)
-                + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
-                XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
+                + this.getPrefixedTermOfUri(name)
+                + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' + '</ownedAttribute>\n'
         }
 
         let dtype = this.findDataType(uppercaseType.name, uppercaseType.uri);
-        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + URIManager.lastOfUri(name)
-            + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n' +
-            XMIGenerator.createXMIOwnedComment(name) + '</ownedAttribute>\n'
+        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+            + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
+            + '</ownedAttribute>\n'
 
 
 
@@ -119055,11 +119041,11 @@ class XMIGenerator {
         let idatr = uniqid();
         let targetShape = this.findShape(target);
         let idasoc = uniqid();
-        let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + URIManager.lastOfUri(name)
+        let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
             + XMIGenerator.createXMIAsocCardinality(minimum, maximum)
-            +XMIGenerator.createXMIOwnedComment(name)+ '</ownedAttribute>';
+            + '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
@@ -119108,20 +119094,20 @@ class XMIGenerator {
         return assocs;
     }
 
-    static createXMIType(type) {
+    createXMIType(type) {
         switch(type) {
             case "any": //TODO: ver compatibilidad con otros
                 return { primitive: false, name: "Any" };
-            case XMIGenerator.getXSDTypes(type):
-                let last = URIManager.lastOfUri(type);
+            case this.getXSDTypes(type):
+                let last = this.getPrefixedTermOfUri(type);
                 return { primitive: true, name: last === "int" ? "integer" : last, uri: type};
             default:
-                return { primitive: false, name: URIManager.lastOfUri(type), uri: type};
+                return { primitive: false, name: this.getPrefixedTermOfUri(type), uri: type};
         }
     }
 
-    static getXSDTypes(uri) {
-        let type = URIManager.lastOfUri(uri);
+    getXSDTypes(uri) {
+        let type = this.getPrefixedTermOfUri(uri);
         let xstypes = [];
         xstypes.push("string", "date",     //Dates
             "byte", "int", "integer", "long", "short",    //Numeric
@@ -119164,7 +119150,6 @@ class XMIGenerator {
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
                     'name="' + this.datatypes[i].name + '">\n' +
-                     XMIGenerator.createXMIOwnedComment(this.datatypes[i].uri) +
                     '</packagedElement>';
         }
         return base + '</uml:Model>'

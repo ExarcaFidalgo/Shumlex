@@ -12,7 +12,7 @@ class ShExGenerator {
         let header = "";
         let prefixes = this.urim.getPrefixesList();
         for(let prefix in prefixes) {
-            header += "prefix " + prefixes[prefix].prefix + " <" + prefixes[prefix].uri + ">\n"
+            header += "prefix " + prefixes[prefix].prefix + " " + prefixes[prefix].uri + "\n"
         }
         header += this.urim.getBase();
         return header
@@ -37,7 +37,7 @@ class ShExGenerator {
     savePrefixes(enm) {
         let prefixes = enm.ownedLiteral;
         for(let i = 0; i < prefixes.length; i++) {
-            this.urim.savePrefix(prefixes[i].name)
+            this.urim.savePrefix(prefixes[i].$.name)
         }
 }
 
@@ -46,7 +46,7 @@ class ShExGenerator {
     }
 
     createShExClass(element) {
-        let content = ":" + element.$.name + " {";
+        let content = "" + this.getShExTerm(element.$.name) + " {";
 
         let attributes = element.ownedAttribute;
         for(let i = 0; i < attributes.length; i++) {
@@ -66,24 +66,17 @@ class ShExGenerator {
         let tprefix = "";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
-            let turi = attr.type[0].ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-            tprefix = this.urim.savePrefix(turi);
         }
         else if (attr.$.type) {
             type = this.searchById(this.types, attr.$.type);
-            tprefix = type.prefix;
             type = type.name
         }
-        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-        let nprefix = this.urim.savePrefix(uri);
 
-        return "\n\t" + nprefix + attr.$.name + this.createShExType(type, tprefix) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + ";";
     }
 
     createShExAssociation(attr) {
-        let uri = attr.ownedComment[0].body[0].trim();  //TODO: puede haber más comentarios...
-        let nprefix = this.urim.savePrefix(uri);
-        return "\n\t" + nprefix + attr.$.name + " @:" + this.searchById(this.classes, attr.$.type).name
+        return "\n\t" + attr.$.name + " @" + this.getShExTerm(this.searchById(this.classes, attr.$.type).name)
             + this.cardinalityOf(attr)
             + " ;"
     }
@@ -141,12 +134,19 @@ class ShExGenerator {
         }
     }
 
-    createShExType(type, prefix) {
+    createShExType(type) {
         if(type === "Any") {
             return " .";
         } else {
-            return " " + prefix + type;
+            return " " + this.getShExTerm(type);
         }
+    }
+
+    getShExTerm(term) {
+        if(term.includes(":")) {
+            return term;
+        }
+        return "<" + term + ">"
     }
 
 }

@@ -5,21 +5,6 @@ class URIManager {
         this.base = null;
     }
 
-    getPrefix(uri) {
-        switch(uri) {
-            case "http://www.w3.org/2001/XMLSchema#":
-                return "xsd:";
-            case "http://xmlns.com/foaf/spec/#term_":
-                return "foaf:";
-            case "http://schema.org/":
-                return "schema:";
-            case "http://example.org/":
-                return ":";
-            default:
-                return uri.split("/")[2].split(".")[0] + ":";
-        }
-    }
-
     savePrefix(pr) {
         let fragments = pr.split(" ");
         let type = fragments[0];
@@ -41,31 +26,14 @@ class URIManager {
 
     getBase() {
         if(this.base) {
-            return "base <" + this.base.uri + ">\n\n";;
+            return "base " + this.base.uri + "\n\n";
         }
         return "base <http://example.org/>\n\n";
     }
 
-    static lastOfUri(uri) {
-        let base = uri.split("/").pop();
-        if(base.includes("#")) {
-            return base.split("#").pop();
-        }
-        return base
+    static lastOfUri(baseuri, uri) {
+        return uri.replace(baseuri, "");
     }
 
-    static removeLastOfUri(uri) {
-        let base = [];
-        if(uri.includes("#")) {
-            base = uri.split("#");
-            base.pop();
-            return base.join("#") + "#"
-        } else {
-            base = uri.split("/");
-            base.pop();
-            return base.join("/") + "/"
-        }
-
-    }
 }
 module.exports = URIManager;

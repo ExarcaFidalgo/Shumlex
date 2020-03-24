@@ -7,7 +7,7 @@ class ShExParser {
     this.source = "";
 
     this.shexparser = shexp.construct();
-    this.shexparser._setBase("Shapes.shex");
+    this.shexparser._setBase("http://example.org/");
     this.shexparser._setFileName("Shapes.shex");
 
     this.xmigen = new XMIGenerator();
@@ -17,9 +17,11 @@ class ShExParser {
     let xmiEquivalent = "";
     this.source = this.shexparser.parse(shex);
 
+    console.log(this.source);
+
     xmiEquivalent += XMIGenerator.createXMIHeader();
-    xmiEquivalent += XMIGenerator.createPrefixes(this.source.prefixes);
-    xmiEquivalent += XMIGenerator.createBase(this.source.base);
+
+    let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
 
     console.log(this.source.shapes);
     for (let shape in this.source.shapes){
@@ -28,6 +30,8 @@ class ShExParser {
       }
 
     }
+
+    xmiEquivalent += prefixes;
 
     xmiEquivalent += this.xmigen.createXMIFooter();
 
