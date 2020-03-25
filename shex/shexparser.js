@@ -15,7 +15,12 @@ class ShExParser {
 
   parseShEx(shex) {
     let xmiEquivalent = "";
-    this.source = this.shexparser.parse(shex);
+    try {
+        this.source = this.shexparser.parse(shex);
+    } catch (ex) {
+        alert("Error al parsear ShEx:\n " + ex);
+        return;
+    }
 
     console.log(this.source);
 

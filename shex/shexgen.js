@@ -143,6 +143,9 @@ class ShExGenerator {
     }
 
     getShExTerm(term) {
+        if(!term) {
+            throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
+        }
         if(term.includes(":")) {
             return term;
         }
