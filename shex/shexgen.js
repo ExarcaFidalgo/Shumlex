@@ -48,7 +48,14 @@ class ShExGenerator {
     createShExClass(element) {
         let content = "" + this.getShExTerm(element.$.name) + " {";
 
+        if(element.generalization) {
+            content += this.createShExGeneralization(element.generalization);
+        }
+
         let attributes = element.ownedAttribute;
+        if(!attributes) {
+            attributes = [];
+        }
         for(let i = 0; i < attributes.length; i++) {
             if(attributes[i].$.association) {
                 content += this.createShExAssociation(attributes[i])
@@ -58,6 +65,11 @@ class ShExGenerator {
         }
 
         return content + "\n}\n\n"
+    }
+
+    createShExGeneralization(gen) {
+        let refClass = this.searchById(this.classes, gen[0].$.general);
+        return "\n\ta [" + this.getShExTerm(refClass.name) + "];"
     }
 
     createShExAttribute(attr) {
