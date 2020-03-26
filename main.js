@@ -118807,7 +118807,7 @@ class ShExGenerator {
         let name = this.searchById(this.classes, attr.$.type).name;
         return "\n\t" + attr.$.name + " @" + this.getShExTerm(name)
             + this.cardinalityOf(attr)
-            + " ;"
+            + ";"
     }
 
     cardinalityOf(attr) {
@@ -118981,11 +118981,29 @@ class XMIGenerator {
 
     createXMIClass(name, shape) {
         let sh = this.findShape(name);
+        let expression = shape.expression;
+        let generalizations = "";
+        if(shape.type === "ShapeAnd") {
+            expression = shape.shapeExprs.pop().expression;
+            generalizations = this.createXMIGeneralization(shape.shapeExprs);
+        }
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + this.getPrefixedTermOfUri(name)
             + '">' +
-            this.createXMIAttributes(shape.expression) + '</packagedElement>';
+            this.createXMIAttributes(expression) +
+            generalizations + '</packagedElement>';
         return classXMI + this.createDependentAssociations(sh.id);
+    }
+
+    createXMIGeneralization(parents) {
+        let gens = "";
+        for(let parent in parents) {
+            if(parents.hasOwnProperty(parent)) {
+                let sh = this.findShape(parents[parent].reference);
+                gens += "<generalization xmi:id=\"" + uniqid() + "\" general=\"" + sh.id + "\"/>"
+            }
+        }
+        return gens;
     }
 
     createXMIAttributes(expr) {
@@ -119008,6 +119026,10 @@ class XMIGenerator {
             return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min);
         }
         else if(expr.valueExpr.type === "NodeConstraint") {
+            if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                let list = [{reference: expr.valueExpr.values[0]}];
+                return this.createXMIGeneralization(list);
+            }
             return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
         }
         else if (expr.valueExpr.type === "ShapeRef") {

@@ -31,6 +31,14 @@ base <http://example.org/>
     :buys @<Product> {1,10};
 }
 
+:Ultrauser {
+    a [:User];
+}
+
+:Titanuser @:User AND {
+    :titancode xsd:string;
+}
+
 :Company {
     :name xsd:string ;
     :hasEmployee @:User *;
