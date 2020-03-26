@@ -118800,7 +118800,7 @@ class ShExGenerator {
             type = type.name
         }
 
-        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
     }
 
     createShExAssociation(attr) {
@@ -119005,23 +119005,25 @@ class XMIGenerator {
 
     determineTypeOfExpression(expr) {
         if(!expr.valueExpr) {
-            return this.createXMIPrimAttribute(expr.predicate, "Any");
+            return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min);
         }
         else if(expr.valueExpr.type === "NodeConstraint") {
-            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype);
+            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             return this.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
         }
             }
 
-    createXMIPrimAttribute(name, type) {
+    createXMIPrimAttribute(name, type, min) {
         let uppercaseType = this.createXMIType(type);
+        let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
         if(uppercaseType.primitive) {
             return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" isUnique="false">\n' +
                 ' <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
-                + uppercaseType.name + '">\n' + '</type>'
+                + uppercaseType.name + '">\n' + '</type>' +
+                card
                 + '</ownedAttribute>\n'
         }
         if(uppercaseType.name === "Any") {
@@ -119030,12 +119032,15 @@ class XMIGenerator {
             }
             return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
                 + this.getPrefixedTermOfUri(name)
-                + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' + '</ownedAttribute>\n'
+                + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
+                card
+                + '</ownedAttribute>\n'
         }
 
         let dtype = this.findDataType(uppercaseType.name, uppercaseType.uri);
         return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
+            + card
             + '</ownedAttribute>\n'
 
 

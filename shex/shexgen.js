@@ -71,14 +71,14 @@ class ShExGenerator {
             type = type.name
         }
 
-        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
     }
 
     createShExAssociation(attr) {
         let name = this.searchById(this.classes, attr.$.type).name;
         return "\n\t" + attr.$.name + " @" + this.getShExTerm(name)
             + this.cardinalityOf(attr)
-            + " ;"
+            + ";"
     }
 
     cardinalityOf(attr) {
