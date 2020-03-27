@@ -32,6 +32,8 @@ class XMIParser {
                 } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration" &&
                     packagedElements[i]["$"]["name"] === "Prefixes") {
                     shexgen.savePrefixes(packagedElements[i])
+                } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration") {
+                    shexgen.saveEnum(packagedElements[i])
                 }
             }
 

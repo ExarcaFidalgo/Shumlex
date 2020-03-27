@@ -118735,6 +118735,7 @@ class ShExGenerator {
         this.classes = [];
         this.urim = new URIManager();
         this.types = [];
+        this.enumerations = [];
     }
 
     createShExHeader() {
@@ -118761,6 +118762,16 @@ class ShExGenerator {
                 id: element.$["xmi:id"],
                 name: element.$.name
             })
+    }
+
+    saveEnum(enm) {
+        this.enumerations.push(
+            {
+                id: enm.$["xmi:id"],
+                name: enm.$.name,
+                values: enm.ownedLiteral
+            }
+        )
     }
 
     savePrefixes(enm) {
@@ -118798,21 +118809,32 @@ class ShExGenerator {
 
     createShExGeneralization(gen) {
         let refClass = this.searchById(this.classes, gen[0].$.general);
-        return "a [" + this.getShExTerm(refClass.name) + "];"
+        return "\n\ta [" + this.getShExTerm(refClass.name) + "];"
     }
 
     createShExAttribute(attr) {
-        //TODO: Prever la circunstancia de que el tipo venga aparte como packagedelement y no haya un hijo type
         let type = "Any";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
         }
         else if (attr.$.type) {
+            let enumer = this.searchById(this.enumerations, attr.$.type);
+            if(enumer) {
+                return this.createShExEnumeration(enumer);
+            }
             type = this.searchById(this.types, attr.$.type);
             type = type.name
         }
 
         return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
+    }
+
+    createShExEnumeration(enumer) {
+        let base = "\n\t" + this.getShExTerm(enumer.name) + " [";
+        for(let i = 0; i < enumer.values.length; i++) {
+            base += this.getShExTerm(enumer.values[i].$.name) + " ";
+        }
+        return base + "];";
     }
 
     createShExAssociation(attr) {
@@ -118959,6 +118981,7 @@ class XMIGenerator {
         this.anyTypeId = null;
         this.prefixes = [];
         this.base = "";
+        this.enumerations = [];
     }
 
     static createXMIHeader() {
@@ -119042,6 +119065,9 @@ class XMIGenerator {
                 let list = [{reference: expr.valueExpr.values[0]}];
                 return this.createXMIGeneralization(list);
             }
+            if(expr.valueExpr.values) {
+                return this.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min);
+            }
             return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
@@ -119078,6 +119104,17 @@ class XMIGenerator {
             + '</ownedAttribute>\n'
 
 
+
+    }
+
+    createXMIEnumAttribute(name, values, min) {
+        let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
+        let enumer = { id: uniqid(), name: name, values: values};
+        this.saveEnum(enumer);
+        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+            + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
+            + card
+            + '</ownedAttribute>\n'
 
     }
 
@@ -119188,10 +119225,32 @@ class XMIGenerator {
         return dt;
     }
 
+    saveEnum(enumer) {
+        for(let i = 0; i < this.enumerations.length; i++) {
+            if(enumer.name === this.enumerations[i].name
+                && enumer.values.length === this.enumerations[i].values.length
+                && enumer.values.sort().every(function(value, index) {
+                    return value === this.enumerations[i].values.sort()[index]})) {
+                return this.enumerations[i];
+            }
+        }
+        this.enumerations.push((enumer));
+    }
+
     createXMIFooter() {
         let base = "";
         if(this.anyTypeId) {
             base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>';
+        }
+        for(let i = 0; i < this.enumerations.length; i++) {
+            base += '<packagedElement xmi:type="uml:Enumeration" xmi:id="' + this.enumerations[i].id + '" ' +
+                'name="' + this.getPrefixedTermOfUri(this.enumerations[i].name) + '">\n';
+                for(let j = 0; j < this.enumerations[i].values.length; j++) {
+                    base += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\""
+                        + this.getPrefixedTermOfUri(this.enumerations[i].values[j]) + "\"/>\n";
+                }
+
+                base += '</packagedElement>';
         }
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
@@ -119248,6 +119307,8 @@ class XMIParser {
                 } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration" &&
                     packagedElements[i]["$"]["name"] === "Prefixes") {
                     shexgen.savePrefixes(packagedElements[i])
+                } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration") {
+                    shexgen.saveEnum(packagedElements[i])
                 }
             }
 

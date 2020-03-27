@@ -6,6 +6,7 @@ class ShExGenerator {
         this.classes = [];
         this.urim = new URIManager();
         this.types = [];
+        this.enumerations = [];
     }
 
     createShExHeader() {
@@ -32,6 +33,16 @@ class ShExGenerator {
                 id: element.$["xmi:id"],
                 name: element.$.name
             })
+    }
+
+    saveEnum(enm) {
+        this.enumerations.push(
+            {
+                id: enm.$["xmi:id"],
+                name: enm.$.name,
+                values: enm.ownedLiteral
+            }
+        )
     }
 
     savePrefixes(enm) {
@@ -73,17 +84,28 @@ class ShExGenerator {
     }
 
     createShExAttribute(attr) {
-        //TODO: Prever la circunstancia de que el tipo venga aparte como packagedelement y no haya un hijo type
         let type = "Any";
         if(attr.type) {
             type = attr.type[0].$.href.split("#").pop();
         }
         else if (attr.$.type) {
+            let enumer = this.searchById(this.enumerations, attr.$.type);
+            if(enumer) {
+                return this.createShExEnumeration(enumer);
+            }
             type = this.searchById(this.types, attr.$.type);
             type = type.name
         }
 
         return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
+    }
+
+    createShExEnumeration(enumer) {
+        let base = "\n\t" + this.getShExTerm(enumer.name) + " [";
+        for(let i = 0; i < enumer.values.length; i++) {
+            base += this.getShExTerm(enumer.values[i].$.name) + " ";
+        }
+        return base + "];";
     }
 
     createShExAssociation(attr) {
