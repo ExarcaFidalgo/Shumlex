@@ -13,7 +13,8 @@ function shExToXMI() {
 	let text = shExEditor.getValue();
 
     let parsedToXML = shexparser.parseShEx(text);
-    xmiEditor.setValue(xmlformat(parsedToXML, {}));
+    //xmiEditor.setValue(xmlformat(parsedToXML, {}));
+    xmiEditor.setValue(parsedToXML);
 }
 
 function XMIToShEx() {
@@ -118942,13 +118943,10 @@ class ShExParser {
         return;
     }
 
-    console.log(this.source);
-
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
 
-    console.log(this.source.shapes);
     for (let shape in this.source.shapes){
       if(this.source.shapes.hasOwnProperty(shape)) {
         xmiEquivalent += this.xmigen.createXMIClass(shape, this.source.shapes[shape]);
@@ -118991,16 +118989,16 @@ class XMIGenerator {
     }
 
     createPrefixes (prefixes, base) {
-        let enumeration = "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"" + uniqid() + "\" name=\"Prefixes\">";
+        let enumeration = "\n<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"" + uniqid() + "\" name=\"Prefixes\">";
         for(let prefix in prefixes) {
             if(prefixes.hasOwnProperty(prefix)) {
-                enumeration += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"prefix " +
+                enumeration += "\n\t<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"prefix " +
                     prefix + ": &lt;" + prefixes[prefix] + ">\"/>";
                 this.prefixes.push({uri: prefixes[prefix], prefix: prefix})
             }
         }
-        enumeration += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"base &lt;" + base + ">\"/>" +
-            "</packagedElement>";
+        enumeration += "\n\t<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\"base &lt;" + base + ">\"/>" +
+            "\n</packagedElement>";
         this.base = base;
         return enumeration
     }
@@ -119026,7 +119024,7 @@ class XMIGenerator {
             + this.getPrefixedTermOfUri(name)
             + '">' +
             this.createXMIAttributes(expression) +
-            generalizations + '</packagedElement>';
+            generalizations + '\n</packagedElement>';
         return classXMI + this.createDependentAssociations(sh.id);
     }
 
@@ -119043,7 +119041,10 @@ class XMIGenerator {
 
     createXMIAttributes(expr) {
         let attrs = "";
-        if(expr.type === "TripleConstraint") {
+        if(!expr) {
+            return attrs;
+        }
+        else if(expr.type === "TripleConstraint") {
             attrs = this.determineTypeOfExpression(expr);
         }
         else if (expr.type === "EachOf") {
@@ -119076,32 +119077,33 @@ class XMIGenerator {
             }
 
     createXMIPrimAttribute(name, type, min) {
-        let uppercaseType = this.createXMIType(type);
+        let xmiType = this.createXMIType(type);
         let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
-        if(uppercaseType.primitive) {
-            return '\n<ownedAttribute xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+        if(xmiType.primitive) {
+            let tName = xmiType.name.split(":").pop();
+            return '\n\t<ownedAttribute xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" isUnique="false">\n' +
-                ' <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
-                + uppercaseType.name + '">\n' + '</type>' +
+                '\t\t<type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
+                + tName.substring(0, 1).toUpperCase() + tName.substring(1) + '">\n' + '\t\t</type>' +
                 card
-                + '</ownedAttribute>\n'
+                + '\n\t</ownedAttribute>\n'
         }
-        if(uppercaseType.name === "Any") {
+        if(xmiType.name === "Any") {
             if(!this.anyTypeId) {
                 this.anyTypeId = uniqid();
             }
-            return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
+            return '\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
                 + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
                 card
-                + '</ownedAttribute>\n'
+                + '\t</ownedAttribute>\n'
         }
 
-        let dtype = this.findDataType(uppercaseType.name, uppercaseType.uri);
-        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+        let dtype = this.findDataType(xmiType.name, xmiType.uri);
+        return '\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
             + card
-            + '</ownedAttribute>\n'
+            + '\t</ownedAttribute>\n'
 
 
 
@@ -119190,7 +119192,8 @@ class XMIGenerator {
     }
 
     getXSDTypes(uri) {
-        let type = this.getPrefixedTermOfUri(uri);
+        let type = this.getPrefixedTermOfUri(uri).split(":").pop();
+        console.log(type);
         let xstypes = [];
         xstypes.push("string", "date",     //Dates
             "byte", "int", "integer", "long", "short",    //Numeric
@@ -119240,24 +119243,24 @@ class XMIGenerator {
     createXMIFooter() {
         let base = "";
         if(this.anyTypeId) {
-            base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>';
+            base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>';
         }
         for(let i = 0; i < this.enumerations.length; i++) {
-            base += '<packagedElement xmi:type="uml:Enumeration" xmi:id="' + this.enumerations[i].id + '" ' +
+            base += '\n<packagedElement xmi:type="uml:Enumeration" xmi:id="' + this.enumerations[i].id + '" ' +
                 'name="' + this.getPrefixedTermOfUri(this.enumerations[i].name) + '">\n';
                 for(let j = 0; j < this.enumerations[i].values.length; j++) {
-                    base += "<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\""
+                    base += "\n\t<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\""
                         + this.getPrefixedTermOfUri(this.enumerations[i].values[j]) + "\"/>\n";
                 }
 
-                base += '</packagedElement>';
+                base += '\n</packagedElement>';
         }
         for(let i = 0; i < this.datatypes.length; i++) {
-                base += '<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
+                base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
                     'name="' + this.datatypes[i].name + '">\n' +
-                    '</packagedElement>';
+                    '\n</packagedElement>';
         }
-        return base + '</uml:Model>'
+        return base + '\n</uml:Model>'
     }
 
     static createXMIOwnedComment(comment) {

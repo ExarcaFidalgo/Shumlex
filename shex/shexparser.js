@@ -22,13 +22,10 @@ class ShExParser {
         return;
     }
 
-    console.log(this.source);
-
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
 
-    console.log(this.source.shapes);
     for (let shape in this.source.shapes){
       if(this.source.shapes.hasOwnProperty(shape)) {
         xmiEquivalent += this.xmigen.createXMIClass(shape, this.source.shapes[shape]);

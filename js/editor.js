@@ -12,7 +12,8 @@ function shExToXMI() {
 	let text = shExEditor.getValue();
 
     let parsedToXML = shexparser.parseShEx(text);
-    xmiEditor.setValue(xmlformat(parsedToXML, {}));
+    //xmiEditor.setValue(xmlformat(parsedToXML, {}));
+    xmiEditor.setValue(parsedToXML);
 }
 
 function XMIToShEx() {
