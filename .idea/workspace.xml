@@ -2,45 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/helsreach.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/testrepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/editor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/pegjs.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/VERSION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/bin/pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/examples/arithmetics.pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/examples/css.pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/examples/javascript.pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/examples/json.pegjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/asts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/js.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/opcodes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/generate-bytecode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/generate-js.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/remove-proxy-rules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/report-duplicate-labels.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/report-duplicate-rules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/report-infinite-recursion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/report-infinite-repetition.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/passes/report-undefined-rules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/compiler/visitor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/grammar-error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/parser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/peg.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/utils/arrays.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/utils/classes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/lib/utils/objects.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/pegjs/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shex/shexgen.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex/shexgen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shex/shexparser.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex/shexparser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/helsreach.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/helsreach.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testrepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmi/xmigen.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/xmigen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xmi/xmiparser.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/xmiparser.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -56,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
+            <state relative-caret-position="544">
               <caret line="32" column="1" selection-start-line="25" selection-end-line="32" selection-end-column="1" />
             </state>
           </provider>
@@ -65,53 +34,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
+            <state relative-caret-position="237">
               <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/helsreach.test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="67" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
+            <state relative-caret-position="132">
+              <caret line="56" column="37" selection-start-line="56" selection-start-column="37" selection-end-line="56" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
+        <entry file="file://$PROJECT_DIR$/xmi/xmiparser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+            <state relative-caret-position="175">
+              <caret line="50" column="19" lean-forward="true" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="186" column="5" lean-forward="true" selection-start-line="186" selection-start-column="5" selection-end-line="186" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/testrepository.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="151" column="25" selection-start-line="151" selection-start-column="25" selection-end-line="151" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="289" column="27" selection-start-line="289" selection-start-column="27" selection-end-line="289" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schema/urimanager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="133">
+              <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -154,8 +114,11 @@
       <find>createxmitype</find>
       <find>error.capture</find>
       <find>byid</find>
-      <find>log</find>
       <find>\n</find>
+      <find>log</find>
+      <find>ownedend</find>
+      <find>generaliz</find>
+      <find>rdf</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,15 +143,15 @@
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/node_modules/shex/lib/ShExParser.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/xmi/xmiparser.js" />
-        <option value="$PROJECT_DIR$/shex/shexgen.js" />
         <option value="$PROJECT_DIR$/test/test.js" />
-        <option value="$PROJECT_DIR$/shex/shexparser.js" />
         <option value="$PROJECT_DIR$/js/editor.js" />
-        <option value="$PROJECT_DIR$/xmi/xmigen.js" />
-        <option value="$PROJECT_DIR$/test/testrepository.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/xmi/xmigen.js" />
+        <option value="$PROJECT_DIR$/shex/shexparser.js" />
         <option value="$PROJECT_DIR$/test/helsreach.test.js" />
+        <option value="$PROJECT_DIR$/shex/shexgen.js" />
+        <option value="$PROJECT_DIR$/xmi/xmiparser.js" />
+        <option value="$PROJECT_DIR$/test/testrepository.js" />
       </list>
     </option>
   </component>
@@ -309,12 +272,13 @@
       <workItem from="1585135898564" duration="2504000" />
       <workItem from="1585216357984" duration="8186000" />
       <workItem from="1585305909320" duration="4767000" />
-      <workItem from="1585648189887" duration="5753000" />
+      <workItem from="1585648189887" duration="6009000" />
+      <workItem from="1585730272575" duration="7082000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118904000" />
+    <option name="totallyTimeSpent" value="126242000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -331,7 +295,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3625192" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4347158" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -467,59 +431,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1095">
-          <caret line="105" column="52" selection-start-line="105" selection-start-column="52" selection-end-line="105" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi/xmiparser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
+        <state relative-caret-position="544">
           <caret line="32" column="1" selection-start-line="25" selection-end-line="32" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexparser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schema/urimanager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="289" column="27" selection-start-line="289" selection-start-column="27" selection-end-line="289" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/testrepository.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="151" column="25" selection-start-line="151" selection-start-column="25" selection-end-line="151" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -530,10 +445,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/schema/urimanager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/helsreach.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="67" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
+        <state relative-caret-position="132">
+          <caret line="56" column="37" selection-start-line="56" selection-start-column="37" selection-end-line="56" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="186" column="5" lean-forward="true" selection-start-line="186" selection-start-column="5" selection-end-line="186" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi/xmiparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="50" column="19" lean-forward="true" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/testrepository.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>

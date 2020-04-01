@@ -186,5 +186,12 @@ class ShExGenerator {
         return "<" + term + ">"
     }
 
+    clear() {
+        this.classes = [];
+        this.urim = new URIManager();
+        this.types = [];
+        this.enumerations = [];
+    }
+
 }
 module.exports = new ShExGenerator();

@@ -17,7 +17,6 @@ class XMIParser {
             }
         });
 
-        console.log(this.source);
         if(!this.source) {
             return;
         }
@@ -50,6 +49,8 @@ class XMIParser {
                 "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
                 + ex);
             return;
+        } finally {
+            shexgen.clear();
         }
 
         return shExEquivalent;

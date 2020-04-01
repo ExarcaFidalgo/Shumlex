@@ -64,7 +64,7 @@ class XMIGenerator {
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
                 let sh = this.findShape(parents[parent].reference);
-                gens += "<generalization xmi:id=\"" + uniqid() + "\" general=\"" + sh.id + "\"/>"
+                gens += "\n\t<generalization xmi:id=\"" + uniqid() + "\" general=\"" + sh.id + "\"/>"
             }
         }
         return gens;
@@ -103,6 +103,10 @@ class XMIGenerator {
             return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
+            if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                let list = [{reference: expr.valueExpr.reference}];
+                return this.createXMIGeneralization(list);
+            }
             return this.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
         }
             }
@@ -117,24 +121,24 @@ class XMIGenerator {
                 '\t\t<type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
                 + tName.substring(0, 1).toUpperCase() + tName.substring(1) + '">\n' + '\t\t</type>' +
                 card
-                + '\n\t</ownedAttribute>\n'
+                + '\n\t</ownedAttribute>'
         }
         if(xmiType.name === "Any") {
             if(!this.anyTypeId) {
                 this.anyTypeId = uniqid();
             }
-            return '\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
+            return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
                 + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
                 card
-                + '\t</ownedAttribute>\n'
+                + '\t</ownedAttribute>'
         }
 
         let dtype = this.findDataType(xmiType.name, xmiType.uri);
-        return '\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
             + card
-            + '\t</ownedAttribute>\n'
+            + '\t</ownedAttribute>'
 
 
 
@@ -144,10 +148,10 @@ class XMIGenerator {
         let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
         let enumer = { id: uniqid(), name: name, values: values};
         this.saveEnum(enumer);
-        return '<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card
-            + '</ownedAttribute>\n'
+            + '</ownedAttribute>'
 
     }
 
@@ -157,7 +161,7 @@ class XMIGenerator {
         let idatr = uniqid();
         let targetShape = this.findShape(target);
         let idasoc = uniqid();
-        let content = '<ownedAttribute xmi:id="' + idatr + '" name="' + this.getPrefixedTermOfUri(name)
+        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
             + XMIGenerator.createXMIAsocCardinality(minimum, maximum)
@@ -177,8 +181,8 @@ class XMIGenerator {
         if(cardinality === 1)
             return "";
         if(cardinality === -1)
-            return '<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="*"/>\n';
-        return '<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
+            return '\n\t\t<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="*"/>';
+        return '\n\t\t<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>';
     }
 
     static getLowerCardinality(cardinality) {
@@ -186,18 +190,18 @@ class XMIGenerator {
             return XMIGenerator.getLower0Cardinality();
         else if(cardinality === 1)
             return "";
-        return '<lowerValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>\n';
+        return '\n\t\t<lowerValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + uniqid() + '" value="' + cardinality + '"/>';
     }
 
     static getLower0Cardinality() {
-        return '<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + uniqid() + '"/>';
+        return '\n\t\t<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + uniqid() + '"/>';
     }
 
     static createXMIAssociation(ids, idcl) {
         let idown = uniqid();
         return '\n<packagedElement xmi:type="uml:Association" xmi:id="' + ids.id + '" memberEnd="' + ids.idatr
             + ' '  + idown + '">\n' +
-            '<ownedEnd xmi:id="' + idown + '" visibility="public" type="' + idcl + '" association="'
+            '\t<ownedEnd xmi:id="' + idown + '" visibility="public" type="' + idcl + '" association="'
             + ids.id + '"/>\n' + '</packagedElement>\n'
     }
 
@@ -301,6 +305,16 @@ class XMIGenerator {
 
     static createString(symbols) {
         return symbols.join("")
+    }
+
+    clear() {
+        this.pendingAssociations = [];
+        this.shapes = [];
+        this.datatypes = [];
+        this.anyTypeId = null;
+        this.prefixes = [];
+        this.base = "";
+        this.enumerations = [];
     }
 
 }
