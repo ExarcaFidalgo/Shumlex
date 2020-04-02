@@ -35,28 +35,28 @@ class TestRepository {
     static getShex2() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n"
+            "base <http://example.org/>\n\n"
             + ":User {\n" +
-            "    :name xsd:string;\n" +
-            "    :age xsd:int;\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int;\n" +
             "}\n\n"
             + "<TypeTest> {\n" +
-            "    :z xsd:string;\n" +
-            "    :b xsd:date;\n" +
-            "    :c xsd:time;\n" +
-            "    :d xsd:dateTime;\n" +
-            "    :e xsd:duration;\n" +
-            "    :f xsd:byte;\n" +
-            "    :g xsd:decimal;\n" +
-            "    :h xsd:int;\n" +
-            "    :i xsd:integer;\n" +
-            "    :j xsd:long;\n" +
-            "    :k xsd:short;\n" +
-            "    :l xsd:boolean;\n" +
-            "    :m xsd:double;\n" +
-            "    :n xsd:float;\n" +
-            "    :xyz xsd:invent;\n" +
-            "    }";
+            "\t:z xsd:string;\n" +
+            "\t:b xsd:date;\n" +
+            "\t:c xsd:time;\n" +
+            "\t:d xsd:dateTime;\n" +
+            "\t:e xsd:duration;\n" +
+            "\t:f xsd:byte;\n" +
+            "\t:g xsd:decimal;\n" +
+            "\t:h xsd:int;\n" +
+            "\t:i xsd:integer;\n" +
+            "\t:j xsd:long;\n" +
+            "\t:k xsd:short;\n" +
+            "\t:l xsd:boolean;\n" +
+            "\t:m xsd:double;\n" +
+            "\t:n xsd:float;\n" +
+            "\t:xyz xsd:invent;\n" +
+            "}\n\n";
     }
 
     static getXMI2() {
@@ -154,27 +154,27 @@ class TestRepository {
             "base <http://example.org/>\n" +
             "\n" +
             ":User {\n" +
-            "    :name xsd:string;\n" +
-            "    :knows @:User ;\n" +
-            "    :worksFor @:Company ;\n" +
-            "    :buys @<Product> {1,10};\n" +
+            "\t:name xsd:string;\n" +
+            "\t:knows @:User;\n" +
+            "\t:worksFor @:Company;\n" +
+            "\t:buys @<Product> {1,10};\n" +
             "}\n" +
             "\n" +
             ":Company {\n" +
-            "    :name xsd:string ;\n" +
-            "    :hasEmployee @:User *;\n" +
-            "    :possess @<Product> {5,}\n" +
+            "\t:name xsd:string;\n" +
+            "\t:hasEmployee @:User *;\n" +
+            "\t:possess @<Product> {5,};\n" +
             "}\n" +
             "\n" +
             "<Product> {\n" +
-            "    :name xsd:string;\n" +
-            "    :manufacturer @<Organization> +\n" +
+            "\t:name xsd:string;\n" +
+            "\t:manufacturer @<Organization> +;\n" +
             "}\n" +
             "\n" +
             "<Organization> {\n" +
-            "    :name xsd:string ;\n" +
-            "    :isPartOf @<Organization> ?;\n" +
-            "    :hasDirectives @:User {5}\n" +
+            "\t:name xsd:string;\n" +
+            "\t:isPartOf @<Organization> ?;\n" +
+            "\t:hasDirectives @:User {5};\n" +
             "}\n" +
             "\n"
     }
@@ -270,10 +270,10 @@ class TestRepository {
             "base <http://example.org/>\n" +
             "\n" +
             ":User {\n" +
-            "    :name xsd:string;\n" +
-            "    :age xsd:int ?;\n" +
-            "    :gender [:Male :Female];\n" +
-            "    :id .;\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
+            "\t:gender [:Male :Female ];\n" +
+            "\t:id .;\n" +
             "}\n" +
             "\n";
     }
@@ -319,20 +319,45 @@ class TestRepository {
             "base <http://example.org/>\n" +
             "\n" +
             ":User {\n" +
-            "    :name xsd:string;\n" +
-            "    :age xsd:int ?;\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
             "}\n" +
             "\n" +
             ":Ultrauser {\n" +
-            "    a [:User];\n" +
+            "\ta [:User];\n" +
             "}\n" +
             "\n" +
             ":Titanuser @:User AND {\n" +
-            "    :titancode xsd:string;\n" +
+            "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
             ":VIPUser EXTRA a { \n" +
-            "  a @:User \n" +
+            "\ta @:User; \n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getGenShex5() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser {\n" +
+            "\ta [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser {\n" +
+            "\ta [:User];\n" +
+            "\t:titancode xsd:string;\n" +
+            "}\n" +
+            "\n" +
+            ":VIPUser {\n" +
+            "\ta [:User];\n" +
             "}\n" +
             "\n";
     }
@@ -379,28 +404,60 @@ class TestRepository {
             "base <http://example.org/>\n" +
             "\n" +
             ":User {\n" +
-            "    :name xsd:string;\n" +
-            "    :age xsd:int ?;\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
             "}\n" +
             "\n" +
-            ":Citizen {\n" +
-            "  \t:id .;\n" +
+            "<Citizen> {\n" +
+            "\t:id .;\n" +
             "}\n" +
             "\n" +
             ":Ultrauser {\n" +
-            "    a [:User];\n" +
-            "  \ta [:Citizen];\n" +
+            "\ta [:User];\n" +
+            "\ta [<Citizen>];\n" +
             "}\n" +
             "\n" +
-            ":Titanuser @:User AND @:Citizen AND {\n" +
+            ":Titanuser @:User AND @<Citizen> AND {\n" +
             "    :titancode xsd:string;\n" +
             "}\n" +
             "\n" +
-            ":VIPUser EXTRA a { \n" +
+            ":VIPUser EXTRA a {\n" +
             "  a @:User;\n" +
-            "  a @:Citizen;\n" +
+            "  a @<Citizen>;\n" +
             "}\n" +
-            "          \n";
+            "\n";
+    }
+
+    static getGenShex6() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
+            "}\n" +
+            "\n" +
+            "<Citizen> {\n" +
+            "\t:id .;\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser {\n" +
+            "\ta [:User];\n" +
+            "\ta [<Citizen>];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser {\n" +
+            "\ta [:User];\n" +
+            "\ta [<Citizen>];\n" +
+            "\t:titancode xsd:string;\n" +
+            "}\n" +
+            "\n" +
+            ":VIPUser {\n" +
+            "\ta [:User];\n" +
+            "\ta [<Citizen>];\n" +
+            "}\n" +
+            "\n";
     }
 
     static getXMI6() {
@@ -418,7 +475,7 @@ class TestRepository {
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8h56pot\"/>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h56pov\" name=\":Citizen\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h56pov\" name=\"Citizen\">\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8h56pox\" name=\":id\" visibility=\"public\" type=\"k8h56pow\" isUnique=\"false\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +

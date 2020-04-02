@@ -72,13 +72,13 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('Herencia simple', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI5());
         expect(shex)
-            .toEqual(TestRep.getShex5());
+            .toEqual(TestRep.getGenShex5());
     });
 
     test('Herencia múltiple', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI6());
         expect(shex)
-            .toEqual(TestRep.getShex6());
+            .toEqual(TestRep.getGenShex6());
     });
 
 });

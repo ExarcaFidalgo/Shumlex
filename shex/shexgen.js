@@ -79,14 +79,24 @@ class ShExGenerator {
     }
 
     createShExGeneralization(gen) {
-        let refClass = this.searchById(this.classes, gen[0].$.general);
-        return "\n\ta [" + this.getShExTerm(refClass.name) + "];"
+        let generalizations = "";
+        for(let i = 0; i < gen.length; i++) {
+            let refClass = this.searchById(this.classes, gen[i].$.general);
+            generalizations += "\n\ta [" + this.getShExTerm(refClass.name) + "];"
+        }
+        return generalizations;
     }
 
     createShExAttribute(attr) {
         let type = "Any";
         if(attr.type) {
-            type = attr.type[0].$.href.split("#").pop();
+            let href = attr.type[0].$.href.split("#");
+            if(href[0] === "pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml") {
+                type = this.urim.findXSDPrefix() + href[1].substring(0,1).toLowerCase() + href[1].substring(1);
+            } else {
+                type = href.pop();
+            }
+
         }
         else if (attr.$.type) {
             let enumer = this.searchById(this.enumerations, attr.$.type);
@@ -128,7 +138,7 @@ class ShExGenerator {
                     return " +"
                 }
                 else {
-                    return " {1, " + upperValue + "}"
+                    return " {1," + upperValue + "}"
                 }
             case 0:
                 if(upperValue === 1) {
@@ -138,17 +148,17 @@ class ShExGenerator {
                     return " *"
                 }
                 else {
-                    return " {0, " + upperValue + " }"
+                    return " {0, " + upperValue + "}"
                 }
             default:
                 if(upperValue === lowerValue) {
-                    return " { " + lowerValue + " }"
+                    return " {" + lowerValue + "}"
                 }
                 else if (upperValue === Infinity) {
-                    return " {" + lowerValue + ", }"
+                    return " {" + lowerValue + ",}"
                 }
                 else {
-                    return " {" + lowerValue + ", " + upperValue + " }"
+                    return " {" + lowerValue + ", " + upperValue + "}"
                 }
         }
     }

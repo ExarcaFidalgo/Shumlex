@@ -20,6 +20,16 @@ class URIManager {
 
     }
 
+    findXSDPrefix() {
+        let xsdUri = "<http://www.w3.org/2001/XMLSchema#>";
+        let prefix = this.prefixes.find(value => value.uri === xsdUri);
+        if(prefix) {
+            return prefix.prefix;
+        }
+        this.prefixes.push({prefix: "xsd:", uri: "<" + xsdUri + ">"}); //XSD podría estar ocupado...
+        return "xsd:";
+    }
+
     getPrefixesList() {
         return this.prefixes;
     }
