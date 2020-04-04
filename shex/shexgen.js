@@ -193,7 +193,26 @@ class ShExGenerator {
         if(term.includes(":")) {
             return term;
         }
+        let nk = this.checkNodeKind(term);
+        if(nk) {
+            return nk;
+        }
         return "<" + term + ">"
+    }
+
+    checkNodeKind(nk) {
+        switch(nk.toLowerCase()) {
+            case "literal":
+                return "Literal";
+            case "iri":
+                return "IRI";
+            case "bnode":
+                return "BNode";
+            case "nonliteral":
+                return "NonLiteral";
+            default:
+                return false;
+        }
     }
 
     clear() {

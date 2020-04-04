@@ -11,6 +11,7 @@ class XMIGenerator {
         this.prefixes = [];
         this.base = "";
         this.enumerations = [];
+        this.nodeKinds = [];
     }
 
     static createXMIHeader() {
@@ -100,6 +101,9 @@ class XMIGenerator {
             if(expr.valueExpr.values) {
                 return this.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min);
             }
+            if(expr.valueExpr.nodeKind) {
+                return this.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min);
+            }
             return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
@@ -142,6 +146,15 @@ class XMIGenerator {
 
 
 
+    }
+
+    createXMIKindAttribute(name, kind, min) {
+        let nkind = this.findNodeKind(kind);
+        let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+            + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
+            + card
+            + '\t</ownedAttribute>'
     }
 
     createXMIEnumAttribute(name, values, min) {
@@ -262,6 +275,31 @@ class XMIGenerator {
         return dt;
     }
 
+    findNodeKind(kind) {
+        for(let i = 0; i < this.nodeKinds.length; i++) {
+            if(kind === this.nodeKinds[i].name) {
+                return this.nodeKinds[i];
+            }
+        }
+
+        let nk = {id: uniqid(), name: kind};
+        this.nodeKinds.push((nk));
+        return nk;
+    }
+
+    adequateNodeKindPresentation(nk) {
+        switch(nk) {
+            case "literal":
+                return "Literal";
+            case "iri":
+                return "IRI";
+            case "bnode":
+                return "BNode";
+            case "nonliteral":
+                return "NonLiteral";
+        }
+    }
+
     saveEnum(enumer) {
         for(let i = 0; i < this.enumerations.length; i++) {
             if(enumer.name === this.enumerations[i].name
@@ -294,6 +332,11 @@ class XMIGenerator {
                     'name="' + this.datatypes[i].name + '">\n' +
                     '\n</packagedElement>';
         }
+        for(let i = 0; i < this.nodeKinds.length; i++) {
+            base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.nodeKinds[i].id + '" ' +
+                'name="' + this.adequateNodeKindPresentation(this.nodeKinds[i].name) + '">\n' +
+                '\n</packagedElement>';
+        }
         return base + '\n</uml:Model>'
     }
 
@@ -315,6 +358,7 @@ class XMIGenerator {
         this.prefixes = [];
         this.base = "";
         this.enumerations = [];
+        this.nodeKinds = [];
     }
 
 }

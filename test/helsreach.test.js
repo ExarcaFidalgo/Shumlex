@@ -41,6 +41,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI6()));
     });
 
+    test('Tipos de Nodo', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex7());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI7()));
+    });
+
 });
 
 describe('Pruebas de la transformación XMI-ShEx', () => {
@@ -79,6 +85,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI6());
         expect(shex)
             .toEqual(TestRep.getGenShex6());
+    });
+
+    test('Tipos de Nodo', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI7());
+        expect(shex)
+            .toEqual(TestRep.getGenShex7());
     });
 
 });

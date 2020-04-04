@@ -503,5 +503,79 @@ class TestRepository {
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8h56pow\" name=\"Any\"/>\n" +
             "</uml:Model>";
     }
+
+    static getShex7() {
+        return "prefix : <https://schema.org/>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:aa IRI;\n" +
+            "\t:b Literal ?;\n" +
+            "\t:c BNode;\n" +
+            "\t:d NonLiteral;\n" +
+            "\t:e iri;\n" +
+            "\t:f bnode;\n" +
+            "\t:g nonliteral;\n" +
+            "\t:h literal;\n" +
+            "}\n";
+    }
+
+    static getGenShex7() {
+        return "prefix : <https://schema.org/>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:aa IRI;\n" +
+            "\t:b Literal ?;\n" +
+            "\t:c BNode;\n" +
+            "\t:d NonLiteral;\n" +
+            "\t:e IRI;\n" +
+            "\t:f BNode;\n" +
+            "\t:g NonLiteral;\n" +
+            "\t:h Literal;\n" +
+            "}\n\n";
+    }
+
+    static getXMI7() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8lhqt0s\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8lhqt0w\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt0y\" name=\":aa\" visibility=\"public\" type=\"k8lhqt0x\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt11\" name=\":b\" visibility=\"public\" type=\"k8lhqt0z\" isUnique=\"true\">\n" +
+            "\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8lhqt10\"/>\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt13\" name=\":c\" visibility=\"public\" type=\"k8lhqt12\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt15\" name=\":d\" visibility=\"public\" type=\"k8lhqt14\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt16\" name=\":e\" visibility=\"public\" type=\"k8lhqt0x\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt17\" name=\":f\" visibility=\"public\" type=\"k8lhqt12\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt18\" name=\":g\" visibility=\"public\" type=\"k8lhqt14\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8lhqt19\" name=\":h\" visibility=\"public\" type=\"k8lhqt0z\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8lhqt0t\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8lhqt0u\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8lhqt0v\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8lhqt0x\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8lhqt0z\" name=\"Literal\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8lhqt12\" name=\"BNode\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8lhqt14\" name=\"NonLiteral\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

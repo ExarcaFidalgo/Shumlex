@@ -22,6 +22,8 @@ class ShExParser {
         return;
     }
 
+    console.log(this.source.shapes);
+
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
