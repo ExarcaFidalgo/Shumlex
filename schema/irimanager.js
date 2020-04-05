@@ -1,4 +1,4 @@
-class URIManager {
+class IRIManager {
 
     constructor () {
         this.prefixes = [];
@@ -46,4 +46,4 @@ class URIManager {
     }
 
 }
-module.exports = URIManager;
+module.exports = IRIManager;

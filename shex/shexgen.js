@@ -1,4 +1,4 @@
-const URIManager = require ("../schema/urimanager.js");
+const URIManager = require ("../schema/irimanager.js");
 
 class ShExGenerator {
 

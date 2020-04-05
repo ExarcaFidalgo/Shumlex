@@ -577,5 +577,76 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex8() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User IRI {\n" +
+            "  :name xsd:string\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser Literal AND {\n" +
+            "    a [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser @:User AND NonLiteral AND{\n" +
+            "}\n" +
+            "\n" +
+            "<Product> BNode\n" +
+            "\n" +
+            "<AThing> IRI\n";
+    }
+
+    static getXMI8() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8mx00cz\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8mx00d4\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8mx00d7\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8mx00d6\" name=\"nodeKind\" visibility=\"public\" type=\"k8mx00d5\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8mx00dq\" name=\":Ultrauser\">\n" +
+            "\t<generalization xmi:id=\"k8mx00dt\" general=\"k8mx00d4\"/>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8mx00ds\" name=\"nodeKind\" visibility=\"public\" type=\"k8mx00dr\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8mx00du\" name=\":Titanuser\">\n" +
+            "\t<generalization xmi:id=\"k8mx00dv\" general=\"k8mx00d4\"/>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8mx00dx\" name=\"nodeKind\" visibility=\"public\" type=\"k8mx00dw\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8mx00dy\" name=\"Product\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8mx00e0\" name=\"nodeKind\" visibility=\"public\" type=\"k8mx00dz\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8mx00e1\" name=\"AThing\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8mx00e2\" name=\"nodeKind\" visibility=\"public\" type=\"k8mx00d5\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8mx00d0\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8mx00d1\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8mx00d2\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8mx00d3\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8mx00d5\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8mx00dr\" name=\"Literal\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8mx00dw\" name=\"NonLiteral\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8mx00dz\" name=\"BNode\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

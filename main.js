@@ -118334,7 +118334,7 @@ function extend() {
 }
 
 },{}],533:[function(require,module,exports){
-class URIManager {
+class IRIManager {
 
     constructor () {
         this.prefixes = [];
@@ -118382,9 +118382,9 @@ class URIManager {
     }
 
 }
-module.exports = URIManager;
+module.exports = IRIManager;
 },{}],534:[function(require,module,exports){
-const URIManager = require ("../schema/urimanager.js");
+const URIManager = require ("../schema/irimanager.js");
 
 class ShExGenerator {
 
@@ -118610,7 +118610,7 @@ class ShExGenerator {
 
 }
 module.exports = new ShExGenerator();
-},{"../schema/urimanager.js":533}],535:[function(require,module,exports){
+},{"../schema/irimanager.js":533}],535:[function(require,module,exports){
 const shexp = require('shex').Parser;
 const XMIGenerator = require ("../xmi/xmigen.js");
 
@@ -118663,7 +118663,7 @@ class ShExParser {
 module.exports = new ShExParser();
 },{"../xmi/xmigen.js":536,"shex":421}],536:[function(require,module,exports){
 const uniqid = require("uniqid");
-const URIManager = require ("../schema/urimanager.js");
+const URIManager = require ("../schema/irimanager.js");
 
 class XMIGenerator {
 
@@ -118711,16 +118711,20 @@ class XMIGenerator {
     createXMIClass(name, shape) {
         let sh = this.findShape(name);
         let expression = shape.expression;
+        let nodekind = this.adequateNodeKindPresentation(shape.nodeKind);
         let generalizations = "";
         if(shape.type === "ShapeAnd") {
             expression = shape.shapeExprs.pop().expression;
             generalizations = this.createXMIGeneralization(shape.shapeExprs);
         }
+        let nk = nodekind === undefined ? "" : this.createXMIPrimAttribute("nodeKind", nodekind);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + this.getPrefixedTermOfUri(name)
             + '">' +
             this.createXMIAttributes(expression) +
+            nk +
             generalizations + '\n</packagedElement>';
+
         return classXMI + this.createDependentAssociations(sh.id);
     }
 
@@ -118728,8 +118732,15 @@ class XMIGenerator {
         let gens = "";
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
-                let sh = this.findShape(parents[parent].reference);
-                gens += "\n\t<generalization xmi:id=\"" + uniqid() + "\" general=\"" + sh.id + "\"/>"
+                if(parents[parent].type === "NodeConstraint"){
+                    gens += this.createXMIPrimAttribute("nodeKind",
+                        this.adequateNodeKindPresentation(parents[parent].nodeKind));
+                }
+               else {
+                    let sh = this.findShape(parents[parent].reference);
+                    gens += "\n\t<generalization xmi:id=\"" + uniqid() + "\" general=\"" + sh.id + "\"/>"
+                }
+
             }
         }
         return gens;
@@ -118828,7 +118839,7 @@ class XMIGenerator {
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card
-            + '</ownedAttribute>'
+            + '\t</ownedAttribute>'
 
     }
 
@@ -118961,6 +118972,8 @@ class XMIGenerator {
                 return "BNode";
             case "nonliteral":
                 return "NonLiteral";
+            default:
+                return undefined;
         }
     }
 
@@ -119027,7 +119040,7 @@ class XMIGenerator {
 
 }
 module.exports = XMIGenerator;
-},{"../schema/urimanager.js":533,"uniqid":480}],537:[function(require,module,exports){
+},{"../schema/irimanager.js":533,"uniqid":480}],537:[function(require,module,exports){
 const xmlparser = require('xml2js');
 const shexgen = require ("../shex/shexgen.js");
 
