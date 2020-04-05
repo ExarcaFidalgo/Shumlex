@@ -57,7 +57,8 @@ class ShExGenerator {
     }
 
     createShExClass(element) {
-        let content = "" + this.getShExTerm(element.$.name) + " {";
+        let header = "" + this.getShExTerm(element.$.name);
+        let content = " {";
 
         if(element.generalization) {
             content += this.createShExGeneralization(element.generalization);
@@ -70,12 +71,19 @@ class ShExGenerator {
         for(let i = 0; i < attributes.length; i++) {
             if(attributes[i].$.association) {
                 content += this.createShExAssociation(attributes[i])
-            } else {
+            }
+            else if(attributes[i].$.name.toLowerCase() === "nodekind") {
+                let kind = this.searchById(this.types, attributes[i].$.type);
+                kind = this.checkNodeKind(kind.name);
+                let ajustedKind = kind === "IRI" ? kind : kind + " AND";
+                header += " " + ajustedKind;
+            }
+            else{
                 content += this.createShExAttribute(attributes[i]);
             }
         }
 
-        return content + "\n}\n\n"
+        return header + content + "\n}\n\n"
     }
 
     createShExGeneralization(gen) {

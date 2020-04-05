@@ -293,7 +293,7 @@ class TestRepository {
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8h3m4fr\"/>\n" +
             "\t</ownedAttribute>\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8h3m4fu\" name=\":gender\" visibility=\"public\" type=\"k8h3m4ft\" isUnique=\"true\">\n" +
-            "</ownedAttribute>\n" +
+            "\t</ownedAttribute>\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8h3m4fw\" name=\":id\" visibility=\"public\" type=\"k8h3m4fv\" isUnique=\"false\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
@@ -597,6 +597,31 @@ class TestRepository {
             "<Product> BNode\n" +
             "\n" +
             "<AThing> IRI\n";
+    }
+
+    static getGenShex8() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User IRI {\n" +
+            "\t:name xsd:string;\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser Literal AND {\n" +
+            "\ta [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser NonLiteral AND {\n" +
+            "\ta [:User];\n" +
+            "}\n" +
+            "\n" +
+            "<Product> BNode AND {\n" +
+            "}\n" +
+            "\n" +
+            "<AThing> IRI {\n" +
+            "}\n" +
+            "\n";
     }
 
     static getXMI8() {
