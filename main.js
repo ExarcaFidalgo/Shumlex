@@ -118393,6 +118393,7 @@ class ShExGenerator {
         this.urim = new URIManager();
         this.types = [];
         this.enumerations = [];
+        this.constraints = new Map();
     }
 
     createShExHeader() {
@@ -118436,7 +118437,11 @@ class ShExGenerator {
         for(let i = 0; i < prefixes.length; i++) {
             this.urim.savePrefix(prefixes[i].$.name)
         }
-}
+    }
+
+    saveConstraint(cst) {
+        this.constraints.set(cst.$.constrainedElement, cst.$.name);
+    }
 
     searchById(list, id) {
         return list.find(value => value.id === id);
@@ -118460,8 +118465,6 @@ class ShExGenerator {
             }
             else if(attributes[i].$.name.toLowerCase() === "nodekind") {
                 let kind = this.searchById(this.types, attributes[i].$.type);
-                console.log(attributes[i].$.type);
-                console.log(kind);
                 kind = this.checkNodeKind(kind.name);
                 let ajustedKind = kind === "IRI" ? kind : kind + " AND";
                 header += " " + ajustedKind;
@@ -118485,6 +118488,8 @@ class ShExGenerator {
 
     createShExAttribute(attr) {
         let type = "Any";
+        let cst = this.constraints.get(attr.$["xmi:id"]);
+        let shcs = cst === undefined ? "" : (" " + cst);
         if(attr.type) {
             let href = attr.type[0].$.href.split("#");
             if(href[0] === "pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml") {
@@ -118502,8 +118507,8 @@ class ShExGenerator {
             type = this.searchById(this.types, attr.$.type);
             type = type.name
         }
-
-        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) +
+            shcs + this.cardinalityOf(attr) + ";";
     }
 
     createShExEnumeration(enumer) {
@@ -118616,6 +118621,7 @@ class ShExGenerator {
         this.urim = new URIManager();
         this.types = [];
         this.enumerations = [];
+        this.constraints = new Map();
     }
 
 }
@@ -118644,8 +118650,6 @@ class ShExParser {
         alert("Error al parsear ShEx:\n " + ex);
         return;
     }
-
-    console.log(this.source.shapes);
 
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
@@ -118686,6 +118690,7 @@ class XMIGenerator {
         this.base = "";
         this.enumerations = [];
         this.nodeKinds = [];
+        this.ownedRules = [];
     }
 
     static createXMIHeader() {
@@ -118735,7 +118740,10 @@ class XMIGenerator {
             nk +
             generalizations + '\n</packagedElement>';
 
-        return classXMI + this.createDependentAssociations(sh.id);
+        classXMI += this.createDependentOwnedRules();
+        classXMI += this.createDependentAssociations(sh.id);
+
+        return classXMI;
     }
 
     createXMIGeneralization(parents) {
@@ -118789,7 +118797,7 @@ class XMIGenerator {
             if(expr.valueExpr.nodeKind) {
                 return this.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min);
             }
-            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min);
+            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min, expr.valueExpr);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
@@ -118800,12 +118808,14 @@ class XMIGenerator {
         }
             }
 
-    createXMIPrimAttribute(name, type, min) {
+    createXMIPrimAttribute(name, type, min, valueExpr) {
         let xmiType = this.createXMIType(type);
         let card = min !== undefined ? XMIGenerator.getLower0Cardinality() : "";
+        let atId = uniqid();
+        this.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
             let tName = xmiType.name.split(":").pop();
-            return '\n\t<ownedAttribute xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+            return '\n\t<ownedAttribute xmi:id="' + atId + '" name="' + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" isUnique="false">\n' +
                 '\t\t<type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
                 + tName.substring(0, 1).toUpperCase() + tName.substring(1) + '">\n' + '\t\t</type>' +
@@ -118816,7 +118826,7 @@ class XMIGenerator {
             if(!this.anyTypeId) {
                 this.anyTypeId = uniqid();
             }
-            return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="'
+            return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
                 + this.getPrefixedTermOfUri(name)
                 + '" visibility="public" ' + 'type="'+ this.anyTypeId + '" isUnique="false">\n' +
                 card
@@ -118824,7 +118834,7 @@ class XMIGenerator {
         }
 
         let dtype = this.findDataType(xmiType.name, xmiType.uri);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + uniqid() + '" name="' + this.getPrefixedTermOfUri(name)
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="' + this.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
             + card
             + '\t</ownedAttribute>'
@@ -118910,6 +118920,15 @@ class XMIGenerator {
         }
         this.pendingAssociations = [];
         return assocs;
+    }
+
+    createDependentOwnedRules(){
+        let constraints = "";
+        for(let i = 0; i < this.ownedRules.length; i++) {
+            constraints += this.ownedRules[i];
+        }
+        this.ownedRules = [];
+        return constraints;
     }
 
     createXMIType(type) {
@@ -118999,6 +119018,42 @@ class XMIGenerator {
         this.enumerations.push((enumer));
     }
 
+    checkFacets(vex, id) {
+        if(!vex) {
+            return;
+        }
+        if(vex.mininclusive) {
+            this.ownedRules.push(this.createXMIOwnedRule("MinInclusive " + vex.mininclusive, id));
+        }
+        if(vex.minexclusive) {
+            this.ownedRules.push(this.createXMIOwnedRule("MinExclusive " + vex.minexclusive, id));
+        }
+        if(vex.totaldigits) {
+            this.ownedRules.push(this.createXMIOwnedRule("TotalDigits " + vex.totaldigits, id));
+        }
+        if(vex.fractiondigits) {
+            this.ownedRules.push(this.createXMIOwnedRule("FractionDigits " + vex.fractiondigits, id));
+        }
+        if(vex.length) {
+            this.ownedRules.push(this.createXMIOwnedRule("Length " + vex.length, id));
+        }
+        if(vex.minlength) {
+            this.ownedRules.push(this.createXMIOwnedRule("MinLength " + vex.minlength, id));
+        }
+        if(vex.maxlength) {
+            this.ownedRules.push(this.createXMIOwnedRule("MaxLength " + vex.maxlength, id));
+        }
+        if(vex.pattern) {
+            this.ownedRules.push(this.createXMIOwnedRule("/" + vex.pattern + "/", id));
+        }
+    }
+
+    createXMIOwnedRule(name, id) {
+        return "\n<ownedRule xmi:id=\"" + uniqid() + "\" name=\"" + name + "\" " +
+            "constrainedElement=\"" + id + "\">\n" +
+            "\n</ownedRule>"
+    }
+
     createXMIFooter() {
         let base = "";
         if(this.anyTypeId) {
@@ -119086,6 +119141,13 @@ class XMIParser {
                     shexgen.savePrefixes(packagedElements[i])
                 } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration") {
                     shexgen.saveEnum(packagedElements[i])
+                }
+            }
+
+            let ownedRules = this.source["uml:Model"]["ownedRule"];
+            if(ownedRules !== undefined) {
+                for (let i = 0; i < ownedRules.length; i++) {
+                    shexgen.saveConstraint(ownedRules[i]);
                 }
             }
 

@@ -36,6 +36,13 @@ class XMIParser {
                 }
             }
 
+            let ownedRules = this.source["uml:Model"]["ownedRule"];
+            if(ownedRules !== undefined) {
+                for (let i = 0; i < ownedRules.length; i++) {
+                    shexgen.saveConstraint(ownedRules[i]);
+                }
+            }
+
             for (let i = 0; i < packagedElements.length; i++) {
                 if (packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
                     shExEquivalent += shexgen.createShExClass(packagedElements[i])

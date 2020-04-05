@@ -7,6 +7,7 @@ class ShExGenerator {
         this.urim = new URIManager();
         this.types = [];
         this.enumerations = [];
+        this.constraints = new Map();
     }
 
     createShExHeader() {
@@ -50,7 +51,11 @@ class ShExGenerator {
         for(let i = 0; i < prefixes.length; i++) {
             this.urim.savePrefix(prefixes[i].$.name)
         }
-}
+    }
+
+    saveConstraint(cst) {
+        this.constraints.set(cst.$.constrainedElement, cst.$.name);
+    }
 
     searchById(list, id) {
         return list.find(value => value.id === id);
@@ -97,6 +102,8 @@ class ShExGenerator {
 
     createShExAttribute(attr) {
         let type = "Any";
+        let cst = this.constraints.get(attr.$["xmi:id"]);
+        let shcs = cst === undefined ? "" : (" " + cst);
         if(attr.type) {
             let href = attr.type[0].$.href.split("#");
             if(href[0] === "pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml") {
@@ -114,8 +121,8 @@ class ShExGenerator {
             type = this.searchById(this.types, attr.$.type);
             type = type.name
         }
-
-        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) + this.cardinalityOf(attr) + ";";
+        return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) +
+            shcs + this.cardinalityOf(attr) + ";";
     }
 
     createShExEnumeration(enumer) {
@@ -228,6 +235,7 @@ class ShExGenerator {
         this.urim = new URIManager();
         this.types = [];
         this.enumerations = [];
+        this.constraints = new Map();
     }
 
 }
