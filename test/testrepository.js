@@ -273,7 +273,7 @@ class TestRepository {
             ":User {\n" +
             "\t:name xsd:string;\n" +
             "\t:age xsd:int ?;\n" +
-            "\t:gender [:Male :Female ];\n" +
+            "\t:gender [:Male :Female \"Wo\" 99 \"+34\"~ ];\n" +
             "\t:id .;\n" +
             "}\n" +
             "\n";
@@ -309,6 +309,13 @@ class TestRepository {
             "\t<ownedLiteral xmi:id=\"k8h3m4fx\" name=\":Male\"/>\n" +
             "\n" +
             "\t<ownedLiteral xmi:id=\"k8h3m4fy\" name=\":Female\"/>\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8odaidz\" name=\"&quot;Wo&quot;\"/>\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8odaie0\" name=\"99\"/>\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8odaie1\" name=\"&quot;+34&quot;~\"/>" +
+            "\n" +
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";

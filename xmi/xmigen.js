@@ -376,20 +376,42 @@ class XMIGenerator {
             "\n</ownedRule>"
     }
 
+    createXMIEnumeration(enm) {
+        let base = '\n<packagedElement xmi:type="uml:Enumeration" xmi:id="' + enm.id + '" ' +
+            'name="' + this.getPrefixedTermOfUri(enm.name) + '">\n';
+        for(let j = 0; j < enm.values.length; j++) {
+            console.log(enm.values[j]);
+            let value = "";
+            if(enm.values[j].value !== undefined) {
+                if(enm.values[j].type === undefined) {
+                    value = "&quot;" + enm.values[j].value + "&quot;";
+                }
+                else {
+                    value = enm.values[j].value;
+                }
+
+            }
+            else if(enm.values[j].type === "LiteralStem") {
+                value = "&quot;" + enm.values[j].stem + "&quot;" + "~";
+            }
+            else {
+                value = this.getPrefixedTermOfUri(enm.values[j]);
+            }
+            base += "\n\t<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\""
+                + value + "\"/>\n";
+        }
+
+        base += '\n</packagedElement>';
+        return base;
+    }
+
     createXMIFooter() {
         let base = "";
         if(this.anyTypeId) {
             base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>';
         }
         for(let i = 0; i < this.enumerations.length; i++) {
-            base += '\n<packagedElement xmi:type="uml:Enumeration" xmi:id="' + this.enumerations[i].id + '" ' +
-                'name="' + this.getPrefixedTermOfUri(this.enumerations[i].name) + '">\n';
-                for(let j = 0; j < this.enumerations[i].values.length; j++) {
-                    base += "\n\t<ownedLiteral xmi:id=\"" + uniqid() + "\" name=\""
-                        + this.getPrefixedTermOfUri(this.enumerations[i].values[j]) + "\"/>\n";
-                }
-
-                base += '\n</packagedElement>';
+            base += this.createXMIEnumeration(this.enumerations[i]);
         }
         for(let i = 0; i < this.datatypes.length; i++) {
                 base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
