@@ -639,9 +639,7 @@ class TestRepository {
             "<Product> BNode AND {\n" +
             "}\n" +
             "\n" +
-            "<AThing> IRI {\n" +
-            "}\n" +
-            "\n";
+            "<AThing> IRI\n\n";
     }
 
     static getXMI8() {
@@ -875,6 +873,57 @@ class TestRepository {
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8opvk4r\" name=\":price\">\n" +
             "\n" +
             "\t<ownedLiteral xmi:id=\"k8opvk4y\" name=\". - 66 \"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
+
+    static getShex12() {
+        return "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "prefix : <http://schema.org/>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":HomePage IRI\n" +
+            "\n" +
+            ":CanVoteAge xsd:integer MinInclusive 18 TotalDigits 3\n" +
+            "\n" +
+            ":Special :custom\n" +
+            "\n";
+    }
+
+    static getXMI12() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8orwyht\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi0\" name=\":HomePage\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8orwyi1\" name=\"nodeKind\" visibility=\"public\" type=\"k8orwyi2\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi3\" name=\":CanVoteAge\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8orwyi4\" name=\"datatype\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k8orwyi5\" name=\"MinInclusive 18\" constrainedElement=\"k8orwyi3\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<ownedRule xmi:id=\"k8orwyi6\" name=\"TotalDigits 3\" constrainedElement=\"k8orwyi3\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi7\" name=\":Special\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8orwyi8\" name=\"datatype\" visibility=\"public\" type=\"k8orwyi9\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8orwyhw\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8orwyhx\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8orwyhy\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8orwyhz\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi2\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi9\" name=\":custom\">\n" +
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";

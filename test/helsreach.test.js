@@ -47,7 +47,7 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI7()));
     });
 
-    test('Restricción de tipo nodal como forma de máximo nivel', () => {
+    test('Restricción de tipo nodal como forma de máximo nivel II', () => {
         let xml = shexparser.parseShEx(TestRep.getShex8());
         expect(TestRep.removeUniqueIDs(xml))
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI8()));
@@ -69,6 +69,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
         let xml = shexparser.parseShEx(TestRep.getShex11());
         expect(TestRep.removeUniqueIDs(xml))
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI11()));
+    });
+
+    test('Restricciones nodales como formas de máximo nivel', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex12());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI12()));
     });
 
 });
@@ -139,6 +145,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI11());
         expect(shex)
             .toEqual(TestRep.getShex11());
+    });
+
+    test('Restricciones nodales como formas de máximo nivel II', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI12());
+        expect(shex)
+            .toEqual(TestRep.getShex12());
     });
 
 });

@@ -55,11 +55,14 @@ class XMIGenerator {
             generalizations = this.createXMIGeneralization(shape.shapeExprs);
         }
         let nk = nodekind === undefined ? "" : this.createXMIPrimAttribute("nodeKind", nodekind);
+        let dt = shape.datatype === undefined ? "" : this.createXMIPrimAttribute("datatype",
+            shape.datatype);
+        this.checkFacets(shape, sh.id);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + this.getPrefixedTermOfUri(name)
             + '">' +
             this.createXMIAttributes(expression) +
-            nk +
+            nk + dt +
             generalizations + '\n</packagedElement>';
 
         classXMI += this.createDependentOwnedRules();

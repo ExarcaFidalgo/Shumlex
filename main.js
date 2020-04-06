@@ -118440,7 +118440,14 @@ class ShExGenerator {
     }
 
     saveConstraint(cst) {
-        this.constraints.set(cst.$.constrainedElement, cst.$.name);
+        if(this.constraints.get(cst.$.constrainedElement) === undefined) {
+            this.constraints.set(cst.$.constrainedElement, cst.$.name);
+        }
+        else {
+            this.constraints.set(cst.$.constrainedElement, this.constraints.get(cst.$.constrainedElement) + " "
+                +cst.$.name);
+        }
+
     }
 
     searchById(list, id) {
@@ -118449,32 +118456,53 @@ class ShExGenerator {
 
     createShExClass(element) {
         let header = "" + this.getShExTerm(element.$.name);
-        let content = " {";
+        let content = "";
+        let brackets = false;
 
         if(element.generalization) {
+            brackets = true;
             content += this.createShExGeneralization(element.generalization);
         }
 
         let attributes = element.ownedAttribute;
         if(!attributes) {
+            brackets = true;
             attributes = [];
         }
         for(let i = 0; i < attributes.length; i++) {
             if(attributes[i].$.association) {
-                content += this.createShExAssociation(attributes[i])
+                brackets = true;
+                content += this.createShExAssociation(attributes[i]);
             }
             else if(attributes[i].$.name.toLowerCase() === "nodekind") {
                 let kind = this.searchById(this.types, attributes[i].$.type);
                 kind = this.checkNodeKind(kind.name);
-                let ajustedKind = kind === "IRI" ? kind : kind + " AND";
+                let ajustedKind = kind + " AND";
+                if(kind === "IRI") {
+                    brackets = brackets || false;
+                    ajustedKind = kind;
+                } else {
+                    brackets = true;
+                }
                 header += " " + ajustedKind;
             }
-            else{
+            else if(attributes[i].$.name.toLowerCase() === "datatype") {
+                let dt = this.getAttrType(attributes[i]);
+                header += " " + dt;
+                brackets = false;
+            }
+            else {
+                brackets = true;
                 content += this.createShExAttribute(attributes[i]);
             }
         }
-
-        return header + content + "\n}\n\n"
+        header += this.getConstraints(element.$["xmi:id"]);
+        if(brackets) {
+            return header + " {" + content + "\n}\n\n"
+        }
+        else {
+            return header + content + "\n\n"
+        }
     }
 
     createShExGeneralization(gen) {
@@ -118486,16 +118514,13 @@ class ShExGenerator {
         return generalizations;
     }
 
-    createShExAttribute(attr) {
-        let type = "Any";
-        let cst = this.constraints.get(attr.$["xmi:id"]);
-        let shcs = cst === undefined ? "" : (" " + cst);
+    getAttrType(attr) {
         if(attr.type) {
             let href = attr.type[0].$.href.split("#");
             if(href[0] === "pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml") {
-                type = this.urim.findXSDPrefix() + href[1].substring(0,1).toLowerCase() + href[1].substring(1);
+                return this.urim.findXSDPrefix() + href[1].substring(0,1).toLowerCase() + href[1].substring(1);
             } else {
-                type = href.pop();
+                return href.pop();
             }
 
         }
@@ -118504,19 +118529,30 @@ class ShExGenerator {
             if(enumer) {
                 return this.createShExEnumeration(enumer);
             }
-            type = this.searchById(this.types, attr.$.type);
-            type = type.name
+            let type = this.searchById(this.types, attr.$.type);
+            return type.name;
         }
+        return "Any";
+    }
+
+    getConstraints(id) {
+        let cst = this.constraints.get(id);
+        let shcs = cst === undefined ? "" : (" " + cst);
+        return shcs;
+    }
+
+    createShExAttribute(attr) {
+        let type = this.getAttrType(attr);
         return "\n\t" + this.getShExTerm(attr.$.name) + this.createShExType(type) +
-            shcs + this.cardinalityOf(attr) + ";";
+            this.getConstraints(attr.$["xmi:id"]) + this.cardinalityOf(attr) + ";";
     }
 
     createShExEnumeration(enumer) {
-        let base = "\n\t" + this.getShExTerm(enumer.name) + " [";
+        let base = "[";
         for(let i = 0; i < enumer.values.length; i++) {
             base += this.getShExTerm(enumer.values[i].$.name) + " ";
         }
-        return base + "];";
+        return base + "]";
     }
 
     createShExAssociation(attr) {
@@ -118654,6 +118690,8 @@ class ShExParser {
 
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
+    console.log(this.source.shapes);
+
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
     for (let shape in this.source.shapes){
       if(this.source.shapes.hasOwnProperty(shape)) {
@@ -118734,11 +118772,14 @@ class XMIGenerator {
             generalizations = this.createXMIGeneralization(shape.shapeExprs);
         }
         let nk = nodekind === undefined ? "" : this.createXMIPrimAttribute("nodeKind", nodekind);
+        let dt = shape.datatype === undefined ? "" : this.createXMIPrimAttribute("datatype",
+            shape.datatype);
+        this.checkFacets(shape, sh.id);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + this.getPrefixedTermOfUri(name)
             + '">' +
             this.createXMIAttributes(expression) +
-            nk +
+            nk + dt +
             generalizations + '\n</packagedElement>';
 
         classXMI += this.createDependentOwnedRules();

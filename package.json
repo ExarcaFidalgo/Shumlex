@@ -1,6 +1,6 @@
 {
   "name": "Helsreach",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "ShEx - Uml integration",
   "main": "main.js",
   "scripts": {
