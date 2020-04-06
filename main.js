@@ -118591,7 +118591,8 @@ class ShExGenerator {
         if(!term) {
             throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
         }
-        if(term.includes(":") || term.includes("\"") || term.includes("~") || !isNaN(term)) {
+        if(term.includes(":") || term.includes("\"") || term.includes("~") ||
+            term.includes(" ") || !isNaN(term)) {
             return term;
         }
         let nk = this.checkNodeKind(term);
@@ -119076,7 +119077,13 @@ class XMIGenerator {
                 value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~";
             }
             else if(enm.values[j].type === "IriStemRange") {
-                value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                if(enm.values[j].stem.type === "Wildcard") {
+                    value = ". "
+                }
+                else {
+                    value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                }
+
                 for(let k = 0; k < enm.values[j].exclusions.length; k++) {
                     let excl = enm.values[j].exclusions[k];
                     if(excl.type === "IriStem") {
@@ -119088,7 +119095,12 @@ class XMIGenerator {
                 }
             }
             else if(enm.values[j].type === "LiteralStemRange") {
-                value =  this.checkLiteralStem(enm.values[j].stem) + "~ ";
+                if(enm.values[j].stem.type === "Wildcard") {
+                    value = ". "
+                }
+                else {
+                    value = this.checkLiteralStem(enm.values[j].stem) + "~ ";
+                }
                 for(let k = 0; k < enm.values[j].exclusions.length; k++) {
                     let excl = enm.values[j].exclusions[k];
                     if(excl.type === "LiteralStem") {

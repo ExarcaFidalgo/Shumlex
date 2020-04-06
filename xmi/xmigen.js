@@ -398,7 +398,13 @@ class XMIGenerator {
                 value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~";
             }
             else if(enm.values[j].type === "IriStemRange") {
-                value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                if(enm.values[j].stem.type === "Wildcard") {
+                    value = ". "
+                }
+                else {
+                    value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                }
+
                 for(let k = 0; k < enm.values[j].exclusions.length; k++) {
                     let excl = enm.values[j].exclusions[k];
                     if(excl.type === "IriStem") {
@@ -410,7 +416,12 @@ class XMIGenerator {
                 }
             }
             else if(enm.values[j].type === "LiteralStemRange") {
-                value =  this.checkLiteralStem(enm.values[j].stem) + "~ ";
+                if(enm.values[j].stem.type === "Wildcard") {
+                    value = ". "
+                }
+                else {
+                    value = this.checkLiteralStem(enm.values[j].stem) + "~ ";
+                }
                 for(let k = 0; k < enm.values[j].exclusions.length; k++) {
                     let excl = enm.values[j].exclusions[k];
                     if(excl.type === "LiteralStem") {

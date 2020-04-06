@@ -65,6 +65,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI10()));
     });
 
+    test('Conjuntos genéricos con exclusiones', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex11());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI11()));
+    });
+
 });
 
 describe('Pruebas de la transformación XMI-ShEx', () => {
@@ -127,6 +133,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI10());
         expect(shex)
             .toEqual(TestRep.getShex10());
+    });
+
+    test('Conjuntos genéricos con exclusiones', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI11());
+        expect(shex)
+            .toEqual(TestRep.getShex11());
     });
 
 });

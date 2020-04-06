@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/helsreach.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/helsreach.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/testrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testrepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmi/xmigen.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/xmigen.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -27,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/testrepository.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="777" column="16" selection-start-line="777" selection-start-column="16" selection-end-line="785" selection-end-column="17" />
+            <state relative-caret-position="1017">
+              <caret line="831" column="25" selection-start-line="831" selection-start-column="25" selection-end-line="831" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -39,8 +37,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="440" column="44" selection-start-line="440" selection-start-column="44" selection-end-line="440" selection-end-column="44" />
+            <state relative-caret-position="-802">
+              <caret line="423" column="17" selection-start-line="423" selection-start-column="17" selection-end-line="423" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="142">
+              <caret line="207" column="72" lean-forward="true" selection-start-line="207" selection-start-column="72" selection-end-line="207" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -126,9 +133,9 @@
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/xmi/xmiparser.js" />
         <option value="$PROJECT_DIR$/shex/shexparser.js" />
+        <option value="$PROJECT_DIR$/test/helsreach.test.js" />
         <option value="$PROJECT_DIR$/shex/shexgen.js" />
         <option value="$PROJECT_DIR$/test/testrepository.js" />
-        <option value="$PROJECT_DIR$/test/helsreach.test.js" />
         <option value="$PROJECT_DIR$/xmi/xmigen.js" />
       </list>
     </option>
@@ -279,12 +286,12 @@
       <workItem from="1586076991899" duration="7895000" />
       <workItem from="1586100953782" duration="7838000" />
       <workItem from="1586166752808" duration="5002000" />
-      <workItem from="1586186531266" duration="4264000" />
+      <workItem from="1586186531266" duration="5362000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162891000" />
+    <option name="totallyTimeSpent" value="163989000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -455,13 +462,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3519">
-          <caret line="207" column="50" selection-start-line="207" selection-start-column="50" selection-end-line="207" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xmi/xmiparser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -483,17 +483,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
+    <entry file="file://$PROJECT_DIR$/test/testrepository.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="440" column="44" selection-start-line="440" selection-start-column="44" selection-end-line="440" selection-end-column="44" />
+        <state relative-caret-position="1017">
+          <caret line="831" column="25" selection-start-line="831" selection-start-column="25" selection-end-line="831" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/testrepository.js">
+    <entry file="file://$PROJECT_DIR$/xmi/xmigen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="777" column="16" selection-start-line="777" selection-start-column="16" selection-end-line="785" selection-end-column="17" />
+        <state relative-caret-position="-802">
+          <caret line="423" column="17" selection-start-line="423" selection-start-column="17" selection-end-line="423" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="207" column="72" lean-forward="true" selection-start-line="207" selection-start-column="72" selection-end-line="207" selection-end-column="72" />
         </state>
       </provider>
     </entry>
