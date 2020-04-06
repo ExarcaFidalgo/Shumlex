@@ -275,6 +275,9 @@ class TestRepository {
             "\t:age xsd:int ?;\n" +
             "\t:gender [:Male :Female \"Wo\" 99 \"+34\"~ ];\n" +
             "\t:id .;\n" +
+            "}\n\n" +
+            ":Spanish {\n" +
+            "\t:country [:Spain ];\n" +
             "}\n" +
             "\n";
     }
@@ -298,6 +301,10 @@ class TestRepository {
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8h3m4fw\" name=\":id\" visibility=\"public\" type=\"k8h3m4fv\" isUnique=\"false\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8omjpqh\" name=\":Spanish\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8omjpqj\" name=\":country\" visibility=\"public\" type=\"k8omjpqi\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8h3m4fl\" name=\"Prefixes\">\n" +
             "\t<ownedLiteral xmi:id=\"k8h3m4fm\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8h3m4fn\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
@@ -316,6 +323,11 @@ class TestRepository {
             "\n" +
             "\t<ownedLiteral xmi:id=\"k8odaie1\" name=\"&quot;+34&quot;~\"/>" +
             "\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8omjpqi\" name=\":country\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8omjpqk\" name=\":Spain\"/>\n" +
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
