@@ -205,7 +205,7 @@ class ShExGenerator {
         if(!term) {
             throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
         }
-        if(term.includes(":") || term.includes("\"") || !isNaN(term)) {
+        if(term.includes(":") || term.includes("\"") || term.includes("~") || !isNaN(term)) {
             return term;
         }
         let nk = this.checkNodeKind(term);

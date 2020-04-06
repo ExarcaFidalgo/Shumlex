@@ -118591,7 +118591,7 @@ class ShExGenerator {
         if(!term) {
             throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
         }
-        if(term.includes(":") || term.includes("\"") || !isNaN(term)) {
+        if(term.includes(":") || term.includes("\"") || term.includes("~") || !isNaN(term)) {
             return term;
         }
         let nk = this.checkNodeKind(term);
@@ -119072,6 +119072,33 @@ class XMIGenerator {
             else if(enm.values[j].type === "LiteralStem") {
                 value = "&quot;" + enm.values[j].stem + "&quot;" + "~";
             }
+            else if(enm.values[j].type === "IriStem") {
+                value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~";
+            }
+            else if(enm.values[j].type === "IriStemRange") {
+                value =  this.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
+                    let excl = enm.values[j].exclusions[k];
+                    if(excl.type === "IriStem") {
+                        value += "- " + this.getPrefixedTermOfUri(excl.stem) + "~ ";
+                    }
+                    else {
+                        value += "- " + this.getPrefixedTermOfUri(excl) + " ";
+                    }
+                }
+            }
+            else if(enm.values[j].type === "LiteralStemRange") {
+                value =  this.checkLiteralStem(enm.values[j].stem) + "~ ";
+                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
+                    let excl = enm.values[j].exclusions[k];
+                    if(excl.type === "LiteralStem") {
+                        value += "- " + this.checkLiteralStem(excl.stem) + "~ ";
+                    }
+                    else {
+                        value += "- " + this.checkLiteralStem(excl) + " ";
+                    }
+                }
+            }
             else {
                 value = this.getPrefixedTermOfUri(enm.values[j]);
             }
@@ -119081,6 +119108,16 @@ class XMIGenerator {
 
         base += '\n</packagedElement>';
         return base;
+    }
+
+    checkLiteralStem(txt) {
+        if(/^([0-9]+(\.[0-9]+)?)$/.test(txt)) {
+            return txt;
+
+        }
+        else {
+            return "&quot;" + txt+ "&quot;";
+        }
     }
 
     createXMIFooter() {
