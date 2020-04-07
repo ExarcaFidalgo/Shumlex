@@ -928,5 +928,76 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex13() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":FrenchProduct {\n" +
+            "\t:label [@fr  ];\n" +
+            "}\n" +
+            "\n" +
+            ":EnglishProduct {\n" +
+            "\t:label [@en~  ];\n" +
+            "}\n" +
+            "\n" +
+            ":SpanishProduct {\n" +
+            "\t:label [@es~ - @es-AR - @es-ES  ];\n" +
+            "}\n" +
+            "\n" +
+            ":AnyProduct {\n" +
+            "\t:label [. - @kz  ];\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI13() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8pszqku\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8pszql2\" name=\":FrenchProduct\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8pszql4\" name=\":label\" visibility=\"public\" type=\"k8pszql3\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8pszql5\" name=\":EnglishProduct\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8pszql7\" name=\":label\" visibility=\"public\" type=\"k8pszql6\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8pszql8\" name=\":SpanishProduct\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8pszqla\" name=\":label\" visibility=\"public\" type=\"k8pszql9\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8pszqlb\" name=\":AnyProduct\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8pszqld\" name=\":label\" visibility=\"public\" type=\"k8pszqlc\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszqky\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszqkz\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszql0\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszql1\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql3\" name=\":label\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszqle\" name=\"@fr \"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql6\" name=\":label\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszqlf\" name=\"@en~ \"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql9\" name=\":label\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszqlg\" name=\"@es~ - @es-AR - @es-ES \"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszqlc\" name=\":label\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k8pszqlh\" name=\". - @kz \"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

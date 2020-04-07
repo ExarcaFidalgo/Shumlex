@@ -119050,10 +119050,11 @@ class XMIGenerator {
 
     saveEnum(enumer) {
         for(let i = 0; i < this.enumerations.length; i++) {
+            const self = this;
             if(enumer.name === this.enumerations[i].name
                 && enumer.values.length === this.enumerations[i].values.length
                 && enumer.values.sort().every(function(value, index) {
-                    return value === this.enumerations[i].values.sort()[index]})) {
+                    return value === self.enumerations[i].values.sort()[index]})) {
                 return this.enumerations[i];
             }
         }
@@ -119149,6 +119150,29 @@ class XMIGenerator {
                     }
                     else {
                         value += "- " + this.checkLiteralStem(excl) + " ";
+                    }
+                }
+            }
+            else if(enm.values[j].type === "Language") {
+                value = "@" + enm.values[j].languageTag + " ";
+            }
+            else if(enm.values[j].type === "LanguageStem") {
+                value = "@" + enm.values[j].stem + "~ ";
+            }
+            else if(enm.values[j].type === "LanguageStemRange") {
+                if(enm.values[j].stem.type === "Wildcard") {
+                    value = ". "
+                }
+                else {
+                    value = "@" + enm.values[j].stem + "~ ";
+                }
+                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
+                    let excl = enm.values[j].exclusions[k];
+                    if(excl.type === "LanguageStem") {
+                        value += "- @" +excl.stem + "~ ";
+                    }
+                    else {
+                        value += "- @" + excl + " ";
                     }
                 }
             }
