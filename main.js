@@ -118730,6 +118730,8 @@ class XMIGenerator {
         this.enumerations = [];
         this.nodeKinds = [];
         this.ownedRules = [];
+        this.subClassesCounter = new Map();
+        this.subClasses = [];
     }
 
     static createXMIHeader() {
@@ -118775,16 +118777,34 @@ class XMIGenerator {
         let dt = shape.datatype === undefined ? "" : this.createXMIPrimAttribute("datatype",
             shape.datatype);
         this.checkFacets(shape, sh.id);
+        let prName = this.getPrefixedTermOfUri(name);
+        console.log(prName);
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
-            + this.getPrefixedTermOfUri(name)
+            + prName
             + '">' +
-            this.createXMIAttributes(expression) +
+            this.createXMIAttributes(expression, prName) +
             nk + dt +
             generalizations + '\n</packagedElement>';
 
         classXMI += this.createDependentOwnedRules();
         classXMI += this.createDependentAssociations(sh.id);
+        classXMI += this.createDependentSubClasses();
 
+        return classXMI;
+    }
+
+    createDependentSubClasses() {
+        let classXMI = "";
+        for(let i = 0; i < this.subClasses.length; i++) {
+            let shape = this.findShape(this.subClasses[i].name);
+            console.log(this.subClasses[i]);
+            classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + shape.id + '" name="'
+                + this.subClasses[i].name
+                + '">' +
+                this.createXMIAttributes(this.subClasses[i].expr, shape.name) + '\n</packagedElement>';
+        }
+        this.subClasses = [];
+        console.log(classXMI);
         return classXMI;
     }
 
@@ -118806,7 +118826,7 @@ class XMIGenerator {
         return gens;
     }
 
-    createXMIAttributes(expr) {
+    createXMIAttributes(expr, className) {
         let attrs = "";
         if(!expr) {
             return attrs;
@@ -118815,11 +118835,23 @@ class XMIGenerator {
             attrs = this.determineTypeOfExpression(expr);
         }
         else if (expr.type === "EachOf") {
-            for(let attr in expr.expressions) {
-                if(expr.expressions.hasOwnProperty(attr)) {
-                    attrs += this.determineTypeOfExpression(expr.expressions[attr]);
+            console.log(expr);
+            if(expr.min !== undefined || expr.max !== undefined) {
+                let subClassName = this.getSubClassNumber(className);
+                attrs = this.createXMIAsocAttribute(subClassName, subClassName, expr.min, expr.max);
+                let subClass = {name: subClassName, expr: expr};
+                subClass.expr.min = undefined;
+                subClass.expr.max = undefined;
+                this.subClasses.push(subClass);
+            }
+            else {
+                for(let attr in expr.expressions) {
+                    if(expr.expressions.hasOwnProperty(attr)) {
+                        attrs += this.createXMIAttributes(expr.expressions[attr], className);
+                    }
                 }
             }
+
         }
         return attrs;
     }
@@ -119061,6 +119093,18 @@ class XMIGenerator {
         this.enumerations.push((enumer));
     }
 
+    getSubClassNumber(className) {
+        if(this.subClassesCounter.get(className) === undefined) {
+            this.subClassesCounter.set(className, 1);
+            return className + "_" + 1;
+        }
+        else {
+            let sub = this.subClassesCounter.get(className) + 1;
+            this.subClassesCounter.set(className, sub);
+            return className + "_" + sub;
+        }
+    }
+
     checkFacets(vex, id) {
         if(!vex) {
             return;
@@ -119237,6 +119281,9 @@ class XMIGenerator {
         this.base = "";
         this.enumerations = [];
         this.nodeKinds = [];
+        this.ownedRules = [];
+        this.subClassesCounter = new Map();
+        this.subClasses = [];
     }
 
 }
