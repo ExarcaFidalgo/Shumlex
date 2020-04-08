@@ -1,5 +1,5 @@
 const shexp = require('shex').Parser;
-const XMIGenerator = require ("../xmi/xmigen.js");
+const XMIGenerator = require ("../xmi/XMIGenerator.js");
 
 class ShExParser {
 
@@ -24,7 +24,7 @@ class ShExParser {
 
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
-    console.log(this.source.shapes);
+    //console.log(this.source.shapes);
 
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
     for (let shape in this.source.shapes){
