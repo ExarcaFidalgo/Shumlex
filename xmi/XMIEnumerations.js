@@ -44,7 +44,6 @@ class XMIEnumerations {
         let base = '\n<packagedElement xmi:type="uml:Enumeration" xmi:id="' + enm.id + '" ' +
             'name="' + this.xmipref.getPrefixedTermOfUri(enm.name) + '">\n';
         for(let j = 0; j < enm.values.length; j++) {
-            console.log(enm.values[j]);
             let value = "";
             if(enm.values[j].value !== undefined) {
                 if(enm.values[j].type === undefined) {

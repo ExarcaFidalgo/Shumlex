@@ -1,4 +1,4 @@
-const shexparser = require('../shex/shexparser.js');
+const shexparser = require('../shex/ShExParser.js');
 const xmiparser = require('../xmi/XMIParser.js');
 const TestRep = require('./testrepository.js');
 

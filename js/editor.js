@@ -1,6 +1,6 @@
 const $ = require('./jquery-3.4.1.min.js');
 
-const shexparser = require('../shex/shexparser.js');
+const shexparser = require('../shex/ShExParser.js');
 const xmiparser = require('../xmi/XMIParser.js');
 
 $('#shextoxmi').click(shExToXMI);
