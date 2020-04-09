@@ -24,9 +24,10 @@ class XMIGenerator {
         this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
 
         this.xmitype = new XMITypes(uniqid, this.xmipref);
+        this.xmisub = new XMISubclasses(this.shm, null);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,
             this.xmipref, this.xmicon, this.shm, XMITypes, this.xmicard);
-        this.xmisub = new XMISubclasses(this.shm, this.xmiats);
+        this.xmisub.xmiats = this.xmiats;
         this.xmicl = new XMIClass(this.shm, XMITypes, this.xmipref, this.xmiats, this.xmicon, this.xmiasoc,
             this.xmisub);
 

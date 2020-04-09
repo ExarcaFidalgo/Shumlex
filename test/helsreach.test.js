@@ -83,6 +83,13 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI13()));
     });
 
+    test('Cardinalidades aplicadas a conjuntos', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex14());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI14()));
+    });
+
+
 });
 
 describe('Pruebas de la transformación XMI-ShEx', () => {
@@ -163,6 +170,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI13());
         expect(shex)
             .toEqual(TestRep.getShex13());
+    });
+
+    test('Cardinalidades aplicadas a conjuntos', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI14());
+        expect(shex)
+            .toEqual(TestRep.getShex14());
     });
 
 });

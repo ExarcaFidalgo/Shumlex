@@ -999,5 +999,143 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex14() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "( \n" +
+            "\t:givenName xsd:string;\n" +
+            "\t:familyName xsd:string; ) ? ;\n" +
+            "( \n" +
+            "\t:has @<Something> {2,};\n" +
+            "\t:c xsd:string; ) * ;\n" +
+            "\t:owns @:Garage;\n" +
+            "}\n" +
+            "\n" +
+            ":Garage {\n" +
+            "( \n" +
+            "\t<AE86> xsd:string;\n" +
+            "( \n" +
+            "\t<Levin> xsd:string;\n" +
+            "\t<Cilinders> xsd:int; ) ? ;\n" +
+            "( \n" +
+            "\t<Trueno> xsd:string;\n" +
+            "\t<Cilinders> xsd:int; ) ? ; ) + ;\n" +
+            "}\n" +
+            "\n" +
+            "<Something> {\n" +
+            "}\n\n";
+    }
+
+    static getXMI14() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8t0ym5p\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym5u\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym5v\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym5w\" name=\":User_1\" visibility=\"public\" type=\"k8t0ym5x\" association=\"k8t0ym5y\">\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8t0ym5z\"/></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym60\" name=\":User_2\" visibility=\"public\" type=\"k8t0ym61\" association=\"k8t0ym62\">\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8t0ym63\"/>\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8t0ym64\" value=\"*\"/></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym65\" name=\":owns\" visibility=\"public\" type=\"k8t0ym66\" association=\"k8t0ym67\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym5y\" memberEnd=\"k8t0ym5w k8t0ym68\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym68\" visibility=\"public\" type=\"k8t0ym5u\" association=\"k8t0ym5y\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym62\" memberEnd=\"k8t0ym60 k8t0ym69\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym69\" visibility=\"public\" type=\"k8t0ym5u\" association=\"k8t0ym62\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym67\" memberEnd=\"k8t0ym65 k8t0ym6a\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym6a\" visibility=\"public\" type=\"k8t0ym5u\" association=\"k8t0ym67\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym5x\" name=\":User_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6b\" name=\":givenName\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6c\" name=\":familyName\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym61\" name=\":User_2\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6d\" name=\":has\" visibility=\"public\" type=\"k8t0ym6e\" association=\"k8t0ym6f\">\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8t0ym6g\" value=\"2\"/>\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8t0ym6h\" value=\"*\"/></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6i\" name=\":c\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym66\" name=\":Garage\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6j\" name=\":Garage_1\" visibility=\"public\" type=\"k8t0ym6k\" association=\"k8t0ym6l\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8t0ym6m\" value=\"*\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym6f\" memberEnd=\"k8t0ym6d k8t0ym6n\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym6n\" visibility=\"public\" type=\"k8t0ym66\" association=\"k8t0ym6f\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym6l\" memberEnd=\"k8t0ym6j k8t0ym6o\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym6o\" visibility=\"public\" type=\"k8t0ym66\" association=\"k8t0ym6l\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym6k\" name=\":Garage_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6p\" name=\"AE86\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6q\" name=\":Garage_1_1\" visibility=\"public\" type=\"k8t0ym6r\" association=\"k8t0ym6s\">\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8t0ym6t\"/></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6u\" name=\":Garage_1_2\" visibility=\"public\" type=\"k8t0ym6v\" association=\"k8t0ym6w\">\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8t0ym6x\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym6r\" name=\":Garage_1_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6y\" name=\"Levin\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym6z\" name=\"Cilinders\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym6v\" name=\":Garage_1_2\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym70\" name=\"Trueno\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8t0ym71\" name=\"Cilinders\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8t0ym6e\" name=\"Something\">\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym6s\" memberEnd=\"k8t0ym6q k8t0ym72\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym72\" visibility=\"public\" type=\"k8t0ym6e\" association=\"k8t0ym6s\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8t0ym6w\" memberEnd=\"k8t0ym6u k8t0ym73\">\n" +
+            "\t<ownedEnd xmi:id=\"k8t0ym73\" visibility=\"public\" type=\"k8t0ym6e\" association=\"k8t0ym6w\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8t0ym5q\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8t0ym5r\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8t0ym5s\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8t0ym5t\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

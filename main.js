@@ -118395,15 +118395,68 @@ class ShExAttributes {
 
     }
 
-    createShExAttribute(attr) {
+    createShExAttributes(attributes, brs){
+
+        let brackets = brs;
+        let content = "";
+        let header = "";
+
+        for(let i = 0; i < attributes.length; i++) {
+            if(attributes[i].$.association) {
+                brackets = true;
+                content += this.createShExAssociation(attributes[i], header);
+            }
+            else if(attributes[i].$.name.toLowerCase() === "nodekind") {
+                let kind = this.shext.getType(attributes[i].$.type);
+                kind = this.shexaux.checkNodeKind(kind.name);
+                let ajustedKind = kind + " AND";
+                if(kind === "IRI") {
+                    brackets = brackets || false;
+                    ajustedKind = kind;
+                } else {
+                    brackets = true;
+                }
+                header += " " + ajustedKind;
+            }
+            else if(attributes[i].$.name.toLowerCase() === "datatype") {
+                let dt = this.shext.getAttrType(attributes[i]);
+                header += " " + dt;
+                brackets = false;
+            }
+            else {
+                brackets = true;
+                content += this.createShExBasicAttribute(attributes[i]);
+            }
+        }
+
+        return {
+            brackets: brackets,
+            content: content,
+            header: header
+        };
+
+    }
+
+    createShExBasicAttribute(attr) {
         let type = this.shext.getAttrType(attr);
         return "\n\t" + this.shexaux.getShExTerm(attr.$.name) + this.shext.createShExType(type) +
             this.shexco.getConstraints(attr.$["xmi:id"]) + this.shexcar.cardinalityOf(attr) + ";";
     }
 
     createShExAssociation(attr) {
-        let name = this.shexsh.getShape(attr.$.type).name;
-        return "\n\t" + attr.$.name + " @" + this.shexaux.getShExTerm(name)
+        let subSet = this.shexsh.getSubSet(attr.$.name);
+        if(subSet !== undefined) {
+            let conj = "\n( ";
+            conj += this.createShExAttributes(subSet.attributes).content;
+            conj += " )";
+            conj += this.shexcar.cardinalityOf(attr) + " ;";
+            return conj;
+        }
+
+        let shape = this.shexsh.getShape(attr.$.type);
+        let shExName = this.shexaux.getShExTerm(shape.name);
+
+        return "\n\t" + attr.$.name + " @" + shExName
             + this.shexcar.cardinalityOf(attr)
             + ";"
     }
@@ -118518,15 +118571,18 @@ module.exports = ShExCardinality;
 },{}],537:[function(require,module,exports){
 class ShExClass {
 
-    constructor (shexaux, shexat, shext, shexco) {
+    constructor (shexaux, shexat, shexco, shexsh) {
         this.shexaux = shexaux;
         this.shexat = shexat;
-        this.shext = shext;
         this.shexco = shexco;
+        this.shexsh = shexsh;
     }
 
     createShExClass(element) {
-        let header = "" + this.shexaux.getShExTerm(element.$.name);
+        if(this.shexsh.getSubSet(element.$.name) !== undefined) {
+            return "";
+        }
+        let header = this.shexaux.getShExTerm(element.$.name);
         let content = "";
         let brackets = false;
 
@@ -118540,33 +118596,13 @@ class ShExClass {
             brackets = true;
             attributes = [];
         }
-        for(let i = 0; i < attributes.length; i++) {
-            if(attributes[i].$.association) {
-                brackets = true;
-                content += this.shexat.createShExAssociation(attributes[i]);
-            }
-            else if(attributes[i].$.name.toLowerCase() === "nodekind") {
-                let kind = this.shext.getType(attributes[i].$.type);
-                kind = this.shexaux.checkNodeKind(kind.name);
-                let ajustedKind = kind + " AND";
-                if(kind === "IRI") {
-                    brackets = brackets || false;
-                    ajustedKind = kind;
-                } else {
-                    brackets = true;
-                }
-                header += " " + ajustedKind;
-            }
-            else if(attributes[i].$.name.toLowerCase() === "datatype") {
-                let dt = this.shext.getAttrType(attributes[i]);
-                header += " " + dt;
-                brackets = false;
-            }
-            else {
-                brackets = true;
-                content += this.shexat.createShExAttribute(attributes[i]);
-            }
-        }
+
+        let ats = this.shexat.createShExAttributes(attributes, brackets);
+
+        content += ats.content;
+        header += ats.header;
+        brackets = ats.brackets;
+
         header += this.shexco.getConstraints(element.$["xmi:id"]);
         if(brackets) {
             return header + " {" + content + "\n}\n\n"
@@ -118625,8 +118661,6 @@ class ShExEnumerations {
     }
 
     getEnum(id) {
-        console.log(this.enumerations);
-        console.log(id);
         return this.enumerations.get(id);
     }
 
@@ -118665,7 +118699,7 @@ class ShExGenerator {
         this.shexen = new ShExEnumerations(ShExAuxiliar);
         this.shext = new ShExTypes(this.irim, this.shexen, ShExAuxiliar);
         this.shexat = new ShExAttributes(this.shext, ShExAuxiliar, this.shexsh, this.shexco, ShExCardinality);
-        this.shexcl = new ShExClass(ShExAuxiliar, this.shexat, this.shext, this.shexco);
+        this.shexcl = new ShExClass(ShExAuxiliar, this.shexat, this.shexco, this.shexsh);
     }
 
     createShExHeader() {
@@ -118772,18 +118806,38 @@ class ShExShapes {
 
     constructor () {
         this.shapes = new Map();
+        this.subSet = new Map();
     }
 
     saveShape(element) {
-        this.shapes.set(element.$["xmi:id"], {name: element.$.name});
+        if(/^([:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name)) {
+            this.subSet.set(element.$.name, {
+                attributes: element.ownedAttribute
+            });
+        }
+        else {
+            this.shapes.set(element.$["xmi:id"], {
+                name: element.$.name
+            });
+        }
+
     }
 
     getShape(id) {
         return this.shapes.get(id);
     }
 
+    getSubSet(name) {
+        return this.subSet.get(name);
+    }
+
+    clearSubSet() {
+        this.subSet = new Map();
+    }
+
     clear() {
         this.shapes = new Map();
+        this.clearSubSet();
     }
 
 
@@ -118819,7 +118873,6 @@ class ShExType {
         }
         else if (attr.$.type) {
             let enumer = this.shexen.getEnum(attr.$.type);
-            console.log(enumer);
             if(enumer) {
                 return this.shexen.createShExEnumeration(enumer);
             }
@@ -119347,9 +119400,10 @@ class XMIGenerator {
         this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
 
         this.xmitype = new XMITypes(uniqid, this.xmipref);
+        this.xmisub = new XMISubclasses(this.shm, null);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,
             this.xmipref, this.xmicon, this.shm, XMITypes, this.xmicard);
-        this.xmisub = new XMISubclasses(this.shm, this.xmiats);
+        this.xmisub.xmiats = this.xmiats;
         this.xmicl = new XMIClass(this.shm, XMITypes, this.xmipref, this.xmiats, this.xmicon, this.xmiasoc,
             this.xmisub);
 

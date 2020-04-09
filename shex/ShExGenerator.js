@@ -18,7 +18,7 @@ class ShExGenerator {
         this.shexen = new ShExEnumerations(ShExAuxiliar);
         this.shext = new ShExTypes(this.irim, this.shexen, ShExAuxiliar);
         this.shexat = new ShExAttributes(this.shext, ShExAuxiliar, this.shexsh, this.shexco, ShExCardinality);
-        this.shexcl = new ShExClass(ShExAuxiliar, this.shexat, this.shext, this.shexco);
+        this.shexcl = new ShExClass(ShExAuxiliar, this.shexat, this.shexco, this.shexsh);
     }
 
     createShExHeader() {

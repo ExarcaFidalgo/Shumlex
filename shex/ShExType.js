@@ -27,7 +27,6 @@ class ShExType {
         }
         else if (attr.$.type) {
             let enumer = this.shexen.getEnum(attr.$.type);
-            console.log(enumer);
             if(enumer) {
                 return this.shexen.createShExEnumeration(enumer);
             }

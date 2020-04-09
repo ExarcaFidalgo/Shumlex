@@ -13,8 +13,6 @@ class ShExEnumerations {
     }
 
     getEnum(id) {
-        console.log(this.enumerations);
-        console.log(id);
         return this.enumerations.get(id);
     }
 
