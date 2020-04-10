@@ -8,7 +8,7 @@ class ShExClass {
     }
 
     createShExClass(element) {
-        if(this.shexsh.getSubSet(element.$.name) !== undefined) {
+        if(this.shexsh.getSubSet(element.$["xmi:id"]) !== undefined) {
             return "";
         }
         let header = this.shexaux.getShExTerm(element.$.name);

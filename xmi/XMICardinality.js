@@ -4,6 +4,12 @@ class XMICardinality {
         this.unid = unid;
     }
 
+    createXMICardinality(min, max) {
+        let minimum = min !== undefined ? min : 1;
+        let maximum = max !== undefined ? max : 1;
+        return this.getLowerCardinality(minimum) + this.getUpperCardinality(maximum);
+    }
+
     getUpperCardinality(cardinality) {
         if(cardinality === 1)
             return "";

@@ -9,25 +9,19 @@ class XMIAssociations {
     }
 
     createXMIAsocAttribute(name, target, min, max) {
-        let minimum = min !== undefined ? min : 1;
-        let maximum = max !== undefined ? max : 1;
         let idatr = this.unid();
         let targetShape = this.shm.findShape(target);
         let idasoc = this.unid();
         let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + this.xmipref.getPrefixedTermOfUri(name)
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
-            + this.createXMIAsocCardinality(minimum, maximum)
+            + this.xmicard.createXMICardinality(min, max)
             + '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
 
         return content;
-    }
-
-    createXMIAsocCardinality(min, max) {
-        return this.xmicard.getLowerCardinality(min) + this.xmicard.getUpperCardinality(max);
     }
 
     createXMIAssociation(ids, idcl) {

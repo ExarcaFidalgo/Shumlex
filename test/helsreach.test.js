@@ -89,6 +89,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI14()));
     });
 
+    test('Operador OneOf', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex15());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI15()));
+    });
+
 
 });
 
@@ -176,6 +182,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI14());
         expect(shex)
             .toEqual(TestRep.getShex14());
+    });
+
+    test('Operador OneOf', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI15());
+        expect(shex)
+            .toEqual(TestRep.getShex15());
     });
 
 });

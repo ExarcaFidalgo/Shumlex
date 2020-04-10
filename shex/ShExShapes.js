@@ -7,7 +7,7 @@ class ShExShapes {
 
     saveShape(element) {
         if(/^([:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name)) {
-            this.subSet.set(element.$.name, {
+            this.subSet.set(element.$["xmi:id"], {
                 attributes: element.ownedAttribute
             });
         }

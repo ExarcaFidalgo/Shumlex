@@ -118402,31 +118402,10 @@ class ShExAttributes {
         let header = "";
 
         for(let i = 0; i < attributes.length; i++) {
-            if(attributes[i].$.association) {
-                brackets = true;
-                content += this.createShExAssociation(attributes[i], header);
-            }
-            else if(attributes[i].$.name.toLowerCase() === "nodekind") {
-                let kind = this.shext.getType(attributes[i].$.type);
-                kind = this.shexaux.checkNodeKind(kind.name);
-                let ajustedKind = kind + " AND";
-                if(kind === "IRI") {
-                    brackets = brackets || false;
-                    ajustedKind = kind;
-                } else {
-                    brackets = true;
-                }
-                header += " " + ajustedKind;
-            }
-            else if(attributes[i].$.name.toLowerCase() === "datatype") {
-                let dt = this.shext.getAttrType(attributes[i]);
-                header += " " + dt;
-                brackets = false;
-            }
-            else {
-                brackets = true;
-                content += this.createShExBasicAttribute(attributes[i]);
-            }
+            let at = this.createShExAttribute(attributes[i], brackets);
+            brackets = at.brackets;
+            content += at.content;
+            header += at.header;
         }
 
         return {
@@ -118437,6 +118416,44 @@ class ShExAttributes {
 
     }
 
+    createShExAttribute(attr, brs) {
+        let brackets = brs;
+        let content = "";
+        let header = "";
+
+        if(attr.$.association) {
+            brackets = true;
+            content += this.createShExAssociation(attr, header);
+        }
+        else if(attr.$.name.toLowerCase() === "nodekind") {
+            let kind = this.shext.getType(attr.$.type);
+            kind = this.shexaux.checkNodeKind(kind.name);
+            let ajustedKind = kind + " AND";
+            if(kind === "IRI") {
+                brackets = brackets || false;
+                ajustedKind = kind;
+            } else {
+                brackets = true;
+            }
+            header += " " + ajustedKind;
+        }
+        else if(attr.$.name.toLowerCase() === "datatype") {
+            let dt = this.shext.getAttrType(attr);
+            header += " " + dt;
+            brackets = false;
+        }
+        else {
+            brackets = true;
+            content += this.createShExBasicAttribute(attr);
+        }
+
+        return {
+            brackets: brackets,
+            content: content,
+            header: header
+        };
+    }
+
     createShExBasicAttribute(attr) {
         let type = this.shext.getAttrType(attr);
         return "\n\t" + this.shexaux.getShExTerm(attr.$.name) + this.shext.createShExType(type) +
@@ -118444,13 +118461,36 @@ class ShExAttributes {
     }
 
     createShExAssociation(attr) {
-        let subSet = this.shexsh.getSubSet(attr.$.name);
+        let subSet = this.shexsh.getSubSet(attr.$.type);
+        console.log(attr);
+        console.log(subSet);
         if(subSet !== undefined) {
-            let conj = "\n( ";
-            conj += this.createShExAttributes(subSet.attributes).content;
-            conj += " )";
-            conj += this.shexcar.cardinalityOf(attr) + " ;";
-            return conj;
+            if(attr.$.name === "OneOf") {
+                let conj = "";
+                let card = this.shexcar.cardinalityOf(attr);
+                if(card !== "") {
+                    conj = "\n (";
+                }
+                for(let i = 0; i < subSet.attributes.length; i++) {
+                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                    if(i < subSet.attributes.length - 1) {
+                        conj += " |"
+                    }
+                }
+                if(card !== "") {
+                    conj += ") " + card + ";";
+                }
+
+                return conj;
+            }
+            else {
+                let conj = "\n( ";
+                conj += this.createShExAttributes(subSet.attributes).content;
+                conj += " )";
+                conj += this.shexcar.cardinalityOf(attr) + " ;";
+                return conj;
+            }
+
         }
 
         let shape = this.shexsh.getShape(attr.$.type);
@@ -118579,7 +118619,7 @@ class ShExClass {
     }
 
     createShExClass(element) {
-        if(this.shexsh.getSubSet(element.$.name) !== undefined) {
+        if(this.shexsh.getSubSet(element.$["xmi:id"]) !== undefined) {
             return "";
         }
         let header = this.shexaux.getShExTerm(element.$.name);
@@ -118777,7 +118817,7 @@ class ShExParser {
 
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
-    //console.log(this.source.shapes);
+    console.log(this.source.shapes);
 
     let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
     for (let shape in this.source.shapes){
@@ -118811,7 +118851,7 @@ class ShExShapes {
 
     saveShape(element) {
         if(/^([:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name)) {
-            this.subSet.set(element.$.name, {
+            this.subSet.set(element.$["xmi:id"], {
                 attributes: element.ownedAttribute
             });
         }
@@ -118937,25 +118977,19 @@ class XMIAssociations {
     }
 
     createXMIAsocAttribute(name, target, min, max) {
-        let minimum = min !== undefined ? min : 1;
-        let maximum = max !== undefined ? max : 1;
         let idatr = this.unid();
         let targetShape = this.shm.findShape(target);
         let idasoc = this.unid();
         let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + this.xmipref.getPrefixedTermOfUri(name)
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
-            + this.createXMIAsocCardinality(minimum, maximum)
+            + this.xmicard.createXMICardinality(min, max)
             + '</ownedAttribute>';
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
 
         return content;
-    }
-
-    createXMIAsocCardinality(min, max) {
-        return this.xmicard.getLowerCardinality(min) + this.xmicard.getUpperCardinality(max);
     }
 
     createXMIAssociation(ids, idcl) {
@@ -118995,6 +119029,8 @@ class XMIAttributes {
         this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, xmipref, xmicon, xmicard);
         this.shm = shm;
         this.sxmit = sxmit;
+
+        this.depth = 0;
     }
 
     createXMIAttributes(expr, className) {
@@ -119005,33 +119041,35 @@ class XMIAttributes {
         else if(expr.type === "TripleConstraint") {
             attrs = this.determineTypeOfExpression(expr);
         }
+        else if(expr.type === "OneOf") {
+            let subClassName = this.xmisub.getSubClassNumber(className);
+            let oneOfExpr = JSON.parse(JSON.stringify(expr));
+            oneOfExpr.type = "EachOf";
+            attrs = this.createSubClass("OneOf", subClassName, oneOfExpr, expr.min, expr.max);
+        }
         else if (expr.type === "EachOf") {
-            if(expr.min !== undefined || expr.max !== undefined) {
+            if( this.depth > 0 || expr.min !== undefined || expr.max !== undefined) {
                 let subClassName = this.xmisub.getSubClassNumber(className);
-                attrs = this.xmiasoc.createXMIAsocAttribute(subClassName, subClassName, expr.min, expr.max);
-                let subClass = {
-                    name: subClassName,
-                    expr: expr
-                };
-                subClass.expr.min = undefined;
-                subClass.expr.max = undefined;
-                this.xmisub.subClasses.push(subClass);
+                let subExpr = JSON.parse(JSON.stringify(expr));
+                attrs = this.createSubClass(subClassName, subClassName, subExpr, expr.min, expr.max);
             }
             else {
                 for(let attr in expr.expressions) {
                     if(expr.expressions.hasOwnProperty(attr)) {
+                        this.incrementDepth();
                         attrs += this.createXMIAttributes(expr.expressions[attr], className);
                     }
                 }
             }
 
         }
+        this.decrementDepth();
         return attrs;
     }
 
     determineTypeOfExpression(expr) {
         if(!expr.valueExpr) {
-            return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min);
+            return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min, expr.max);
         }
         else if(expr.valueExpr.type === "NodeConstraint") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
@@ -119039,12 +119077,12 @@ class XMIAttributes {
                 return this.createXMIGeneralization(list);
             }
             if(expr.valueExpr.values) {
-                return this.xmienum.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min);
+                return this.xmienum.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min, expr.max);
             }
             if(expr.valueExpr.nodeKind) {
-                return this.xmiprim.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min);
+                return this.xmiprim.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min, expr.max);
             }
-            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min, expr.valueExpr);
+            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min, expr.max, expr.valueExpr);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
@@ -119055,8 +119093,19 @@ class XMIAttributes {
         }
     }
 
-    createXMIPrimAttribute(name, type, min, valueExpr) {
-        return this.xmiprim.createXMIPrimAttribute(name, type, min, valueExpr);
+    createSubClass(asocName, subClassName, expr, min, max) {
+        let subClass = {
+            name: subClassName,
+            expr: expr
+        };
+        subClass.expr.min = undefined;
+        subClass.expr.max = undefined;
+        this.xmisub.subClasses.push(subClass);
+        return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
+    }
+
+    createXMIPrimAttribute(name, type, min, max, valueExpr) {
+        return this.xmiprim.createXMIPrimAttribute(name, type, min, max, valueExpr);
     }
 
     createXMIGeneralization(parents) {
@@ -119077,6 +119126,17 @@ class XMIAttributes {
         return gens;
     }
 
+    incrementDepth(){
+        this.depth++;
+    }
+
+    decrementDepth() {
+        if(this.depth > 0) {
+            this.depth--;
+        }
+
+    }
+
 
 }
 module.exports = XMIAttributes;
@@ -119085,6 +119145,12 @@ class XMICardinality {
 
     constructor(unid) {
         this.unid = unid;
+    }
+
+    createXMICardinality(min, max) {
+        let minimum = min !== undefined ? min : 1;
+        let maximum = max !== undefined ? max : 1;
+        return this.getLowerCardinality(minimum) + this.getUpperCardinality(maximum);
     }
 
     getUpperCardinality(cardinality) {
@@ -119222,8 +119288,8 @@ class XMIEnumerations {
         this.xmicard = xmicard;
     }
 
-    createXMIEnumAttribute(name, values, min) {
-        let card = min !== undefined ? this.xmicard.getLower0Cardinality() : "";
+    createXMIEnumAttribute(name, values, min, max) {
+        let card = this.xmicard.createXMICardinality(min, max);
         let enumer = { id: this.unid(), name: name, values: values};
         this.saveEnum(enumer);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
@@ -119582,9 +119648,9 @@ class XMIPrimitiveAttributes {
         this.xmicard = xmicard;
     }
 
-    createXMIPrimAttribute(name, type, min, valueExpr) {
+    createXMIPrimAttribute(name, type, min, max, valueExpr) {
         let xmiType = this.xmitype.createXMIType(type);
-        let card = min !== undefined ? this.xmicard.getLower0Cardinality() : "";
+        let card = this.xmicard.createXMICardinality(min, max);
         let atId = this.unid();
         this.xmicon.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
@@ -119615,9 +119681,9 @@ class XMIPrimitiveAttributes {
             + '\t</ownedAttribute>'
     }
 
-    createXMIKindAttribute(name, kind, min) {
+    createXMIKindAttribute(name, kind, min, max) {
         let nkind = this.xmitype.findNodeKind(kind);
-        let card = min !== undefined ?  this.xmicard.getLower0Cardinality() : "";
+        let card = this.xmicard.createXMICardinality(min, max);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
             + this.xmipref.getPrefixedTermOfUri(name)
             + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
@@ -119644,7 +119710,6 @@ class XMISubclasses {
         let classXMI = "";
         for(let i = 0; i < this.subClasses.length; i++) {
             let shape = this.shm.findShape(this.subClasses[i].name);
-            console.log(this.subClasses[i]);
             classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + shape.id + '" name="'
                 + this.subClasses[i].name
                 + '">' +

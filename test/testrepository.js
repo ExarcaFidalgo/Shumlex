@@ -1137,5 +1137,94 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex15() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string; |\n" +
+            "( \n" +
+            "\t:givenName xsd:string +;\n" +
+            "\t:familyName xsd:string; ) ;\n" +
+            "}\n" +
+            "\n" +
+            ":Car {\n" +
+            "\t:model xsd:string;\n" +
+            " (\n" +
+            "\t:turbo xsd:string; |\n" +
+            "\t:misfiring xsd:string; |\n" +
+            "\t:atm xsd:string;)  {1,2};\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI15() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k8uib8ev\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8uib8f0\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8f1\" name=\"OneOf\" visibility=\"public\" type=\"k8uib8f2\" association=\"k8uib8f3\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8uib8f3\" memberEnd=\"k8uib8f1 k8uib8f4\">\n" +
+            "\t<ownedEnd xmi:id=\"k8uib8f4\" visibility=\"public\" type=\"k8uib8f0\" association=\"k8uib8f3\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8uib8f2\" name=\":User_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8f5\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8f6\" name=\":User_1_1\" visibility=\"public\" type=\"k8uib8f7\" association=\"k8uib8f8\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8uib8f7\" name=\":User_1_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fa\" name=\":givenName\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8uib8f9\" value=\"*\"/>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fb\" name=\":familyName\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8uib8fc\" name=\":Car\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fd\" name=\":model\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fe\" name=\"OneOf\" visibility=\"public\" type=\"k8uib8ff\" association=\"k8uib8fg\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k8uib8fh\" value=\"2\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8uib8f8\" memberEnd=\"k8uib8f6 k8uib8fi\">\n" +
+            "\t<ownedEnd xmi:id=\"k8uib8fi\" visibility=\"public\" type=\"k8uib8fc\" association=\"k8uib8f8\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k8uib8fg\" memberEnd=\"k8uib8fe k8uib8fj\">\n" +
+            "\t<ownedEnd xmi:id=\"k8uib8fj\" visibility=\"public\" type=\"k8uib8fc\" association=\"k8uib8fg\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8uib8ff\" name=\":Car_1\">\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fk\" name=\":turbo\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fl\" name=\":misfiring\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k8uib8fm\" name=\":atm\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8uib8ew\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k8uib8ex\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8uib8ey\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k8uib8ez\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

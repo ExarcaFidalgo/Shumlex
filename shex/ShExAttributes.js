@@ -16,31 +16,10 @@ class ShExAttributes {
         let header = "";
 
         for(let i = 0; i < attributes.length; i++) {
-            if(attributes[i].$.association) {
-                brackets = true;
-                content += this.createShExAssociation(attributes[i], header);
-            }
-            else if(attributes[i].$.name.toLowerCase() === "nodekind") {
-                let kind = this.shext.getType(attributes[i].$.type);
-                kind = this.shexaux.checkNodeKind(kind.name);
-                let ajustedKind = kind + " AND";
-                if(kind === "IRI") {
-                    brackets = brackets || false;
-                    ajustedKind = kind;
-                } else {
-                    brackets = true;
-                }
-                header += " " + ajustedKind;
-            }
-            else if(attributes[i].$.name.toLowerCase() === "datatype") {
-                let dt = this.shext.getAttrType(attributes[i]);
-                header += " " + dt;
-                brackets = false;
-            }
-            else {
-                brackets = true;
-                content += this.createShExBasicAttribute(attributes[i]);
-            }
+            let at = this.createShExAttribute(attributes[i], brackets);
+            brackets = at.brackets;
+            content += at.content;
+            header += at.header;
         }
 
         return {
@@ -51,6 +30,44 @@ class ShExAttributes {
 
     }
 
+    createShExAttribute(attr, brs) {
+        let brackets = brs;
+        let content = "";
+        let header = "";
+
+        if(attr.$.association) {
+            brackets = true;
+            content += this.createShExAssociation(attr, header);
+        }
+        else if(attr.$.name.toLowerCase() === "nodekind") {
+            let kind = this.shext.getType(attr.$.type);
+            kind = this.shexaux.checkNodeKind(kind.name);
+            let ajustedKind = kind + " AND";
+            if(kind === "IRI") {
+                brackets = brackets || false;
+                ajustedKind = kind;
+            } else {
+                brackets = true;
+            }
+            header += " " + ajustedKind;
+        }
+        else if(attr.$.name.toLowerCase() === "datatype") {
+            let dt = this.shext.getAttrType(attr);
+            header += " " + dt;
+            brackets = false;
+        }
+        else {
+            brackets = true;
+            content += this.createShExBasicAttribute(attr);
+        }
+
+        return {
+            brackets: brackets,
+            content: content,
+            header: header
+        };
+    }
+
     createShExBasicAttribute(attr) {
         let type = this.shext.getAttrType(attr);
         return "\n\t" + this.shexaux.getShExTerm(attr.$.name) + this.shext.createShExType(type) +
@@ -58,13 +75,36 @@ class ShExAttributes {
     }
 
     createShExAssociation(attr) {
-        let subSet = this.shexsh.getSubSet(attr.$.name);
+        let subSet = this.shexsh.getSubSet(attr.$.type);
+        console.log(attr);
+        console.log(subSet);
         if(subSet !== undefined) {
-            let conj = "\n( ";
-            conj += this.createShExAttributes(subSet.attributes).content;
-            conj += " )";
-            conj += this.shexcar.cardinalityOf(attr) + " ;";
-            return conj;
+            if(attr.$.name === "OneOf") {
+                let conj = "";
+                let card = this.shexcar.cardinalityOf(attr);
+                if(card !== "") {
+                    conj = "\n (";
+                }
+                for(let i = 0; i < subSet.attributes.length; i++) {
+                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                    if(i < subSet.attributes.length - 1) {
+                        conj += " |"
+                    }
+                }
+                if(card !== "") {
+                    conj += ") " + card + ";";
+                }
+
+                return conj;
+            }
+            else {
+                let conj = "\n( ";
+                conj += this.createShExAttributes(subSet.attributes).content;
+                conj += " )";
+                conj += this.shexcar.cardinalityOf(attr) + " ;";
+                return conj;
+            }
+
         }
 
         let shape = this.shexsh.getShape(attr.$.type);

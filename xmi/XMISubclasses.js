@@ -12,7 +12,6 @@ class XMISubclasses {
         let classXMI = "";
         for(let i = 0; i < this.subClasses.length; i++) {
             let shape = this.shm.findShape(this.subClasses[i].name);
-            console.log(this.subClasses[i]);
             classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + shape.id + '" name="'
                 + this.subClasses[i].name
                 + '">' +
