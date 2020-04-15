@@ -1226,5 +1226,135 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex16() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            "\n" +
+            ":Car {\n" +
+            "\t:name xsd:string ;\n" +
+            "\t:belongs @_:1\n" +
+            "}\n" +
+            "\n" +
+            "_:1 { a [ :Garage ] }\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string ;\n" +
+            "\t:worksFor {\n" +
+            "\t\ta [ :Company];\n" +
+            "}\n" +
+            "}\n" +
+            "\n" +
+            ":GreatGrandson {\n" +
+            ":parent { :parent { :parent . + } + }+ ;\n" +
+            "}\n";
+    }
+
+    static getXMI16() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k91905l7\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905ld\" name=\":Car\">\n" +
+            "\t<ownedAttribute xmi:id=\"k91905le\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k91905lf\" name=\":belongs\" visibility=\"public\" type=\"k91905lg\" association=\"k91905lh\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k91905lh\" memberEnd=\"k91905lf k91905li\">\n" +
+            "\t<ownedEnd xmi:id=\"k91905li\" visibility=\"public\" type=\"k91905ld\" association=\"k91905lh\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lg\" name=\"_:1\">\n" +
+            "\t<generalization xmi:id=\"k91905lk\" general=\"k91905lj\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lj\" name=\":Garage\">\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905ll\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k91905lm\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k91905ln\" name=\":worksFor\" visibility=\"public\" type=\"k91905lo\" association=\"k91905lp\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k91905lp\" memberEnd=\"k91905ln k91905lq\">\n" +
+            "\t<ownedEnd xmi:id=\"k91905lq\" visibility=\"public\" type=\"k91905ll\" association=\"k91905lp\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lo\" name=\"_:2\">\n" +
+            "\t<generalization xmi:id=\"k91905ls\" general=\"k91905lr\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lr\" name=\":Company\">\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lt\" name=\":GreatGrandson\">\n" +
+            "\t<ownedAttribute xmi:id=\"k91905lu\" name=\":parent\" visibility=\"public\" type=\"k91905lv\" association=\"k91905lw\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k91905lx\" value=\"*\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k91905lw\" memberEnd=\"k91905lu k91905ly\">\n" +
+            "\t<ownedEnd xmi:id=\"k91905ly\" visibility=\"public\" type=\"k91905lt\" association=\"k91905lw\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905lv\" name=\"_:3\">\n" +
+            "\t<ownedAttribute xmi:id=\"k91905lz\" name=\":parent\" visibility=\"public\" type=\"k91905m0\" association=\"k91905m1\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k91905m2\" value=\"*\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k91905m0\" name=\"_:4\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k91905m4\" name=\":parent\" visibility=\"public\" type=\"k91905m5\" isUnique=\"false\">\n" +
+            "\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k91905m3\" value=\"*\"/>\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k91905l9\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k91905la\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k91905lb\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k91905lc\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k91905m5\" name=\"Any\"/>\n" +
+            "</uml:Model>";
+    }
+
+    static getGenShex16() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":Car {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:belongs @_:1;\n" +
+            "}\n" +
+            "\n" +
+            "_:1 {\n" +
+            "\ta [:Garage];\n" +
+            "}\n" +
+            "\n" +
+            ":Garage {\n" +
+            "}\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:worksFor @_:2;\n" +
+            "}\n" +
+            "\n" +
+            "_:2 {\n" +
+            "\ta [:Company];\n" +
+            "}\n" +
+            "\n" +
+            ":Company {\n" +
+            "}\n" +
+            "\n" +
+            ":GreatGrandson {\n" +
+            "\t:parent @_:3 +;\n" +
+            "}\n" +
+            "\n" +
+            "_:3 {\n" +
+            "\t:parent @_:4 +;\n" +
+            "}\n" +
+            "\n" +
+            "_:4 {\n" +
+            "\t:parent . +;\n" +
+            "}\n" +
+            "\n";
+    }
 }
 module.exports = TestRepository;

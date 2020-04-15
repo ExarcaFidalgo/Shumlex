@@ -8,6 +8,7 @@ class XMIClass {
         this.xmicon = xmicon;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
+
     }
 
     createXMIClass(name, shape) {
@@ -24,6 +25,9 @@ class XMIClass {
             shape.datatype);
         this.xmicon.checkFacets(shape, sh.id);
         let prName = this.xmipref.getPrefixedTermOfUri(name);
+        if(prName.includes("_:")) {
+            this.shm.incrementBlank();
+        }
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + prName
             + '">' +

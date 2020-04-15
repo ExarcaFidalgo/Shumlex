@@ -118943,10 +118943,12 @@ class ShapeManager {
 
     constructor (unid) {
         this.shapes = [];
+        this.pendingShapes = [];
         this.unid = unid;
+        this.blankCounter = 0;
     }
 
-    findShape(name) {
+    findShape(name, save) {
         for(let i = 0; i < this.shapes.length; i++) {
             if(name === this.shapes[i].name) {
                 return this.shapes[i];
@@ -118954,12 +118956,33 @@ class ShapeManager {
         }
 
         let shape = {id: this.unid(), name: name};
-        this.shapes.push((shape));
+        this.shapes.push(shape);
+        if(save) {
+            this.pendingShapes.push(shape);
+        }
         return shape;
+    }
+
+    incrementBlank() {
+        this.blankCounter++;
+    }
+
+    getCurrentBlank() {
+        return this.blankCounter;
+    }
+
+    getPendingShapes() {
+        return this.pendingShapes;
+    }
+
+    clearPendingShapes() {
+        this.pendingShapes = [];
     }
 
     clear() {
         this.shapes = [];
+        this.pendingShapes = [];
+        this.blankCounter = 0;
     }
 
 
@@ -119027,6 +119050,7 @@ class XMIAttributes {
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
         this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, xmipref, xmicon, xmicard);
+        this.xmipref = xmipref;
         this.shm = shm;
         this.sxmit = sxmit;
 
@@ -119091,6 +119115,11 @@ class XMIAttributes {
             }
             return this.xmiasoc.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
         }
+        else if (expr.valueExpr.type === "Shape") {
+            this.shm.incrementBlank();
+            let ref = "_:" + this.shm.getCurrentBlank();
+            return this.createSubClass(expr.predicate, ref, expr.valueExpr.expression, expr.min, expr.max);
+        }
     }
 
     createSubClass(asocName, subClassName, expr, min, max) {
@@ -119098,9 +119127,12 @@ class XMIAttributes {
             name: subClassName,
             expr: expr
         };
-        subClass.expr.min = undefined;
-        subClass.expr.max = undefined;
-        this.xmisub.subClasses.push(subClass);
+        if(subClass.expr.type !== "TripleConstraint") {
+            subClass.expr.min = undefined;
+            subClass.expr.max = undefined;
+        }
+
+        this.xmisub.saveSubClass(subClass);
         return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
     }
 
@@ -119117,7 +119149,7 @@ class XMIAttributes {
                         this.sxmit.adequateNodeKindPresentation(parents[parent].nodeKind));
                 }
                 else {
-                    let sh = this.shm.findShape(parents[parent].reference);
+                    let sh = this.shm.findShape(parents[parent].reference, true);
                     gens += "\n\t<generalization xmi:id=\"" + this.unid() + "\" general=\"" + sh.id + "\"/>"
                 }
 
@@ -119186,6 +119218,7 @@ class XMIClass {
         this.xmicon = xmicon;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
+
     }
 
     createXMIClass(name, shape) {
@@ -119202,6 +119235,9 @@ class XMIClass {
             shape.datatype);
         this.xmicon.checkFacets(shape, sh.id);
         let prName = this.xmipref.getPrefixedTermOfUri(name);
+        if(prName.includes("_:")) {
+            this.shm.incrementBlank();
+        }
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + prName
             + '">' +
@@ -119466,7 +119502,7 @@ class XMIGenerator {
         this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
 
         this.xmitype = new XMITypes(uniqid, this.xmipref);
-        this.xmisub = new XMISubclasses(this.shm, null);
+        this.xmisub = new XMISubclasses(this.shm, null, this.xmipref);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,
             this.xmipref, this.xmicon, this.shm, XMITypes, this.xmicard);
         this.xmisub.xmiats = this.xmiats;
@@ -119698,12 +119734,13 @@ module.exports = XMIPrimitiveAttributes;
 },{}],556:[function(require,module,exports){
 class XMISubclasses {
 
-    constructor (shm, xmiats) {
+    constructor (shm, xmiats, xmipref) {
         this.subClassesCounter = new Map();
         this.subClasses = [];
 
         this.shm = shm;
         this.xmiats = xmiats;
+        this.xmipref = xmipref;
     }
 
     createDependentSubClasses() {
@@ -119715,6 +119752,14 @@ class XMISubclasses {
                 + '">' +
                 this.xmiats.createXMIAttributes(this.subClasses[i].expr, shape.name) + '\n</packagedElement>';
         }
+        let pendingShapes = this.shm.getPendingShapes();
+        for(let i = 0; i < pendingShapes.length; i++) {
+            let ps = pendingShapes[i];
+            classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + ps.id + '" name="'
+                + this.xmipref.getPrefixedTermOfUri(ps.name)
+                + '">' + '\n</packagedElement>';
+        }
+        this.shm.clearPendingShapes();
         this.subClasses = [];
         return classXMI;
     }
@@ -119729,6 +119774,10 @@ class XMISubclasses {
             this.subClassesCounter.set(className, sub);
             return className + "_" + sub;
         }
+    }
+
+    saveSubClass(sub) {
+        this.subClasses.push(sub);
     }
 
     clear() {

@@ -9,6 +9,7 @@ class XMIAttributes {
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
         this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, xmipref, xmicon, xmicard);
+        this.xmipref = xmipref;
         this.shm = shm;
         this.sxmit = sxmit;
 
@@ -73,6 +74,11 @@ class XMIAttributes {
             }
             return this.xmiasoc.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
         }
+        else if (expr.valueExpr.type === "Shape") {
+            this.shm.incrementBlank();
+            let ref = "_:" + this.shm.getCurrentBlank();
+            return this.createSubClass(expr.predicate, ref, expr.valueExpr.expression, expr.min, expr.max);
+        }
     }
 
     createSubClass(asocName, subClassName, expr, min, max) {
@@ -80,9 +86,12 @@ class XMIAttributes {
             name: subClassName,
             expr: expr
         };
-        subClass.expr.min = undefined;
-        subClass.expr.max = undefined;
-        this.xmisub.subClasses.push(subClass);
+        if(subClass.expr.type !== "TripleConstraint") {
+            subClass.expr.min = undefined;
+            subClass.expr.max = undefined;
+        }
+
+        this.xmisub.saveSubClass(subClass);
         return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
     }
 
@@ -99,7 +108,7 @@ class XMIAttributes {
                         this.sxmit.adequateNodeKindPresentation(parents[parent].nodeKind));
                 }
                 else {
-                    let sh = this.shm.findShape(parents[parent].reference);
+                    let sh = this.shm.findShape(parents[parent].reference, true);
                     gens += "\n\t<generalization xmi:id=\"" + this.unid() + "\" general=\"" + sh.id + "\"/>"
                 }
 
