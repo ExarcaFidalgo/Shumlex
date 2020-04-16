@@ -26,7 +26,6 @@ $('#showuml').click(generateUML);
 function generateUML() {
     let encoded = plantumlEncoder.encode(umlEditor.getValue());
     $('#umlimg').attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
-    console.log(encoded);
 }
 },{"../shex/ShExParser.js":552,"../xmi/XMIParser.js":564,"./jquery-3.4.1.min.js":2,"plantuml-encoder":341}],2:[function(require,module,exports){
 /*! jQuery v3.4.1 | (c) JS Foundation and other contributors | jquery.org/license */
@@ -120461,8 +120460,12 @@ class XMIClass {
         let nodekind = this.XMITypes.adequateNodeKindPresentation(shape.nodeKind);
         let generalizations = "";
         if(shape.type === "ShapeAnd") {
-            expression = shape.shapeExprs.pop().expression;
+            let shExpr = shape.shapeExprs.pop();
+            expression = shExpr.expression;
             generalizations = this.xmiatt.createXMIGeneralization(shape.shapeExprs);
+            if(shExpr.closed === true) {
+                this.xmicon.markAsClosed(sh.id);
+            }
         }
         let nk = nodekind === undefined ? "" : this.xmiatt.createXMIPrimAttribute("nodeKind", nodekind);
         let dt = shape.datatype === undefined ? "" : this.xmiatt.createXMIPrimAttribute("datatype",
@@ -120478,6 +120481,10 @@ class XMIClass {
             this.xmiatt.createXMIAttributes(expression, prName) +
             nk + dt +
             generalizations + '\n</packagedElement>';
+
+        if(shape.closed === true) {
+            this.xmicon.markAsClosed(sh.id);
+        }
 
         classXMI += this.xmicon.createDependentOwnedRules();
         classXMI += this.xmiasoc.createDependentAssociations(sh.id);
@@ -120534,6 +120541,10 @@ class XMIConstraints {
         if(vex.pattern) {
             this.ownedRules.push(this.createXMIOwnedRule("/" + vex.pattern + "/", id));
         }
+    }
+
+    markAsClosed(id) {
+        this.ownedRules.push(this.createXMIOwnedRule("CLOSED", id));
     }
 
     createXMIOwnedRule(name, id) {

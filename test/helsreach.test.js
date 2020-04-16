@@ -101,6 +101,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI16()));
     });
 
+    test('Formas cerradas', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex17());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI17()));
+    });
+
 
 });
 
@@ -196,10 +202,16 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
             .toEqual(TestRep.getShex15());
     });
 
-    test('Restricción de tipo nodal como forma de máximo nivel', () => {
+    test('Formas anidadas', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI16());
         expect(shex)
             .toEqual(TestRep.getGenShex16());
+    });
+
+    test('Formas cerradas', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI17());
+        expect(shex)
+            .toEqual(TestRep.getShex17());
     });
 
 });

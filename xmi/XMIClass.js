@@ -17,8 +17,12 @@ class XMIClass {
         let nodekind = this.XMITypes.adequateNodeKindPresentation(shape.nodeKind);
         let generalizations = "";
         if(shape.type === "ShapeAnd") {
-            expression = shape.shapeExprs.pop().expression;
+            let shExpr = shape.shapeExprs.pop();
+            expression = shExpr.expression;
             generalizations = this.xmiatt.createXMIGeneralization(shape.shapeExprs);
+            if(shExpr.closed === true) {
+                this.xmicon.markAsClosed(sh.id);
+            }
         }
         let nk = nodekind === undefined ? "" : this.xmiatt.createXMIPrimAttribute("nodeKind", nodekind);
         let dt = shape.datatype === undefined ? "" : this.xmiatt.createXMIPrimAttribute("datatype",
@@ -34,6 +38,10 @@ class XMIClass {
             this.xmiatt.createXMIAttributes(expression, prName) +
             nk + dt +
             generalizations + '\n</packagedElement>';
+
+        if(shape.closed === true) {
+            this.xmicon.markAsClosed(sh.id);
+        }
 
         classXMI += this.xmicon.createDependentOwnedRules();
         classXMI += this.xmiasoc.createDependentAssociations(sh.id);

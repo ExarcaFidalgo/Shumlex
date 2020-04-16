@@ -1356,5 +1356,80 @@ class TestRepository {
             "}\n" +
             "\n";
     }
+
+    static getShex17() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User IRI CLOSED {\n" +
+            "\t:name xsd:string MaxLength 3;\n" +
+            "\t:age xsd:int ?;\n" +
+            "\t:gender [:Male :Female ];\n" +
+            "\t:knows @:User;\n" +
+            "}\n" +
+            "\n" +
+            ":Company CLOSED {\n" +
+            "\t:name xsd:string;\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI17() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k92pb46x\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92pb472\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92pb476\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k92pb479\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
+            "\t\t</type>\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k92pb478\"/>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92pb47b\" name=\":gender\" visibility=\"public\" type=\"k92pb47a\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k92pb47c\" name=\":knows\" visibility=\"public\" type=\"k92pb472\" association=\"k92pb47d\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92pb473\" name=\"nodeKind\" visibility=\"public\" type=\"k92pb474\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k92pb475\" name=\"CLOSED\" constrainedElement=\"k92pb472\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<ownedRule xmi:id=\"k92pb477\" name=\"MaxLength 3\" constrainedElement=\"k92pb476\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92pb47d\" memberEnd=\"k92pb47c k92pb47e\">\n" +
+            "\t<ownedEnd xmi:id=\"k92pb47e\" visibility=\"public\" type=\"k92pb472\" association=\"k92pb47d\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92pb47f\" name=\":Company\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92pb47g\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k92pb47h\" name=\"CLOSED\" constrainedElement=\"k92pb47f\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92pb46y\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k92pb46z\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92pb470\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92pb471\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92pb47a\" name=\":gender\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92pb47i\" name=\":Male\"/>\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92pb47j\" name=\":Female\"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k92pb474\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

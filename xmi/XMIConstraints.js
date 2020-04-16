@@ -44,6 +44,10 @@ class XMIConstraints {
         }
     }
 
+    markAsClosed(id) {
+        this.ownedRules.push(this.createXMIOwnedRule("CLOSED", id));
+    }
+
     createXMIOwnedRule(name, id) {
         return "\n<ownedRule xmi:id=\"" + this.unid() + "\" name=\"" + name + "\" " +
             "constrainedElement=\"" + id + "\">\n" +
