@@ -12,7 +12,7 @@ class XMIAssociations {
         let idatr = this.unid();
         let targetShape = this.shm.findShape(target);
         let idasoc = this.unid();
-        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + this.xmipref.getPrefixedTermOfUri(name)
+        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + name
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
             + this.xmicard.createXMICardinality(min, max)

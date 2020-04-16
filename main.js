@@ -119695,8 +119695,6 @@ class ShExAttributes {
 
     createShExAssociation(attr) {
         let subSet = this.shexsh.getSubSet(attr.$.type);
-        console.log(attr);
-        console.log(subSet);
         if(subSet !== undefined) {
             if(attr.$.name === "OneOf") {
                 let conj = "";
@@ -119737,8 +119735,14 @@ class ShExAttributes {
     createShExGeneralization(gen) {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
+            let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
+            let inv = "";
+            console.log(con);
+            if(con === " Inverse") {
+                inv = "^";
+            }
             let refClass = this.shexsh.getShape(gen[i].$.general);
-            generalizations += "\n\ta [" + this.shexaux.getShExTerm(refClass.name) + "];"
+            generalizations += "\n\t" + inv + "a [" + this.shexaux.getShExTerm(refClass.name) + "];"
         }
         return generalizations;
     }
@@ -120236,7 +120240,7 @@ class XMIAssociations {
         let idatr = this.unid();
         let targetShape = this.shm.findShape(target);
         let idasoc = this.unid();
-        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + this.xmipref.getPrefixedTermOfUri(name)
+        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + name
             + '" visibility="public" ' +
             'type="' + targetShape.id + '" association="' + idasoc + '">'
             + this.xmicard.createXMICardinality(min, max)
@@ -120282,6 +120286,7 @@ class XMIAttributes {
         this.xmitype = xmitype;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
+        this.xmicon = xmicon;
         this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, xmipref, xmicon, xmicard);
         this.xmipref = xmipref;
         this.shm = shm;
@@ -120325,33 +120330,36 @@ class XMIAttributes {
     }
 
     determineTypeOfExpression(expr) {
+        let inverse = (expr.inverse === true ? "^" : "");
+        let name = inverse + this.xmipref.getPrefixedTermOfUri(expr.predicate);
         if(!expr.valueExpr) {
-            return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min, expr.max);
+            return this.createXMIPrimAttribute(name, "Any", expr.min, expr.max);
         }
         else if(expr.valueExpr.type === "NodeConstraint") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 let list = [{reference: expr.valueExpr.values[0]}];
-                return this.createXMIGeneralization(list);
+                return this.createXMIGeneralization(list, expr.inverse);
             }
             if(expr.valueExpr.values) {
-                return this.xmienum.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min, expr.max);
+                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max);
             }
             if(expr.valueExpr.nodeKind) {
-                return this.xmiprim.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min, expr.max);
+                return this.xmiprim.createXMIKindAttribute(name, expr.valueExpr.nodeKind, expr.min, expr.max);
             }
-            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min, expr.max, expr.valueExpr);
+            return this.createXMIPrimAttribute(name, expr.valueExpr.datatype, expr.min, expr.max,
+                expr.valueExpr);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 let list = [{reference: expr.valueExpr.reference}];
-                return this.createXMIGeneralization(list);
+                return this.createXMIGeneralization(list, expr.inverse);
             }
-            return this.xmiasoc.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
+            return this.xmiasoc.createXMIAsocAttribute(name, expr.valueExpr.reference, expr.min, expr.max);
         }
         else if (expr.valueExpr.type === "Shape") {
             this.shm.incrementBlank();
             let ref = "_:" + this.shm.getCurrentBlank();
-            return this.createSubClass(expr.predicate, ref, expr.valueExpr.expression, expr.min, expr.max);
+            return this.createSubClass(name, ref, expr.valueExpr.expression, expr.min, expr.max);
         }
     }
 
@@ -120373,7 +120381,7 @@ class XMIAttributes {
         return this.xmiprim.createXMIPrimAttribute(name, type, min, max, valueExpr);
     }
 
-    createXMIGeneralization(parents) {
+    createXMIGeneralization(parents, inv) {
         let gens = "";
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
@@ -120383,7 +120391,11 @@ class XMIAttributes {
                 }
                 else {
                     let sh = this.shm.findShape(parents[parent].reference, true);
-                    gens += "\n\t<generalization xmi:id=\"" + this.unid() + "\" general=\"" + sh.id + "\"/>"
+                    let id = this.unid();
+                    gens += "\n\t<generalization xmi:id=\"" + id + "\" general=\"" + sh.id + "\"/>";
+                    if(inv === true) {
+                        this.xmicon.markAsInverse(id);
+                    }
                 }
 
             }
@@ -120547,6 +120559,10 @@ class XMIConstraints {
         this.ownedRules.push(this.createXMIOwnedRule("CLOSED", id));
     }
 
+    markAsInverse(id) {
+        this.ownedRules.push(this.createXMIOwnedRule("Inverse", id));
+    }
+
     createXMIOwnedRule(name, id) {
         return "\n<ownedRule xmi:id=\"" + this.unid() + "\" name=\"" + name + "\" " +
             "constrainedElement=\"" + id + "\">\n" +
@@ -120574,7 +120590,7 @@ class XMIEnumerations {
         let enumer = { id: this.unid(), name: name, values: values};
         this.saveEnum(enumer);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
-            + this.xmipref.getPrefixedTermOfUri(name)
+            + name
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card
             + '\t</ownedAttribute>'
@@ -120933,10 +120949,11 @@ class XMIPrimitiveAttributes {
         let xmiType = this.xmitype.createXMIType(type);
         let card = this.xmicard.createXMICardinality(min, max);
         let atId = this.unid();
+
         this.xmicon.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
             let tName = xmiType.name.split(":").pop();
-            return '\n\t<ownedAttribute xmi:id="' + atId + '" name="' + this.xmipref.getPrefixedTermOfUri(name)
+            return '\n\t<ownedAttribute xmi:id="' + atId + '" name="' + name
                 + '" visibility="public" isUnique="false">\n' +
                 '\t\t<type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
                 + tName.substring(0, 1).toUpperCase() + tName.substring(1) + '">\n' + '\t\t</type>' +
@@ -120948,7 +120965,7 @@ class XMIPrimitiveAttributes {
                 this.xmitype.setAny();
             }
             return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-                + this.xmipref.getPrefixedTermOfUri(name)
+                + name
                 + '" visibility="public" ' + 'type="'+ this.xmitype.getAny() + '" isUnique="false">\n' +
                 card
                 + '\t</ownedAttribute>'
@@ -120956,7 +120973,7 @@ class XMIPrimitiveAttributes {
 
         let dtype = this.xmitype.findDataType(xmiType.name, xmiType.uri);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-            + this.xmipref.getPrefixedTermOfUri(name)
+            + name
             + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
             + card
             + '\t</ownedAttribute>'
@@ -120966,7 +120983,7 @@ class XMIPrimitiveAttributes {
         let nkind = this.xmitype.findNodeKind(kind);
         let card = this.xmicard.createXMICardinality(min, max);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
-            + this.xmipref.getPrefixedTermOfUri(name)
+            + name
             + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
             + card
             + '\t</ownedAttribute>'

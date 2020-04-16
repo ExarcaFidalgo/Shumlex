@@ -76,8 +76,6 @@ class ShExAttributes {
 
     createShExAssociation(attr) {
         let subSet = this.shexsh.getSubSet(attr.$.type);
-        console.log(attr);
-        console.log(subSet);
         if(subSet !== undefined) {
             if(attr.$.name === "OneOf") {
                 let conj = "";
@@ -118,8 +116,14 @@ class ShExAttributes {
     createShExGeneralization(gen) {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
+            let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
+            let inv = "";
+            console.log(con);
+            if(con === " Inverse") {
+                inv = "^";
+            }
             let refClass = this.shexsh.getShape(gen[i].$.general);
-            generalizations += "\n\ta [" + this.shexaux.getShExTerm(refClass.name) + "];"
+            generalizations += "\n\t" + inv + "a [" + this.shexaux.getShExTerm(refClass.name) + "];"
         }
         return generalizations;
     }

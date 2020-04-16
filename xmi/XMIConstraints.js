@@ -48,6 +48,10 @@ class XMIConstraints {
         this.ownedRules.push(this.createXMIOwnedRule("CLOSED", id));
     }
 
+    markAsInverse(id) {
+        this.ownedRules.push(this.createXMIOwnedRule("Inverse", id));
+    }
+
     createXMIOwnedRule(name, id) {
         return "\n<ownedRule xmi:id=\"" + this.unid() + "\" name=\"" + name + "\" " +
             "constrainedElement=\"" + id + "\">\n" +

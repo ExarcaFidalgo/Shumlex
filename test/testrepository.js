@@ -1515,5 +1515,66 @@ class TestRepository {
             "}\n" +
             "\n";
     }
+
+    static getShex19() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":Person {\n" +
+            "}\n" +
+            "\n" +
+            ":User {\n" +
+            "\t^a [:Person];\n" +
+            "\t^:name xsd:string;\n" +
+            "\t^:gender [:Male :Female ];\n" +
+            "}\n" +
+            "\n" +
+            ":Company {\n" +
+            "\t^:worksFor @:User +;\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI19() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k92snpem\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92snpev\" name=\":Person\">\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92snpew\" name=\":User\">\n" +
+            "\t<generalization xmi:id=\"k92snpex\" general=\"k92snpev\"/>\n" +
+            "\t<ownedAttribute xmi:id=\"k92snpez\" name=\"^:name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92snpf1\" name=\"^:gender\" visibility=\"public\" type=\"k92snpf0\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k92snpey\" name=\"Inverse\" constrainedElement=\"k92snpex\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92snpf2\" name=\":Company\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92snpf3\" name=\"^:worksFor\" visibility=\"public\" type=\"k92snpew\" association=\"k92snpf4\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k92snpf5\" value=\"*\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92snpf4\" memberEnd=\"k92snpf3 k92snpf6\">\n" +
+            "\t<ownedEnd xmi:id=\"k92snpf6\" visibility=\"public\" type=\"k92snpf2\" association=\"k92snpf4\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92snper\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k92snpes\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92snpet\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92snpeu\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92snpf0\" name=\"^:gender\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92snpf7\" name=\":Male\"/>\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92snpf8\" name=\":Female\"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
 }
 module.exports = TestRepository;

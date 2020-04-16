@@ -12,7 +12,7 @@ class XMIEnumerations {
         let enumer = { id: this.unid(), name: name, values: values};
         this.saveEnum(enumer);
         return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
-            + this.xmipref.getPrefixedTermOfUri(name)
+            + name
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card
             + '\t</ownedAttribute>'

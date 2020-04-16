@@ -8,6 +8,7 @@ class XMIAttributes {
         this.xmitype = xmitype;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
+        this.xmicon = xmicon;
         this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, xmipref, xmicon, xmicard);
         this.xmipref = xmipref;
         this.shm = shm;
@@ -51,33 +52,36 @@ class XMIAttributes {
     }
 
     determineTypeOfExpression(expr) {
+        let inverse = (expr.inverse === true ? "^" : "");
+        let name = inverse + this.xmipref.getPrefixedTermOfUri(expr.predicate);
         if(!expr.valueExpr) {
-            return this.createXMIPrimAttribute(expr.predicate, "Any", expr.min, expr.max);
+            return this.createXMIPrimAttribute(name, "Any", expr.min, expr.max);
         }
         else if(expr.valueExpr.type === "NodeConstraint") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 let list = [{reference: expr.valueExpr.values[0]}];
-                return this.createXMIGeneralization(list);
+                return this.createXMIGeneralization(list, expr.inverse);
             }
             if(expr.valueExpr.values) {
-                return this.xmienum.createXMIEnumAttribute(expr.predicate, expr.valueExpr.values, expr.min, expr.max);
+                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max);
             }
             if(expr.valueExpr.nodeKind) {
-                return this.xmiprim.createXMIKindAttribute(expr.predicate, expr.valueExpr.nodeKind, expr.min, expr.max);
+                return this.xmiprim.createXMIKindAttribute(name, expr.valueExpr.nodeKind, expr.min, expr.max);
             }
-            return this.createXMIPrimAttribute(expr.predicate, expr.valueExpr.datatype, expr.min, expr.max, expr.valueExpr);
+            return this.createXMIPrimAttribute(name, expr.valueExpr.datatype, expr.min, expr.max,
+                expr.valueExpr);
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 let list = [{reference: expr.valueExpr.reference}];
-                return this.createXMIGeneralization(list);
+                return this.createXMIGeneralization(list, expr.inverse);
             }
-            return this.xmiasoc.createXMIAsocAttribute(expr.predicate, expr.valueExpr.reference, expr.min, expr.max);
+            return this.xmiasoc.createXMIAsocAttribute(name, expr.valueExpr.reference, expr.min, expr.max);
         }
         else if (expr.valueExpr.type === "Shape") {
             this.shm.incrementBlank();
             let ref = "_:" + this.shm.getCurrentBlank();
-            return this.createSubClass(expr.predicate, ref, expr.valueExpr.expression, expr.min, expr.max);
+            return this.createSubClass(name, ref, expr.valueExpr.expression, expr.min, expr.max);
         }
     }
 
@@ -99,7 +103,7 @@ class XMIAttributes {
         return this.xmiprim.createXMIPrimAttribute(name, type, min, max, valueExpr);
     }
 
-    createXMIGeneralization(parents) {
+    createXMIGeneralization(parents, inv) {
         let gens = "";
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
@@ -109,7 +113,11 @@ class XMIAttributes {
                 }
                 else {
                     let sh = this.shm.findShape(parents[parent].reference, true);
-                    gens += "\n\t<generalization xmi:id=\"" + this.unid() + "\" general=\"" + sh.id + "\"/>"
+                    let id = this.unid();
+                    gens += "\n\t<generalization xmi:id=\"" + id + "\" general=\"" + sh.id + "\"/>";
+                    if(inv === true) {
+                        this.xmicon.markAsInverse(id);
+                    }
                 }
 
             }
