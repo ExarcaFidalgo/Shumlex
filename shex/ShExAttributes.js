@@ -76,6 +76,7 @@ class ShExAttributes {
 
     createShExAssociation(attr) {
         let subSet = this.shexsh.getSubSet(attr.$.type);
+
         if(subSet !== undefined) {
             if(attr.$.name === "OneOf") {
                 let conj = "";
@@ -92,6 +93,20 @@ class ShExAttributes {
                 if(card !== "") {
                     conj += ") " + card + ";";
                 }
+
+                return conj;
+            }
+            else if(attr.$.name.includes("&:")) {
+                return "\n\t" + attr.$.name + ";";
+            }
+            else if(/^([$]:[<]?[a-zA-Z]+[>]?)$/.test(attr.$.name)) {
+                console.log(subSet);
+                let conj = "\n\t" + attr.$.name +" (";
+                let card = this.shexcar.cardinalityOf(attr);
+                for(let i = 0; i < subSet.attributes.length; i++) {
+                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                }
+                conj += ") " + card + ";";
 
                 return conj;
             }

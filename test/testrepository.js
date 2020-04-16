@@ -1641,5 +1641,83 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex21() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t$:name (\n" +
+            "\t:name .; |\n" +
+            "( \n" +
+            "\t:givenName .;\n" +
+            "\t:familyName .; ) ;) ;\n" +
+            "\t:email IRI;\n" +
+            "}\n" +
+            "\n" +
+            ":Employee {\n" +
+            "\t&:name;\n" +
+            "\t:employeeId .;\n" +
+            "}\n" +
+            "\n"
+    }
+
+    static getXMI21() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k934qs0r\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k934qs0x\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k934qs0y\" name=\"$:name\" visibility=\"public\" type=\"k934qs0z\" association=\"k934qs10\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k934qs12\" name=\":email\" visibility=\"public\" type=\"k934qs11\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k934qs10\" memberEnd=\"k934qs0y k934qs13\">\n" +
+            "\t<ownedEnd xmi:id=\"k934qs13\" visibility=\"public\" type=\"k934qs0x\" association=\"k934qs10\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k934qs0z\" name=\"$:name\">\n" +
+            "\t<ownedAttribute xmi:id=\"k934qs14\" name=\"OneOf\" visibility=\"public\" type=\"k934qs15\" association=\"k934qs16\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k934qs15\" name=\"$:name_1\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k934qs17\" name=\":name\" visibility=\"public\" type=\"k934qs18\" isUnique=\"false\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k934qs19\" name=\"$:name_1_1\" visibility=\"public\" type=\"k934qs1a\" association=\"k934qs1b\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k934qs1a\" name=\"$:name_1_1\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k934qs1c\" name=\":givenName\" visibility=\"public\" type=\"k934qs18\" isUnique=\"false\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k934qs1d\" name=\":familyName\" visibility=\"public\" type=\"k934qs18\" isUnique=\"false\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k934qs1e\" name=\":Employee\">\n" +
+            "\t<ownedAttribute xmi:id=\"k934qs1f\" name=\"&#38;:name\" visibility=\"public\" type=\"k934qs0z\" association=\"k934qs1g\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k934qs1h\" name=\":employeeId\" visibility=\"public\" type=\"k934qs18\" isUnique=\"false\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k934qs16\" memberEnd=\"k934qs14 k934qs1i\">\n" +
+            "\t<ownedEnd xmi:id=\"k934qs1i\" visibility=\"public\" type=\"k934qs1e\" association=\"k934qs16\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k934qs1b\" memberEnd=\"k934qs19 k934qs1j\">\n" +
+            "\t<ownedEnd xmi:id=\"k934qs1j\" visibility=\"public\" type=\"k934qs1e\" association=\"k934qs1b\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k934qs1g\" memberEnd=\"k934qs1f k934qs1k\">\n" +
+            "\t<ownedEnd xmi:id=\"k934qs1k\" visibility=\"public\" type=\"k934qs1e\" association=\"k934qs1g\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k934qs0t\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k934qs0u\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k934qs0v\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k934qs0w\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k934qs18\" name=\"Any\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k934qs11\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
+
 }
 module.exports = TestRepository;

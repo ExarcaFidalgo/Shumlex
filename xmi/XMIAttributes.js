@@ -22,6 +22,16 @@ class XMIAttributes {
         if(!expr) {
             return attrs;
         }
+        else if(expr.id !== undefined) {
+            let labelRef = "$" + this.xmipref.getPrefixedTermOfUri(expr.id);
+            let subExpr = JSON.parse(JSON.stringify(expr));
+            subExpr.id = undefined;
+            attrs = this.createSubClass(labelRef, labelRef, subExpr, expr.min, expr.max);
+        }
+        else if(expr.type === "Inclusion") {
+            let labelRef = this.xmipref.getPrefixedTermOfUri(expr.include);
+            attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, "$" + labelRef, expr.min, expr.max);
+        }
         else if(expr.type === "TripleConstraint") {
             attrs = this.determineTypeOfExpression(expr);
         }

@@ -119695,6 +119695,7 @@ class ShExAttributes {
 
     createShExAssociation(attr) {
         let subSet = this.shexsh.getSubSet(attr.$.type);
+
         if(subSet !== undefined) {
             if(attr.$.name === "OneOf") {
                 let conj = "";
@@ -119711,6 +119712,20 @@ class ShExAttributes {
                 if(card !== "") {
                     conj += ") " + card + ";";
                 }
+
+                return conj;
+            }
+            else if(attr.$.name.includes("&:")) {
+                return "\n\t" + attr.$.name + ";";
+            }
+            else if(/^([$]:[<]?[a-zA-Z]+[>]?)$/.test(attr.$.name)) {
+                console.log(subSet);
+                let conj = "\n\t" + attr.$.name +" (";
+                let card = this.shexcar.cardinalityOf(attr);
+                for(let i = 0; i < subSet.attributes.length; i++) {
+                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                }
+                conj += ") " + card + ";";
 
                 return conj;
             }
@@ -120086,7 +120101,8 @@ class ShExShapes {
     }
 
     saveShape(element) {
-        if(/^([:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name)) {
+        if(/^([$]?[:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name) ||
+            /^([$]:[<]?[a-zA-Z]+[>]?)$/.test(element.$.name)) {
             this.subSet.set(element.$["xmi:id"], {
                 attributes: element.ownedAttribute
             });
@@ -120298,6 +120314,16 @@ class XMIAttributes {
         let attrs = "";
         if(!expr) {
             return attrs;
+        }
+        else if(expr.id !== undefined) {
+            let labelRef = "$" + this.xmipref.getPrefixedTermOfUri(expr.id);
+            let subExpr = JSON.parse(JSON.stringify(expr));
+            subExpr.id = undefined;
+            attrs = this.createSubClass(labelRef, labelRef, subExpr, expr.min, expr.max);
+        }
+        else if(expr.type === "Inclusion") {
+            let labelRef = this.xmipref.getPrefixedTermOfUri(expr.include);
+            attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, "$" + labelRef, expr.min, expr.max);
         }
         else if(expr.type === "TripleConstraint") {
             attrs = this.determineTypeOfExpression(expr);
