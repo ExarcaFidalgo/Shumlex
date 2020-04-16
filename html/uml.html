@@ -1,0 +1,62 @@
+<!doctype html>
+
+<title>UML Test</title>
+<meta charset="utf-8"/>
+
+<link rel="stylesheet" href="../codemirror-5.51.0/lib/codemirror.css">
+<link rel="stylesheet" href="../codemirror-5.51.0/theme/ayu-mirage.css">
+<link rel="stylesheet" href="../codemirror-5.51.0/theme/dracula.css">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+<script src="../codemirror-5.51.0/lib/codemirror.js"></script>
+<script src="../codemirror-5.51.0/mode/plantuml/plantuml.js"></script>
+
+<section id=demo>
+    <h2>UML</h2>
+    <textarea id=uml>
+        @startuml
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+  Object[] elementData
+  size()
+}
+
+enum TimeUnit {
+  DAYS
+  HOURS
+  MINUTES
+}
+
+@enduml
+    </textarea>
+
+
+    <button id="showuml">Crear UML</button>
+
+    <img id="umlimg" src=""/>
+
+
+    <script>
+        const umlEditor = CodeMirror.fromTextArea(document.getElementById("uml"), {
+            mode: "plantuml",
+            lineNumbers: true
+        });
+
+        umlEditor.setOption("theme", "ayu-mirage");
+    </script>
+    <script src="../main.js"></script>
+
+</section>
+
