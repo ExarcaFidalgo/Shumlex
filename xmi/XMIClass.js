@@ -43,6 +43,10 @@ class XMIClass {
             this.xmicon.markAsClosed(sh.id);
         }
 
+        if(shape.extra !== undefined) {
+            this.xmicon.markAsExtra(sh.id, shape.extra);
+        }
+
         classXMI += this.xmicon.createDependentOwnedRules();
         classXMI += this.xmiasoc.createDependentAssociations(sh.id);
         classXMI += this.xmisub.createDependentSubClasses();

@@ -19,7 +19,7 @@ class XMIGenerator {
         this.xmipref = new XMIPrefixes(uniqid, IRIManager);
         this.xmicard = new XMICardinality(uniqid);
         this.xmiasoc = new XMIAssociations(uniqid, this.shm, this.xmipref, this.xmicard);
-        this.xmicon = new XMIConstraints(uniqid);
+        this.xmicon = new XMIConstraints(uniqid, this.xmipref);
         this.xmienum = new XMIEnumerations(uniqid, this.xmipref, this.xmicard);
         this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
 

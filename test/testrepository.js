@@ -376,7 +376,7 @@ class TestRepository {
             "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
-            ":VIPUser {\n" +
+            ":VIPUser EXTRA a {\n" +
             "\ta [:User];\n" +
             "}\n" +
             "\n";
@@ -385,35 +385,38 @@ class TestRepository {
     static getXMI5() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
-            " xmi:id=\"k8h527l8\" name=\"ShExGeneratedXMI\">\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb2\" name=\":User\">\n" +
-            "\t<ownedAttribute xmi:id=\"k8h527ld\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            " xmi:id=\"k92zxa42\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92zxa47\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92zxa48\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"k8h527lf\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92zxa4a\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
-            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8h527le\"/>\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k92zxa49\"/>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb6\" name=\":Ultrauser\">\n" +
-            "\t<generalization xmi:id=\"k8h527lg\" general=\"k8h4wtb2\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92zxa4b\" name=\":Ultrauser\">\n" +
+            "\t<generalization xmi:id=\"k92zxa4c\" general=\"k92zxa47\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb8\" name=\":Titanuser\">\n" +
-            "\t<ownedAttribute xmi:id=\"k8h527li\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92zxa4d\" name=\":Titanuser\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92zxa4f\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<generalization xmi:id=\"k8h527lh\" general=\"k8h4wtb2\"/>\n" +
+            "\t<generalization xmi:id=\"k92zxa4e\" general=\"k92zxa47\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtbb\" name=\":VIPUser\">\n" +
-            "\t<generalization xmi:id=\"k8h527lj\" general=\"k8h4wtb2\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92zxa4g\" name=\":VIPUser\">\n" +
+            "\t<generalization xmi:id=\"k92zxa4h\" general=\"k92zxa47\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8h527l9\" name=\"Prefixes\">\n" +
-            "\t<ownedLiteral xmi:id=\"k8h527la\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8h527lb\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8h527lc\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "<ownedRule xmi:id=\"k92zxa4i\" name=\"EXTRA a\" constrainedElement=\"k92zxa4g\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92zxa43\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k92zxa44\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92zxa45\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92zxa46\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
     }
@@ -473,7 +476,7 @@ class TestRepository {
             "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
-            ":VIPUser {\n" +
+            ":VIPUser EXTRA a {\n" +
             "\ta [:User];\n" +
             "\ta [<Citizen>];\n" +
             "}\n" +
@@ -483,44 +486,47 @@ class TestRepository {
     static getXMI6() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
-            " xmi:id=\"k8h56pon\" name=\"ShExGeneratedXMI\">\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb2\" name=\":User\">\n" +
-            "\t<ownedAttribute xmi:id=\"k8h56pos\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            " xmi:id=\"k93027ip\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k93027j4\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k93027j5\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"k8h56pou\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"k93027j7\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
-            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k8h56pot\"/>\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"k93027j6\"/>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h56pov\" name=\"Citizen\">\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8h56pox\" name=\":id\" visibility=\"public\" type=\"k8h56pow\" isUnique=\"false\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k93027j8\" name=\"Citizen\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k93027j9\" name=\":id\" visibility=\"public\" type=\"k93027ja\" isUnique=\"false\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb6\" name=\":Ultrauser\">\n" +
-            "\t<generalization xmi:id=\"k8h56poy\" general=\"k8h4wtb2\"/>\n" +
-            "\t<generalization xmi:id=\"k8h56poz\" general=\"k8h56pov\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k93027jb\" name=\":Ultrauser\">\n" +
+            "\t<generalization xmi:id=\"k93027jc\" general=\"k93027j4\"/>\n" +
+            "\t<generalization xmi:id=\"k93027jd\" general=\"k93027j8\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtb8\" name=\":Titanuser\">\n" +
-            "\t<ownedAttribute xmi:id=\"k8h56pp2\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k93027je\" name=\":Titanuser\">\n" +
+            "\t<ownedAttribute xmi:id=\"k93027jh\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<generalization xmi:id=\"k8h56pp0\" general=\"k8h4wtb2\"/>\n" +
-            "\t<generalization xmi:id=\"k8h56pp1\" general=\"k8h56pov\"/>\n" +
+            "\t<generalization xmi:id=\"k93027jf\" general=\"k93027j4\"/>\n" +
+            "\t<generalization xmi:id=\"k93027jg\" general=\"k93027j8\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8h4wtbb\" name=\":VIPUser\">\n" +
-            "\t<generalization xmi:id=\"k8h56pp3\" general=\"k8h4wtb2\"/>\n" +
-            "\t<generalization xmi:id=\"k8h56pp4\" general=\"k8h56pov\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k93027ji\" name=\":VIPUser\">\n" +
+            "\t<generalization xmi:id=\"k93027jj\" general=\"k93027j4\"/>\n" +
+            "\t<generalization xmi:id=\"k93027jk\" general=\"k93027j8\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8h56poo\" name=\"Prefixes\">\n" +
-            "\t<ownedLiteral xmi:id=\"k8h56pop\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8h56poq\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8h56por\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "<ownedRule xmi:id=\"k93027jl\" name=\"EXTRA a\" constrainedElement=\"k93027ji\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k93027j0\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k93027j1\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k93027j2\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k93027j3\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8h56pow\" name=\"Any\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k93027ja\" name=\"Any\"/>\n" +
             "</uml:Model>";
     }
 
@@ -1572,6 +1578,65 @@ class TestRepository {
             "\t<ownedLiteral xmi:id=\"k92snpf7\" name=\":Male\"/>\n" +
             "\n" +
             "\t<ownedLiteral xmi:id=\"k92snpf8\" name=\":Female\"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
+
+    static getShex20() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":FollowSpaniards EXTRA :follows {\n" +
+            "\t:follows { \n" +
+            "      :nationality [:Spain] \n" +
+            "    }+\n" +
+            "}\n";
+    }
+
+    static getGenShex20() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":FollowSpaniards EXTRA :follows {\n" +
+            "\t:follows @_:1 +;\n" +
+            "}\n" +
+            "\n" +
+            "_:1 {\n" +
+            "\t:nationality [:Spain ];\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI20() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k92z0c2x\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92z0c32\" name=\":FollowSpaniards\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92z0c33\" name=\":follows\" visibility=\"public\" type=\"k92z0c34\" association=\"k92z0c35\">\n" +
+            "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"k92z0c36\" value=\"*\"/></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k92z0c37\" name=\"EXTRA :follows\" constrainedElement=\"k92z0c32\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92z0c35\" memberEnd=\"k92z0c33 k92z0c38\">\n" +
+            "\t<ownedEnd xmi:id=\"k92z0c38\" visibility=\"public\" type=\"k92z0c32\" association=\"k92z0c35\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92z0c34\" name=\"_:1\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92z0c3a\" name=\":nationality\" visibility=\"public\" type=\"k92z0c39\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92z0c2y\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k92z0c2z\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92z0c30\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92z0c31\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92z0c39\" name=\":nationality\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92z0c3b\" name=\":Spain\"/>\n" +
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";

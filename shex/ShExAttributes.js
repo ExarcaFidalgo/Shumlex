@@ -118,7 +118,6 @@ class ShExAttributes {
         for(let i = 0; i < gen.length; i++) {
             let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
             let inv = "";
-            console.log(con);
             if(con === " Inverse") {
                 inv = "^";
             }

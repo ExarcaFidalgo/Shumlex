@@ -119737,7 +119737,6 @@ class ShExAttributes {
         for(let i = 0; i < gen.length; i++) {
             let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
             let inv = "";
-            console.log(con);
             if(con === " Inverse") {
                 inv = "^";
             }
@@ -120498,6 +120497,10 @@ class XMIClass {
             this.xmicon.markAsClosed(sh.id);
         }
 
+        if(shape.extra !== undefined) {
+            this.xmicon.markAsExtra(sh.id, shape.extra);
+        }
+
         classXMI += this.xmicon.createDependentOwnedRules();
         classXMI += this.xmiasoc.createDependentAssociations(sh.id);
         classXMI += this.xmisub.createDependentSubClasses();
@@ -120511,9 +120514,10 @@ module.exports = XMIClass;
 },{}],560:[function(require,module,exports){
 class XMIConstraints {
 
-    constructor (unid) {
+    constructor (unid, xmipref) {
         this.ownedRules = [];
         this.unid = unid;
+        this.xmipref = xmipref;
     }
 
     createDependentOwnedRules(){
@@ -120561,6 +120565,18 @@ class XMIConstraints {
 
     markAsInverse(id) {
         this.ownedRules.push(this.createXMIOwnedRule("Inverse", id));
+    }
+
+    markAsExtra(id, values) {
+        let extra = "EXTRA";
+        for(let i = 0; i < values.length; i++) {
+            let value = this.xmipref.getPrefixedTermOfUri(values[i]);
+            if(value === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                value = "a";
+            }
+            extra += " " + value;
+        }
+        this.ownedRules.push(this.createXMIOwnedRule(extra, id));
     }
 
     createXMIOwnedRule(name, id) {
@@ -120758,7 +120774,7 @@ class XMIGenerator {
         this.xmipref = new XMIPrefixes(uniqid, IRIManager);
         this.xmicard = new XMICardinality(uniqid);
         this.xmiasoc = new XMIAssociations(uniqid, this.shm, this.xmipref, this.xmicard);
-        this.xmicon = new XMIConstraints(uniqid);
+        this.xmicon = new XMIConstraints(uniqid, this.xmipref);
         this.xmienum = new XMIEnumerations(uniqid, this.xmipref, this.xmicard);
         this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
 

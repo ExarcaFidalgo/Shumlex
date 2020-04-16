@@ -1,8 +1,9 @@
 class XMIConstraints {
 
-    constructor (unid) {
+    constructor (unid, xmipref) {
         this.ownedRules = [];
         this.unid = unid;
+        this.xmipref = xmipref;
     }
 
     createDependentOwnedRules(){
@@ -50,6 +51,18 @@ class XMIConstraints {
 
     markAsInverse(id) {
         this.ownedRules.push(this.createXMIOwnedRule("Inverse", id));
+    }
+
+    markAsExtra(id, values) {
+        let extra = "EXTRA";
+        for(let i = 0; i < values.length; i++) {
+            let value = this.xmipref.getPrefixedTermOfUri(values[i]);
+            if(value === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                value = "a";
+            }
+            extra += " " + value;
+        }
+        this.ownedRules.push(this.createXMIOwnedRule(extra, id));
     }
 
     createXMIOwnedRule(name, id) {
