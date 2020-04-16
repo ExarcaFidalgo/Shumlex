@@ -1431,5 +1431,89 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex18() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:parent {\n" +
+            "\t\t:gender [:Male ]\n" +
+            "} ;\n" +
+            "\t:parent {\n" +
+            "\t\t:gender [:Female ]\n" +
+            "} ;\n" +
+            "}\n" +
+            "\n";
+    }
+
+    static getXMI18() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k92phah7\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92phahc\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k92phahd\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k92phahe\" name=\":parent\" visibility=\"public\" type=\"k92phahf\" association=\"k92phahg\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k92phahh\" name=\":parent\" visibility=\"public\" type=\"k92phahi\" association=\"k92phahj\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92phahg\" memberEnd=\"k92phahe k92phahk\">\n" +
+            "\t<ownedEnd xmi:id=\"k92phahk\" visibility=\"public\" type=\"k92phahc\" association=\"k92phahg\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92phahj\" memberEnd=\"k92phahh k92phahl\">\n" +
+            "\t<ownedEnd xmi:id=\"k92phahl\" visibility=\"public\" type=\"k92phahc\" association=\"k92phahj\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92phahf\" name=\"_:1\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92phahn\" name=\":gender\" visibility=\"public\" type=\"k92phahm\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k92phahi\" name=\"_:2\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92phahp\" name=\":gender\" visibility=\"public\" type=\"k92phaho\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92phah8\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k92phah9\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92phaha\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k92phahb\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92phahm\" name=\":gender\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92phahq\" name=\":Male\"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92phaho\" name=\":gender\">\n" +
+            "\n" +
+            "\t<ownedLiteral xmi:id=\"k92phahr\" name=\":Female\"/>\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
+
+    static getGenShex18() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:parent @_:1;\n" +
+            "\t:parent @_:2;\n" +
+            "}\n" +
+            "\n" +
+            "_:1 {\n" +
+            "\t:gender [:Male ];\n" +
+            "}\n" +
+            "\n" +
+            "_:2 {\n" +
+            "\t:gender [:Female ];\n" +
+            "}\n" +
+            "\n";
+    }
 }
 module.exports = TestRepository;

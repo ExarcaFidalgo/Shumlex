@@ -107,6 +107,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI17()));
     });
 
+    test('Propiedades repetidas', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex18());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI18()));
+    });
+
 
 });
 
@@ -212,6 +218,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI17());
         expect(shex)
             .toEqual(TestRep.getShex17());
+    });
+
+    test('Propiedades repetidas', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI18());
+        expect(shex)
+            .toEqual(TestRep.getGenShex18());
     });
 
 });

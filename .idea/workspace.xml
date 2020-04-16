@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/helsreach.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/helsreach.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/testrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/testrepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi/XMIClass.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/XMIClass.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi/XMIConstraints.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/XMIConstraints.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xmi/XMIClass.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-179">
+            <state relative-caret-position="374">
               <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
             </state>
           </provider>
@@ -40,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/helsreach.test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="213" column="38" selection-start-line="213" selection-start-column="38" selection-end-line="213" selection-end-column="38" />
+            <state relative-caret-position="170">
+              <caret line="223" column="54" selection-start-line="223" selection-start-column="54" selection-end-line="223" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -50,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/test/testrepository.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
-              <caret line="1360" column="18" selection-start-line="1360" selection-start-column="18" selection-end-line="1360" selection-end-column="18" />
+              <caret line="1435" column="18" selection-start-line="1435" selection-start-column="18" selection-end-line="1435" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -297,18 +294,18 @@
       <workItem from="1586944313713" duration="6668000" />
       <workItem from="1586963951905" duration="3240000" />
       <workItem from="1587027690053" duration="2662000" />
-      <workItem from="1587034681710" duration="1771000" />
+      <workItem from="1587034681710" duration="2513000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237641000" />
+    <option name="totallyTimeSpent" value="238383000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -320,7 +317,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3778802" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3778802" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -635,22 +632,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xmi/XMIClass.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
+        <state relative-caret-position="374">
           <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/helsreach.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="213" column="38" selection-start-line="213" selection-start-column="38" selection-end-line="213" selection-end-column="38" />
+        <state relative-caret-position="170">
+          <caret line="223" column="54" selection-start-line="223" selection-start-column="54" selection-end-line="223" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/testrepository.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
-          <caret line="1360" column="18" selection-start-line="1360" selection-start-column="18" selection-end-line="1360" selection-end-column="18" />
+          <caret line="1435" column="18" selection-start-line="1435" selection-start-column="18" selection-end-line="1435" selection-end-column="18" />
         </state>
       </provider>
     </entry>
