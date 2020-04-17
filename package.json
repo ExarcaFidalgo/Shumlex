@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "browserify js/editor.js > main.js",
-    "test": "jest --coverage helsreach.test.js"
+    "test": "jest --coverage shex-xmi.test.js xmi-shex.test.js"
   },
   "bin": {},
   "repository": {

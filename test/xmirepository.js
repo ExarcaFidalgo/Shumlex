@@ -1,4 +1,4 @@
-class TestRepository {
+class Xmirepository {
 
     static removeUniqueIDs(text) {
         return text.replace(/xmi:id="[0-9a-zA-Z]+"/g, "xmi:id=\"\"")
@@ -7,15 +7,6 @@ class TestRepository {
             .replace(/memberEnd="[ 0-9a-zA-Z]+"/g, "memberEnd=\"\"")
             .replace(/general="[0-9a-zA-Z]+"/g, "general=\"\"")
             .replace(/constrainedElement="[0-9a-zA-Z]+"/g, "constrainedElement=\"\"");
-    }
-
-    static getShex1() {
-        return "prefix : <https://schema.org/>\n" +
-            "base <http://example.org/>\n\n"
-            + ":User {\n" +
-            "}\n\n"
-            + "<TypeTest> {\n" +
-            "}\n\n";
     }
 
     static getXMI1() {
@@ -31,33 +22,6 @@ class TestRepository {
             "\t<ownedLiteral xmi:id=\"k8fsti2q\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>"
-    }
-
-    static getShex2() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n\n"
-            + ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int;\n" +
-            "}\n\n"
-            + "<TypeTest> {\n" +
-            "\t:z xsd:string;\n" +
-            "\t:b xsd:date;\n" +
-            "\t:c xsd:time;\n" +
-            "\t:d xsd:dateTime;\n" +
-            "\t:e xsd:duration;\n" +
-            "\t:f xsd:byte;\n" +
-            "\t:g xsd:decimal;\n" +
-            "\t:h xsd:int;\n" +
-            "\t:i xsd:integer;\n" +
-            "\t:j xsd:long;\n" +
-            "\t:k xsd:short;\n" +
-            "\t:l xsd:boolean;\n" +
-            "\t:m xsd:double;\n" +
-            "\t:n xsd:float;\n" +
-            "\t:xyz xsd:invent;\n" +
-            "}\n\n";
     }
 
     static getXMI2() {
@@ -149,37 +113,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex3() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:knows @:User;\n" +
-            "\t:worksFor @:Company;\n" +
-            "\t:buys @<Product> {1,10};\n" +
-            "}\n" +
-            "\n" +
-            ":Company {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:hasEmployee @:User *;\n" +
-            "\t:possess @<Product> {5,};\n" +
-            "}\n" +
-            "\n" +
-            "<Product> {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:manufacturer @<Organization> +;\n" +
-            "}\n" +
-            "\n" +
-            "<Organization> {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:isPartOf @<Organization> ?;\n" +
-            "\t:hasDirectives @:User {5};\n" +
-            "}\n" +
-            "\n"
-    }
-
     static getXMI3() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -265,23 +198,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex4() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "\t:gender [:Male :Female \"Wo\" 99 \"+34\"~ ];\n" +
-            "\t:id .;\n" +
-            "}\n\n" +
-            ":Spanish {\n" +
-            "\t:country [:Spain ];\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI4() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -333,55 +249,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex5() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser @:User AND {\n" +
-            "\t:titancode xsd:string;\n" +
-            "}\n" +
-            "\n" +
-            ":VIPUser EXTRA a { \n" +
-            "\ta @:User; \n" +
-            "}\n" +
-            "\n";
-    }
-
-    static getGenShex5() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
-            "\t:titancode xsd:string;\n" +
-            "}\n" +
-            "\n" +
-            ":VIPUser EXTRA a {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI5() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -419,68 +286,6 @@ class TestRepository {
             "\t<ownedLiteral xmi:id=\"k92zxa46\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex6() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "}\n" +
-            "\n" +
-            "<Citizen> {\n" +
-            "\t:id .;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser {\n" +
-            "\ta [:User];\n" +
-            "\ta [<Citizen>];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser @:User AND @<Citizen> AND {\n" +
-            "    :titancode xsd:string;\n" +
-            "}\n" +
-            "\n" +
-            ":VIPUser EXTRA a {\n" +
-            "  a @:User;\n" +
-            "  a @<Citizen>;\n" +
-            "}\n" +
-            "\n";
-    }
-
-    static getGenShex6() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "}\n" +
-            "\n" +
-            "<Citizen> {\n" +
-            "\t:id .;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser {\n" +
-            "\ta [:User];\n" +
-            "\ta [<Citizen>];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
-            "\ta [<Citizen>];\n" +
-            "\t:titancode xsd:string;\n" +
-            "}\n" +
-            "\n" +
-            ":VIPUser EXTRA a {\n" +
-            "\ta [:User];\n" +
-            "\ta [<Citizen>];\n" +
-            "}\n" +
-            "\n";
     }
 
     static getXMI6() {
@@ -530,38 +335,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex7() {
-        return "prefix : <https://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:aa IRI;\n" +
-            "\t:b Literal ?;\n" +
-            "\t:c BNode;\n" +
-            "\t:d NonLiteral;\n" +
-            "\t:e iri;\n" +
-            "\t:f bnode;\n" +
-            "\t:g nonliteral;\n" +
-            "\t:h literal;\n" +
-            "}\n";
-    }
-
-    static getGenShex7() {
-        return "prefix : <https://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:aa IRI;\n" +
-            "\t:b Literal ?;\n" +
-            "\t:c BNode;\n" +
-            "\t:d NonLiteral;\n" +
-            "\t:e IRI;\n" +
-            "\t:f BNode;\n" +
-            "\t:g NonLiteral;\n" +
-            "\t:h Literal;\n" +
-            "}\n\n";
-    }
-
     static getXMI7() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -602,50 +375,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex8() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User IRI {\n" +
-            "  :name xsd:string\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "    a [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser @:User AND NonLiteral AND{\n" +
-            "}\n" +
-            "\n" +
-            "<Product> BNode\n" +
-            "\n" +
-            "<AThing> IRI\n";
-    }
-
-    static getGenShex8() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User IRI {\n" +
-            "\t:name xsd:string;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser NonLiteral AND {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n" +
-            "<Product> BNode AND {\n" +
-            "}\n" +
-            "\n" +
-            "<AThing> IRI\n\n";
     }
 
     static getXMI8() {
@@ -696,22 +425,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex9() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string /[a-z]+/;\n" +
-            "\t:age xsd:int MinInclusive 18 ?;\n" +
-            "\t:c xsd:int TotalDigits 3;\n" +
-            "\t:d xsd:int FractionDigits 4;\n" +
-            "\t:e xsd:string Length 6;\n" +
-            "\t:f xsd:string MinLength 3;\n" +
-            "\t:g xsd:string MaxLength 15;\n" +
-            "}\n\n";
     }
 
     static getXMI9() {
@@ -778,20 +491,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex10() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix codes: <http://example.codes/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":Product {\n" +
-            "\t:status [codes:~ - codes:unknown - codes:bad.~  \"111\" ];\n" +
-            "\t:phone [\"+34\"~ - \"+3468031\" - \"+3467182\"~  ];\n" +
-            "\t:quantity [99~ - 9987 - 991~  ];\n" +
-            "\t:url [codes:Personal~ ];\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI10() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -836,19 +535,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex11() {
-        return "prefix codes: <http://example.codes/>\n" +
-            "prefix : <http://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":Product {\n" +
-            "\t:status [. - codes:bad  ];\n" +
-            "\t:name [. - \"Trademark\"  ];\n" +
-            "\t:price [. - 66  ];\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI11() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -882,19 +568,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex12() {
-        return "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "prefix : <http://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":HomePage IRI\n" +
-            "\n" +
-            ":CanVoteAge xsd:integer MinInclusive 18 TotalDigits 3\n" +
-            "\n" +
-            ":Special :custom\n" +
-            "\n";
     }
 
     static getXMI12() {
@@ -933,29 +606,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex13() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":FrenchProduct {\n" +
-            "\t:label [@fr  ];\n" +
-            "}\n" +
-            "\n" +
-            ":EnglishProduct {\n" +
-            "\t:label [@en~  ];\n" +
-            "}\n" +
-            "\n" +
-            ":SpanishProduct {\n" +
-            "\t:label [@es~ - @es-AR - @es-ES  ];\n" +
-            "}\n" +
-            "\n" +
-            ":AnyProduct {\n" +
-            "\t:label [. - @kz  ];\n" +
-            "}\n" +
-            "\n";
     }
 
     static getXMI13() {
@@ -1004,37 +654,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex14() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "( \n" +
-            "\t:givenName xsd:string;\n" +
-            "\t:familyName xsd:string; ) ? ;\n" +
-            "( \n" +
-            "\t:has @<Something> {2,};\n" +
-            "\t:c xsd:string; ) * ;\n" +
-            "\t:owns @:Garage;\n" +
-            "}\n" +
-            "\n" +
-            ":Garage {\n" +
-            "( \n" +
-            "\t<AE86> xsd:string;\n" +
-            "( \n" +
-            "\t<Levin> xsd:string;\n" +
-            "\t<Cilinders> xsd:int; ) ? ;\n" +
-            "( \n" +
-            "\t<Trueno> xsd:string;\n" +
-            "\t<Cilinders> xsd:int; ) ? ; ) + ;\n" +
-            "}\n" +
-            "\n" +
-            "<Something> {\n" +
-            "}\n\n";
     }
 
     static getXMI14() {
@@ -1144,28 +763,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex15() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string; |\n" +
-            "( \n" +
-            "\t:givenName xsd:string +;\n" +
-            "\t:familyName xsd:string; ) ;\n" +
-            "}\n" +
-            "\n" +
-            ":Car {\n" +
-            "\t:model xsd:string;\n" +
-            " (\n" +
-            "\t:turbo xsd:string; |\n" +
-            "\t:misfiring xsd:string; |\n" +
-            "\t:atm xsd:string;)  {1,2};\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI15() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1233,31 +830,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex16() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            "\n" +
-            ":Car {\n" +
-            "\t:name xsd:string ;\n" +
-            "\t:belongs @_:1\n" +
-            "}\n" +
-            "\n" +
-            "_:1 { a [ :Garage ] }\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string ;\n" +
-            "\t:worksFor {\n" +
-            "\t\ta [ :Company];\n" +
-            "}\n" +
-            "}\n" +
-            "\n" +
-            ":GreatGrandson {\n" +
-            ":parent { :parent { :parent . + } + }+ ;\n" +
-            "}\n";
-    }
-
     static getXMI16() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1320,67 +892,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getGenShex16() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":Car {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:belongs @_:1;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
-            "\ta [:Garage];\n" +
-            "}\n" +
-            "\n" +
-            ":Garage {\n" +
-            "}\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:worksFor @_:2;\n" +
-            "}\n" +
-            "\n" +
-            "_:2 {\n" +
-            "\ta [:Company];\n" +
-            "}\n" +
-            "\n" +
-            ":Company {\n" +
-            "}\n" +
-            "\n" +
-            ":GreatGrandson {\n" +
-            "\t:parent @_:3 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:3 {\n" +
-            "\t:parent @_:4 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:4 {\n" +
-            "\t:parent . +;\n" +
-            "}\n" +
-            "\n";
-    }
-
-    static getShex17() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User IRI CLOSED {\n" +
-            "\t:name xsd:string MaxLength 3;\n" +
-            "\t:age xsd:int ?;\n" +
-            "\t:gender [:Male :Female ];\n" +
-            "\t:knows @:User;\n" +
-            "}\n" +
-            "\n" +
-            ":Company CLOSED {\n" +
-            "\t:name xsd:string;\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI17() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1438,23 +949,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex18() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:parent {\n" +
-            "\t\t:gender [:Male ]\n" +
-            "} ;\n" +
-            "\t:parent {\n" +
-            "\t\t:gender [:Female ]\n" +
-            "} ;\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI18() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1501,47 +995,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getGenShex18() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:parent @_:1;\n" +
-            "\t:parent @_:2;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
-            "\t:gender [:Male ];\n" +
-            "}\n" +
-            "\n" +
-            "_:2 {\n" +
-            "\t:gender [:Female ];\n" +
-            "}\n" +
-            "\n";
-    }
-
-    static getShex19() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":Person {\n" +
-            "}\n" +
-            "\n" +
-            ":User {\n" +
-            "\t^a [:Person];\n" +
-            "\t^:name xsd:string;\n" +
-            "\t^:gender [:Male :Female ];\n" +
-            "}\n" +
-            "\n" +
-            ":Company {\n" +
-            "\t^:worksFor @:User +;\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI19() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1583,33 +1036,6 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getShex20() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":FollowSpaniards EXTRA :follows {\n" +
-            "\t:follows { \n" +
-            "      :nationality [:Spain] \n" +
-            "    }+\n" +
-            "}\n";
-    }
-
-    static getGenShex20() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":FollowSpaniards EXTRA :follows {\n" +
-            "\t:follows @_:1 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
-            "\t:nationality [:Spain ];\n" +
-            "}\n" +
-            "\n";
-    }
-
     static getXMI20() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1640,27 +1066,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex21() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t$:name (\n" +
-            "\t:name .; |\n" +
-            "( \n" +
-            "\t:givenName .;\n" +
-            "\t:familyName .; ) ;) ;\n" +
-            "\t:email IRI;\n" +
-            "}\n" +
-            "\n" +
-            ":Employee {\n" +
-            "\t&:name;\n" +
-            "\t:employeeId .;\n" +
-            "}\n" +
-            "\n"
     }
 
     static getXMI21() {
@@ -1717,27 +1122,6 @@ class TestRepository {
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
-    }
-
-    static getShex22() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User { :name xsd:string ; :owns IRI }\n" +
-            "AND { :owns @:Product }\n" +
-            "\n" +
-            ":Titanuser @:User AND {\n" +
-            ":titancode xsd:string;\n" +
-            "} AND { :owns Literal }\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "a [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Product {\n" +
-            ":productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10\n" +
-            "}";
     }
 
     static getXMI22() {
@@ -1797,34 +1181,5 @@ class TestRepository {
             "</uml:Model>";
     }
 
-    static getGenShex22() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:owns IRI;\n" +
-            "\t:owns @:Product;\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
-            "\t:titancode xsd:string;\n" +
-            "\t:owns Literal;\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "\ta [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Product {\n" +
-            "\t:productId xsd:string MinLength 5 MaxLength 10;\n" +
-            "}\n" +
-            "\n";
-    }
-
-
-
 }
-module.exports = TestRepository;
+module.exports = Xmirepository;
