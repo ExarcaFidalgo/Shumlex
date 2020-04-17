@@ -8,10 +8,13 @@ class XMIPrimitiveAttributes {
         this.xmicard = xmicard;
     }
 
-    createXMIPrimAttribute(name, type, min, max, valueExpr) {
+    createXMIPrimAttribute(name, type, min, max, valueExpr, id) {
         let xmiType = this.xmitype.createXMIType(type);
         let card = this.xmicard.createXMICardinality(min, max);
         let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
 
         this.xmicon.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
@@ -42,10 +45,14 @@ class XMIPrimitiveAttributes {
             + '\t</ownedAttribute>'
     }
 
-    createXMIKindAttribute(name, kind, min, max) {
+    createXMIKindAttribute(name, kind, min, max, id) {
         let nkind = this.xmitype.findNodeKind(kind);
         let card = this.xmicard.createXMICardinality(min, max);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
+        let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
             + name
             + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
             + card

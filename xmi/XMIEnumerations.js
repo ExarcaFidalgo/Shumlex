@@ -7,11 +7,15 @@ class XMIEnumerations {
         this.xmicard = xmicard;
     }
 
-    createXMIEnumAttribute(name, values, min, max) {
+    createXMIEnumAttribute(name, values, min, max, id) {
         let card = this.xmicard.createXMICardinality(min, max);
         let enumer = { id: this.unid(), name: name, values: values};
         this.saveEnum(enumer);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
+        let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
             + name
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card

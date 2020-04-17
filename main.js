@@ -120354,7 +120354,7 @@ class XMIAttributes {
         return attrs;
     }
 
-    determineTypeOfExpression(expr) {
+    determineTypeOfExpression(expr, id) {
         let inverse = (expr.inverse === true ? "^" : "");
         let name = inverse + this.xmipref.getPrefixedTermOfUri(expr.predicate);
         if(!expr.valueExpr) {
@@ -120366,13 +120366,17 @@ class XMIAttributes {
                 return this.createXMIGeneralization(list, expr.inverse);
             }
             if(expr.valueExpr.values) {
-                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max);
+                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max, id);
             }
             if(expr.valueExpr.nodeKind) {
-                return this.xmiprim.createXMIKindAttribute(name, expr.valueExpr.nodeKind, expr.min, expr.max);
+                return this.xmiprim.createXMIKindAttribute(name, expr.valueExpr.nodeKind, expr.min, expr.max, id);
             }
-            return this.createXMIPrimAttribute(name, expr.valueExpr.datatype, expr.min, expr.max,
-                expr.valueExpr);
+            if(expr.valueExpr.datatype) {
+                return this.createXMIPrimAttribute(name, expr.valueExpr.datatype, expr.min, expr.max,
+                    expr.valueExpr, id);
+            }
+            this.xmicon.checkFacets(expr.valueExpr, id);
+            return "";
         }
         else if (expr.valueExpr.type === "ShapeRef") {
             if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
@@ -120385,6 +120389,15 @@ class XMIAttributes {
             this.shm.incrementBlank();
             let ref = "_:" + this.shm.getCurrentBlank();
             return this.createSubClass(name, ref, expr.valueExpr.expression, expr.min, expr.max);
+        }
+        else if (expr.valueExpr.type === "ShapeAnd") {
+            let and = "";
+            let id = this.unid();
+            for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
+                let xp = { predicate: expr.predicate, valueExpr: expr.valueExpr.shapeExprs[i]};
+                and += this.determineTypeOfExpression(xp, id);
+            }
+            return and;
         }
     }
 
@@ -120402,8 +120415,12 @@ class XMIAttributes {
         return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
     }
 
-    createXMIPrimAttribute(name, type, min, max, valueExpr) {
-        return this.xmiprim.createXMIPrimAttribute(name, type, min, max, valueExpr);
+    createXMIPrimAttribute(name, type, min, max, valueExpr, id) {
+        return this.xmiprim.createXMIPrimAttribute(name, type, min, max, valueExpr, id);
+    }
+
+    createXMIKindAttribute(name, kind, min, max, id) {
+        return this.xmiprim.createXMIKindAttribute(name, kind, min, max, id);
     }
 
     createXMIGeneralization(parents, inv) {
@@ -120411,8 +120428,8 @@ class XMIAttributes {
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
                 if(parents[parent].type === "NodeConstraint"){
-                    gens += this.createXMIPrimAttribute("nodeKind",
-                        this.sxmit.adequateNodeKindPresentation(parents[parent].nodeKind));
+                    gens += this.createXMIKindAttribute("nodeKind",
+                        parents[parent].nodeKind)
                 }
                 else {
                     let sh = this.shm.findShape(parents[parent].reference, true);
@@ -120494,28 +120511,41 @@ class XMIClass {
     createXMIClass(name, shape) {
         let sh = this.shm.findShape(name);
         let expression = shape.expression;
-        let nodekind = this.XMITypes.adequateNodeKindPresentation(shape.nodeKind);
+        let nodekind = shape.nodeKind;
         let generalizations = "";
-        if(shape.type === "ShapeAnd") {
-            let shExpr = shape.shapeExprs.pop();
-            expression = shExpr.expression;
-            generalizations = this.xmiatt.createXMIGeneralization(shape.shapeExprs);
-            if(shExpr.closed === true) {
-                this.xmicon.markAsClosed(sh.id);
-            }
-        }
-        let nk = nodekind === undefined ? "" : this.xmiatt.createXMIPrimAttribute("nodeKind", nodekind);
+        let nk = nodekind === undefined ? "" : this.xmiatt.createXMIKindAttribute("nodeKind", nodekind);
         let dt = shape.datatype === undefined ? "" : this.xmiatt.createXMIPrimAttribute("datatype",
             shape.datatype);
-        this.xmicon.checkFacets(shape, sh.id);
         let prName = this.xmipref.getPrefixedTermOfUri(name);
         if(prName.includes("_:")) {
             this.shm.incrementBlank();
         }
+        let ats = "";
+        if(shape.type === "ShapeAnd") {
+            let exprsForGen = [];
+            for (let i = 0; i < shape.shapeExprs.length; i++) {
+                if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
+                    || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
+                    exprsForGen.push(shape.shapeExprs[i]);
+                }
+                else {  //Conjunción de formas - :User { ... } AND { ... }
+                        ats += this.xmiatt.createXMIAttributes(shape.shapeExprs[i].expression, prName);
+                        if(shape.shapeExprs[i].closed === true) {
+                            this.xmicon.markAsClosed(sh.id);
+                        }
+                }
+            }
+            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen);
+        } else {
+            ats = this.xmiatt.createXMIAttributes(expression, prName);
+        }
+
+        this.xmicon.checkFacets(shape, sh.id);
+
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + prName
             + '">' +
-            this.xmiatt.createXMIAttributes(expression, prName) +
+            ats +
             nk + dt +
             generalizations + '\n</packagedElement>';
 
@@ -120627,11 +120657,15 @@ class XMIEnumerations {
         this.xmicard = xmicard;
     }
 
-    createXMIEnumAttribute(name, values, min, max) {
+    createXMIEnumAttribute(name, values, min, max, id) {
         let card = this.xmicard.createXMICardinality(min, max);
         let enumer = { id: this.unid(), name: name, values: values};
         this.saveEnum(enumer);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
+        let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
             + name
             + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
             + card
@@ -120987,10 +121021,13 @@ class XMIPrimitiveAttributes {
         this.xmicard = xmicard;
     }
 
-    createXMIPrimAttribute(name, type, min, max, valueExpr) {
+    createXMIPrimAttribute(name, type, min, max, valueExpr, id) {
         let xmiType = this.xmitype.createXMIType(type);
         let card = this.xmicard.createXMICardinality(min, max);
         let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
 
         this.xmicon.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
@@ -121021,10 +121058,14 @@ class XMIPrimitiveAttributes {
             + '\t</ownedAttribute>'
     }
 
-    createXMIKindAttribute(name, kind, min, max) {
+    createXMIKindAttribute(name, kind, min, max, id) {
         let nkind = this.xmitype.findNodeKind(kind);
         let card = this.xmicard.createXMICardinality(min, max);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + this.unid() + '" name="'
+        let atId = this.unid();
+        if(id !== undefined) {
+            atId = id;
+        }
+        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
             + name
             + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
             + card

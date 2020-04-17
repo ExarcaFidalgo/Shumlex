@@ -926,10 +926,10 @@ class TestRepository {
             "\t<ownedLiteral xmi:id=\"k8orwyhy\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8orwyhz\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi2\" name=\"IRI\">\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi9\" name=\":custom\">\n" +
             "\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi9\" name=\":custom\">\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi2\" name=\"IRI\">\n" +
             "\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -1401,10 +1401,10 @@ class TestRepository {
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k92pb473\" name=\"nodeKind\" visibility=\"public\" type=\"k92pb474\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<ownedRule xmi:id=\"k92pb475\" name=\"CLOSED\" constrainedElement=\"k92pb472\">\n" +
+            "<ownedRule xmi:id=\"k92pb477\" name=\"MaxLength 3\" constrainedElement=\"k92pb476\">\n" +
             "\n" +
             "</ownedRule>\n" +
-            "<ownedRule xmi:id=\"k92pb477\" name=\"MaxLength 3\" constrainedElement=\"k92pb476\">\n" +
+            "<ownedRule xmi:id=\"k92pb475\" name=\"CLOSED\" constrainedElement=\"k92pb472\">\n" +
             "\n" +
             "</ownedRule>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k92pb47d\" memberEnd=\"k92pb47c k92pb47e\">\n" +
@@ -1718,6 +1718,113 @@ class TestRepository {
             "</packagedElement>\n" +
             "</uml:Model>";
     }
+
+    static getShex22() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User { :name xsd:string ; :owns IRI }\n" +
+            "AND { :owns @:Product }\n" +
+            "\n" +
+            ":Titanuser @:User AND {\n" +
+            ":titancode xsd:string;\n" +
+            "} AND { :owns Literal }\n" +
+            "\n" +
+            ":Ultrauser Literal AND {\n" +
+            "a [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Product {\n" +
+            ":productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10\n" +
+            "}";
+    }
+
+    static getXMI22() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"k94hbte8\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k94hbtee\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"k94hbtef\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k94hbteh\" name=\":owns\" visibility=\"public\" type=\"k94hbteg\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"k94hbtei\" name=\":owns\" visibility=\"public\" type=\"k94hbtej\" association=\"k94hbtek\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"k94hbtek\" memberEnd=\"k94hbtei k94hbtel\">\n" +
+            "\t<ownedEnd xmi:id=\"k94hbtel\" visibility=\"public\" type=\"k94hbtee\" association=\"k94hbtek\"/>\n" +
+            "</packagedElement>\n" +
+            "\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k94hbtem\" name=\":Titanuser\">\n" +
+            "\t<ownedAttribute xmi:id=\"k94hbten\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k94hbtep\" name=\":owns\" visibility=\"public\" type=\"k94hbteo\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<generalization xmi:id=\"k94hbteq\" general=\"k94hbtee\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k94hbter\" name=\":Ultrauser\">\n" +
+            "\t<generalization xmi:id=\"k94hbtes\" general=\"k94hbtee\"/>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k94hbtet\" name=\"nodeKind\" visibility=\"public\" type=\"k94hbteo\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k94hbtej\" name=\":Product\">\n" +
+            "\t<ownedAttribute xmi:id=\"k94hbteu\" name=\":productId\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"k94hbtew\" name=\"MinLength 5\" constrainedElement=\"k94hbteu\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<ownedRule xmi:id=\"k94hbtex\" name=\"MaxLength 10\" constrainedElement=\"k94hbteu\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k94hbtea\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"k94hbteb\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k94hbtec\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"k94hbted\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k94hbteg\" name=\"IRI\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k94hbteo\" name=\"Literal\">\n" +
+            "\n" +
+            "</packagedElement>\n" +
+            "</uml:Model>";
+    }
+
+    static getGenShex22() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:owns IRI;\n" +
+            "\t:owns @:Product;\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser {\n" +
+            "\ta [:User];\n" +
+            "\t:titancode xsd:string;\n" +
+            "\t:owns Literal;\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser Literal AND {\n" +
+            "\ta [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Product {\n" +
+            "\t:productId xsd:string MinLength 5 MaxLength 10;\n" +
+            "}\n" +
+            "\n";
+    }
+
+
 
 }
 module.exports = TestRepository;

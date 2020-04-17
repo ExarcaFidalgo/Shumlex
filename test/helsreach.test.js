@@ -131,6 +131,12 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI21()));
     });
 
+    test('Conjunciones', () => {
+        let xml = shexparser.parseShEx(TestRep.getShex22());
+        expect(TestRep.removeUniqueIDs(xml))
+            .toEqual(TestRep.removeUniqueIDs(TestRep.getXMI22()));
+    });
+
 
 });
 
@@ -260,6 +266,12 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         let shex = xmiparser.parseXMI(TestRep.getXMI21());
         expect(shex)
             .toEqual(TestRep.getShex21());
+    });
+
+    test('Conjunciones', () => {
+        let shex = xmiparser.parseXMI(TestRep.getXMI22());
+        expect(shex)
+            .toEqual(TestRep.getGenShex22());
     });
 
 });

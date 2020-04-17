@@ -14,28 +14,41 @@ class XMIClass {
     createXMIClass(name, shape) {
         let sh = this.shm.findShape(name);
         let expression = shape.expression;
-        let nodekind = this.XMITypes.adequateNodeKindPresentation(shape.nodeKind);
+        let nodekind = shape.nodeKind;
         let generalizations = "";
-        if(shape.type === "ShapeAnd") {
-            let shExpr = shape.shapeExprs.pop();
-            expression = shExpr.expression;
-            generalizations = this.xmiatt.createXMIGeneralization(shape.shapeExprs);
-            if(shExpr.closed === true) {
-                this.xmicon.markAsClosed(sh.id);
-            }
-        }
-        let nk = nodekind === undefined ? "" : this.xmiatt.createXMIPrimAttribute("nodeKind", nodekind);
+        let nk = nodekind === undefined ? "" : this.xmiatt.createXMIKindAttribute("nodeKind", nodekind);
         let dt = shape.datatype === undefined ? "" : this.xmiatt.createXMIPrimAttribute("datatype",
             shape.datatype);
-        this.xmicon.checkFacets(shape, sh.id);
         let prName = this.xmipref.getPrefixedTermOfUri(name);
         if(prName.includes("_:")) {
             this.shm.incrementBlank();
         }
+        let ats = "";
+        if(shape.type === "ShapeAnd") {
+            let exprsForGen = [];
+            for (let i = 0; i < shape.shapeExprs.length; i++) {
+                if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
+                    || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
+                    exprsForGen.push(shape.shapeExprs[i]);
+                }
+                else {  //Conjunción de formas - :User { ... } AND { ... }
+                        ats += this.xmiatt.createXMIAttributes(shape.shapeExprs[i].expression, prName);
+                        if(shape.shapeExprs[i].closed === true) {
+                            this.xmicon.markAsClosed(sh.id);
+                        }
+                }
+            }
+            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen);
+        } else {
+            ats = this.xmiatt.createXMIAttributes(expression, prName);
+        }
+
+        this.xmicon.checkFacets(shape, sh.id);
+
         let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
             + prName
             + '">' +
-            this.xmiatt.createXMIAttributes(expression, prName) +
+            ats +
             nk + dt +
             generalizations + '\n</packagedElement>';
 
