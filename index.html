@@ -1,89 +1,70 @@
 <!doctype html>
 
-<title>ShEx-XMI Parser</title>
+<title>Helsreach</title>
 <meta charset="utf-8"/>
 
-<link rel="stylesheet" href="./codemirror-5.51.0/lib/codemirror.css">
-<link rel="stylesheet" href="./codemirror-5.51.0/theme/ayu-mirage.css">
-<link rel="stylesheet" href="./codemirror-5.51.0/theme/dracula.css">
-<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+<link rel="stylesheet" href="./css/app.css">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script src="./codemirror-5.51.0/lib/codemirror.js"></script>
-<script src="./codemirror-5.51.0/mode/xml/xml.js"></script>
-<script src="./codemirror-5.51.0/mode/shex/shex.js"></script>
+<body>
+<div class="header">
+    <img src="img/ShexLogo.png" alt="logo" />
+    <h1>Proyecto Helsreach</h1>
+</div>
+<div class="navbar">
+    <a href="./html/shextoxmi.html">ShEx a XMI</a>
+    <a href="./html/xmitoshex.html">XMI a ShEx</a>
+    <a href="#">Generar UML</a>
+    <a href="#">Generar grafo</a>
+    <div class="subnav">
+        <button class="subnavbtn">Cargar ejemplos <i class="fa fa-caret-down"></i></button>
+        <div class="subnav-content">
+            <a href="./html/shextoxmi.html?basic">ShEx básico</a>
+            <a href="./html/shextoxmi.html?herencia">Herencia</a>
+            <a href="./html/shextoxmi.html?resnod">Restr. tipo nodal</a>
+            <a href="./html/shextoxmi.html?facetas">Facetas</a>
+            <a href="./html/shextoxmi.html?rexcl">Rangos y exclusiones</a>
+            <a href="./html/shextoxmi.html?cgen">Conjuntos genéricos</a>
+            <a href="./html/shextoxmi.html?leng">Etiquetas de lenguaje</a>
+            <a href="./html/shextoxmi.html?card">Cardinalidad</a>
+            <a href="./html/shextoxmi.html?oneof">OneOf</a>
+            <a href="./html/shextoxmi.html?anid">Shapes anidadas</a>
+            <a href="./html/shextoxmi.html?closed">Shapes cerradas</a>
+            <a href="./html/shextoxmi.html?rti">Restricción triple inversa</a>
+            <a href="./html/shextoxmi.html?extra">Extra</a>
+            <a href="./html/shextoxmi.html?etiq">Expresiones etiquetadas</a>
+            <a href="./html/shextoxmi.html?conj">Conjunciones</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Configuración
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Tema claro</a>
+            <a href="#">Tema oscuro</a>
+        </div>
+    </div>
+</div>
 
-<style>
-    .CodeMirror { border: 1px solid #eee; }
-</style>
-
-<section id=demo>
-  <h2>ShEx</h2>
-<textarea id=shextext>
-prefix : <https://schema.org/>
-prefix xsd: <http://www.w3.org/2001/XMLSchema#>
-base <http://example.org/>
-
-:User {
-    :name xsd:string;
-    :age xsd:int ?;
-    :gender [:Male :Female];
-    :knows @:User ;
-    :worksFor @:Company ;
-    :buys @<Product> {1,10};
-}
-
-:Ultrauser {
-    a [:User];
-}
-
-:Titanuser @:User AND {
-    :titancode xsd:string;
-}
-
-:Company {
-    :name xsd:string ;
-    :hasEmployee @:User *;
-    :possess @<Product> {5,}
-}
-
-<Product> {
-    :name .;
-    :sku xsd:boolean ;
-    :manufacturer @<Organization> +
-}
-
-<Organization> {
-    :name xsd:string ;
-    :isPartOf @<Organization> ?;
-    :hasDirectives @:User {5}
-}
-</textarea>
-
-
-<button id="shextoxmi">Transformar ShEx a XMI</button>
-<button id="xmitoshex">Transformar XMI a ShEx</button>
-
-<form>
-    <textarea id=xmitext>
-    </textarea>
-</form>
-
-
-    <script>
-        var shExEditor = CodeMirror.fromTextArea(document.getElementById("shextext"), {
-            mode: "shex",
-            lineNumbers: true
-        });
-
-        var xmiEditor = CodeMirror.fromTextArea(document.getElementById("xmitext"), {
-            mode: "xml",
-            lineNumbers: true
-        });
-
-        xmiEditor.setOption("theme", "ayu-mirage");
-        shExEditor.setOption("theme", "ayu-mirage");
-    </script>
-    <script src="main.js"></script>
-
+<section>
+    <h2>Introducción</h2>
+    <p>Bienvenidos al <span class="pbold">Proyecto Helsreach</span>. El objeto del mismo consiste en elaborar una herramienta que permita
+        llevar a cabo una integración entre las Shape Expressions y UML, otorgando al usuario la capacidad de generar
+        el equivalente en UML del conjunto deseado de ShEx, o viceversa. Con este propósito, esta aplicación web
+        se organiza del modo que a continuación se describe.</p>
+    <p>Disponemos de dos secciones análogas para sendas transformaciones entre ShEx y XMI, siendo XMI el formato
+    empleado para representar UML, el cual es apto para la importación en multitud de herramientas profesionales.
+        El usuario podrá aquí aportar su entrada y obtener la correspondiente salida, siendo
+    capaz de modificar a su antojo ambas mediante el editor integrado.</p>
+    <p>De cara a facilitar una mayor comprensión y usabilidad respecto a las salidas obtenidas, posibilitamos
+    una funcionalidad de generación de UML -para visualizar los XMI que se deseen- así como de generación del grafo
+    correspondiente a un conjunto de Shape Expressions.</p>
+    <p>Si el usuario no está familiarizado con las Shape Expressions o con XMI, proporcionamos una serie de ejemplos
+    de casuística variada para ayudar en la comprensión de las mismas y su correspondencia con su contraparte.</p>
+    <p>Por último, el usuario puede personalizar determinados aspectos de la configuración de la página.</p>
 </section>
+
+
 

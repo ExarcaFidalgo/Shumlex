@@ -1,6 +1,6 @@
 const shexparser = require('../shex/ShExParser.js');
-const XMIRep = require('./xmirepository.js');
-const ShExRep = require('./shexrepository.js');
+const XMIRep = require('../repo/xmirepository.js');
+const ShExRep = require('../repo/shexrepository.js');
 
 describe('Pruebas de la transformación ShEx-XMI', () => {
 

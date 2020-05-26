@@ -1,5 +1,46 @@
 class ShExRepository {
 
+    static getShex0() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "    :name xsd:string;\n" +
+            "    :age xsd:int ?;\n" +
+            "    :gender [:Male :Female];\n" +
+            "    :knows @:User ;\n" +
+            "    :worksFor @:Company ;\n" +
+            "    :buys @<Product> {1,10};\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser {\n" +
+            "    a [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser @:User AND {\n" +
+            "    :titancode xsd:string;\n" +
+            "}\n" +
+            "\n" +
+            ":Company {\n" +
+            "    :name xsd:string ;\n" +
+            "    :hasEmployee @:User *;\n" +
+            "    :possess @<Product> {5,}\n" +
+            "}\n" +
+            "\n" +
+            "<Product> {\n" +
+            "    :name .;\n" +
+            "    :sku xsd:boolean ;\n" +
+            "    :manufacturer @<Organization> +\n" +
+            "}\n" +
+            "\n" +
+            "<Organization> {\n" +
+            "    :name xsd:string ;\n" +
+            "    :isPartOf @<Organization> ?;\n" +
+            "    :hasDirectives @:User {5}\n" +
+            "}";
+    }
+
     static getShex1() {
         return "prefix : <https://schema.org/>\n" +
             "base <http://example.org/>\n\n"
