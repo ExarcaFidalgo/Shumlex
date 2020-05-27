@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="../codemirror-5.51.0/lib/codemirror.css">
     <link rel="stylesheet" href="../codemirror-5.51.0/theme/ayu-mirage.css">
-    <link rel="stylesheet" href="../codemirror-5.51.0/theme/dracula.css">
+    <link rel="stylesheet" href="../codemirror-5.51.0/theme/xq-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
 
     <script src="../codemirror-5.51.0/lib/codemirror.js"></script>
@@ -51,8 +52,8 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="#">Tema claro</a>
-            <a href="#">Tema oscuro</a>
+            <a id="cambiarClaro">Tema claro</a>
+            <a id="cambiarOscuro">Tema oscuro</a>
         </div>
     </div>
 </div>
@@ -61,6 +62,20 @@
     <h2>XMI a ShEx</h2>
     <div class="centerdiv">
         <button id="xmitoshex" class="btn1">Generar ShEx</button>
+    </div>
+    <div class="centerdiv">
+        <div class="icon-bar">
+            <a id="borrarxmi"><i class="fa fa-trash"></i></a>
+            <a class="intercambiarxs"><i class="fa fa-arrows-h"></i></a>
+            <a id="cargarUML">UML</a>
+            <a href="#"><i class="fa fa-download"></i></a>
+        </div>
+        <div class="icon-bar">
+            <a id="borrarshex" ><i class="fa fa-trash"></i></a>
+            <a class="intercambiarxs"><i class="fa fa-arrows-h"></i></a>
+            <a id="cargarGrafo">Grafo</a>
+            <a href="#"><i class="fa fa-download"></i></a>
+        </div>
     </div>
     <div class="centerdiv">
         <textarea id=xmitext>

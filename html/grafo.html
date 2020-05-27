@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>UML Test</title>
+<title>Generación de grafo</title>
 <meta charset="utf-8"/>
 
 <link rel="stylesheet" href="../css/app.css">
@@ -11,8 +11,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
 
 <script src="../codemirror-5.51.0/lib/codemirror.js"></script>
-<script src="../codemirror-5.51.0/mode/xml/xml.js"></script>
-<script src="../codemirror-5.51.0/mode/plantuml/plantuml.js"></script>
+<script src="../codemirror-5.51.0/mode/shex/shex.js"></script>
 
 <div class="header">
     <img src="../img/ShexLogo.png" alt="logo" />
@@ -55,22 +54,22 @@
 </div>
 
 <section id=demo>
-    <h2>Generación de UML</h2>
+    <h2>Generación de grafo</h2>
     <div class="centerdiv">
-        <button id="showuml" class="btn1">Generar UML</button>
+        <button id="showgrafo" class="btn1">Generar grafo</button>
     </div>
     <div class="centerdiv">
         <div class="icon-bar">
-            <a id="borrarxmi"><i class="fa fa-trash"></i></a>
-            <a id="cargarXMIShex">Generar ShEx</a>
+            <a id="borrarshex"><i class="fa fa-trash"></i></a>
+            <a id="cargarShexXMI">Generar XMI</a>
             <a href="#"><i class="fa fa-download"></i></a>
         </div>
         <div class="icon-bar">
         </div>
     </div>
     <div class="centerdiv">
-        <textarea id=xmitext></textarea>
-        <img id="umlimg" class="displayimg" src=""/>
+        <textarea id=shextext></textarea>
+        <img id="grafimg" class="displayimg" src=""/>
     </div>
 
     </body>

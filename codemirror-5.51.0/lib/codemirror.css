@@ -7,7 +7,9 @@
   height: 650px;
   color: black;
   direction: ltr;
-  margin: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-bottom: 4em;
   width: 45%;
   float: left;
 }

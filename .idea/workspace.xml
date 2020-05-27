@@ -2,19 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/html/xmitoshex.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codemirror-5.51.0/theme/xq-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/grafo.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css" beforeDir="false" afterPath="$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/favicon-16x16.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/favicon-16x16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/shextoxmi.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/shextoxmi.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/uml.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/uml.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/xmitoshex.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/xmitoshex.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/editor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/shex-xmi.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/shex-xmi.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/shexrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/shexrepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/xmi-shex.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/xmi-shex.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/xmirepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/xmirepository.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,28 +26,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+        <entry file="file://$PROJECT_DIR$/html/grafo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="36" selection-end-column="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/editor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+            <state relative-caret-position="-820">
+              <caret line="13" column="62" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
+        <entry file="file://$PROJECT_DIR$/html/uml.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1615">
-              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+            <state relative-caret-position="952">
+              <caret line="62" column="30" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -57,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/shextoxmi.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="45" selection-end-column="60" />
+            <state relative-caret-position="541">
+              <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -66,17 +64,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/xmitoshex.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="45" column="60" selection-start-line="45" selection-start-column="60" selection-end-line="45" selection-end-column="60" />
+            <state relative-caret-position="204">
+              <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10371">
-              <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+            <state relative-caret-position="179">
+              <caret line="171" column="43" lean-forward="true" selection-start-line="171" selection-start-column="43" selection-end-line="171" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -94,7 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>save</find>
       <find>sub</find>
       <find>checkLiteralStem</find>
       <find>unid</find>
@@ -124,6 +121,7 @@
       <find>TestRep</find>
       <find>h2</find>
       <find>window.location</find>
+      <find>window</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\woest\OneDrive\Documentos\Helsreach\shex</dir>
@@ -137,8 +135,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/xmi/xmiparser.js" />
         <option value="$PROJECT_DIR$/shex/shexgen.js" />
         <option value="$PROJECT_DIR$/shex/shexenumerations.js" />
         <option value="$PROJECT_DIR$/xmi/xmigen.js" />
@@ -160,7 +156,6 @@
         <option value="$PROJECT_DIR$/uml/umleditor.js" />
         <option value="$PROJECT_DIR$/node_modules/plantuml-encoder/lib/decoder.js" />
         <option value="$PROJECT_DIR$/node_modules/plantuml-encoder/dist/plantuml-decoder.js" />
-        <option value="$PROJECT_DIR$/html/uml.html" />
         <option value="$PROJECT_DIR$/xmi/XMIAssociations.js" />
         <option value="$PROJECT_DIR$/xmi/XMIGenerator.js" />
         <option value="$PROJECT_DIR$/xmi/XMIConstraints.js" />
@@ -181,13 +176,16 @@
         <option value="$PROJECT_DIR$/test/shex-xmi.test.js" />
         <option value="$PROJECT_DIR$/test/xmi-shex.test.js" />
         <option value="$PROJECT_DIR$/repo/shexrepository.js" />
-        <option value="$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css" />
         <option value="$PROJECT_DIR$/js/ejemplos.js" />
+        <option value="$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css" />
         <option value="$PROJECT_DIR$/css/app.css" />
-        <option value="$PROJECT_DIR$/js/editor.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/codemirror-5.51.0/theme/xq-light.css" />
+        <option value="$PROJECT_DIR$/html/uml.html" />
         <option value="$PROJECT_DIR$/html/shextoxmi.html" />
         <option value="$PROJECT_DIR$/html/xmitoshex.html" />
+        <option value="$PROJECT_DIR$/html/grafo.html" />
+        <option value="$PROJECT_DIR$/js/editor.js" />
       </list>
     </option>
   </component>
@@ -203,12 +201,30 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
               <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
+              <item name="codemirror-5.51.0" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
+              <item name="codemirror-5.51.0" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Helsreach" type="462c0819:PsiDirectoryNode" />
+              <item name="codemirror-5.51.0" type="462c0819:PsiDirectoryNode" />
+              <item name="theme" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Helsreach" type="b2602c69:ProjectViewProjectNode" />
@@ -249,7 +265,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,19 +279,19 @@
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\img" />
-      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\repo" />
-      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\xmi" />
-      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\shex" />
-      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\grammar" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\html" />
       <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\test" />
       <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\shex" />
       <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\xmi" />
       <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\img" />
+      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\repo" />
+      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\xmi" />
+      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\shex" />
+      <recent name="C:\Users\woest\OneDrive\Documentos\Helsreach\grammar" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -359,17 +374,19 @@
       <workItem from="1587138849063" duration="9594000" />
       <workItem from="1590490331302" duration="3434000" />
       <workItem from="1590503078179" duration="12464000" />
+      <workItem from="1590517212565" duration="263000" />
+      <workItem from="1590578131422" duration="1590000" />
+      <workItem from="1590595921339" duration="6887000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285146000" />
+    <option name="totallyTimeSpent" value="293886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -381,7 +398,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.2596006" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.2596006" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -411,14 +428,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shex/ShExPrefixes.js" />
-    <entry file="file://$PROJECT_DIR$/shex/ShExEnumerations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shex/ShExType.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -651,74 +660,82 @@
     <entry file="file://$PROJECT_DIR$/img/ShexLogo.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/uml.html">
+    <entry file="file://$PROJECT_DIR$/js/ejemplos.js" />
+    <entry file="file://$PROJECT_DIR$/main.js" />
+    <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="51" column="64" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/ejemplos.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1380" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="66" column="19" lean-forward="true" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
+        <state relative-caret-position="187">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10371">
+        <state relative-caret-position="425">
           <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1216">
+          <caret line="255" column="25" selection-start-line="255" selection-start-column="25" selection-end-line="255" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="36" selection-end-column="65" />
+        <state relative-caret-position="272">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
+    <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/theme/xq-light.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1615">
-          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+        <state relative-caret-position="221">
+          <caret line="31" column="39" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/uml.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="62" column="30" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/grafo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-820">
+          <caret line="13" column="62" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/html/shextoxmi.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="45" selection-end-column="60" />
+        <state relative-caret-position="541">
+          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/html/xmitoshex.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="45" column="60" selection-start-line="45" selection-start-column="60" selection-end-line="45" selection-end-column="60" />
+        <state relative-caret-position="204">
+          <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+        <state relative-caret-position="179">
+          <caret line="171" column="43" lean-forward="true" selection-start-line="171" selection-start-column="43" selection-end-line="171" selection-end-column="43" />
         </state>
       </provider>
     </entry>

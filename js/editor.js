@@ -55,20 +55,41 @@ $(document).ready(function() {
     else if(ref.includes("?conj")) {
         shExEditor.setValue(repo.getShex22());
     }
+    else if(ref.includes("?load")) {
+        let shv = sessionStorage.getItem("shexvalue");
+        let xmv = sessionStorage.getItem("xmivalue");
+        if(shv && shExEditor) {
+            shExEditor.setValue(sessionStorage.getItem("shexvalue"));
+        }
+        if(xmv && xmiEditor) {
+            xmiEditor.setValue(sessionStorage.getItem("xmivalue"));
+        }
+
+    }
 });
 
-let shExEditor = CodeMirror.fromTextArea(document.getElementById("shextext"), {
-    mode: "shex",
-    lineNumbers: true
-});
+let shExEditor;
+let xmiEditor;
+let theme = sessionStorage.getItem("theme");
 
-let xmiEditor = CodeMirror.fromTextArea(document.getElementById("xmitext"), {
-    mode: "xml",
-    lineNumbers: true
-});
+if(document.getElementById("shextext") !== null) {
+    shExEditor = CodeMirror.fromTextArea(document.getElementById("shextext"), {
+        mode: "shex",
+        lineNumbers: true
+    });
+    let theme = sessionStorage.getItem("theme");
+    shExEditor.setOption("theme", theme === null ? "ayu-mirage" : theme);
+}
 
-xmiEditor.setOption("theme", "ayu-mirage");
-shExEditor.setOption("theme", "ayu-mirage");
+if(document.getElementById("xmitext") !== null) {
+    xmiEditor = CodeMirror.fromTextArea(document.getElementById("xmitext"), {
+        mode: "xml",
+        lineNumbers: true
+    });
+    xmiEditor.setOption("theme", theme === null ? "ayu-mirage" : theme);
+}
+
+
 
 $('#shextoxmi').click(shExToXMI);
 $('#xmitoshex').click(XMIToShEx);
@@ -78,7 +99,6 @@ function shExToXMI() {
 
     let parsedToXML = shexparser.parseShEx(text);
     xmiEditor.setValue(parsedToXML);
-    console.log(window.location.href)
 }
 
 function XMIToShEx() {
@@ -93,3 +113,81 @@ function generateUML() {
     $('#umlimg').attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
 }
 
+$('#borrarshex').click(borrarShex);
+
+function borrarShex() {
+    shExEditor.setValue("");
+}
+
+$('#borrarxmi').click(borrarXMI);
+
+function borrarXMI() {
+    xmiEditor.setValue("");
+}
+
+$('.intercambiarsx').click(intercambiarsx);
+$('.intercambiarxs').click(intercambiarxs);
+
+function intercambiarsx() {
+    sessionStorage.setItem("shexvalue", shExEditor.getValue());
+    sessionStorage.setItem("xmivalue", xmiEditor.getValue());
+    window.location = "./xmitoshex.html?load";
+}
+
+function intercambiarxs() {
+    sessionStorage.setItem("shexvalue", shExEditor.getValue());
+    sessionStorage.setItem("xmivalue", xmiEditor.getValue());
+    window.location = "./shextoxmi.html?load";
+}
+
+
+$('#cambiarClaro').click(cambiarTemaClaro);
+$('#cambiarOscuro').click(cambiarTemaOscuro);
+
+function cambiarTemaOscuro() {
+    if(shExEditor) {
+        shExEditor.setOption("theme", "ayu-mirage");
+    }
+    if(xmiEditor) {
+        xmiEditor.setOption("theme", "ayu-mirage");
+    }
+    sessionStorage.setItem("theme", "ayu-mirage");
+}
+
+function cambiarTemaClaro() {
+    if(shExEditor) {
+        shExEditor.setOption("theme", "xq-light");
+    }
+    if(xmiEditor) {
+        xmiEditor.setOption("theme",  "xq-light");
+    }
+    sessionStorage.setItem("theme", "xq-light")
+}
+
+$('#cargarShexXMI').click(cargarShexXMI);
+$('#cargarXMIShex').click(cargarXMIShex);
+
+function cargarShexXMI() {
+    sessionStorage.setItem("shexvalue", shExEditor.getValue());
+    sessionStorage.setItem("xmivalue", "");
+    window.location = "./shextoxmi.html?load";
+}
+
+function cargarXMIShex() {
+    sessionStorage.setItem("xmivalue", xmiEditor.getValue());
+    sessionStorage.setItem("shexvalue", "");
+    window.location = "./xmitoshex.html?load";
+}
+
+$('#cargarGrafo').click(cargarGrafo);
+$('#cargarUML').click(cargarUML);
+
+function cargarGrafo() {
+    sessionStorage.setItem("shexvalue", shExEditor.getValue());
+    window.location = "./grafo.html?load";
+}
+
+function cargarUML() {
+    sessionStorage.setItem("xmivalue", xmiEditor.getValue());
+    window.location = "./uml.html?load";
+}
