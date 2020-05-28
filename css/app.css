@@ -249,9 +249,10 @@ p {
     background-color: #4CAF50; /* Add an active/current color */
 }
 
-.displayimg {
+.displaydiv {
     width: 45%;
     height: 650px;
-    margin-left: 1.7em;
-    margin-right: 1.72em;
+    margin-left: 1.5em;
+    margin-right: 1.55em;
+    border: double black;
 }

@@ -1,5 +1,5 @@
 const xmlparser = require('xml2js');
-const shexgen = require ("../shex/ShExGenerator.js");
+const shexgen = require ("../shex/shexgen/ShExGenerator.js");
 
 class XMIParser {
 

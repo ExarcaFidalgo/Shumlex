@@ -3,6 +3,24 @@ class IRIManager {
     constructor () {
         this.prefixes = [];
         this.base = null;
+        this.iris = new Map();
+    }
+
+    saveIri(iri, id) {
+        this.iris.set(iri, id);
+    }
+
+    findIri(iri) {
+        return this.iris.get(iri);
+    }
+
+    createPrefixes (prefixes, base) {
+        for(let prefix in prefixes) {
+            if(prefixes.hasOwnProperty(prefix)) {
+                this.prefixes.push({uri: prefixes[prefix], prefix: prefix})
+            }
+        }
+        this.base = base;
     }
 
     savePrefix(pr) {
@@ -39,6 +57,15 @@ class IRIManager {
             return "base " + this.base.uri + "\n\n";
         }
         return "base <http://example.org/>\n\n";
+    }
+
+    getPrefixedTermOfUri(uri) {
+        for(let i = 0; i < this.prefixes.length; i++) {
+            if(uri.includes(this.prefixes[i].uri)) {
+                return this.prefixes[i].prefix + ":" + IRIManager.lastOfUri(this.prefixes[i].uri, uri)
+            }
+        }
+        return IRIManager.lastOfUri(this.base, uri)
     }
 
     static lastOfUri(baseuri, uri) {

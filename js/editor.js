@@ -7,6 +7,10 @@ const repo = require('../repo/shexrepository.js');
 
 const plantumlEncoder = require('plantuml-encoder');
 
+const grafo = require('./grafo.js');
+
+let shExEditor;
+let xmiEditor;
 
 $(document).ready(function() {
     let ref = window.location.href;
@@ -68,8 +72,6 @@ $(document).ready(function() {
     }
 });
 
-let shExEditor;
-let xmiEditor;
 let theme = sessionStorage.getItem("theme");
 
 if(document.getElementById("shextext") !== null) {
@@ -97,7 +99,7 @@ $('#xmitoshex').click(XMIToShEx);
 function shExToXMI() {
 	let text = shExEditor.getValue();
 
-    let parsedToXML = shexparser.parseShEx(text);
+    let parsedToXML = shexparser.parseShExToXMI(text);
     xmiEditor.setValue(parsedToXML);
 }
 
@@ -168,6 +170,7 @@ $('#cargarShexXMI').click(cargarShexXMI);
 $('#cargarXMIShex').click(cargarXMIShex);
 
 function cargarShexXMI() {
+    console.log(shExEditor.getValue());
     sessionStorage.setItem("shexvalue", shExEditor.getValue());
     sessionStorage.setItem("xmivalue", "");
     window.location = "./shextoxmi.html?load";
@@ -179,13 +182,25 @@ function cargarXMIShex() {
     window.location = "./xmitoshex.html?load";
 }
 
+/// GRAFO ///
+
 $('#cargarGrafo').click(cargarGrafo);
-$('#cargarUML').click(cargarUML);
+
 
 function cargarGrafo() {
     sessionStorage.setItem("shexvalue", shExEditor.getValue());
     window.location = "./grafo.html?load";
 }
+
+
+$('#mostrargrafo').click(function() {
+    sessionStorage.setItem("shexvalue", shExEditor.getValue());
+    grafo.generarGrafo(shExEditor.getValue());
+});
+
+/// UML ///
+
+$('#cargarUML').click(cargarUML);
 
 function cargarUML() {
     sessionStorage.setItem("xmivalue", xmiEditor.getValue());

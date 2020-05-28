@@ -13,23 +13,17 @@ class ShExParser {
     this.xmigen = new XMIGenerator();
   }
 
-  parseShEx(shex) {
+  parseShExToXMI(shex) {
     let xmiEquivalent = "";
-    try {
-        this.source = this.shexparser.parse(shex);
-    } catch (ex) {
-        alert("Error al parsear ShEx:\n " + ex);
-        return;
-    }
+
+    let source = this.parseShEx(shex);
 
     xmiEquivalent += XMIGenerator.createXMIHeader();
 
-    console.log(this.source.shapes);
-
-    let prefixes = this.xmigen.createPrefixes(this.source.prefixes, this.source.base);
-    for (let shape in this.source.shapes){
-      if(this.source.shapes.hasOwnProperty(shape)) {
-        xmiEquivalent += this.xmigen.createXMIClass(shape, this.source.shapes[shape]);
+    let prefixes = this.xmigen.createPrefixes(source.prefixes, source.base);
+    for (let shape in source.shapes){
+      if(source.shapes.hasOwnProperty(shape)) {
+        xmiEquivalent += this.xmigen.createXMIClass(shape, source.shapes[shape]);
       }
 
     }
@@ -43,8 +37,15 @@ class ShExParser {
     return xmiEquivalent;
   }
 
-
-
+  parseShEx(shex) {
+    try {
+      this.source = this.shexparser.parse(shex);
+    } catch (ex) {
+      alert("Error al parsear ShEx:\n " + ex);
+      return;
+    }
+    return this.source;
+  }
 }
 
 module.exports = new ShExParser();
