@@ -2,7 +2,9 @@
 const $ = require('./jquery-3.4.1.min.js');
 const cyto = require('cytoscape');
 let dagre = require('cytoscape-dagre');
+const panzoom = require('cytoscape-panzoom');
 cyto.use( dagre );
+panzoom( cyto );
 const IRIManager = require("../schema/irimanager.js");
 const shexparser = require('../shex/ShExParser.js');
 const ShapeManager = require("../xmi/ShapeManager.js");
@@ -48,10 +50,41 @@ function generarGrafo(data) {
         ],
 
         layout: {
-            name: 'dagre'
+            name: 'dagre',
+            nodeSep: 60,
+            edgeSep: 40,
+            rankSep: 80
         }
 
     });
+    var defaults = {
+        zoomFactor: 0.05, // zoom factor per zoom tick
+        zoomDelay: 45, // how many ms between zoom ticks
+        minZoom: 0.1, // min zoom level
+        maxZoom: 10, // max zoom level
+        fitPadding: 50, // padding when fitting
+        panSpeed: 10, // how many ms in between pan ticks
+        panDistance: 10, // max pan distance per tick
+        panDragAreaSize: 75, // the length of the pan drag box in which the vector for panning is calculated (bigger = finer control of pan speed and direction)
+        panMinPercentSpeed: 0.25, // the slowest speed we can pan by (as a percent of panSpeed)
+        panInactiveArea: 8, // radius of inactive area in pan drag box
+        panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
+        zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
+        fitSelector: undefined, // selector of elements to fit
+        animateOnFit: function(){ // whether to animate on fit
+            return false;
+        },
+        fitAnimationDuration: 1000, // duration of animation on fit
+
+        // icon class names
+        sliderHandleIcon: 'fa fa-minus',
+        zoomInIcon: 'fa fa-plus',
+        zoomOutIcon: 'fa fa-minus',
+        resetIcon: 'fa fa-expand'
+    };
+
+// add the panzoom control
+    cy.panzoom( defaults );
 }
 
 function shExAGrafo(text) {
@@ -122,7 +155,7 @@ function determineTypeOfExpression(expr, father) {
     let attrs = [];
 
     let inverse = (expr.inverse === true ? "^" : "");
-    let name = inverse + expr.predicate;
+    let name = inverse + expr.predicate + cardinalityOf(expr);
 
     if(!expr.valueExpr) {
         let id = getID();
@@ -173,4 +206,43 @@ function determineTypeOfExpression(expr, father) {
         return attrs;
     }
 }
+
+function cardinalityOf(attr) {
+    //TODO: Comprobar validez de las cardinalidades
+    let lowerValue = attr.min !== undefined ? attr.min : 1;
+    let upperValue = attr.max !== undefined ? attr.max : 1;
+    switch(lowerValue){
+        case 1:
+            if(upperValue === 1) {
+                return ""
+            }
+            else if (upperValue === -1) {
+                return " +"
+            }
+            else {
+                return " {1," + upperValue + "}"
+            }
+        case 0:
+            if(upperValue === 1) {
+                return " ?"
+            }
+            else if (upperValue === -1) {
+                return " *"
+            }
+            else {
+                return " {0, " + upperValue + "}"
+            }
+        default:
+            if(upperValue === lowerValue) {
+                return " {" + lowerValue + "}"
+            }
+            else if (upperValue === -1) {
+                return " {" + lowerValue + ",}"
+            }
+            else {
+                return " {" + lowerValue + ", " + upperValue + "}"
+            }
+    }
+}
+
 exports.generarGrafo = generarGrafo;
