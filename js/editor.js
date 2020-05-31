@@ -5,9 +5,8 @@ const xmiparser = require('../xmi/XMIParser.js');
 
 const repo = require('../repo/shexrepository.js');
 
-const plantumlEncoder = require('plantuml-encoder');
-
 const grafo = require('./grafo.js');
+const uml = require('./uml.js');
 
 let shExEditor;
 let xmiEditor;
@@ -105,14 +104,7 @@ function shExToXMI() {
 
 function XMIToShEx() {
     let text = xmiEditor.getValue();
-    shExEditor.setValue(xmiparser.parseXMI(text));
-}
-
-$('#showuml').click(generateUML);
-
-function generateUML() {
-    let encoded = plantumlEncoder.encode(umlEditor.getValue());
-    $('#umlimg').attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
+    shExEditor.setValue(xmiparser.parseXMIToShEx(text));
 }
 
 $('#borrarshex').click(borrarShex);
@@ -206,3 +198,37 @@ function cargarUML() {
     sessionStorage.setItem("xmivalue", xmiEditor.getValue());
     window.location = "./uml.html?load";
 }
+
+$('#mostraruml').click(function() {
+    sessionStorage.setItem("xmivalue", xmiEditor.getValue());
+    uml.generarUML(xmiEditor.getValue());
+});
+
+//DESCARGA
+
+function download(filename, text) {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+document.getElementById("dwnshex-btn").addEventListener("click", function(){
+    let text = shExEditor.getValue();
+    let filename = "helsreach.shex";
+
+    download(filename, text);
+}, false);
+
+document.getElementById("dwnxmi-btn").addEventListener("click", function(){
+    let text = xmiEditor.getValue();
+    let filename = "helsreach.xmi";
+
+    download(filename, text);
+}, false);

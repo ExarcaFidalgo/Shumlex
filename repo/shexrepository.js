@@ -376,15 +376,15 @@ class ShExRepository {
             "base <http://example.org/>\n" +
             "\n" +
             ":FrenchProduct {\n" +
-            "\t:label [@fr  ];\n" +
+            "\t:frlabel [@fr  ];\n" +
             "}\n" +
             "\n" +
             ":EnglishProduct {\n" +
-            "\t:label [@en~  ];\n" +
+            "\t:enlabel [@en~  ];\n" +
             "}\n" +
             "\n" +
             ":SpanishProduct {\n" +
-            "\t:label [@es~ - @es-AR - @es-ES  ];\n" +
+            "\t:splabel [@es~ - @es-AR - @es-ES  ];\n" +
             "}\n" +
             "\n" +
             ":AnyProduct {\n" +

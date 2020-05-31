@@ -9,7 +9,6 @@ class XMIParser {
 
     parseXMI(xmi) {
         const self = this;
-        let shExEquivalent = "";
         xmlparser.parseString(xmi, function (err, result) {
             self.source = result;
             if(err) {
@@ -20,6 +19,17 @@ class XMIParser {
         if(!this.source) {
             return;
         }
+
+        return this.source;
+
+    }
+
+    parseXMIToShEx(xmi) {
+
+        let shExEquivalent = "";
+
+        this.parseXMI(xmi);
+
         let packagedElements = this.source["uml:Model"]["packagedElement"];
 
         try {
@@ -63,7 +73,6 @@ class XMIParser {
 
         return shExEquivalent;
     }
-
 
 
 }

@@ -25,7 +25,6 @@ class XMIPrefixes {
     }
 
     getPrefixedTermOfUri(uri) {
-        console.log(uri);
         for(let i = 0; i < this.prefixes.length; i++) {
             if(uri.includes(this.prefixes[i].uri)) {
                 return this.prefixes[i].prefix + ":" + this.IRIManager.lastOfUri(this.prefixes[i].uri, uri)
