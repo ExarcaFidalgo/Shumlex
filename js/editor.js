@@ -219,16 +219,21 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
-document.getElementById("dwnshex-btn").addEventListener("click", function(){
-    let text = shExEditor.getValue();
-    let filename = "helsreach.shex";
+if(document.getElementById("dwnshex-btn")) {
+    document.getElementById("dwnshex-btn").addEventListener("click", function(){
+        let text = shExEditor.getValue();
+        let filename = "helsreach.shex";
 
-    download(filename, text);
-}, false);
+        download(filename, text);
+    }, false);
+}
 
-document.getElementById("dwnxmi-btn").addEventListener("click", function(){
-    let text = xmiEditor.getValue();
-    let filename = "helsreach.xmi";
+if(document.getElementById("dwnxmi-btn")) {
+    document.getElementById("dwnxmi-btn").addEventListener("click", function(){
+        let text = xmiEditor.getValue();
+        let filename = "helsreach.xmi";
 
-    download(filename, text);
-}, false);
+        download(filename, text);
+    }, false);
+}
+

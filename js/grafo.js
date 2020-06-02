@@ -18,6 +18,10 @@ function getID() {
     return ++id;
 }
 
+let labels = new Map();
+let andAtrs = new Map();
+
+
 function generarGrafo(data) {
     let cy = cyto({
 
@@ -30,7 +34,9 @@ function generarGrafo(data) {
                 selector: 'node',
                 style: {
                     'background-color': 'purple',
+                    'background-opacity': '0.1',
                     'label': 'data(name)',
+                    'text-valign': 'center',
                     'font-family': 'CaslonAntique'
                 }
             },
@@ -103,6 +109,14 @@ function shExAGrafo(text) {
             elements.push({ // node a
                 data: { id: id, name: irim.getPrefixedTermOfUri(shape) }
             });
+            if(source.shapes[shape].closed) {
+                let idn = getID();
+                elements.push({
+                    data: { id: idn, name: "CLOSED"}
+                });
+                elements.push({data: { id: getID(), name: "is", source: id,
+                        target: idn }});
+            }
 
             if( source.shapes[shape].nodeKind !== undefined) {
                 let idn = getID();
@@ -129,6 +143,14 @@ function shExAGrafo(text) {
                                 target: idn }});
                     }
                     else {  //Conjunción de formas - :User { ... } AND { ... }
+                        if(source.shapes[shape].shapeExprs[i].closed) {
+                            let idn = getID();
+                            elements.push({
+                                data: { id: idn, name: "CLOSED"}
+                            });
+                            elements.push({data: { id: getID(), name: "is", source: id,
+                                    target: idn }});
+                        }
                         let ats = checkExpression(source.shapes[shape].shapeExprs[i].expression, id);
                         for(let i = 0; i < ats.length; i++) {
                             elements.push(ats[i]);
@@ -148,26 +170,59 @@ function shExAGrafo(text) {
     return elements;
 }
 
-function checkExpression(expr, father) {
+function checkExpression(expr, father, dep) {
+    let depth = dep ? dep : 1;
     console.log(expr);
     let attrs = [];
     if(!expr) {
         return attrs;
     }
     else if(expr.id !== undefined) {
+        let label = irim.getPrefixedTermOfUri(expr.id);
+        let labelRef = "$" + label;
+        let id = getID();
+        labels.set(label, id);
+        attrs.push({data: { id: id, name: label}});
+        attrs.push({data: { id: getID(), name: labelRef + ' ' + cardinalityOf(expr), source: father, target: id }});
+        let exp = expr;
+        expr.id = undefined;
+        let ats = checkExpression(exp, id, depth + 1);
+        for(let i = 0; i < ats.length; i++) {
+            attrs.push(ats[i]);
+        }
         return attrs;
     }
     else if(expr.type === "Inclusion") {
+        attrs.push({data: { id: getID(), name: '&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + cardinalityOf(expr), source: father,
+                target: labels.get(irim.getPrefixedTermOfUri(expr.include)) }});
         return attrs;
     }
     else if(expr.type === "TripleConstraint") {
         return determineTypeOfExpression(expr, father);
     }
     else if(expr.type === "OneOf") {
+        let id = getID();
+        attrs.push({data: { id: id, name: 'expressions'}});
+        attrs.push({data: { id: getID(), name: 'OneOf ' + cardinalityOf(expr), source: father, target: id }});
+        for(let attr in expr.expressions) {
+            let ats = checkExpression(expr.expressions[attr], id, depth + 1);
+            for(let i = 0; i < ats.length; i++) {
+                attrs.push(ats[i]);
+            }
+        }
         return attrs;
     }
     else if (expr.type === "EachOf") {
-        if( this.depth > 0 || expr.min !== undefined || expr.max !== undefined) {
+        if(depth > 1 || expr.min !== undefined || expr.max !== undefined) {
+            let id = getID();
+            attrs.push({data: { id: id, name: 'expressions'}});
+            attrs.push({data: { id: getID(), name: 'EachOf ' + cardinalityOf(expr), source: father, target: id }});
+            for(let attr in expr.expressions) {
+                let ats = checkExpression(expr.expressions[attr], id, depth + 1);
+                for(let i = 0; i < ats.length; i++) {
+                    attrs.push(ats[i]);
+                }
+            }
             return attrs;
         }
         else {
@@ -183,28 +238,59 @@ function checkExpression(expr, father) {
     }
 }
 
-function determineTypeOfExpression(expr, father) {
+function determineTypeOfExpression(expr, father, fname) {
 
     let attrs = [];
 
     let inverse = (expr.inverse === true ? "^" : "");
-    let name = inverse + expr.predicate + cardinalityOf(expr);
+
+    let name;
+    if(expr.predicate) {
+        name = inverse + irim.getPrefixedTermOfUri(expr.predicate) + cardinalityOf(expr);
+    }
 
     if(!expr.valueExpr) {
-        let id = getID();
-        attrs.push({data: { id: id, name: '.'}});
-        attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: id }});
+        if(expr.type === "NodeConstraint") {
+            let andAtr = andAtrs.get(fname);
+            if(!andAtr) {
+                andAtr = getID();
+                attrs.push({data: { id: andAtr, name: "shapeExprs"}});
+                attrs.push({data: { id: getID(), name: fname, source: father, target: andAtr }});
+                andAtrs.set(fname, andAtr);
+            }
+
+            let ats = checkDatatype(expr, andAtr);
+            for(let i = 0; i < ats.length; i++) {
+                attrs.push(ats[i]);
+            }
+        }
+        else {
+            let id = getID();
+            attrs.push({data: { id: id, name: '.'}});
+            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
+        }
+
         return attrs;
     }
     else if(expr.valueExpr.type === "NodeConstraint") {
         if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-            attrs.push({data: { id: getID(), name: "a", source: father, target: irim.findIri(expr.valueExpr.values[0]) }});
+            let target = irim.findIri(expr.valueExpr.values[0]);
+            if(target === undefined) {
+                target = expr.valueExpr.values[0];
+                let id = getID();
+                irim.saveIri(target, id);
+                attrs.push({
+                    data: { id: id, name: irim.getPrefixedTermOfUri(target) }
+                });
+            }
+            let inverse = (expr.inverse === true ? "^" : "");
+            attrs.push({data: { id: getID(), name: inverse + "a", source: father, target: irim.findIri(expr.valueExpr.values[0]) }});
             return attrs;
         }
         if(expr.valueExpr.values) {
             let idv = getID();
             attrs.push({data: { id: idv, name: "values"}});
-            attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: idv }});
+            attrs.push({data: { id: getID(), name: name, source: father, target: idv }});
             for(let value in expr.valueExpr.values) {
                 if(expr.valueExpr.values.hasOwnProperty(value)) {
                 if(expr.valueExpr.values[value].value !== undefined) {
@@ -297,6 +383,10 @@ function determineTypeOfExpression(expr, father) {
                         }
                         attrs.push({data: { id: getID(), name: "-", source: ide, target: idx }});
                     }
+                } else {
+                    let ide = getID();
+                    attrs.push({data: { id: ide, name: irim.getPrefixedTermOfUri(expr.valueExpr.values[value])}});
+                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
                 }
 
             }
@@ -308,7 +398,7 @@ function determineTypeOfExpression(expr, father) {
         if(expr.valueExpr.nodeKind) {
             let id = getID();
             attrs.push({data: { id: id, name: expr.valueExpr.nodeKind}});
-            attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: id }});
+            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
             return attrs;
         }
         if(expr.valueExpr.datatype) {
@@ -316,7 +406,7 @@ function determineTypeOfExpression(expr, father) {
             let facets = checkFacets(expr.valueExpr, id);
             attrs = attrs.concat(facets);
             attrs.push({data: { id: id, name: irim.getPrefixedTermOfUri(expr.valueExpr.datatype)}});
-            attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: id }});
+            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
             return attrs;
         }
     }
@@ -325,21 +415,26 @@ function determineTypeOfExpression(expr, father) {
             attrs.push({data: { id: getID(), name: "a", source: father, target: irim.findIri(expr.valueExpr.reference) }});
             return attrs;
         }
-        attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: irim.findIri(expr.valueExpr.reference) }});
+        attrs.push({data: { id: getID(), name: name, source: father, target: irim.findIri(expr.valueExpr.reference) }});
         return attrs;
     }
     else if (expr.valueExpr.type === "Shape") {
         shm.incrementBlank();
+        let id = getID();
         let ref = "_:" + shm.getCurrentBlank();
-        attrs.push({data: { id: ref}});
-        attrs.push({data: { id: getID(), name: irim.getPrefixedTermOfUri(name), source: father, target: ref }});
+        attrs.push({data: { id: id, name: ref}});
+        attrs.push({data: { id: getID(), name: name, source: father, target: id }});
+        let and = checkExpression(expr.valueExpr.expression, id);
+        for(let j = 0; j < and.length; j++) {
+            attrs.push(and[j]);
+        }
         return attrs;
     }
     else if (expr.valueExpr.type === "ShapeAnd") {
         let and = [];
 
         for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
-            and = determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father);
+            and = determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate));
             for(let j = 0; j < and.length; j++) {
                 attrs.push(and[j]);
             }
@@ -458,4 +553,22 @@ function checkFacets(vex, idn) {
     return facets;
 }
 
+function checkDatatype(expr, father) {
+    let attrs = [];
+    if(expr.valueExpr) {
+
+    }
+    else {
+        let facets = checkFacets(expr, father);
+        attrs = attrs.concat(facets);
+        if(expr.datatype) {
+            let idd = getID();
+            attrs.push({data: { id: idd, name: irim.getPrefixedTermOfUri(expr.datatype)}});
+            attrs.push({data: { id: getID(), name: "type", source: father, target: idd }});
+        }
+
+    }
+
+    return attrs;
+}
 exports.generarGrafo = generarGrafo;

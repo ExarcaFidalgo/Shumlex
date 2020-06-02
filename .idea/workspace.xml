@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/uml.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/uml.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/uml.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/grafo.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/grafo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repo/shexrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/shexrepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repo/xmirepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/xmirepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/xmi-shex.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/xmi-shex.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi/XMIParser.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/XMIParser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi/XMIPrefixes.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi/XMIPrefixes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,35 +21,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/uml.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
+            <state relative-caret-position="731">
               <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/grafo.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="252" column="36" lean-forward="true" selection-start-line="252" selection-start-column="36" selection-end-line="252" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xmi/XMIAttributes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExAttributes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1115">
-              <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="73" selection-end-column="98" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExConstraints.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="13" selection-end-column="9" />
+            <state relative-caret-position="4029">
+              <caret line="237" column="1" selection-start-line="237" selection-start-column="1" selection-end-line="237" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -74,16 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Any</find>
-      <find>saveType</find>
-      <find>getType</find>
-      <find>k8pszql3</find>
-      <find>createXMIPrim</find>
-      <find>subSet</find>
-      <find>subClasses</find>
-      <find>./deflate</find>
-      <find>./</find>
-      <find>zlib</find>
       <find>./dist</find>
       <find>iri</find>
       <find>and</find>
@@ -104,6 +87,16 @@
       <find>label</find>
       <find>XMI13</find>
       <find>dropdo</find>
+      <find>values</find>
+      <find>irim</find>
+      <find>closed</find>
+      <find>inverse</find>
+      <find>extra</find>
+      <find>subClass</find>
+      <find>determine</find>
+      <find>checkDat</find>
+      <find>facets</find>
+      <find>datatype</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\woest\OneDrive\Documentos\Helsreach\shex</dir>
@@ -149,16 +142,11 @@
         <option value="$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/codemirror-5.51.0/theme/xq-light.css" />
-        <option value="$PROJECT_DIR$/html/shextoxmi.html" />
-        <option value="$PROJECT_DIR$/html/xmitoshex.html" />
         <option value="$PROJECT_DIR$/shex/ShExParser.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/xmi/XMIAttributes.js" />
         <option value="$PROJECT_DIR$/shex/shexgen/ShExCardinality.js" />
-        <option value="$PROJECT_DIR$/html/grafo.html" />
-        <option value="$PROJECT_DIR$/js/grafo.js" />
         <option value="$PROJECT_DIR$/schema/irimanager.js" />
-        <option value="$PROJECT_DIR$/html/uml.html" />
         <option value="$PROJECT_DIR$/xmi/XMIPrefixes.js" />
         <option value="$PROJECT_DIR$/xmi/XMIParser.js" />
         <option value="$PROJECT_DIR$/test/xmi-shex.test.js" />
@@ -167,7 +155,12 @@
         <option value="$PROJECT_DIR$/repo/xmirepository.js" />
         <option value="$PROJECT_DIR$/js/uml.js" />
         <option value="$PROJECT_DIR$/css/app.css" />
+        <option value="$PROJECT_DIR$/html/shextoxmi.html" />
+        <option value="$PROJECT_DIR$/html/xmitoshex.html" />
+        <option value="$PROJECT_DIR$/html/uml.html" />
+        <option value="$PROJECT_DIR$/html/grafo.html" />
         <option value="$PROJECT_DIR$/js/editor.js" />
+        <option value="$PROJECT_DIR$/js/grafo.js" />
       </list>
     </option>
   </component>
@@ -363,18 +356,22 @@
       <workItem from="1590749918318" duration="3773000" />
       <workItem from="1590827871273" duration="11916000" />
       <workItem from="1590920620250" duration="6272000" />
-      <workItem from="1590938449101" duration="10589000" />
+      <workItem from="1590938449101" duration="10952000" />
+      <workItem from="1590949781173" duration="637000" />
+      <workItem from="1591020224457" duration="1301000" />
+      <workItem from="1591085899231" duration="1863000" />
+      <workItem from="1591111201124" duration="9846000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342576000" />
+    <option name="totallyTimeSpent" value="356586000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25223213" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25223213" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -386,7 +383,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.2596006" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37480798" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -469,20 +466,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/xmitoshex.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/shextoxmi.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codemirror-5.51.0/lib/codemirror.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5428">
@@ -554,28 +537,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xmi/XMIAttributes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="135" column="26" selection-start-line="135" selection-start-column="23" selection-end-line="135" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1590858844607.jpg" />
-    <entry file="file://$PROJECT_DIR$/html/grafo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/uml.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="72" column="35" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xmi/XMIEnumerations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -646,20 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/grafo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExConstraints.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="13" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -695,30 +643,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExAttributes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1115">
-          <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="73" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExAuxiliar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-246" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExClass.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="34" column="65" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/uml.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/app.css">
@@ -728,10 +655,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/html/xmitoshex.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="69" column="37" lean-forward="true" selection-start-line="69" selection-start-column="37" selection-end-line="69" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/uml.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="65" column="65" selection-start-line="65" selection-start-column="65" selection-end-line="65" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExConstraints.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="13" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/grafo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/shextoxmi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/uml.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
+        <state relative-caret-position="4029">
+          <caret line="237" column="1" selection-start-line="237" selection-start-column="1" selection-end-line="237" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExClass.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="34" column="65" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex/shexgen/ShExAttributes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="707">
+          <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="73" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi/XMIAttributes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/grafo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="252" column="36" lean-forward="true" selection-start-line="252" selection-start-column="36" selection-end-line="252" selection-end-column="36" />
         </state>
       </provider>
     </entry>
