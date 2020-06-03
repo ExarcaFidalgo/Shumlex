@@ -1,5 +1,4 @@
 
-const $ = require('./jquery-3.4.1.min.js');
 const cyto = require('cytoscape');
 let dagre = require('cytoscape-dagre');
 const panzoom = require('cytoscape-panzoom');
@@ -29,31 +28,7 @@ function generarGrafo(data) {
 
         elements: shExAGrafo(data),
 
-        style: [ // the stylesheet for the graph
-            {
-                selector: 'node',
-                style: {
-                    'background-color': 'purple',
-                    'background-opacity': '0.1',
-                    'label': 'data(name)',
-                    'text-valign': 'center',
-                    'font-family': 'CaslonAntique'
-                }
-            },
-
-            {
-                selector: 'edge',
-                style: {
-                    'width': 3,
-                    'line-color': '#ccc',
-                    'target-arrow-color': '#ccc',
-                    'target-arrow-shape': 'triangle',
-                    'curve-style': 'bezier',
-                    'label': 'data(name)',
-                    'font-family': 'CaslonAntique'
-                }
-            }
-        ],
+        style: style,
 
         layout: {
             name: 'dagre',
@@ -63,33 +38,7 @@ function generarGrafo(data) {
         }
 
     });
-    var defaults = {
-        zoomFactor: 0.05, // zoom factor per zoom tick
-        zoomDelay: 45, // how many ms between zoom ticks
-        minZoom: 0.1, // min zoom level
-        maxZoom: 10, // max zoom level
-        fitPadding: 50, // padding when fitting
-        panSpeed: 10, // how many ms in between pan ticks
-        panDistance: 10, // max pan distance per tick
-        panDragAreaSize: 75, // the length of the pan drag box in which the vector for panning is calculated (bigger = finer control of pan speed and direction)
-        panMinPercentSpeed: 0.25, // the slowest speed we can pan by (as a percent of panSpeed)
-        panInactiveArea: 8, // radius of inactive area in pan drag box
-        panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
-        zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
-        fitSelector: undefined, // selector of elements to fit
-        animateOnFit: function(){ // whether to animate on fit
-            return false;
-        },
-        fitAnimationDuration: 1000, // duration of animation on fit
-
-        // icon class names
-        sliderHandleIcon: 'fa fa-minus',
-        zoomInIcon: 'fa fa-plus',
-        zoomOutIcon: 'fa fa-minus',
-        resetIcon: 'fa fa-expand'
-    };
-
-// add the panzoom control
+    // add the panzoom control
     cy.panzoom( defaults );
 }
 
@@ -99,74 +48,73 @@ function shExAGrafo(text) {
     let source = shexparser.parseShEx(text);
     irim.createPrefixes(source.prefixes, source.base);
 
-    for (let shape in source.shapes){
-        irim.saveIri(shape, getID());
+    for (let shape in source.shapes) {
+        if(source.shapes.hasOwnProperty(shape)) {
+            irim.saveIri(shape, getID());
+        }
     }
     console.log(source.shapes);
-    for (let shape in source.shapes){
-        if(source.shapes.hasOwnProperty(shape)) {
+
+    for (let shape in source.shapes) {
+        if (source.shapes.hasOwnProperty(shape)) {
             let id = irim.findIri(shape);
-            elements.push({ // node a
-                data: { id: id, name: irim.getPrefixedTermOfUri(shape) }
-            });
-            if(source.shapes[shape].closed) {
-                let idn = getID();
-                elements.push({
-                    data: { id: idn, name: "CLOSED"}
-                });
-                elements.push({data: { id: getID(), name: "is", source: id,
-                        target: idn }});
-            }
+            let sh = source.shapes[shape];
+            elements.push(createNode(id, irim.getPrefixedTermOfUri(shape)));
 
-            if( source.shapes[shape].nodeKind !== undefined) {
-                let idn = getID();
-                elements.push({ // node a
-                    data: { id: idn, name: source.shapes[shape].nodeKind }
-                });
-                elements.push({data: { id: getID(), name: "a", source: id,
-                        target: idn }});
-            }
+            elements = elements.concat(checkClosed(sh, id));
+            elements = elements.concat(checkNodeKind(sh, id, "a"));
 
-            if(source.shapes[shape].type === "ShapeAnd") {
-                let exprsForGen = [];
-                for (let i = 0; i < source.shapes[shape].shapeExprs.length; i++) {
-                    if(source.shapes[shape].shapeExprs[i].type === "ShapeRef") { // Herencia - :User :Person AND {}
-                        elements.push({data: { id: getID(), name: "a", source: id,
-                                target: irim.findIri(source.shapes[shape].shapeExprs[i].reference) }});
+            if (sh.type === "ShapeAnd") {
+                for (let i = 0; i < sh.shapeExprs.length; i++) {
+                    if (sh.shapeExprs[i].type === "ShapeRef") { // Herencia - :User :Person AND {}
+                        elements = elements.concat(createInheritance(sh.shapeExprs[i], id));
                     }
-                    else if(source.shapes[shape].shapeExprs[i].type === "NodeConstraint") {
-                        let idn = getID();
-                        elements.push({ // node a
-                            data: { id: idn, name: source.shapes[shape].shapeExprs[i].nodeKind }
-                        });
-                        elements.push({data: { id: getID(), name: "a", source: id,
-                                target: idn }});
+                    else if (sh.shapeExprs[i].type === "NodeConstraint") {
+                        elements = elements.concat(createNodeKind(sh.shapeExprs[i], id,"a"));
                     }
                     else {  //Conjunción de formas - :User { ... } AND { ... }
-                        if(source.shapes[shape].shapeExprs[i].closed) {
-                            let idn = getID();
-                            elements.push({
-                                data: { id: idn, name: "CLOSED"}
-                            });
-                            elements.push({data: { id: getID(), name: "is", source: id,
-                                    target: idn }});
-                        }
-                        let ats = checkExpression(source.shapes[shape].shapeExprs[i].expression, id);
-                        for(let i = 0; i < ats.length; i++) {
-                            elements.push(ats[i]);
-                        }
+                        elements = elements.concat(checkClosed(sh.shapeExprs[i], id));
+                        let ats = checkExpression(sh.shapeExprs[i].expression, id);
+                        elements = elements.concat(ats);
                     }
                 }
             } else {
-                let ats = checkExpression(source.shapes[shape].expression, id);
-                for(let i = 0; i < ats.length; i++) {
-                    elements.push(ats[i]);
-                }
+                let ats = checkExpression(sh.expression, id);
+                elements = elements.concat(ats);
             }
-
         }
     }
     console.log(elements);
+    return elements;
+}
+
+function checkClosed(shape, id) {
+    let elements = [];
+    if (shape.closed) {
+        let idn = getID();
+        elements = elements.concat(createToNode(idn, "CLOSED", "is", id));
+    }
+    return elements;
+}
+
+function checkNodeKind(shape, id, name) {
+    let elements = [];
+    if (shape.nodeKind !== undefined) {
+        elements = elements.concat(createNodeKind(shape, id, name));
+    }
+    return elements;
+}
+
+function createNodeKind(shape, id, name) {
+    let elements = [];
+    let idn = getID();
+    elements = elements.concat(createToNode(idn, shape.nodeKind, name, id));
+    return elements;
+}
+
+function createInheritance(shape, id){
+    let elements = [];
+    elements.push(createRelation("a", id, irim.findIri(shape.reference)));
     return elements;
 }
 
@@ -178,269 +126,310 @@ function checkExpression(expr, father, dep) {
         return attrs;
     }
     else if(expr.id !== undefined) {
-        let label = irim.getPrefixedTermOfUri(expr.id);
-        let labelRef = "$" + label;
-        let id = getID();
-        labels.set(label, id);
-        attrs.push({data: { id: id, name: label}});
-        attrs.push({data: { id: getID(), name: labelRef + ' ' + cardinalityOf(expr), source: father, target: id }});
-        let exp = expr;
-        expr.id = undefined;
-        let ats = checkExpression(exp, id, depth + 1);
-        for(let i = 0; i < ats.length; i++) {
-            attrs.push(ats[i]);
-        }
+        attrs = attrs.concat(createLabel(expr, father, depth));
         return attrs;
     }
     else if(expr.type === "Inclusion") {
-        attrs.push({data: { id: getID(), name: '&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + cardinalityOf(expr), source: father,
-                target: labels.get(irim.getPrefixedTermOfUri(expr.include)) }});
+        attrs = attrs.concat(createLabelRef(expr, father));
         return attrs;
     }
     else if(expr.type === "TripleConstraint") {
         return determineTypeOfExpression(expr, father);
     }
     else if(expr.type === "OneOf") {
-        let id = getID();
-        attrs.push({data: { id: id, name: 'expressions'}});
-        attrs.push({data: { id: getID(), name: 'OneOf ' + cardinalityOf(expr), source: father, target: id }});
-        for(let attr in expr.expressions) {
+        attrs = attrs.concat(createOneOf(expr, father, depth));
+        return attrs;
+    }
+    else if (expr.type === "EachOf") {
+        attrs = attrs.concat(checkEachOf(expr, father, depth));
+        return attrs;
+    }
+}
+
+function createLabel(expr, father, depth) {
+    let attrs = [];
+    let label = irim.getPrefixedTermOfUri(expr.id);
+    let labelRef = "$" + label;
+    let id = getID();
+    labels.set(label, id);
+    attrs = attrs.concat(createToNode(id, label, labelRef + ' ' + cardinalityOf(expr), father));
+    let exp = expr;
+    expr.id = undefined;
+    let ats = checkExpression(exp, id, depth + 1);
+    attrs = attrs.concat(ats);
+    return attrs;
+}
+
+function createLabelRef(expr, father) {
+    let attrs = [];
+    attrs.push(createRelation('&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + cardinalityOf(expr),
+        father, labels.get(irim.getPrefixedTermOfUri(expr.include))));
+    return attrs;
+}
+
+function createOneOf(expr, father, depth) {
+    let attrs = [];
+    let id = getID();
+    attrs = attrs.concat(createToNode(id, 'expressions', 'OneOf ' + cardinalityOf(expr), father));
+    for(let attr in expr.expressions) {
+        if(expr.expressions.hasOwnProperty(attr)) {
             let ats = checkExpression(expr.expressions[attr], id, depth + 1);
-            for(let i = 0; i < ats.length; i++) {
-                attrs.push(ats[i]);
+            attrs = attrs.concat(ats);
+        }
+    }
+    return attrs;
+}
+
+function checkEachOf(expr, father, depth) {
+    let attrs = [];
+    if(depth > 1 || expr.min !== undefined || expr.max !== undefined) {
+        let id = getID();
+        attrs = attrs.concat(createToNode(id, 'expressions', 'EachOf ' + cardinalityOf(expr), father));
+        for(let attr in expr.expressions) {
+            if(expr.expressions.hasOwnProperty(attr)) {
+                let ats = checkExpression(expr.expressions[attr], id, depth + 1);
+                attrs = attrs.concat(ats);
             }
         }
         return attrs;
     }
-    else if (expr.type === "EachOf") {
-        if(depth > 1 || expr.min !== undefined || expr.max !== undefined) {
-            let id = getID();
-            attrs.push({data: { id: id, name: 'expressions'}});
-            attrs.push({data: { id: getID(), name: 'EachOf ' + cardinalityOf(expr), source: father, target: id }});
-            for(let attr in expr.expressions) {
-                let ats = checkExpression(expr.expressions[attr], id, depth + 1);
-                for(let i = 0; i < ats.length; i++) {
-                    attrs.push(ats[i]);
-                }
-            }
-            return attrs;
-        }
-        else {
-            for(let attr in expr.expressions) {
+    else {
+        for(let attr in expr.expressions) {
+            if(expr.expressions.hasOwnProperty(attr)) {
                 let ats = checkExpression(expr.expressions[attr], father);
-                for(let i = 0; i < ats.length; i++) {
-                    attrs.push(ats[i]);
-                }
+                attrs = attrs.concat(ats);
             }
-            return attrs;
         }
-
+        return attrs;
     }
 }
 
 function determineTypeOfExpression(expr, father, fname) {
-
     let attrs = [];
-
     let inverse = (expr.inverse === true ? "^" : "");
-
     let name;
+
     if(expr.predicate) {
         name = inverse + irim.getPrefixedTermOfUri(expr.predicate) + cardinalityOf(expr);
     }
 
     if(!expr.valueExpr) {
         if(expr.type === "NodeConstraint") {
-            let andAtr = andAtrs.get(fname);
-            if(!andAtr) {
-                andAtr = getID();
-                attrs.push({data: { id: andAtr, name: "shapeExprs"}});
-                attrs.push({data: { id: getID(), name: fname, source: father, target: andAtr }});
-                andAtrs.set(fname, andAtr);
-            }
-
-            let ats = checkDatatype(expr, andAtr);
-            for(let i = 0; i < ats.length; i++) {
-                attrs.push(ats[i]);
-            }
+            attrs = attrs.concat(checkShapeAndExprs(expr, father, fname));
         }
         else {
-            let id = getID();
-            attrs.push({data: { id: id, name: '.'}});
-            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
+            attrs = attrs.concat(createWildcard(name, father));
         }
-
         return attrs;
     }
+
     else if(expr.valueExpr.type === "NodeConstraint") {
         if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-            let target = irim.findIri(expr.valueExpr.values[0]);
-            if(target === undefined) {
-                target = expr.valueExpr.values[0];
-                let id = getID();
-                irim.saveIri(target, id);
-                attrs.push({
-                    data: { id: id, name: irim.getPrefixedTermOfUri(target) }
-                });
-            }
-            let inverse = (expr.inverse === true ? "^" : "");
-            attrs.push({data: { id: getID(), name: inverse + "a", source: father, target: irim.findIri(expr.valueExpr.values[0]) }});
+            attrs = attrs.concat(createNCType(expr, father));
             return attrs;
         }
         if(expr.valueExpr.values) {
-            let idv = getID();
-            attrs.push({data: { id: idv, name: "values"}});
-            attrs.push({data: { id: getID(), name: name, source: father, target: idv }});
-            for(let value in expr.valueExpr.values) {
-                if(expr.valueExpr.values.hasOwnProperty(value)) {
-                if(expr.valueExpr.values[value].value !== undefined) {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: expr.valueExpr.values[value].value}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-                else if(expr.valueExpr.values[value].type === "LiteralStem") {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: "&quot;" + expr.valueExpr.values[value].stem + "&quot;" + "~"}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-                else if(expr.valueExpr.values[value].type === "IriStem") {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: irim.getPrefixedTermOfUri(expr.valueExpr.values[value].stem) + "~"}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-                else if(expr.valueExpr.values[value].type === "IriStemRange") {
-                    let ide = getID();
-                    if(expr.valueExpr.values[value].stem.type === "Wildcard") {
-                        attrs.push({data: { id: ide, name: "."}});
-                    }
-                    else {
-                        attrs.push({data: { id: ide, name: irim.getPrefixedTermOfUri(expr.valueExpr.values[value].stem) + "~ "}});
-                    }
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-
-                    for(let k = 0; k < expr.valueExpr.values[value].exclusions.length; k++) {
-                        let excl = expr.valueExpr.values[value].exclusions[k];
-                        let idx = getID();
-                        if(excl.type === "IriStem") {
-                            attrs.push({data: { id: idx, name: irim.getPrefixedTermOfUri(excl.stem) + "~"}});
-                        }
-                        else {
-                            attrs.push({data: { id: idx, name: irim.getPrefixedTermOfUri(excl)}});
-                        }
-                        attrs.push({data: { id: getID(), name: "-", source: ide, target: idx }});
-                    }
-                }
-                else if(expr.valueExpr.values[value].type === "LiteralStemRange") {
-                    let ide = getID();
-                    if(expr.valueExpr.values[value].stem.type === "Wildcard") {
-                        attrs.push({data: { id: ide, name: "."}});
-                    }
-                    else {
-                        attrs.push({data: { id: ide, name: expr.valueExpr.values[value].stem + "~ "}});
-                    }
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-
-                    for(let k = 0; k < expr.valueExpr.values[value].exclusions.length; k++) {
-                        let excl = expr.valueExpr.values[value].exclusions[k];
-                        let idx = getID();
-                        if(excl.type === "LiteralStem") {
-                            attrs.push({data: { id: idx, name: excl.stem + "~"}});
-                        }
-                        else {
-                            attrs.push({data: { id: idx, name: excl}});
-                        }
-                        attrs.push({data: { id: getID(), name: "-", source: ide, target: idx }});
-                    }
-                }
-                else if(expr.valueExpr.values[value].type === "Language") {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: "@" + expr.valueExpr.values[value].languageTag}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-                else if(expr.valueExpr.values[value].type === "LanguageStem") {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: "@" + expr.valueExpr.values[value].stem + "~ "}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-                else if(expr.valueExpr.values[value].type === "LanguageStemRange") {
-                    let ide = getID();
-                    if(expr.valueExpr.values[value].stem.type === "Wildcard") {
-                        attrs.push({data: { id: ide, name: "."}});
-                    }
-                    else {
-                        attrs.push({data: { id: ide, name: "@" + expr.valueExpr.values[value].stem + "~ "}});
-                    }
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-
-                    for(let k = 0; k < expr.valueExpr.values[value].exclusions.length; k++) {
-                        let excl = expr.valueExpr.values[value].exclusions[k];
-                        let idx = getID();
-                        if(excl.type === "LanguageStem") {
-                            attrs.push({data: { id: idx, name: "@" + excl.stem + "~"}});
-                        }
-                        else {
-                            attrs.push({data: { id: idx, name: "@" + excl}});
-                        }
-                        attrs.push({data: { id: getID(), name: "-", source: ide, target: idx }});
-                    }
-                } else {
-                    let ide = getID();
-                    attrs.push({data: { id: ide, name: irim.getPrefixedTermOfUri(expr.valueExpr.values[value])}});
-                    attrs.push({data: { id: getID(), name: "", source: idv, target: ide }});
-                }
-
-            }
-
-
-        }
+            attrs = attrs.concat(createEnumeration(expr, name, father));
             return attrs;
         }
         if(expr.valueExpr.nodeKind) {
-            let id = getID();
-            attrs.push({data: { id: id, name: expr.valueExpr.nodeKind}});
-            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
+            attrs = attrs.concat(createNodeKind(expr.valueExpr, name, father));
             return attrs;
         }
         if(expr.valueExpr.datatype) {
-            let id = getID();
-            let facets = checkFacets(expr.valueExpr, id);
-            attrs = attrs.concat(facets);
-            attrs.push({data: { id: id, name: irim.getPrefixedTermOfUri(expr.valueExpr.datatype)}});
-            attrs.push({data: { id: getID(), name: name, source: father, target: id }});
+            attrs = attrs.concat(createDatatype(expr, name, father));
             return attrs;
         }
     }
     else if (expr.valueExpr.type === "ShapeRef") {
-        if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-            attrs.push({data: { id: getID(), name: "a", source: father, target: irim.findIri(expr.valueExpr.reference) }});
-            return attrs;
-        }
-        attrs.push({data: { id: getID(), name: name, source: father, target: irim.findIri(expr.valueExpr.reference) }});
+        attrs = attrs.concat(createShapeRef(expr, name, father));
         return attrs;
     }
     else if (expr.valueExpr.type === "Shape") {
-        shm.incrementBlank();
-        let id = getID();
-        let ref = "_:" + shm.getCurrentBlank();
-        attrs.push({data: { id: id, name: ref}});
-        attrs.push({data: { id: getID(), name: name, source: father, target: id }});
-        let and = checkExpression(expr.valueExpr.expression, id);
-        for(let j = 0; j < and.length; j++) {
-            attrs.push(and[j]);
-        }
+        attrs = attrs.concat(createBlank(expr, name, father));
         return attrs;
     }
     else if (expr.valueExpr.type === "ShapeAnd") {
-        let and = [];
-
-        for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
-            and = determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate));
-            for(let j = 0; j < and.length; j++) {
-                attrs.push(and[j]);
-            }
-        }
+        attrs = attrs.concat(createShapeAnd(expr, father));
         return attrs;
     }
+}
+
+function checkShapeAndExprs(expr, father, fname) {
+    let attrs = [];
+    let andAtr = andAtrs.get(fname);
+    if(!andAtr) {
+        andAtr = getID();
+        attrs = attrs.concat(createToNode(andAtr, 'shapeExprs', fname, father));
+        andAtrs.set(fname, andAtr);
+    }
+
+    attrs = attrs.concat(createDatatype(expr, null, andAtr));
+    return attrs;
+}
+
+function createWildcard(name, father) {
+    let attrs = [];
+    let id = getID();
+    attrs = attrs.concat(createToNode(id, '.', name, father));
+    return attrs;
+}
+
+function createNCType(expr, father) {
+    let attrs = [];
+    let target = irim.findIri(expr.valueExpr.values[0]);
+    if(target === undefined) {
+        target = expr.valueExpr.values[0];
+        let id = getID();
+        irim.saveIri(target, id);
+        attrs.push(createNode(id, irim.getPrefixedTermOfUri(target)));
+    }
+    let inverse = (expr.inverse === true ? "^" : "");
+    attrs.push(createRelation(inverse + "a", father, irim.findIri(expr.valueExpr.values[0])));
+    return attrs;
+}
+
+function createEnumeration(expr, name, father) {
+    let attrs = [];
+    let idv = getID();
+    attrs = attrs.concat(createToNode(idv, "values", name, father));
+    for(let value in expr.valueExpr.values) {
+        if(expr.valueExpr.values.hasOwnProperty(value)) {
+            let vl = expr.valueExpr.values[value];
+            let ide = getID();
+            if(vl.value !== undefined) {
+                attrs = attrs.concat(createToNode(ide, vl, "", idv));
+            }
+            else if(vl.type === "LiteralStem") {
+                attrs = attrs.concat(createToNode(ide, "&quot;" + vl.stem + "&quot;" + "~", "", idv));
+            }
+            else if(vl.type === "IriStem") {
+                attrs = attrs.concat(createToNode(ide, irim.getPrefixedTermOfUri(vl.stem) + "~", "", idv));
+            }
+            else if(vl.type === "IriStemRange") {
+                attrs = attrs.concat(checkStemRange(vl, ide, idv, "IriStem"));
+            }
+            else if(vl.type === "LiteralStemRange") {
+                attrs = attrs.concat(checkStemRange(vl, ide, idv, "LiteralStem"));
+            }
+            else if(vl.type === "Language") {
+                attrs = attrs.concat(createToNode(ide, "@" + vl.languageTag, "", idv));
+            }
+            else if(vl.type === "LanguageStem") {
+                attrs = attrs.concat(createToNode(ide, "@" + vl.stem + "~ ", "", idv));
+            }
+            else if(vl.type === "LanguageStemRange") {
+                attrs = attrs.concat(checkStemRange(vl, ide, idv, "LanguageStem"));
+            } else {
+                attrs = attrs.concat(createToNode(ide, irim.getPrefixedTermOfUri(vl), "", idv));
+            }
+        }
+    }
+    return attrs;
+}
+
+function checkStemRange(vl, ide, idv, type) {
+    let attrs = [];
+    if(vl.stem.type === "Wildcard") {
+        attrs = attrs.concat(createToNode(ide, ".", "", idv));
+    }
+    else {
+        switch(type) {
+            case "IriStem":
+                attrs = attrs.concat(createToNode(ide,
+                    irim.getPrefixedTermOfUri(expr.valueExpr.values[value].stem) + "~ ", "", idv));
+                break;
+            case "LiteralStem":
+                attrs = attrs.concat(createToNode(ide,
+                    expr.valueExpr.values[value].stem + "~ ", "", idv));
+                break;
+            case "LanguageStem":
+                attrs = attrs.concat(createToNode(ide,
+                    "@" + expr.valueExpr.values[value].stem + "~ ", "", idv));
+                break;
+        }
+    }
+
+    for(let k = 0; k < vl.exclusions.length; k++) {
+        let excl = vl.exclusions[k];
+        let idx = getID();
+        if(excl.type === type) {
+            switch(type) {
+                case "IriStem":
+                    attrs = attrs.concat(createToNode(idx, irim.getPrefixedTermOfUri(excl.stem) + "~",
+                        "-", ide));
+                    break;
+                case "LiteralStem":
+                    attrs = attrs.concat(createToNode(idx, excl.stem + "~", "-", ide));
+                    break;
+                case "LanguageStem":
+                    attrs.concat(createToNode(idx, "@" + excl.stem + "~", "-", ide));
+                    break;
+            }
+        }
+        else {
+            switch(type) {
+                case "IriStem":
+                    attrs = attrs.concat(createToNode(idx, irim.getPrefixedTermOfUri(excl), "-", ide));
+                    break;
+                case "LiteralStem":
+                    attrs = attrs.concat(createToNode(idx, excl, "-", ide));
+                    break;
+                case "LanguageStem":
+                    attrs = attrs.concat(createToNode(idx, "@" + excl, "-", ide));
+                    break;
+            }
+        }
+    }
+    return attrs;
+}
+
+function createDatatype(expr, name, father) {
+    let attrs = [];
+    if(expr.valueExpr) {
+        let id = getID();
+        let facets = checkFacets(expr.valueExpr, id);
+        attrs = attrs.concat(facets);
+        attrs = attrs.concat(createToNode(id, irim.getPrefixedTermOfUri(expr.valueExpr.datatype), name, father));
+    }
+    else {
+        let facets = checkFacets(expr, father);
+        attrs = attrs.concat(facets);
+        if(expr.datatype) {
+            let idd = getID();
+            attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfUri(expr.datatype), "type", father));
+        }
+    }
+    return attrs;
+}
+
+function createShapeRef(expr, name, father) {
+    let attrs = [];
+    if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+        attrs.push(createRelation("a", father, irim.findIri(expr.valueExpr.reference)));
+        return attrs;
+    }
+    attrs.push(createRelation(name, father, irim.findIri(expr.valueExpr.reference)));
+    return attrs;
+}
+
+function createBlank(expr, name, father) {
+    let attrs = [];
+    shm.incrementBlank();
+    let id = getID();
+    let ref = "_:" + shm.getCurrentBlank();
+    attrs = attrs.concat(createToNode(id, ref, name, father));
+    attrs = attrs.concat(checkExpression(expr.valueExpr.expression, id));
+    return attrs;
+}
+
+function createShapeAnd(expr, father) {
+    let attrs = [];
+    for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
+        attrs = attrs.concat(
+            determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate)));
+    }
+    return attrs;
 }
 
 function cardinalityOf(attr) {
@@ -483,92 +472,101 @@ function cardinalityOf(attr) {
 
 function checkFacets(vex, idn) {
     let facets = [];
+    let idf = getID();
     if(!vex) {
         return facets;
     }
     if(vex.mininclusive) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.mininclusive}
-        });
-        facets.push({data: { id: getID(), name: "MinInclusive", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.mininclusive, "MinInclusive", idn));
     }
     if(vex.minexclusive) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.minexclusive}
-        });
-        facets.push({data: { id: getID(), name: "MinExclusive", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.minexclusive, "MinExclusive", idn));
     }
     if(vex.totaldigits) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.totaldigits}
-        });
-        facets.push({data: { id: getID(), name: "TotalDigits", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.totaldigits, "TotalDigits", idn));
     }
     if(vex.fractiondigits) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.fractiondigits}
-        });
-        facets.push({data: { id: getID(), name: "FractionDigits", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.fractiondigits, "FractionDigits", idn));
     }
     if(vex.length) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.length}
-        });
-        facets.push({data: { id: getID(), name: "Length", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.length, "Length", idn));
     }
     if(vex.minlength) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.minlength}
-        });
-        facets.push({data: { id: getID(), name: "MinLength", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.minlength, "MinLength", idn));
     }
     if(vex.maxlength) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: vex.maxlength}
-        });
-        facets.push({data: { id: getID(), name: "MaxLength", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, vex.maxlength, "MaxLength", idn));
     }
     if(vex.pattern) {
-        let idf = getID();
-        facets.push({ // node a
-            data: { id: idf, name: "/" + vex.pattern + "/"}
-        });
-        facets.push({data: { id: getID(), name: "Pattern", source: idn,
-                target: idf }});
+        facets = facets.concat(createToNode(idf, "/" + vex.pattern + "/", "Pattern", idn));
     }
     return facets;
 }
 
-function checkDatatype(expr, father) {
+function createToNode(id, nname, rname, source) {
     let attrs = [];
-    if(expr.valueExpr) {
-
-    }
-    else {
-        let facets = checkFacets(expr, father);
-        attrs = attrs.concat(facets);
-        if(expr.datatype) {
-            let idd = getID();
-            attrs.push({data: { id: idd, name: irim.getPrefixedTermOfUri(expr.datatype)}});
-            attrs.push({data: { id: getID(), name: "type", source: father, target: idd }});
-        }
-
-    }
-
+    attrs.push(createNode(id, nname));
+    attrs.push(createRelation(rname, source, id));
     return attrs;
 }
+
+function createNode(id, nname) {
+    return {data: { id: id, name: nname}};
+}
+
+function createRelation(rname, source, target) {
+    return {data: { id: getID(), name: rname, source: source, target: target }};
+}
+
+let style = [ // the stylesheet for the graph
+    {
+        selector: 'node',
+        style: {
+            'background-color': 'purple',
+            'background-opacity': '0.1',
+            'label': 'data(name)',
+            'text-valign': 'center',
+            'font-family': 'CaslonAntique'
+        }
+    },
+
+    {
+        selector: 'edge',
+        style: {
+            'width': 3,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(name)',
+            'font-family': 'CaslonAntique'
+        }
+    }
+];
+
+let defaults = {
+    zoomFactor: 0.05, // zoom factor per zoom tick
+    zoomDelay: 45, // how many ms between zoom ticks
+    minZoom: 0.1, // min zoom level
+    maxZoom: 10, // max zoom level
+    fitPadding: 50, // padding when fitting
+    panSpeed: 10, // how many ms in between pan ticks
+    panDistance: 10, // max pan distance per tick
+    panDragAreaSize: 75, // the length of the pan drag box in which the vector for panning is calculated (bigger = finer control of pan speed and direction)
+    panMinPercentSpeed: 0.25, // the slowest speed we can pan by (as a percent of panSpeed)
+    panInactiveArea: 8, // radius of inactive area in pan drag box
+    panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
+    zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
+    fitSelector: undefined, // selector of elements to fit
+    animateOnFit: function(){ // whether to animate on fit
+        return false;
+    },
+    fitAnimationDuration: 1000, // duration of animation on fit
+
+    // icon class names
+    sliderHandleIcon: 'fa fa-minus',
+    zoomInIcon: 'fa fa-plus',
+    zoomOutIcon: 'fa fa-minus',
+    resetIcon: 'fa fa-expand'
+};
 exports.generarGrafo = generarGrafo;
