@@ -1,12 +1,11 @@
 const plantumlEncoder = require('plantuml-encoder');
 const $ = require('./jquery-3.4.1.min.js');
 
-const IRIManager = require("../schema/irimanager.js");
-const xmiparser = require('../xmi/XMIParser.js');
+const IRIManager = require("../managers/irimanager.js");
+const xmiparser = require('../xmi_util/XMIParser.js');
 const irim = new IRIManager();
 
-const ShExCardinality = require("../shex/shexgen/ShExCardinality.js");
-const ShExAux = require("../shex/shexgen/ShExAuxiliar.js");
+const ShExCardinality = require("../shex_util/shexgen/ShExCardinality.js");
 
 let classes = new Map();
 let types = new Map();

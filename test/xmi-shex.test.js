@@ -1,4 +1,4 @@
-const xmiparser = require('../xmi/XMIParser.js');
+const xmiparser = require('../xmi_util/XMIParser.js');
 const XMIRep = require('../repo/xmirepository.js');
 const ShExRep = require('../repo/shexrepository.js');
 

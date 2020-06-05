@@ -4,8 +4,8 @@ let dagre = require('cytoscape-dagre');
 const panzoom = require('cytoscape-panzoom');
 cyto.use( dagre );
 panzoom( cyto );
-const IRIManager = require("../schema/irimanager.js");
-const shexparser = require('../shex/ShExParser.js');
+const IRIManager = require("../managers/irimanager.js");
+const shexparser = require('../shex_util/ShExParser.js');
 
 const irim = new IRIManager();
 
