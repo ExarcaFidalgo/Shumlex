@@ -72,5 +72,36 @@ class IRIManager {
         return uri.replace(baseuri, "");
     }
 
+    static getShexTerm(term) {
+
+        if(term === undefined) {
+            throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
+        }
+        if(term.includes(":") || term.includes("\"") || term.includes("~") ||
+            term.includes(" ") || (!isNaN(term) && (term.length > 0))) {
+            return term;
+        }
+        let nk = IRIManager.checkNodeKind(term);
+        if(nk) {
+            return nk;
+        }
+        return "<" + term + ">"
+    }
+
+    static checkNodeKind(nk) {
+        switch(nk.toLowerCase()) {
+            case "literal":
+                return "Literal";
+            case "iri":
+                return "IRI";
+            case "bnode":
+                return "BNode";
+            case "nonliteral":
+                return "NonLiteral";
+            default:
+                return false;
+        }
+    }
+
 }
 module.exports = IRIManager;

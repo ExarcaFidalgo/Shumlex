@@ -6,9 +6,7 @@ cyto.use( dagre );
 panzoom( cyto );
 const IRIManager = require("../schema/irimanager.js");
 const shexparser = require('../shex/ShExParser.js');
-const ShapeManager = require("../xmi/ShapeManager.js");
 
-const shm = new ShapeManager();
 const irim = new IRIManager();
 
 let id = 0;
@@ -59,22 +57,46 @@ function shExAGrafo(text) {
         if (source.shapes.hasOwnProperty(shape)) {
             let id = irim.findIri(shape);
             let sh = source.shapes[shape];
-            elements.push(createNode(id, irim.getPrefixedTermOfUri(shape)));
+            let shapeName = IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape));
+            elements.push(createNode(id, shapeName));
 
             elements = elements.concat(checkClosed(sh, id));
-            elements = elements.concat(checkNodeKind(sh, id, "a"));
+            elements = elements.concat(checkExtra(sh, id));
+            elements = elements.concat(checkNodeKind(sh, id, ""));
 
             if (sh.type === "ShapeAnd") {
+                let nOfShapes = 0;
+                //Contar el número de Shapes en la conjunción
+                for (let i = 0; i < sh.shapeExprs.length; i++) {
+                    if (sh.shapeExprs[i].type === "Shape") { // Herencia - :User :Person AND {}
+                        nOfShapes++;
+                    }
+                }
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
                     if (sh.shapeExprs[i].type === "ShapeRef") { // Herencia - :User :Person AND {}
                         elements = elements.concat(createInheritance(sh.shapeExprs[i], id));
                     }
                     else if (sh.shapeExprs[i].type === "NodeConstraint") {
-                        elements = elements.concat(createNodeKind(sh.shapeExprs[i], id,"a"));
+                        elements = elements.concat(createNodeKind(sh.shapeExprs[i], id,""));
                     }
                     else {  //Conjunción de formas - :User { ... } AND { ... }
-                        elements = elements.concat(checkClosed(sh.shapeExprs[i], id));
-                        let ats = checkExpression(sh.shapeExprs[i].expression, id);
+                        let idMid = getID();
+                        //Comprobar si hay solo una Shape, en cuyo caso no representaremos el AND,
+                        // puesto que solo habría 1 hijo
+                        if(nOfShapes > 1) {
+                            let andAtr = andAtrs.get(shapeName);
+                            if(!andAtr) {
+                                andAtr = getID();
+                                elements = elements.concat(createToNode(andAtr, 'AND', "", id));
+                                andAtrs.set(shapeName, andAtr);
+                            }
+                            elements = elements.concat(createToNode(idMid, '', "", andAtr));
+                        }
+
+                        let expFather = nOfShapes > 1 ? idMid : id;
+
+                        elements = elements.concat(checkClosed(sh.shapeExprs[i], expFather));
+                        let ats = checkExpression(sh.shapeExprs[i].expression, expFather);
                         elements = elements.concat(ats);
                     }
                 }
@@ -92,7 +114,21 @@ function checkClosed(shape, id) {
     let elements = [];
     if (shape.closed) {
         let idn = getID();
-        elements = elements.concat(createToNode(idn, "CLOSED", "is", id));
+        elements = elements.concat(createToNode(idn, "CLOSED", "", id));
+    }
+    return elements;
+}
+
+function checkExtra(shape, id) {
+    let elements = [];
+    if (shape.extra) {
+        let idn = getID();
+        elements = elements.concat(createToNode(idn, "EXTRA", "", id));
+        for(let i = 0; i < shape.extra.length; i++) {
+            elements = elements.concat(createToNode(getID(),
+                IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape.extra[i])),
+                "", idn));
+        }
     }
     return elements;
 }
@@ -108,7 +144,7 @@ function checkNodeKind(shape, id, name) {
 function createNodeKind(shape, id, name) {
     let elements = [];
     let idn = getID();
-    elements = elements.concat(createToNode(idn, shape.nodeKind, name, id));
+    elements = elements.concat(createToNode(idn, IRIManager.checkNodeKind(shape.nodeKind), name, id));
     return elements;
 }
 
@@ -152,9 +188,9 @@ function createLabel(expr, father, depth) {
     let labelRef = "$" + label;
     let id = getID();
     labels.set(label, id);
-    attrs = attrs.concat(createToNode(id, label, labelRef + ' ' + cardinalityOf(expr), father));
+    attrs = attrs.concat(createToNode(id, "", labelRef + ' ' + cardinalityOf(expr), father));
     let exp = expr;
-    expr.id = undefined;
+    exp.id = undefined;
     let ats = checkExpression(exp, id, depth + 1);
     attrs = attrs.concat(ats);
     return attrs;
@@ -210,7 +246,7 @@ function determineTypeOfExpression(expr, father, fname) {
     let name;
 
     if(expr.predicate) {
-        name = inverse + irim.getPrefixedTermOfUri(expr.predicate) + cardinalityOf(expr);
+        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate)) + cardinalityOf(expr);
     }
 
     if(!expr.valueExpr) {
@@ -233,7 +269,7 @@ function determineTypeOfExpression(expr, father, fname) {
             return attrs;
         }
         if(expr.valueExpr.nodeKind) {
-            attrs = attrs.concat(createNodeKind(expr.valueExpr, name, father));
+            attrs = attrs.concat(createNodeKind(expr.valueExpr, father, name));
             return attrs;
         }
         if(expr.valueExpr.datatype) {
@@ -260,7 +296,7 @@ function checkShapeAndExprs(expr, father, fname) {
     let andAtr = andAtrs.get(fname);
     if(!andAtr) {
         andAtr = getID();
-        attrs = attrs.concat(createToNode(andAtr, 'shapeExprs', fname, father));
+        attrs = attrs.concat(createToNode(andAtr, 'AND', fname, father));
         andAtrs.set(fname, andAtr);
     }
 
@@ -298,13 +334,14 @@ function createEnumeration(expr, name, father) {
             let vl = expr.valueExpr.values[value];
             let ide = getID();
             if(vl.value !== undefined) {
-                attrs = attrs.concat(createToNode(ide, vl, "", idv));
+                attrs = attrs.concat(createToNode(ide, vl.value, "", idv));
             }
             else if(vl.type === "LiteralStem") {
                 attrs = attrs.concat(createToNode(ide, "&quot;" + vl.stem + "&quot;" + "~", "", idv));
             }
             else if(vl.type === "IriStem") {
-                attrs = attrs.concat(createToNode(ide, irim.getPrefixedTermOfUri(vl.stem) + "~", "", idv));
+                attrs = attrs.concat(createToNode(ide,
+                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~", "", idv));
             }
             else if(vl.type === "IriStemRange") {
                 attrs = attrs.concat(checkStemRange(vl, ide, idv, "IriStem"));
@@ -321,7 +358,8 @@ function createEnumeration(expr, name, father) {
             else if(vl.type === "LanguageStemRange") {
                 attrs = attrs.concat(checkStemRange(vl, ide, idv, "LanguageStem"));
             } else {
-                attrs = attrs.concat(createToNode(ide, irim.getPrefixedTermOfUri(vl), "", idv));
+                attrs = attrs.concat(createToNode(ide,
+                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl)), "", idv));
             }
         }
     }
@@ -337,15 +375,15 @@ function checkStemRange(vl, ide, idv, type) {
         switch(type) {
             case "IriStem":
                 attrs = attrs.concat(createToNode(ide,
-                    irim.getPrefixedTermOfUri(expr.valueExpr.values[value].stem) + "~ ", "", idv));
+                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~ ", "", idv));
                 break;
             case "LiteralStem":
                 attrs = attrs.concat(createToNode(ide,
-                    expr.valueExpr.values[value].stem + "~ ", "", idv));
+                    vl.stem + "~ ", "", idv));
                 break;
             case "LanguageStem":
                 attrs = attrs.concat(createToNode(ide,
-                    "@" + expr.valueExpr.values[value].stem + "~ ", "", idv));
+                    "@" + vl.stem + "~ ", "", idv));
                 break;
         }
     }
@@ -356,7 +394,8 @@ function checkStemRange(vl, ide, idv, type) {
         if(excl.type === type) {
             switch(type) {
                 case "IriStem":
-                    attrs = attrs.concat(createToNode(idx, irim.getPrefixedTermOfUri(excl.stem) + "~",
+                    attrs = attrs.concat(createToNode(idx,
+                        IRIManager.getShexTerm(irim.getPrefixedTermOfUri(excl.stem)) + "~",
                         "-", ide));
                     break;
                 case "LiteralStem":
@@ -370,7 +409,8 @@ function checkStemRange(vl, ide, idv, type) {
         else {
             switch(type) {
                 case "IriStem":
-                    attrs = attrs.concat(createToNode(idx, irim.getPrefixedTermOfUri(excl), "-", ide));
+                    attrs = attrs.concat(createToNode(idx, IRIManager.getShexTerm(irim.getPrefixedTermOfUri(excl))
+                        , "-", ide));
                     break;
                 case "LiteralStem":
                     attrs = attrs.concat(createToNode(idx, excl, "-", ide));
@@ -397,7 +437,7 @@ function createDatatype(expr, name, father) {
         attrs = attrs.concat(facets);
         if(expr.datatype) {
             let idd = getID();
-            attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfUri(expr.datatype), "type", father));
+            attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfUri(expr.datatype), "datatype", father));
         }
     }
     return attrs;
@@ -415,16 +455,15 @@ function createShapeRef(expr, name, father) {
 
 function createBlank(expr, name, father) {
     let attrs = [];
-    shm.incrementBlank();
     let id = getID();
-    let ref = "_:" + shm.getCurrentBlank();
-    attrs = attrs.concat(createToNode(id, ref, name, father));
+    attrs = attrs.concat(createToNode(id, "", name, father));
     attrs = attrs.concat(checkExpression(expr.valueExpr.expression, id));
     return attrs;
 }
 
 function createShapeAnd(expr, father) {
     let attrs = [];
+
     for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
         attrs = attrs.concat(
             determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate)));
