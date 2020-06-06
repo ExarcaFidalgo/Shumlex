@@ -9,20 +9,28 @@ const shexparser = require('../shex_util/ShExParser.js');
 
 const irim = new IRIManager();
 
+//ID actual
 let id = 0;
 
+/**
+ * Devuelve el ID a asignar al nuevo elemento del grafo
+ * @returns {number}
+ */
 function getID() {
     return ++id;
 }
 
-let labels = new Map();
-let andAtrs = new Map();
+let labels = new Map();     //Almacena etiquetas
+let andShs = new Map();    //Almacena las ShapeAnd existentes
 
-
+/**
+ * Crea un grafo mediante Cytoscape en el <div> "grafo"
+ * @param data  Datos del grafo
+ */
 function generarGrafo(data) {
     let cy = cyto({
 
-        container: document.getElementById('grafo'), // container to render in
+        container: document.getElementById('grafo'), // Contenedor
 
         elements: shExAGrafo(data),
 
@@ -36,16 +44,21 @@ function generarGrafo(data) {
         }
 
     });
-    // add the panzoom control
     cy.panzoom( defaults );
 }
 
+/**
+ * Crea la información necesaria para generar un grafo a partir de un ShEx
+ * @param text  ShEx
+ * @returns {Array} Conjunto de nodos y asociaciones
+ */
 function shExAGrafo(text) {
     let elements = [];
 
     let source = shexparser.parseShEx(text);
     irim.createPrefixes(source.prefixes, source.base);
 
+    //Guardamos las shapes y su ID para futuras asociaciones
     for (let shape in source.shapes) {
         if(source.shapes.hasOwnProperty(shape)) {
             irim.saveIri(shape, getID());
@@ -55,6 +68,7 @@ function shExAGrafo(text) {
 
     for (let shape in source.shapes) {
         if (source.shapes.hasOwnProperty(shape)) {
+            //Extraemos el ID generado anteriormente
             let id = irim.findIri(shape);
             let sh = source.shapes[shape];
             let shapeName = IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape));
@@ -68,27 +82,30 @@ function shExAGrafo(text) {
                 let nOfShapes = 0;
                 //Contar el número de Shapes en la conjunción
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
-                    if (sh.shapeExprs[i].type === "Shape") { // Herencia - :User :Person AND {}
+                    if (sh.shapeExprs[i].type === "Shape") {
                         nOfShapes++;
                     }
                 }
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
-                    if (sh.shapeExprs[i].type === "ShapeRef") { // Herencia - :User :Person AND {}
+                    // Herencia - :User :Person AND {}
+                    if (sh.shapeExprs[i].type === "ShapeRef") {
                         elements = elements.concat(createInheritance(sh.shapeExprs[i], id));
                     }
+                    // Restricción tipo nodal - :User Literal AND
                     else if (sh.shapeExprs[i].type === "NodeConstraint") {
                         elements = elements.concat(createNodeKind(sh.shapeExprs[i], id,""));
                     }
-                    else {  //Conjunción de formas - :User { ... } AND { ... }
+                    //Conjunción de formas - :User { ... } AND { ... }
+                    else {
                         let idMid = getID();
                         //Comprobar si hay solo una Shape, en cuyo caso no representaremos el AND,
                         // puesto que solo habría 1 hijo
                         if(nOfShapes > 1) {
-                            let andAtr = andAtrs.get(shapeName);
+                            let andAtr = andShs.get(shapeName);
                             if(!andAtr) {
                                 andAtr = getID();
                                 elements = elements.concat(createToNode(andAtr, 'AND', "", id));
-                                andAtrs.set(shapeName, andAtr);
+                                andShs.set(shapeName, andAtr);
                             }
                             elements = elements.concat(createToNode(idMid, '', "", andAtr));
                         }
@@ -96,11 +113,14 @@ function shExAGrafo(text) {
                         let expFather = nOfShapes > 1 ? idMid : id;
 
                         elements = elements.concat(checkClosed(sh.shapeExprs[i], expFather));
+                        //Generar los elementos del grafo correspondientes a la expresión actual de la ShapeAnd
                         let ats = checkExpression(sh.shapeExprs[i].expression, expFather);
                         elements = elements.concat(ats);
                     }
                 }
-            } else {
+            }
+            //No es ShapeAnd, sino Shape
+            else {
                 let ats = checkExpression(sh.expression, id);
                 elements = elements.concat(ats);
             }
@@ -110,6 +130,13 @@ function shExAGrafo(text) {
     return elements;
 }
 
+/**
+ * Comprueba si es una Shape CLOSED.
+ * En caso afirmativo añade una asociación a un nodo CLOSED
+ * @param shape Shape
+ * @param id    ID padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkClosed(shape, id) {
     let elements = [];
     if (shape.closed) {
@@ -119,11 +146,19 @@ function checkClosed(shape, id) {
     return elements;
 }
 
+/**
+ * Comprueba si es una Shape con EXTRA.
+ * En caso afirmativo añade una asociación a un nodo EXTRA, cuyos hijos serán las respectivas URIs
+ * @param shape Shape
+ * @param id    ID padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkExtra(shape, id) {
     let elements = [];
     if (shape.extra) {
         let idn = getID();
         elements = elements.concat(createToNode(idn, "EXTRA", "", id));
+        //Generamos los hijos de EXTRA: todas las URI del array extra
         for(let i = 0; i < shape.extra.length; i++) {
             elements = elements.concat(createToNode(getID(),
                 IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape.extra[i])),
@@ -133,6 +168,14 @@ function checkExtra(shape, id) {
     return elements;
 }
 
+/**
+ * Comprueba si es una Shape con tipo de nodo - nodekind.
+ * En caso afirmativo añade una asociación a un nodo con el nombre del nodekind - Literal, BNode...
+ * @param shape Shape
+ * @param id    ID padre
+ * @param name    Nombre de la relación
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkNodeKind(shape, id, name) {
     let elements = [];
     if (shape.nodeKind !== undefined) {
@@ -141,6 +184,13 @@ function checkNodeKind(shape, id, name) {
     return elements;
 }
 
+/**
+ * Añade una asociación a un nodo con el nombre del nodekind - Literal, BNode...
+ * @param shape Shape
+ * @param id    ID padre
+ * @param name    Nombre de la relación
+ * @returns {Array} Elementos del grafo generados
+ */
 function createNodeKind(shape, id, name) {
     let elements = [];
     let idn = getID();
@@ -148,67 +198,120 @@ function createNodeKind(shape, id, name) {
     return elements;
 }
 
+/**
+ * Crea una relación de herencia
+ * @param shape Shape hija
+ * @param id    ID del nodo correspondiente a la shape padre
+ * @returns {Array} Elementos generados
+ */
 function createInheritance(shape, id){
     let elements = [];
     elements.push(createRelation("a", id, irim.findIri(shape.reference)));
     return elements;
 }
 
+/**
+ * Comprueba una expresión. Según el tipo, genera distintos constructos en el grafo
+ * @param expr  Expresión a analizar
+ * @param father    ID del nodo correspondiente a la shape padre
+ * @param dep   Profundidad, si aplica. En algunos casos hay recursividad y es necesario contabilizarla
+ * para actuar en consecuencia: vease el checkEachOf.
+ * @returns {*} Elementos del grafo generados
+ */
 function checkExpression(expr, father, dep) {
+    //Si no se recibe profundidad como parámetro, estamos en el primer nivel
     let depth = dep ? dep : 1;
     console.log(expr);
     let attrs = [];
+    //Si no hay expresión, no se genera nada
     if(!expr) {
         return attrs;
     }
+    //Si existe un atributo id, se trata de una expresión etiquetada.
     else if(expr.id !== undefined) {
         attrs = attrs.concat(createLabel(expr, father, depth));
         return attrs;
     }
+    //Si es un tipo Inclusion, se trata de una referencia a una expresión etiquetada.
     else if(expr.type === "Inclusion") {
         attrs = attrs.concat(createLabelRef(expr, father));
         return attrs;
     }
+    //Una TripleConstraint alberga múltiples alternativas. Redigirimos a un método especializado.
     else if(expr.type === "TripleConstraint") {
         return determineTypeOfExpression(expr, father);
     }
+    //Expresión OneOf.
     else if(expr.type === "OneOf") {
         attrs = attrs.concat(createOneOf(expr, father, depth));
         return attrs;
     }
+    //Expresión EachOf.
     else if (expr.type === "EachOf") {
         attrs = attrs.concat(checkEachOf(expr, father, depth));
         return attrs;
     }
 }
 
+/**
+ * Crea una representación de una expresión etiquetada.
+ * @param expr  Expresión.
+ * @param father    ID nodo padre.
+ * @param depth Profundidad.
+ * @returns {Array} Elementos del grafo generados.
+ */
 function createLabel(expr, father, depth) {
     let attrs = [];
+    //La etiqueta de la expresión es el ID
     let label = irim.getPrefixedTermOfUri(expr.id);
+    //La referencia se crea añadiendo $
     let labelRef = "$" + label;
     let id = getID();
+    //Guardamos la etiqueta
     labels.set(label, id);
+    //Creamos una relación a un nodo sin nombre, que abarca toda la expr. etiq. La relación lleva el nombre $<etiqueta>
     attrs = attrs.concat(createToNode(id, "", labelRef + ' ' + cardinalityOf(expr), father));
     let exp = expr;
+    //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
     exp.id = undefined;
+    //Generamos los elementos de la expresión etiquetada, a partir del nodo anónimo anterior
     let ats = checkExpression(exp, id, depth + 1);
     attrs = attrs.concat(ats);
     return attrs;
 }
 
+/**
+ * Genera una representación de referencia a expresión etiquetada
+ * @param expr  Expresión
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createLabelRef(expr, father) {
     let attrs = [];
+    //Se crea relación entre el padre y el nodo anónimo que abarca la expresión etiquetada, cuyo id obtenemos
+    // a partir de la etiqueta.
+    //El nombre de la relación es &<etiqueta>
     attrs.push(createRelation('&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + cardinalityOf(expr),
         father, labels.get(irim.getPrefixedTermOfUri(expr.include))));
     return attrs;
 }
 
+/**
+ * Genera una representación de un OneOf
+ * @param expr  Expresión
+ * @param father    ID nodo padre
+ * @param depth Profundidad
+ * @returns {Array} Elementos del grafo generados
+ */
 function createOneOf(expr, father, depth) {
     let attrs = [];
     let id = getID();
+    //Desde el padre, creamos relación "OneOf" a un nodo "expressions"
     attrs = attrs.concat(createToNode(id, 'expressions', 'OneOf ' + cardinalityOf(expr), father));
+    //Los hijos de "expressions" será cada una de las expresiones del OneOf
     for(let attr in expr.expressions) {
         if(expr.expressions.hasOwnProperty(attr)) {
+            //Generamos la representación correspondiente a cada una de estas expresiones, aumentando profundidad
             let ats = checkExpression(expr.expressions[attr], id, depth + 1);
             attrs = attrs.concat(ats);
         }
@@ -216,19 +319,31 @@ function createOneOf(expr, father, depth) {
     return attrs;
 }
 
+/**
+ * Genera la representación de una expresión EachOf
+ * @param expr Expresión
+ * @param father    ID nodo padre
+ * @param depth Profundidad
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkEachOf(expr, father, depth) {
     let attrs = [];
+    //Creamos una relación EachOf desde el padre hasta un nodo "expressions":
+    //Si la profundidad es mayor de 1 - Por ejemplo, es una de las expressiones de un OneOf.
+    //Si tiene cardinalidad distinta de 1 - Empleamos el EachOf para indicar la cardinalidad del conjunto de sus expr.
     if(depth > 1 || expr.min !== undefined || expr.max !== undefined) {
         let id = getID();
         attrs = attrs.concat(createToNode(id, 'expressions', 'EachOf ' + cardinalityOf(expr), father));
         for(let attr in expr.expressions) {
             if(expr.expressions.hasOwnProperty(attr)) {
+                //Generamos la representación de las expresiones del EachOf, siendo su padre el EachOf.
                 let ats = checkExpression(expr.expressions[attr], id, depth + 1);
                 attrs = attrs.concat(ats);
             }
         }
         return attrs;
     }
+    //En caso contrario, se generan las expresiones del EachOf, sin crear nodo EachOf. El padre es el indicado por param
     else {
         for(let attr in expr.expressions) {
             if(expr.expressions.hasOwnProperty(attr)) {
@@ -240,6 +355,13 @@ function checkEachOf(expr, father, depth) {
     }
 }
 
+/**
+ * Representa una expresión de tipo TripleConstraint
+ * @param expr  Expresión TripleConstraint
+ * @param father    ID nodo padre
+ * @param fname Nombre del nodo padre
+ * @returns {Array} Elementos generados
+ */
 function determineTypeOfExpression(expr, father, fname) {
     let attrs = [];
     let inverse = (expr.inverse === true ? "^" : "");
@@ -293,11 +415,11 @@ function determineTypeOfExpression(expr, father, fname) {
 
 function checkShapeAndExprs(expr, father, fname) {
     let attrs = [];
-    let andAtr = andAtrs.get(fname);
+    let andAtr = andShs.get(fname);
     if(!andAtr) {
         andAtr = getID();
         attrs = attrs.concat(createToNode(andAtr, 'AND', fname, father));
-        andAtrs.set(fname, andAtr);
+        andShs.set(fname, andAtr);
     }
 
     attrs = attrs.concat(createDatatype(expr, null, andAtr));

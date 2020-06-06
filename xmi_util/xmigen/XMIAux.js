@@ -83,7 +83,7 @@ class XMIAux {
 
     static createOwnLit(value) {
         return "\n\t<ownedLiteral xmi:id=\"" + unid() + "\" name=\""
-        + value + "\"/>\n";
+        + value + "\"/>";
     }
 
     static createGen(id, idgen) {

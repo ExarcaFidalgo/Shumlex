@@ -1,5 +1,9 @@
 const unid = require("uniqid");
+const XMIAux = require("../xmi_util/xmigen/XMIAux.js");
 
+/**
+ * Gestiona diversos aspectos relacionados con las IRIs a manejar
+ */
 class IRIManager {
 
     constructor () {
@@ -8,14 +12,29 @@ class IRIManager {
         this.iris = new Map();
     }
 
+    /**
+     * Guarda una IRI, con la misma como clave y el ID como valor a recuperar
+     * @param iri
+     * @param id
+     */
     saveIri(iri, id) {
         this.iris.set(iri, id);
     }
 
+    /**
+     * Devuelve el ID almacenado para una IRI
+     * @param iri
+     * @returns ID, si existe
+     */
     findIri(iri) {
         return this.iris.get(iri);
     }
 
+    /**
+     * Almacena un listado de prefijos
+     * @param prefixes
+     * @param base  Prefijo base
+     */
     createPrefixes (prefixes, base) {
         for(let prefix in prefixes) {
             if(prefixes.hasOwnProperty(prefix)) {
@@ -25,6 +44,10 @@ class IRIManager {
         this.base = base;
     }
 
+    /**
+     * Almacena un prefijo dado
+     * @param pr Prefijo
+     */
     savePrefix(pr) {
         let fragments = pr.split(" ");
         let type = fragments[0];
@@ -40,6 +63,11 @@ class IRIManager {
 
     }
 
+    /**
+     * Retorna el prefijo correspondiente a la IRI de XMLSchema
+     * Si no existe, se añade uno por defecto.
+     * @returns Prefijo de XSD
+     */
     findXSDPrefix() {
         let xsdUri = "<http://www.w3.org/2001/XMLSchema#>";
         let prefix = this.prefixes.find(value => value.uri === xsdUri);
@@ -50,17 +78,30 @@ class IRIManager {
         return "xsd:";
     }
 
+    /**
+     * Retorna el listado de prefijos
+     * @returns {Array}
+     */
     getPrefixesList() {
         return this.prefixes;
     }
 
+    /**
+     * Retorna el prefijo base, o nada si no existe (IRIs relativas)
+     * @returns {string}
+     */
     getBase() {
         if(this.base) {
             return "base " + this.base.uri + "\n\n";
         }
-        return "base <http://example.org/>\n\n";
+        return "";
     }
 
+    /**
+     * Devuelve el término prefijado correspondiente a una URI
+     * @param uri
+     * @returns {*}
+     */
     getPrefixedTermOfUri(uri) {
         for(let i = 0; i < this.prefixes.length; i++) {
             if(uri.includes(this.prefixes[i].uri)) {
@@ -70,10 +111,21 @@ class IRIManager {
         return IRIManager.lastOfUri(this.base, uri)
     }
 
+    /**
+     * Devuelve el último fragmento de una URI
+     * @param baseuri   Fragmento base - se elimina-
+     * @param uri       URI a tratar
+     * @returns {*}
+     */
     static lastOfUri(baseuri, uri) {
         return uri.replace(baseuri, "");
     }
 
+    /**
+     * Devuelve el término debido para una URI a representar en ShEx
+     * @param term
+     * @returns {*}
+     */
     static getShexTerm(term) {
 
         if(term === undefined) {
@@ -90,6 +142,11 @@ class IRIManager {
         return "<" + term + ">"
     }
 
+    /**
+     * Devuelve el Tipo de Nodo con una estética adecuada
+     * @param nk
+     * @returns {*}
+     */
     static checkNodeKind(nk) {
         switch(nk.toLowerCase()) {
             case "literal":
@@ -105,22 +162,30 @@ class IRIManager {
         }
     }
 
+    /**
+     * A partir de los prefijos recibidos, los almacena y genera el XMI correspondiente
+     * @param prefixes
+     * @param base
+     * @returns {string}    Enumeración XMI con los prefijos
+     */
     createXMIPrefixes (prefixes, base) {
-        let enumeration = "\n<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"" + unid()
-            + "\" name=\"Prefixes\">";
+
+        let int = "";
         for(let prefix in prefixes) {
             if(prefixes.hasOwnProperty(prefix)) {
-                enumeration += "\n\t<ownedLiteral xmi:id=\"" + unid() + "\" name=\"prefix " +
-                    prefix + ": &lt;" + prefixes[prefix] + ">\"/>";
+                int += XMIAux.createOwnLit("prefix " + prefix + ": &lt;" + prefixes[prefix] + ">");
                 this.prefixes.push({uri: prefixes[prefix], prefix: prefix})
             }
         }
-        enumeration += "\n\t<ownedLiteral xmi:id=\"" + unid() + "\" name=\"base &lt;" + base + ">\"/>" +
-            "\n</packagedElement>";
+        int += XMIAux.createOwnLit("base &lt;" + base + ">");
+        let enumeration = XMIAux.createPackEl("uml:Enumeration", unid(), "name=\"Prefixes\"", int);
         this.base = base;
         return enumeration
     }
 
+    /**
+     * Reinicia los listados
+     */
     clear() {
         this.prefixes = [];
         this.base = null;
