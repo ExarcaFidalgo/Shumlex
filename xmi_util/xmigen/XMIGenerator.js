@@ -7,35 +7,31 @@ const XMICardinality = require("./XMICardinality.js");
 const XMIClass = require("./XMIClass.js");
 const XMIConstraints = require("./XMIConstraints.js");
 const XMIEnumerations = require("./XMIEnumerations.js");
-const XMIGeneralization = require("./XMIGeneralization.js");
 const XMISubclasses = require("./XMISubclasses.js");
 const XMITypes = require("./XMITypes.js");
+const XMIAux = require("./XMIAux.js");
 
 class XMIGenerator {
 
     constructor () {
         this.shm = new ShapeManager(uniqid);
         this.irim = new IRIManager();
-        this.xmicard = new XMICardinality(uniqid);
-        this.xmiasoc = new XMIAssociations(uniqid, this.shm, this.irim, this.xmicard);
-        this.xmicon = new XMIConstraints(uniqid, this.irim);
-        this.xmienum = new XMIEnumerations(uniqid, this.irim, this.xmicard);
-        this.xmigen = new XMIGeneralization(uniqid, XMITypes, this.shm);
-
-        this.xmitype = new XMITypes(uniqid, this.irim);
-        this.xmisub = new XMISubclasses(this.shm, null, this.irim);
+        this.xmicard = new XMICardinality(uniqid, XMIAux);
+        this.xmiasoc = new XMIAssociations(uniqid, this.shm, this.irim, this.xmicard, XMIAux);
+        this.xmicon = new XMIConstraints(uniqid, this.irim, XMIAux);
+        this.xmienum = new XMIEnumerations(uniqid, this.irim, this.xmicard, XMIAux);
+        this.xmitype = new XMITypes(uniqid, this.irim, XMIAux, IRIManager);
+        this.xmisub = new XMISubclasses(this.shm, null, this.irim, XMIAux);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,
-            this.irim, this.xmicon, this.shm, XMITypes, this.xmicard);
+            this.irim, this.xmicon, this.shm, XMITypes, this.xmicard, XMIAux);
         this.xmisub.xmiats = this.xmiats;
         this.xmicl = new XMIClass(this.shm, XMITypes, this.irim, this.xmiats, this.xmicon, this.xmiasoc,
-            this.xmisub);
+            this.xmisub, XMIAux);
 
     }
 
     static createXMIHeader() {
-        return '<?xml version="1.0" encoding="UTF-8"?>\n' +
-            '<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" ' +
-            'xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML"\n xmi:id="' + uniqid() + '" name="ShExGeneratedXMI">'
+        return XMIAux.createXMIHeader();
     }
 
     createXMIClass(name, shape) {
@@ -56,15 +52,9 @@ class XMIGenerator {
 
         base += this.xmitype.getNodeKindsXMI();
 
-        base += '\n</uml:Model>';
+        base += XMIAux.closeXMI();
 
         return base;
-    }
-
-    static createXMIOwnedComment(comment) {
-        return '<ownedComment xmi:id="' + uniqid() + '">\n' +
-            '<body>' + comment + '</body>\n' +
-            '</ownedComment>\n'
     }
 
     clear() {

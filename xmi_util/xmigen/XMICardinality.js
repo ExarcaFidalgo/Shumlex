@@ -1,7 +1,8 @@
 class XMICardinality {
 
-    constructor(unid) {
+    constructor(unid, XMIAux) {
         this.unid = unid;
+        this.XMIAux = XMIAux;
     }
 
     createXMICardinality(min, max) {
@@ -14,8 +15,8 @@ class XMICardinality {
         if(cardinality === 1)
             return "";
         if(cardinality === -1)
-            return '\n\t\t<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + this.unid() + '" value="*"/>';
-        return '\n\t\t<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + this.unid() + '" value="' + cardinality + '"/>';
+            return this.XMIAux.getUpVal("*");
+        return this.XMIAux.getUpVal(cardinality);
     }
 
     getLowerCardinality(cardinality) {
@@ -23,11 +24,11 @@ class XMICardinality {
             return this.getLower0Cardinality();
         else if(cardinality === 1)
             return "";
-        return '\n\t\t<lowerValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="' + this.unid() + '" value="' + cardinality + '"/>';
+        return this.XMIAux.getLowVal("UnlimitedNatural", cardinality);
     }
 
     getLower0Cardinality() {
-        return '\n\t\t<lowerValue xmi:type="uml:LiteralInteger" xmi:id="' + this.unid() + '"/>';
+        return this.XMIAux.getLowVal("Integer");
     }
 
 }

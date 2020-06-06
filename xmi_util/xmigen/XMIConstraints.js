@@ -1,9 +1,10 @@
 class XMIConstraints {
 
-    constructor (unid, irim) {
+    constructor (unid, irim, XMIAux) {
         this.ownedRules = [];
         this.unid = unid;
         this.irim = irim;
+        this.XMIAux = XMIAux;
     }
 
     createDependentOwnedRules(){
@@ -20,37 +21,37 @@ class XMIConstraints {
             return;
         }
         if(vex.mininclusive) {
-            this.ownedRules.push(this.createXMIOwnedRule("MinInclusive " + vex.mininclusive, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinInclusive " + vex.mininclusive, id));
         }
         if(vex.minexclusive) {
-            this.ownedRules.push(this.createXMIOwnedRule("MinExclusive " + vex.minexclusive, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinExclusive " + vex.minexclusive, id));
         }
         if(vex.totaldigits) {
-            this.ownedRules.push(this.createXMIOwnedRule("TotalDigits " + vex.totaldigits, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("TotalDigits " + vex.totaldigits, id));
         }
         if(vex.fractiondigits) {
-            this.ownedRules.push(this.createXMIOwnedRule("FractionDigits " + vex.fractiondigits, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("FractionDigits " + vex.fractiondigits, id));
         }
         if(vex.length) {
-            this.ownedRules.push(this.createXMIOwnedRule("Length " + vex.length, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("Length " + vex.length, id));
         }
         if(vex.minlength) {
-            this.ownedRules.push(this.createXMIOwnedRule("MinLength " + vex.minlength, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinLength " + vex.minlength, id));
         }
         if(vex.maxlength) {
-            this.ownedRules.push(this.createXMIOwnedRule("MaxLength " + vex.maxlength, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MaxLength " + vex.maxlength, id));
         }
         if(vex.pattern) {
-            this.ownedRules.push(this.createXMIOwnedRule("/" + vex.pattern + "/", id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("/" + vex.pattern + "/", id));
         }
     }
 
     markAsClosed(id) {
-        this.ownedRules.push(this.createXMIOwnedRule("CLOSED", id));
+        this.ownedRules.push(this.XMIAux.createXMIOwnedRule("CLOSED", id));
     }
 
     markAsInverse(id) {
-        this.ownedRules.push(this.createXMIOwnedRule("Inverse", id));
+        this.ownedRules.push(this.XMIAux.createXMIOwnedRule("Inverse", id));
     }
 
     markAsExtra(id, values) {
@@ -62,13 +63,7 @@ class XMIConstraints {
             }
             extra += " " + value;
         }
-        this.ownedRules.push(this.createXMIOwnedRule(extra, id));
-    }
-
-    createXMIOwnedRule(name, id) {
-        return "\n<ownedRule xmi:id=\"" + this.unid() + "\" name=\"" + name + "\" " +
-            "constrainedElement=\"" + id + "\">\n" +
-            "\n</ownedRule>"
+        this.ownedRules.push(this.XMIAux.createXMIOwnedRule(extra, id));
     }
 
     clear() {

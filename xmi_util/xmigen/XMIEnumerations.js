@@ -1,10 +1,11 @@
 class XMIEnumerations {
 
-    constructor (unid, irim, xmicard) {
+    constructor (unid, irim, xmicard, XMIAux) {
         this.enumerations = [];
         this.unid = unid;
         this.irim = irim;
         this.xmicard = xmicard;
+        this.XMIAux = XMIAux;
     }
 
     createXMIEnumAttribute(name, values, min, max, id) {
@@ -15,12 +16,7 @@ class XMIEnumerations {
         if(id !== undefined) {
             atId = id;
         }
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-            + name
-            + '" visibility="public" ' + 'type="'+ enumer.id + '" isUnique="true">\n'
-            + card
-            + '\t</ownedAttribute>'
-
+        return this.XMIAux.createOwnAt(atId, name, "uml:Property", enumer.id, card);
     }
 
     saveEnum(enumer) {
@@ -125,8 +121,7 @@ class XMIEnumerations {
             else {
                 value = this.irim.getPrefixedTermOfUri(enm.values[j]);
             }
-            base += "\n\t<ownedLiteral xmi:id=\"" + this.unid() + "\" name=\""
-                + value + "\"/>\n";
+            base += this.XMIAux.createOwnLit(value);
         }
 
         base += '\n</packagedElement>';

@@ -1,12 +1,14 @@
 class XMITypes {
 
-    constructor (unid, irim) {
+    constructor (unid, irim, XMIAux, IRIManager) {
         this.datatypes = [];
         this.anyTypeId = null;
         this.nodeKinds = [];
 
         this.unid = unid;
         this.irim = irim;
+        this.XMIAux = XMIAux;
+        this.IRIManager = IRIManager;
     }
 
     createXMIType(type) {
@@ -68,21 +70,6 @@ class XMITypes {
         return nk;
     }
 
-    static adequateNodeKindPresentation(nk) {
-        switch(nk) {
-            case "literal":
-                return "Literal";
-            case "iri":
-                return "IRI";
-            case "bnode":
-                return "BNode";
-            case "nonliteral":
-                return "NonLiteral";
-            default:
-                return undefined;
-        }
-    }
-
     getAny() {
         return this.anyTypeId;
     }
@@ -93,7 +80,7 @@ class XMITypes {
 
     getAnyTypeXMI() {
         if(this.anyTypeId) {
-            return '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.anyTypeId + '" name="Any"/>';
+            return this.XMIAux.createPackEl("uml:PrimitiveType", this.anyTypeId, 'name="Any"', "");
         }
         return "";
     }
@@ -101,9 +88,8 @@ class XMITypes {
     getDatatypesXMI() {
         let base = "";
         for(let i = 0; i < this.datatypes.length; i++) {
-            base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.datatypes[i].id + '" ' +
-                'name="' + this.datatypes[i].name + '">\n' +
-                '\n</packagedElement>';
+            base += this.XMIAux.createPackEl("uml:PrimitiveType", this.datatypes[i].id,
+                'name="' + this.datatypes[i].name + '"', "");
         }
         return base;
     }
@@ -111,9 +97,8 @@ class XMITypes {
     getNodeKindsXMI() {
         let base = "";
         for(let i = 0; i < this.nodeKinds.length; i++) {
-            base += '\n<packagedElement xmi:type="uml:PrimitiveType" xmi:id="' + this.nodeKinds[i].id + '" ' +
-                'name="' + XMITypes.adequateNodeKindPresentation(this.nodeKinds[i].name) + '">\n' +
-                '\n</packagedElement>';
+            base += this.XMIAux.createPackEl("uml:PrimitiveType", this.nodeKinds[i].id,
+                'name="' + this.IRIManager.checkNodeKind(this.nodeKinds[i].name) + '"', "");
         }
         return base;
     }

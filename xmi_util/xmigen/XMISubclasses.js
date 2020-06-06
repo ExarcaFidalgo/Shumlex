@@ -1,29 +1,27 @@
 class XMISubclasses {
 
-    constructor (shm, xmiats, irim) {
+    constructor (shm, xmiats, irim, XMIAux) {
         this.subClassesCounter = new Map();
         this.subClasses = [];
 
         this.shm = shm;
         this.xmiats = xmiats;
         this.irim = irim;
+        this.XMIAux = XMIAux;
     }
 
     createDependentSubClasses() {
         let classXMI = "";
         for(let i = 0; i < this.subClasses.length; i++) {
             let shape = this.shm.findShape(this.subClasses[i].name);
-            classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + shape.id + '" name="'
-                + this.subClasses[i].name
-                + '">' +
-                this.xmiats.createXMIAttributes(this.subClasses[i].expr, shape.name) + '\n</packagedElement>';
+            classXMI += this.XMIAux.createPackEl("uml:Class", shape.id, 'name="' + this.subClasses[i].name + '"',
+                this.xmiats.createXMIAttributes(this.subClasses[i].expr, shape.name));
         }
         let pendingShapes = this.shm.getPendingShapes();
         for(let i = 0; i < pendingShapes.length; i++) {
             let ps = pendingShapes[i];
-            classXMI += '\n<packagedElement xmi:type="uml:Class" xmi:id="' + ps.id + '" name="'
-                + this.irim.getPrefixedTermOfUri(ps.name)
-                + '">' + '\n</packagedElement>';
+            classXMI += this.XMIAux.createPackEl("uml:Class", ps.id, 'name="' + this.irim.getPrefixedTermOfUri(ps.name)+ '"',
+                "");
         }
         this.shm.clearPendingShapes();
         this.subClasses = [];

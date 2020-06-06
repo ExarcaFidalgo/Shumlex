@@ -1,11 +1,12 @@
 class XMIPrimitiveAttributes {
 
-    constructor (unid, xmitype, irim, xmicon, xmicard) {
+    constructor (unid, xmitype, irim, xmicon, xmicard, XMIAux) {
         this.unid = unid;
         this.xmitype = xmitype;
         this.irim = irim;
         this.xmicon = xmicon;
         this.xmicard = xmicard;
+        this.XMIAux = XMIAux;
     }
 
     createXMIPrimAttribute(name, type, min, max, valueExpr, id) {
@@ -19,30 +20,17 @@ class XMIPrimitiveAttributes {
         this.xmicon.checkFacets(valueExpr, atId);
         if(xmiType.primitive) {
             let tName = xmiType.name.split(":").pop();
-            return '\n\t<ownedAttribute xmi:id="' + atId + '" name="' + name
-                + '" visibility="public" isUnique="false">\n' +
-                '\t\t<type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#'
-                + tName.substring(0, 1).toUpperCase() + tName.substring(1) + '">\n' + '\t\t</type>' +
-                card
-                + '\n\t</ownedAttribute>'
+            return this.XMIAux.createOwnAt(atId, name, "uml:PrimitiveType", tName, card);
         }
         if(xmiType.name === "Any") {
             if(!this.xmitype.getAny()) {
                 this.xmitype.setAny();
             }
-            return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-                + name
-                + '" visibility="public" ' + 'type="'+ this.xmitype.getAny() + '" isUnique="false">\n' +
-                card
-                + '\t</ownedAttribute>'
+            return this.XMIAux.createOwnAt(atId, name, "uml:Property", this.xmitype.getAny(), card);
         }
 
         let dtype = this.xmitype.findDataType(xmiType.name, xmiType.uri);
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-            + name
-            + '" visibility="public" ' + 'type="'+ dtype.id + '" isUnique="true">\n'
-            + card
-            + '\t</ownedAttribute>'
+        return this.XMIAux.createOwnAt(atId, name, "uml:Property", dtype.id, card);
     }
 
     createXMIKindAttribute(name, kind, min, max, id) {
@@ -52,11 +40,7 @@ class XMIPrimitiveAttributes {
         if(id !== undefined) {
             atId = id;
         }
-        return '\n\t<ownedAttribute xmi:type="uml:Property" xmi:id="' + atId + '" name="'
-            + name
-            + '" visibility="public" ' + 'type="'+ nkind.id + '" isUnique="true">\n'
-            + card
-            + '\t</ownedAttribute>'
+        return this.XMIAux.createOwnAt(atId, name, "uml:Property", nkind.id, card);
     }
 
 

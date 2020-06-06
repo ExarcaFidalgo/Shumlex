@@ -1,22 +1,20 @@
 class XMIAssociations {
 
-    constructor (unid, shm, irim, xmicard) {
+    constructor (unid, shm, irim, xmicard, XMIAux) {
         this.pendingAssociations = [];
         this.unid = unid;
         this.shm = shm;
         this.irim = irim;
         this.xmicard = xmicard;
+        this.XMIAux = XMIAux;
     }
 
     createXMIAsocAttribute(name, target, min, max) {
         let idatr = this.unid();
         let targetShape = this.shm.findShape(target);
         let idasoc = this.unid();
-        let content = '\n\t<ownedAttribute xmi:id="' + idatr + '" name="' + name
-            + '" visibility="public" ' +
-            'type="' + targetShape.id + '" association="' + idasoc + '">'
-            + this.xmicard.createXMICardinality(min, max)
-            + '</ownedAttribute>';
+        let card = this.xmicard.createXMICardinality(min, max);
+        let content = this.XMIAux.createAsocAt(idatr, name, targetShape.id, idasoc, card);
 
         let asoc = { id: idasoc, idatr: idatr};
         this.pendingAssociations.push(asoc);
@@ -26,10 +24,9 @@ class XMIAssociations {
 
     createXMIAssociation(ids, idcl) {
         let idown = this.unid();
-        return '\n<packagedElement xmi:type="uml:Association" xmi:id="' + ids.id + '" memberEnd="' + ids.idatr
-            + ' '  + idown + '">\n' +
-            '\t<ownedEnd xmi:id="' + idown + '" visibility="public" type="' + idcl + '" association="'
-            + ids.id + '"/>\n' + '</packagedElement>\n'
+        let memberEnd = this.XMIAux.createMemEnd(ids.idatr, idown);
+        let ownedEnd = this.XMIAux.createOwEnd(idown, idcl, ids.id);
+        return this.XMIAux.createPackEl("uml:Association", ids.id, memberEnd, ownedEnd);
     }
 
     createDependentAssociations(idcl){

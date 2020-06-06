@@ -2,17 +2,18 @@ const XMIPrimitiveAttributes = require("./XMIPrimitiveAttributes.js");
 
 class XMIAttributes {
 
-    constructor (unid, xmisub, xmiasoc, xmienum, xmitype, irim, xmicon, shm, sxmit, xmicard) {
+    constructor (unid, xmisub, xmiasoc, xmienum, xmitype, irim, xmicon, shm, sxmit, xmicard, XMIAux) {
         this.unid = unid;
         this.xmienum = xmienum;
         this.xmitype = xmitype;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
         this.xmicon = xmicon;
-        this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, irim, xmicon, xmicard);
+        this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, irim, xmicon, xmicard, XMIAux);
         this.irim = irim;
         this.shm = shm;
         this.sxmit = sxmit;
+        this.XMIAux = XMIAux;
 
         this.depth = 0;
     }
@@ -141,7 +142,7 @@ class XMIAttributes {
                 else {
                     let sh = this.shm.findShape(parents[parent].reference, true);
                     let id = this.unid();
-                    gens += "\n\t<generalization xmi:id=\"" + id + "\" general=\"" + sh.id + "\"/>";
+                    gens += this.XMIAux.createGen(id, sh.id);
                     if(inv === true) {
                         this.xmicon.markAsInverse(id);
                     }

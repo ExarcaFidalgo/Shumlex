@@ -1,6 +1,6 @@
 class XMIClass {
 
-    constructor (shm, xmitype, irim, xmiatt, xmicon, xmiasoc, xmisub) {
+    constructor (shm, xmitype, irim, xmiatt, xmicon, xmiasoc, xmisub, XMIAux) {
         this.shm = shm;
         this.XMITypes = xmitype;
         this.irim = irim;
@@ -8,6 +8,7 @@ class XMIClass {
         this.xmicon = xmicon;
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
+        this.XMIAux = XMIAux;
 
     }
 
@@ -45,12 +46,8 @@ class XMIClass {
 
         this.xmicon.checkFacets(shape, sh.id);
 
-        let classXMI = '\n<packagedElement xmi:type="uml:Class" xmi:id="' + sh.id + '" name="'
-            + prName
-            + '">' +
-            ats +
-            nk + dt +
-            generalizations + '\n</packagedElement>';
+        let int = ats + nk + dt + generalizations;
+        let classXMI = this.XMIAux.createPackEl("uml:Class", sh.id, 'name="' + prName + '"', int);
 
         if(shape.closed === true) {
             this.xmicon.markAsClosed(sh.id);
