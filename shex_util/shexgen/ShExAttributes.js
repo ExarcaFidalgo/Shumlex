@@ -95,7 +95,7 @@ class ShExAttributes {
     /**
      * Genera el ShEx para un atributo básico de UML
      * @param attr  Atributo
-     * @returns {string}    Equivalente UML
+     * @returns {string}    Equivalente ShEx
      */
     basicAttrToShex(attr) {
         let type = this.shext.getAttrType(attr);

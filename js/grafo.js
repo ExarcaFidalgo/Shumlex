@@ -503,7 +503,7 @@ function createEnumeration(expr, name, father) {
         if(expr.valueExpr.values.hasOwnProperty(value)) {
             let vl = expr.valueExpr.values[value];
             let ide = getID();
-            //Valor común: "1453", 12, URI
+            //Valor común: "1453", 12, IRI
             if(vl.value !== undefined) {
                 attrs = attrs.concat(createToNode(ide, vl.value, "", idv));
             }

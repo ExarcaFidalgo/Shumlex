@@ -1,5 +1,5 @@
 {
-  "name": "Helsreach",
+  "name": "Shumlex",
   "version": "0.0.7",
   "description": "ShEx - Uml integration",
   "main": "main.js",
@@ -10,11 +10,11 @@
   "bin": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jorgealvarezfidalgo/Helsreach"
+    "url": "git+https://github.com/jorgealvarezfidalgo/Shumlex"
   },
   "author": "Jorge Fidalgo <UO258524@uniovi.es>",
   "bugs": {
-    "url": "https://github.com/jorgealvarezfidalgo/Helsreach/issues"
+    "url": "https://github.com/jorgealvarezfidalgo/Shumlex/issues"
   },
   "devDependencies": {
     "jest": "^25.2.4"

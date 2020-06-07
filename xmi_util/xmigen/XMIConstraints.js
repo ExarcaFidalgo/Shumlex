@@ -1,3 +1,6 @@
+/**
+ * Genera restricciones XMI
+ */
 class XMIConstraints {
 
     constructor (unid, irim, XMIAux) {
@@ -7,15 +10,24 @@ class XMIConstraints {
         this.XMIAux = XMIAux;
     }
 
+    /**
+     * Genera el XMI correspondiente a las restricciones pendientes en el estado actual
+     * @returns {string}
+     */
     createDependentOwnedRules(){
         let constraints = "";
         for(let i = 0; i < this.ownedRules.length; i++) {
             constraints += this.ownedRules[i];
         }
-        this.ownedRules = [];
+        this.clear();
         return constraints;
     }
 
+    /**
+     * Comprueba si existen facetas y genera las restricciones pertinentes
+     * @param vex   ValueExpr
+     * @param id    ID Shape
+     */
     checkFacets(vex, id) {
         if(!vex) {
             return;
@@ -46,14 +58,27 @@ class XMIConstraints {
         }
     }
 
+    /**
+     * Introduce restricción "Cerrada"
+     * @param id    ID Shape
+     */
     markAsClosed(id) {
         this.ownedRules.push(this.XMIAux.createXMIOwnedRule("CLOSED", id));
     }
 
+    /**
+     * Introduce restricción "Inversa"
+     * @param id    ID Shape
+     */
     markAsInverse(id) {
         this.ownedRules.push(this.XMIAux.createXMIOwnedRule("Inverse", id));
     }
 
+    /**
+     * Introduce restricción extra
+     * @param id    ID Shape
+     * @param values    Valores Extra
+     */
     markAsExtra(id, values) {
         let extra = "EXTRA";
         for(let i = 0; i < values.length; i++) {
@@ -66,6 +91,9 @@ class XMIConstraints {
         this.ownedRules.push(this.XMIAux.createXMIOwnedRule(extra, id));
     }
 
+    /**
+     * Resetea los registros de restricciones
+     */
     clear() {
         this.ownedRules = [];
     }

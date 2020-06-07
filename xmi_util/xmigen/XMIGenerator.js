@@ -11,6 +11,9 @@ const XMISubclasses = require("./XMISubclasses.js");
 const XMITypes = require("./XMITypes.js");
 const XMIAux = require("./XMIAux.js");
 
+/**
+ * Clase aunadora y centralizadora de todos los elementos necesarios para generar XMI
+ */
 class XMIGenerator {
 
     constructor () {
@@ -30,18 +33,38 @@ class XMIGenerator {
 
     }
 
+    /**
+     * Refiere a la creación del header XMI
+     * @returns {string}    Header XMI
+     */
     static createXMIHeader() {
         return XMIAux.createXMIHeader();
     }
 
+    /**
+     * Refiere a la creación de una clase XMI
+     * @param name  Nombre de la clase
+     * @param shape Shape a analizar
+     * @returns {string|*}  Clase XMI
+     */
     createXMIClass(name, shape) {
         return this.xmicl.createXMIClass(name, shape);
     }
 
+    /**
+     * Refiere a la creación de los prefijos en XMI
+     * @param prefixes  Prefijos
+     * @param base  Prefijo base
+     * @returns {string}    Prefijos en XMI
+     */
     createPrefixes (prefixes, base) {
         return this.irim.createXMIPrefixes(prefixes, base);
     }
 
+    /**
+     * Crea el final del XMI. Incluye enumeraciones, tipos y cierre.
+     * @returns {string}    Footer XMI
+     */
     createXMIFooter() {
         let base = "";
         base += this.xmitype.getAnyTypeXMI();
@@ -57,6 +80,9 @@ class XMIGenerator {
         return base;
     }
 
+    /**
+     * Resetea todas las clases empleadas para la generación de XMI
+     */
     clear() {
         this.shm.clearXMIShapes();
         this.xmiasoc.clear();

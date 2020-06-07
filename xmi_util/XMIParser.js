@@ -1,12 +1,20 @@
 const xmlparser = require('xml2js');
 const shexgen = require ("../shex_util/shexgen/ShExGenerator.js");
 
+/**
+ * Parsea XMI para la generación de UML o ShEx
+ */
 class XMIParser {
 
     constructor () {
         this.source = "";
     }
 
+    /**
+     * Parsea XMI y devuelve un JSON con la información
+     * @param xmi XMI
+     * @returns {string|*}  JSON con la información extraída
+     */
     parseXMI(xmi) {
         const self = this;
         xmlparser.parseString(xmi, function (err, result) {
@@ -24,6 +32,11 @@ class XMIParser {
 
     }
 
+    /**
+     * Parsea XMI e invoca la generación de ShEx a partir del JSON obtenido
+     * @param xmi   XMI
+     * @returns {string}    Equivalente ShEx
+     */
     parseXMIToShEx(xmi) {
 
         let shExEquivalent = "";
@@ -33,19 +46,26 @@ class XMIParser {
         let packagedElements = this.source["uml:Model"]["packagedElement"];
 
         try {
+            //Hacemos un barrido preliminar para guardar elementos de cara a su uso futuro
             for (let i = 0; i < packagedElements.length; i++) {
-                if (packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
-                    shexgen.saveClass(packagedElements[i])
-                } else if (packagedElements[i]["$"]["xmi:type"] === "uml:PrimitiveType") {
-                    shexgen.saveType(packagedElements[i])
-                } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration" &&
-                    packagedElements[i]["$"]["name"] === "Prefixes") {
-                    shexgen.savePrefixes(packagedElements[i])
-                } else if (packagedElements[i]["$"]["xmi:type"] === "uml:Enumeration") {
-                    shexgen.saveEnum(packagedElements[i])
+                let pe = packagedElements[i];
+                let type = pe["$"]["xmi:type"];
+                if (type === "uml:Class") {
+                    shexgen.saveClass(pe)
+                }
+                else if (type === "uml:PrimitiveType") {
+                    shexgen.saveType(pe)
+                }
+                else if (type === "uml:Enumeration" &&
+                    e["$"]["name"] === "Prefixes") {
+                    shexgen.savePrefixes(pe)
+                }
+                else if (type === "uml:Enumeration") {
+                    shexgen.saveEnum(pe)
                 }
             }
 
+            //Registramos las restricciones
             let ownedRules = this.source["uml:Model"]["ownedRule"];
             if(ownedRules !== undefined) {
                 for (let i = 0; i < ownedRules.length; i++) {
@@ -53,12 +73,14 @@ class XMIParser {
                 }
             }
 
+            //Generamos el equivalente a las clases y su contenido
             for (let i = 0; i < packagedElements.length; i++) {
                 if (packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
                     shExEquivalent += shexgen.classToShEx(packagedElements[i])
                 }
             }
 
+            //Añadimos los prefijos
             shExEquivalent = shexgen.createShExHeader() + shExEquivalent;
 
         } catch (ex) {
@@ -66,8 +88,9 @@ class XMIParser {
             alert("Se ha producido un error durante la generación de las Shape Expressions.\n" +
                 "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
                 + ex);
-            return;
+            return "";
         } finally {
+            //Reseteamos el generador
             shexgen.clear();
         }
 

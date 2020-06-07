@@ -1,3 +1,6 @@
+/**
+ * Genera enumeraciones en XMI
+ */
 class XMIEnumerations {
 
     constructor (unid, irim, xmicard, XMIAux) {
@@ -8,6 +11,15 @@ class XMIEnumerations {
         this.XMIAux = XMIAux;
     }
 
+    /**
+     * Genera un atributo que referencia a una enumeración
+     * @param name  Nombre
+     * @param values    Valores de la enumeración
+     * @param min   Cardinalidad mínima
+     * @param max   Cardinalidad máxima
+     * @param id    ID
+     * @returns {string|*}  Owned Attribute de enumeración
+     */
     createXMIEnumAttribute(name, values, min, max, id) {
         let card = this.xmicard.createXMICardinality(min, max);
         let enumer = { id: this.unid(), name: name, values: values};
@@ -19,9 +31,16 @@ class XMIEnumerations {
         return this.XMIAux.createOwnAt(atId, name, "uml:Property", enumer.id, card);
     }
 
+    /**
+     * Guardamos la enumeración para su posterior generación como elemento independiente
+     * @param enumer    id: , name: , values:
+     * @returns {*}
+     */
     saveEnum(enumer) {
         for(let i = 0; i < this.enumerations.length; i++) {
             const self = this;
+            //Si coincide nombre, tamaño, y cada uno de los valores, ya existe.
+            //La devolvemos y no guardamos
             if(enumer.name === this.enumerations[i].name
                 && enumer.values.length === this.enumerations[i].values.length
                 && enumer.values.sort().every(function(value, index) {
@@ -32,6 +51,10 @@ class XMIEnumerations {
         this.enumerations.push((enumer));
     }
 
+    /**
+     * Genera cada una de las enumeraciones guardadas
+     * @returns {string}    Enumeraciones XMI
+     */
     createXMIEnumerations() {
         let base = "";
         for(let i = 0; i < this.enumerations.length; i++) {
@@ -40,11 +63,17 @@ class XMIEnumerations {
         return base;
     }
 
+    /**
+     * Genera una enumeración
+     * @param enm   Enumeración
+     * @returns {string}    Enumeración XMI
+     */
     createXMIEnumeration(enm) {
-        let base = '\n<packagedElement xmi:type="uml:Enumeration" xmi:id="' + enm.id + '" ' +
-            'name="' + this.irim.getPrefixedTermOfUri(enm.name) + '">\n';
+        let int = "";
+        //Comprobamos cada uno de los valores
         for(let j = 0; j < enm.values.length; j++) {
             let value = "";
+            //Valor común: "1453", 12, URI
             if(enm.values[j].value !== undefined) {
                 if(enm.values[j].type === undefined) {
                     value = "&quot;" + enm.values[j].value + "&quot;";
@@ -54,12 +83,15 @@ class XMIEnumerations {
                 }
 
             }
+            //LiteralStem - "1453"~
             else if(enm.values[j].type === "LiteralStem") {
                 value = "&quot;" + enm.values[j].stem + "&quot;" + "~";
             }
+            //IRIStem - wo:~
             else if(enm.values[j].type === "IriStem") {
                 value =  this.irim.getPrefixedTermOfUri(enm.values[j].stem) + "~";
             }
+            //IRIStemRange - wo:~ - wo:lo
             else if(enm.values[j].type === "IriStemRange") {
                 if(enm.values[j].stem.type === "Wildcard") {
                     value = ". "
@@ -78,6 +110,7 @@ class XMIEnumerations {
                     }
                 }
             }
+            //LiteralStemRange - "aa"~ - "aab"
             else if(enm.values[j].type === "LiteralStemRange") {
                 if(enm.values[j].stem.type === "Wildcard") {
                     value = ". "
@@ -95,12 +128,15 @@ class XMIEnumerations {
                     }
                 }
             }
+            //Etiqueta de lenguaje: @es
             else if(enm.values[j].type === "Language") {
                 value = "@" + enm.values[j].languageTag + " ";
             }
+            //LanguageStem: @es~
             else if(enm.values[j].type === "LanguageStem") {
                 value = "@" + enm.values[j].stem + "~ ";
             }
+            //LanguageStemRange: @es~ - @es-AR
             else if(enm.values[j].type === "LanguageStemRange") {
                 if(enm.values[j].stem.type === "Wildcard") {
                     value = ". "
@@ -118,26 +154,33 @@ class XMIEnumerations {
                     }
                 }
             }
+            //vl de tipo IRI
             else {
                 value = this.irim.getPrefixedTermOfUri(enm.values[j]);
             }
-            base += this.XMIAux.createOwnLit(value);
+            int += this.XMIAux.createOwnLit(value);
         }
-
-        base += '\n</packagedElement>';
-        return base;
+        return this.XMIAux.createPackEl("uml:Enumeration", enm.id,
+            'name="' + this.irim.getPrefixedTermOfUri(enm.name) + '"', int);
     }
 
+    /**
+     * Comprueba si se trata de una cadena con estructura numérica. En caso negativo, añade comillas
+     * @param txt   Cadena de texto
+     * @returns {*} Cadena intacta o con comillas
+     */
     static checkLiteralStem(txt) {
         if(/^([0-9]+(\.[0-9]+)?)$/.test(txt)) {
             return txt;
-
         }
         else {
             return "&quot;" + txt+ "&quot;";
         }
     }
 
+    /**
+     * Resetea las enumeraciones
+     */
     clear() {
         this.enumerations = [];
     }

@@ -1,3 +1,6 @@
+/**
+ * Genera subclases en XMI
+ */
 class XMISubclasses {
 
     constructor (shm, xmiats, irim, XMIAux) {
@@ -10,6 +13,11 @@ class XMISubclasses {
         this.XMIAux = XMIAux;
     }
 
+    /**
+     * Genera subclases dependientes en XMI. Surgen como solución a estructuras ShEx irrepresentables de modo
+     * fidedigno en UML.
+     * @returns {string}    XMI de (sub)clases
+     */
     createDependentSubClasses() {
         let classXMI = "";
         for(let i = 0; i < this.subClasses.length; i++) {
@@ -17,6 +25,7 @@ class XMISubclasses {
             classXMI += this.XMIAux.createPackEl("uml:Class", shape.id, 'name="' + this.subClasses[i].name + '"',
                 this.xmiats.createXMIAttributes(this.subClasses[i].expr, shape.name));
         }
+        //Crear shapes pendientes de realización
         let pendingShapes = this.shm.getPendingShapes();
         for(let i = 0; i < pendingShapes.length; i++) {
             let ps = pendingShapes[i];
@@ -28,6 +37,11 @@ class XMISubclasses {
         return classXMI;
     }
 
+    /**
+     * Obtiene el número pertinente para una subclase
+     * @param className Nombre de la clase
+     * @returns {string}    Nombre de la clase con número
+     */
     getSubClassNumber(className) {
         if(this.subClassesCounter.get(className) === undefined) {
             this.subClassesCounter.set(className, 1);
@@ -40,10 +54,17 @@ class XMISubclasses {
         }
     }
 
+    /**
+     * Guarda una subclase en el registro
+     * @param sub   Subclase
+     */
     saveSubClass(sub) {
         this.subClasses.push(sub);
     }
 
+    /**
+     * Resetea los registros
+     */
     clear() {
         this.subClassesCounter = new Map();
         this.subClasses = [];

@@ -54,7 +54,7 @@ class ShExParser {
       this.source = this.shexparser.parse(shex);
     } catch (ex) {
       alert("Error al parsear ShEx:\n " + ex);
-      return "";
+      return null;
     }
     return this.source;
   }
