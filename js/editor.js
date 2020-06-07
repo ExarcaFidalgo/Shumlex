@@ -285,7 +285,7 @@ function download(filename, text) {
 if(document.getElementById("dwnshex-btn")) {
     document.getElementById("dwnshex-btn").addEventListener("click", function(){
         let text = shExEditor.getValue();
-        let filename = "helsreach.shex";
+        let filename = "shumlex.shex";
 
         download(filename, text);
     }, false);
@@ -297,7 +297,7 @@ if(document.getElementById("dwnshex-btn")) {
 if(document.getElementById("dwnxmi-btn")) {
     document.getElementById("dwnxmi-btn").addEventListener("click", function(){
         let text = xmiEditor.getValue();
-        let filename = "helsreach.xmi";
+        let filename = "shumlex.xmi";
 
         download(filename, text);
     }, false);
