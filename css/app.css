@@ -258,3 +258,15 @@ p {
     margin-right: 1.55em;
     border: double black;
 }
+
+.bandera {
+    height: 50px;
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#weso {
+    float:right;
+    width: 100px;
+}
