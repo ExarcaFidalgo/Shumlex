@@ -1,3 +1,6 @@
+/**
+ * Genera el equivalente a los atributos de UML en ShEx (TripleConstraint)
+ */
 class ShExAttributes {
 
     constructor(shext, IRIManager, shm, shexco, shexcar) {
@@ -9,14 +12,21 @@ class ShExAttributes {
 
     }
 
-    createShExAttributes(attributes, brs){
+    /**
+     *  Genera el equivalente a los atributos de UML en ShEx
+     * @param attributes    Atributos
+     * @param brs   Indica si crear llaves
+     * @returns {{header: string, content: string, brackets: *}}
+     */
+    attributesToShEx(attributes, brs){
 
         let brackets = brs;
         let content = "";
         let header = "";
 
+        //Generamos cada uno de los atributos
         for(let i = 0; i < attributes.length; i++) {
-            let at = this.createShExAttribute(attributes[i], brackets);
+            let at = this.attributeToShEx(attributes[i], brackets);
             brackets = at.brackets;
             content += at.content;
             header += at.header;
@@ -30,35 +40,49 @@ class ShExAttributes {
 
     }
 
-    createShExAttribute(attr, brs) {
+    /**
+     * Genera el ShEx correspondiente a un atributo UML
+     * @param attr  Atributo
+     * @param brs   Indica si la shape lleva llaves
+     * @returns {{header: string, content: string, brackets: (boolean|*)}}
+     */
+    attributeToShEx(attr, brs) {
         let brackets = brs;
         let content = "";
         let header = "";
 
+        //Asociación (ShapeRef)
         if(attr.$.association) {
             brackets = true;
-            content += this.createShExAssociation(attr, header);
+            content += this.associationToShEx(attr, header);
         }
+        //Restricción de tipo nodal
         else if(attr.$.name.toLowerCase() === "nodekind") {
             let kind = this.shext.getType(attr.$.type);
             kind = this.IRIManager.checkNodeKind(kind.name);
             let ajustedKind = kind + " AND";
+
+            //Si es IRI, no es necesario el AND
+            //La shape no llevará llaves salvo que se haya indicado positivamente
             if(kind === "IRI") {
                 brackets = brackets || false;
                 ajustedKind = kind;
-            } else {
+            }
+            else {
                 brackets = true;
             }
             header += " " + ajustedKind;
         }
+        //Restricción datatype
         else if(attr.$.name.toLowerCase() === "datatype") {
             let dt = this.shext.getAttrType(attr);
             header += " " + dt;
             brackets = false;
         }
+        //Otro
         else {
             brackets = true;
-            content += this.createShExBasicAttribute(attr);
+            content += this.basicAttrToShex(attr);
         }
 
         return {
@@ -68,43 +92,63 @@ class ShExAttributes {
         };
     }
 
-    createShExBasicAttribute(attr) {
+    /**
+     * Genera el ShEx para un atributo básico de UML
+     * @param attr  Atributo
+     * @returns {string}    Equivalente UML
+     */
+    basicAttrToShex(attr) {
         let type = this.shext.getAttrType(attr);
-        return "\n\t" + this.IRIManager.getShexTerm(attr.$.name) + this.shext.createShExType(type) +
-            this.shexco.getConstraints(attr.$["xmi:id"]) + this.shexcar.cardinalityOf(attr) + ";";
+        return "\n\t" + this.IRIManager.getShexTerm(attr.$.name)    //Nombre de la tripleta
+            + this.shext.typeToShEx(type)                       //Tipo (xsd:string...)
+            + this.shexco.getConstraints(attr.$["xmi:id"])          //Restricciones
+            + this.shexcar.cardinalityOf(attr) + ";";               //Cardinalidad
     }
 
-    createShExAssociation(attr) {
+    /**
+     * Genera la ShapeRef para una asociación de UML
+     * @param attr
+     * @returns {string}
+     */
+    associationToShEx(attr) {
+        //Busca si la asociación en UML está registrada como subconjunto
         let subSet = this.shm.getSubSet(attr.$.type);
 
+        //Caso afirmativo
         if(subSet !== undefined) {
+            //La clase a la que señala abarca el contenido de un OneOf
             if(attr.$.name === "OneOf") {
                 let conj = "";
                 let card = this.shexcar.cardinalityOf(attr);
                 if(card !== "") {
                     conj = "\n (";
                 }
+                //Añadimos cada uno de los elementos de la clase subconjunto
+                //Separados por | como elementos del OneOf
                 for(let i = 0; i < subSet.attributes.length; i++) {
-                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                    conj += this.attributeToShEx(subSet.attributes[i]).content;
                     if(i < subSet.attributes.length - 1) {
                         conj += " |"
                     }
                 }
+                //Se añaden paréntesis si posee cardinalidad
                 if(card !== "") {
                     conj += ") " + card + ";";
                 }
 
                 return conj;
             }
+            //Es una referencia a una expresión etiquetada
             else if(attr.$.name.includes("&:")) {
                 return "\n\t" + attr.$.name + ";";
             }
+            //Es una expresión EachOf con cardinalidad
             else if(/^([$]:[<]?[a-zA-Z]+[>]?)$/.test(attr.$.name)) {
                 console.log(subSet);
                 let conj = "\n\t" + attr.$.name +" (";
                 let card = this.shexcar.cardinalityOf(attr);
                 for(let i = 0; i < subSet.attributes.length; i++) {
-                    conj += this.createShExAttribute(subSet.attributes[i]).content;
+                    conj += this.attributeToShEx(subSet.attributes[i]).content;
                 }
                 conj += ") " + card + ";";
 
@@ -112,7 +156,7 @@ class ShExAttributes {
             }
             else {
                 let conj = "\n( ";
-                conj += this.createShExAttributes(subSet.attributes).content;
+                conj += this.attributesToShEx(subSet.attributes).content;
                 conj += " )";
                 conj += this.shexcar.cardinalityOf(attr) + " ;";
                 return conj;
@@ -121,6 +165,7 @@ class ShExAttributes {
         }
 
         let shape = this.shm.getShape(attr.$.type);
+        //ShapeRef
         let shExName = this.IRIManager.getShexTerm(shape.name);
 
         return "\n\t" + attr.$.name + " @" + shExName
@@ -128,14 +173,21 @@ class ShExAttributes {
             + ";"
     }
 
-    createShExGeneralization(gen) {
+    /**
+     * Crea una relación de herencia
+     * @param gen   Generalización
+     * @returns {string}    Equivalente en ShEx
+     */
+    generalizationToShEx(gen) {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
+            //Comprobamos si tiene una restricción Inverse
             let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
             let inv = "";
             if(con === " Inverse") {
                 inv = "^";
             }
+            //Buscamos la Shape padre
             let refClass = this.shm.getShape(gen[i].$.general);
             generalizations += "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(refClass.name) + "];"
         }

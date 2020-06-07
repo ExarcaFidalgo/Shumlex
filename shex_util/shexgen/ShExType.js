@@ -1,3 +1,6 @@
+/**
+ * Genera el equivalente ShEx a los tipos UML
+ */
 class ShExType {
 
     constructor (irim, shexen, IRIManager) {
@@ -7,28 +10,45 @@ class ShExType {
         this.IRIManager = IRIManager;
     }
 
+    /**
+     * Guarda un tipo UML, clave ID, valor nombre
+     * @param element   Tipo
+     */
     saveType(element) {
         this.types.set(element.$["xmi:id"], { name: element.$.name });
     }
 
+    /**
+     * Recupera un tipo, dado su ID
+     * @param id    ID tipo
+     * @returns {any}   Nombre en JSON
+     */
     getType(id) {
         return this.types.get(id);
     }
 
+    /**
+     * Devuelve el tipo adecuado de un atributo
+     * @param attr  Atributo a extraer el tipo
+     * @returns {*} Equivalente ShEx
+     */
     getAttrType(attr) {
         if(attr.type) {
             let href = attr.type[0].$.href.split("#");
+            //Tipo XSD
             if(href[0] === "pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml") {
                 return this.irim.findXSDPrefix() + href[1].substring(0,1).toLowerCase() + href[1].substring(1);
-            } else {
+            }
+            else {
                 return href.pop();
             }
 
         }
         else if (attr.$.type) {
             let enumer = this.shexen.getEnum(attr.$.type);
+            //Tipo enumeración
             if(enumer) {
-                return this.shexen.createShExEnumeration(enumer);
+                return this.shexen.enumerationToShEx(enumer);
             }
             let type = this.getType(attr.$.type);
             return type.name;
@@ -36,7 +56,12 @@ class ShExType {
         return "Any";
     }
 
-    createShExType(type) {
+    /**
+     * Devuelve la representación adecuada de un tipo UML en Shex
+     * @param type Tipo UML
+     * @returns {string} Equivalente ShEx
+     */
+    typeToShEx(type) {
         if(type === "Any") {
             return " .";
         } else {
@@ -44,11 +69,12 @@ class ShExType {
         }
     }
 
+    /**
+     * Resetea el registro de tipos
+     */
     clear () {
         this.types = new Map();
     }
-
-
 
 }
 module.exports = ShExType;

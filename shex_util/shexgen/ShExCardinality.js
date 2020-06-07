@@ -1,7 +1,14 @@
+/**
+ * Utilidades relativas a la cardinalidad para la generación de ShEx
+ */
 class ShExCardinality {
 
+    /**
+     * Devuelve la cardinalidad de un atributo XMI en formato Shex
+     * @param attr  Atributo
+     * @returns {string}    Cardinalidad
+     */
     static cardinalityOf(attr) {
-        //TODO: Comprobar validez de las cardinalidades
         let lowerValue = ShExCardinality.checkCardinalityValue(attr.lowerValue);
         let upperValue = ShExCardinality.checkCardinalityValue(attr.upperValue);
         switch(lowerValue){
@@ -25,7 +32,7 @@ class ShExCardinality {
                 else {
                     return " {0, " + upperValue + "}"
                 }
-            default:
+            default:    //Mayor de 1
                 if(upperValue === lowerValue) {
                     return " {" + lowerValue + "}"
                 }
@@ -38,13 +45,21 @@ class ShExCardinality {
         }
     }
 
+    /**
+     * Devuelve el valor correspondiente a una cardinalidad expresada en XMI
+     * @param attr  Atributo
+     * @returns {number}
+     */
     static checkCardinalityValue(attr) {
+        //Si no se expresa nada, es 1
         if (!attr) {
             return 1
         }
+        //LiteralInteger es 0
         else if (attr[0].$["xmi:type"] === "uml:LiteralInteger") {
             return 0
         }
+        //UnlimitedNatural puede ser >1 o Infinito
         else if (attr[0].$["xmi:type"] === "uml:LiteralUnlimitedNatural") {
             let value = attr[0].$.value;
             if(value === "*")
@@ -52,8 +67,6 @@ class ShExCardinality {
             return parseInt(value)
         }
     }
-
-
 
 }
 module.exports = ShExCardinality;

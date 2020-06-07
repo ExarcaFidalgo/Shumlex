@@ -1,6 +1,9 @@
 const shexp = require('shex').Parser;
 const XMIGenerator = require ("../xmi_util/xmigen/XMIGenerator.js");
 
+/**
+ * Parsea ShEx para la generación del grafo o de XMI
+ */
 class ShExParser {
 
   constructor () {
@@ -13,6 +16,11 @@ class ShExParser {
     this.xmigen = new XMIGenerator();
   }
 
+  /**
+   * Parsea ShEx y convoca la generación de XMI a partir del JSON obtenido
+   * @param shex  ShEx a parsear
+   * @returns {string}  Equivalente XMI
+   */
   parseShExToXMI(shex) {
     let xmiEquivalent = "";
 
@@ -29,7 +37,6 @@ class ShExParser {
     }
 
     xmiEquivalent += prefixes;
-
     xmiEquivalent += this.xmigen.createXMIFooter();
 
     this.xmigen.clear();
@@ -37,12 +44,17 @@ class ShExParser {
     return xmiEquivalent;
   }
 
+  /**
+   * Parsea ShEx y devuelve un JSON
+   * @param shex ShEx
+   * @returns {JSON}  ShEx parseado
+   */
   parseShEx(shex) {
     try {
       this.source = this.shexparser.parse(shex);
     } catch (ex) {
       alert("Error al parsear ShEx:\n " + ex);
-      return;
+      return "";
     }
     return this.source;
   }

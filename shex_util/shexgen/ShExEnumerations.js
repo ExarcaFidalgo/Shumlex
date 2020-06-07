@@ -1,3 +1,6 @@
+/**
+ * Genera el equivalente en ShEx a una enumeración UML
+ */
 class ShExEnumerations {
 
     constructor (IRIManager) {
@@ -5,6 +8,10 @@ class ShExEnumerations {
         this.IRIManager = IRIManager;
     }
 
+    /**
+     * Registra una enumeración con clave id, guardando nombre y valores
+     * @param enm   Enumeración
+     */
     saveEnum(enm) {
         this.enumerations.set(enm.$["xmi:id"], {
             name: enm.$.name,
@@ -12,11 +19,21 @@ class ShExEnumerations {
         });
     }
 
+    /**
+     * Recupera la enumeración, dado el ID de referencia
+     * @param id    ID
+     * @returns {any}   JSON con nombre y valores { name: , values: }
+     */
     getEnum(id) {
         return this.enumerations.get(id);
     }
 
-    createShExEnumeration(enumer) {
+    /**
+     * Genera el equivalente en ShEx de una enumeración UML
+     * @param enumer    Enumeración
+     * @returns {string}    Conjunto de valores en formato [ ... ]
+     */
+    enumerationToShEx(enumer) {
         let base = "[";
         for(let i = 0; i < enumer.values.length; i++) {
             base += this.IRIManager.getShexTerm(enumer.values[i].$.name) + " ";
@@ -24,6 +41,9 @@ class ShExEnumerations {
         return base + "]";
     }
 
+    /**
+     * Resetea el registro de enumeraciones
+     */
     clear() {
         this.enumerations = new Map();
     }

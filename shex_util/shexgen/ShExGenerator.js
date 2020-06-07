@@ -8,6 +8,9 @@ const ShExEnumerations = require("./ShExEnumerations.js");
 const ShExTypes = require("./ShExType.js");
 const ShapeManager = require("../../managers/ShapeManager.js");
 
+/**
+ * Clase aunadora y centralizadora de todos los elementos necesarios para generar ShEx
+ */
 class ShExGenerator {
 
     constructor () {
@@ -20,6 +23,10 @@ class ShExGenerator {
         this.shexcl = new ShExClass(IRIManager, this.shexat, this.shexco, this.shm);
     }
 
+    /**
+     * Crea el conjunto inicial de prefijos
+     * @returns {string}    Lista de prefijos
+     */
     createShExHeader() {
         let header = "";
         let prefixes = this.irim.getPrefixesList();
@@ -32,14 +39,26 @@ class ShExGenerator {
         return header
     }
 
+    /**
+     * Guarda una clase UML como su equivalente Shape
+     * @param clase Clase UML
+     */
     saveClass(clase) {
         this.shm.saveShape(clase);
     }
 
+    /**
+     * Guarda un tipo UML
+     * @param type
+     */
     saveType(type) {
         this.shext.saveType(type);
     }
 
+    /**
+     * Guarda un listado de prefijos
+     * @param prf Prefijos
+     */
     savePrefixes(prf) {
         let prefixes = prf.ownedLiteral;
         for(let i = 0; i < prefixes.length; i++) {
@@ -47,18 +66,34 @@ class ShExGenerator {
         }
     }
 
+    /**
+     * Guarda una enumeración
+     * @param enm   Enumeración
+     */
     saveEnum(enm) {
         this.shexen.saveEnum(enm);
     }
 
+    /**
+     * Guarda una restricción
+     * @param cst   Restricción
+     */
     saveConstraint(cst) {
         this.shexco.saveConstraint(cst);
     }
 
-    createShExClass(clase) {
-        return this.shexcl.createShExClass(clase);
+    /**
+     * Comienza el proceso de generación de ShEx, haciendo llamada a la creación del equivalente a clase
+     * @param clase Clase
+     * @returns {string}    Equivalente ShEx
+     */
+    classToShEx(clase) {
+        return this.shexcl.classToShEx(clase);
     }
 
+    /**
+     * Resetea los registros del generador
+     */
     clear() {
         this.irim = new IRIManager();
         this.shm.clearShExShapes();

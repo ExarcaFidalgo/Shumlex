@@ -6,6 +6,7 @@ cyto.use( dagre );
 panzoom( cyto );
 const IRIManager = require("../managers/irimanager.js");
 const shexparser = require('../shex_util/ShExParser.js');
+const shExCardinality = require('../shex_util/shexgen/ShExCardinality.js');
 
 const irim = new IRIManager();
 
@@ -206,6 +207,14 @@ function createNodeKind(shape, id, name) {
  */
 function createInheritance(shape, id){
     let elements = [];
+    let target = irim.findIri(shape.reference);
+    //Si no existe ya, lo generamos en el grafo
+    if(target === undefined) {
+        target = shape.reference;
+        let id = getID();
+        irim.saveIri(target, id);
+        elements.push(createNode(id, irim.getPrefixedTermOfUri(target)));
+    }
     elements.push(createRelation("a", id, irim.findIri(shape.reference)));
     return elements;
 }
@@ -270,7 +279,7 @@ function createLabel(expr, father, depth) {
     //Guardamos la etiqueta
     labels.set(label, id);
     //Creamos una relación a un nodo sin nombre, que abarca toda la expr. etiq. La relación lleva el nombre $<etiqueta>
-    attrs = attrs.concat(createToNode(id, "", labelRef + ' ' + cardinalityOf(expr), father));
+    attrs = attrs.concat(createToNode(id, "", labelRef + ' ' + shExCardinality.cardinalityOf(expr), father));
     let exp = expr;
     //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
     exp.id = undefined;
@@ -291,7 +300,7 @@ function createLabelRef(expr, father) {
     //Se crea relación entre el padre y el nodo anónimo que abarca la expresión etiquetada, cuyo id obtenemos
     // a partir de la etiqueta.
     //El nombre de la relación es &<etiqueta>
-    attrs.push(createRelation('&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + cardinalityOf(expr),
+    attrs.push(createRelation('&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + shExCardinality.cardinalityOf(expr),
         father, labels.get(irim.getPrefixedTermOfUri(expr.include))));
     return attrs;
 }
@@ -307,7 +316,7 @@ function createOneOf(expr, father, depth) {
     let attrs = [];
     let id = getID();
     //Desde el padre, creamos relación "OneOf" a un nodo "expressions"
-    attrs = attrs.concat(createToNode(id, 'expressions', 'OneOf ' + cardinalityOf(expr), father));
+    attrs = attrs.concat(createToNode(id, 'expressions', 'OneOf ' + shExCardinality.cardinalityOf(expr), father));
     //Los hijos de "expressions" será cada una de las expresiones del OneOf
     for(let attr in expr.expressions) {
         if(expr.expressions.hasOwnProperty(attr)) {
@@ -333,7 +342,7 @@ function checkEachOf(expr, father, depth) {
     //Si tiene cardinalidad distinta de 1 - Empleamos el EachOf para indicar la cardinalidad del conjunto de sus expr.
     if(depth > 1 || expr.min !== undefined || expr.max !== undefined) {
         let id = getID();
-        attrs = attrs.concat(createToNode(id, 'expressions', 'EachOf ' + cardinalityOf(expr), father));
+        attrs = attrs.concat(createToNode(id, 'expressions', 'EachOf ' + shExCardinality.cardinalityOf(expr), father));
         for(let attr in expr.expressions) {
             if(expr.expressions.hasOwnProperty(attr)) {
                 //Generamos la representación de las expresiones del EachOf, siendo su padre el EachOf.
@@ -367,8 +376,9 @@ function determineTypeOfExpression(expr, father, fname) {
     let inverse = (expr.inverse === true ? "^" : "");
     let name;
 
+    //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
     if(expr.predicate) {
-        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate)) + cardinalityOf(expr);
+        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate)) + shExCardinality.cardinalityOf(expr);
     }
 
     if(!expr.valueExpr) {
@@ -376,43 +386,59 @@ function determineTypeOfExpression(expr, father, fname) {
             attrs = attrs.concat(checkShapeAndExprs(expr, father, fname));
         }
         else {
+            //Cualquier tipo: . (Wildcard)
             attrs = attrs.concat(createWildcard(name, father));
         }
         return attrs;
     }
 
+    //Si tiene ValueExpr
     else if(expr.valueExpr.type === "NodeConstraint") {
+        //Relación de tipo "a" ( a [:User])
         if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
             attrs = attrs.concat(createNCType(expr, father));
             return attrs;
         }
+        //Conjunto de valores - [:Male :Female]
         if(expr.valueExpr.values) {
             attrs = attrs.concat(createEnumeration(expr, name, father));
             return attrs;
         }
+        //Tipo de nodo - IRI, Literal...
         if(expr.valueExpr.nodeKind) {
             attrs = attrs.concat(createNodeKind(expr.valueExpr, father, name));
             return attrs;
         }
+        //Tipo de dato - xsd:string, p.e.
         if(expr.valueExpr.datatype) {
             attrs = attrs.concat(createDatatype(expr, name, father));
             return attrs;
         }
     }
+    //Referencia a otra Shape - knows @:User
     else if (expr.valueExpr.type === "ShapeRef") {
         attrs = attrs.concat(createShapeRef(expr, name, father));
         return attrs;
     }
+    //Shape anidada
     else if (expr.valueExpr.type === "Shape") {
         attrs = attrs.concat(createBlank(expr, name, father));
         return attrs;
     }
+    //Shape AND anidada
     else if (expr.valueExpr.type === "ShapeAnd") {
         attrs = attrs.concat(createShapeAnd(expr, father));
         return attrs;
     }
 }
 
+/**
+ * Genera un nodo AND y añade la expresión como su hija
+ * @param expr  Expresión
+ * @param father    ID nodo padre
+ * @param fname Nombre del padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkShapeAndExprs(expr, father, fname) {
     let attrs = [];
     let andAtr = andShs.get(fname);
@@ -426,6 +452,12 @@ function checkShapeAndExprs(expr, father, fname) {
     return attrs;
 }
 
+/**
+ * Crea una relación a un nodo Wildcard, '.'
+ * @param name  Nombre de la relación
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createWildcard(name, father) {
     let attrs = [];
     let id = getID();
@@ -433,9 +465,17 @@ function createWildcard(name, father) {
     return attrs;
 }
 
+/**
+ * Crea una relación "a" hacia un nodo. Similar a createInheritance, pero obtiene la información de un modo distinto
+ * @param expr  Expresión
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createNCType(expr, father) {
     let attrs = [];
+    //Nodo objetivo
     let target = irim.findIri(expr.valueExpr.values[0]);
+    //Si no existe ya, lo generamos en el grafo
     if(target === undefined) {
         target = expr.valueExpr.values[0];
         let id = getID();
@@ -447,39 +487,57 @@ function createNCType(expr, father) {
     return attrs;
 }
 
+/**
+ * Representa un conjunto de valores como una relación a un nodo "values" cuyos hijos son los valores
+ * @param expr  Expresión
+ * @param name  Nombre de la relación
+ * @param father    ID nodo padre
+ * @returns {Array}
+ */
 function createEnumeration(expr, name, father) {
     let attrs = [];
     let idv = getID();
     attrs = attrs.concat(createToNode(idv, "values", name, father));
+    //Comprobamos cada uno de los valores
     for(let value in expr.valueExpr.values) {
         if(expr.valueExpr.values.hasOwnProperty(value)) {
             let vl = expr.valueExpr.values[value];
             let ide = getID();
+            //Valor común: "1453", 12, URI
             if(vl.value !== undefined) {
                 attrs = attrs.concat(createToNode(ide, vl.value, "", idv));
             }
+            //LiteralStem - "1453"~
             else if(vl.type === "LiteralStem") {
                 attrs = attrs.concat(createToNode(ide, "&quot;" + vl.stem + "&quot;" + "~", "", idv));
             }
+            //IRIStem - wo:~
             else if(vl.type === "IriStem") {
                 attrs = attrs.concat(createToNode(ide,
                     IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~", "", idv));
             }
+            //IRIStemRange - wo:~ - wo:lo
             else if(vl.type === "IriStemRange") {
                 attrs = attrs.concat(checkStemRange(vl, ide, idv, "IriStem"));
             }
+            //LiteralStemRange - "aa"~ - "aab"
             else if(vl.type === "LiteralStemRange") {
                 attrs = attrs.concat(checkStemRange(vl, ide, idv, "LiteralStem"));
             }
+            //Etiqueta de lenguaje: @es
             else if(vl.type === "Language") {
                 attrs = attrs.concat(createToNode(ide, "@" + vl.languageTag, "", idv));
             }
+            //LanguageStem: @es~
             else if(vl.type === "LanguageStem") {
                 attrs = attrs.concat(createToNode(ide, "@" + vl.stem + "~ ", "", idv));
             }
+            //LanguageStemRange: @es~ - @es-AR
             else if(vl.type === "LanguageStemRange") {
                 attrs = attrs.concat(checkStemRange(vl, ide, idv, "LanguageStem"));
-            } else {
+            }
+            //vl de tipo IRI
+            else {
                 attrs = attrs.concat(createToNode(ide,
                     IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl)), "", idv));
             }
@@ -488,21 +546,33 @@ function createEnumeration(expr, name, father) {
     return attrs;
 }
 
+/**
+ * Representa un StemRange
+ * @param vl    Valor del conjunto
+ * @param ide   ID del valor
+ * @param idv   ID del nodo values - padre
+ * @param type  Tipo de Stem: IriStem, LiteralStem, LanguageStem
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkStemRange(vl, ide, idv, type) {
     let attrs = [];
+    // Stem del tipo . - wo:lolo "14"
     if(vl.stem.type === "Wildcard") {
         attrs = attrs.concat(createToNode(ide, ".", "", idv));
     }
     else {
         switch(type) {
+            //Obtenemos el término prefijado de la IRI
             case "IriStem":
                 attrs = attrs.concat(createToNode(ide,
                     IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~ ", "", idv));
                 break;
+            //Representamos el literal sin cambios
             case "LiteralStem":
                 attrs = attrs.concat(createToNode(ide,
                     vl.stem + "~ ", "", idv));
                 break;
+            //Añadimos @
             case "LanguageStem":
                 attrs = attrs.concat(createToNode(ide,
                     "@" + vl.stem + "~ ", "", idv));
@@ -510,9 +580,13 @@ function checkStemRange(vl, ide, idv, type) {
         }
     }
 
+    //Generamos las exclusiones, como nodos hijos del stem
+    //La relación se llama "-"
     for(let k = 0; k < vl.exclusions.length; k++) {
         let excl = vl.exclusions[k];
         let idx = getID();
+        //La exclusión es asimismo un stem (- codes:bad.~)
+        //El valor está en excl.stem y se añade un ~
         if(excl.type === type) {
             switch(type) {
                 case "IriStem":
@@ -528,6 +602,7 @@ function checkStemRange(vl, ide, idv, type) {
                     break;
             }
         }
+        //La exclusión es un valor simple; el valor es excl
         else {
             switch(type) {
                 case "IriStem":
@@ -546,46 +621,83 @@ function checkStemRange(vl, ide, idv, type) {
     return attrs;
 }
 
+/**
+ * Representa una restricción de tipo de dato, Datatype
+ * @param expr  Expresión
+ * @param name  Nombre de la relación
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createDatatype(expr, name, father) {
     let attrs = [];
+    //Tripleta común (:name xsd:string)
     if(expr.valueExpr) {
         let id = getID();
         let facets = checkFacets(expr.valueExpr, id);
         attrs = attrs.concat(facets);
         attrs = attrs.concat(createToNode(id, irim.getPrefixedTermOfUri(expr.valueExpr.datatype), name, father));
     }
+    //Es parte de un AND, por ejemplo (:productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10)
     else {
         let facets = checkFacets(expr, father);
         attrs = attrs.concat(facets);
+        //Pueden ser sólo las facetas
         if(expr.datatype) {
             let idd = getID();
+            //En este caso no se recibe nombre de relación, asignamos datatype
             attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfUri(expr.datatype), "datatype", father));
         }
     }
     return attrs;
 }
 
+/**
+ * Representamos una referencia a Shape
+ * @param expr  Expresión
+ * @param name  Nombre de la relación
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createShapeRef(expr, name, father) {
     let attrs = [];
+    //Relación de tipo "a"
     if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
         attrs.push(createRelation("a", father, irim.findIri(expr.valueExpr.reference)));
         return attrs;
     }
+    //Otra relación: nombre pasado por parámetro
     attrs.push(createRelation(name, father, irim.findIri(expr.valueExpr.reference)));
     return attrs;
 }
 
+/**
+ * Representa una shape anónima
+ * @param expr  Expresión
+ * @param name  Nombre de la relación
+ * @param father    ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function createBlank(expr, name, father) {
     let attrs = [];
     let id = getID();
     attrs = attrs.concat(createToNode(id, "", name, father));
+    //Representamos sus expresiones como sus descendientes
     attrs = attrs.concat(checkExpression(expr.valueExpr.expression, id));
     return attrs;
 }
 
+/**
+ * Representa una ShapeAnd en el caso de que sea el valueExpr de un TripleConstraint
+ * Por ejemplo (:productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10)
+ * @param expr  Expresión
+ * @param father    ID nodo padre
+ * @returns {Array}
+ */
 function createShapeAnd(expr, father) {
     let attrs = [];
 
+    //Cada uno de los elementos será en este caso una TripleConstraint.
+    //Generamos cada uno de ellos
     for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
         attrs = attrs.concat(
             determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate)));
@@ -593,44 +705,12 @@ function createShapeAnd(expr, father) {
     return attrs;
 }
 
-function cardinalityOf(attr) {
-    //TODO: Comprobar validez de las cardinalidades
-    let lowerValue = attr.min !== undefined ? attr.min : 1;
-    let upperValue = attr.max !== undefined ? attr.max : 1;
-    switch(lowerValue){
-        case 1:
-            if(upperValue === 1) {
-                return ""
-            }
-            else if (upperValue === -1) {
-                return " +"
-            }
-            else {
-                return " {1," + upperValue + "}"
-            }
-        case 0:
-            if(upperValue === 1) {
-                return " ?"
-            }
-            else if (upperValue === -1) {
-                return " *"
-            }
-            else {
-                return " {0, " + upperValue + "}"
-            }
-        default:
-            if(upperValue === lowerValue) {
-                return " {" + lowerValue + "}"
-            }
-            else if (upperValue === -1) {
-                return " {" + lowerValue + ",}"
-            }
-            else {
-                return " {" + lowerValue + ", " + upperValue + "}"
-            }
-    }
-}
-
+/**
+ * Representa las facetas de una restricción
+ * @param vex   ValueExpr
+ * @param idn   ID nodo padre
+ * @returns {Array} Elementos del grafo generados
+ */
 function checkFacets(vex, idn) {
     let facets = [];
     let idf = getID();
@@ -664,6 +744,14 @@ function checkFacets(vex, idn) {
     return facets;
 }
 
+/**
+ * Crea un nodo y una relación con destino a ese nodo
+ * @param id    ID del nodo a crear
+ * @param nname Nombre del nodo
+ * @param rname Nombre de la relación
+ * @param source    Origen de la relación
+ * @returns {Array} Nodo y relación
+ */
 function createToNode(id, nname, rname, source) {
     let attrs = [];
     attrs.push(createNode(id, nname));
@@ -671,15 +759,28 @@ function createToNode(id, nname, rname, source) {
     return attrs;
 }
 
+/**
+ * Crea un nodo para ser consumido por cytoscape, en formato json
+ * @param id    ID del nodo
+ * @param nname Nombre del nodo
+ * @returns {{data: {name: *, id: *}}}
+ */
 function createNode(id, nname) {
     return {data: { id: id, name: nname}};
 }
 
+/**
+ * Crea una relación para ser consumida por cytoscape, en formato json
+ * @param rname Nombre de la relación
+ * @param source    ID del nodo origen
+ * @param target    ID del nodo destino
+ * @returns {{data: {name: *, id: number, source: *, target: *}}}
+ */
 function createRelation(rname, source, target) {
     return {data: { id: getID(), name: rname, source: source, target: target }};
 }
 
-let style = [ // the stylesheet for the graph
+let style = [ //Hoja de estilo para el grafo
     {
         selector: 'node',
         style: {

@@ -1,3 +1,6 @@
+/**
+ * Genera el equivalente en ShEx de una clase UML (Shape)
+ */
 class ShExClass {
 
     constructor (IRIManager, shexat, shexco, shm) {
@@ -7,7 +10,14 @@ class ShExClass {
         this.shm = shm;
     }
 
-    createShExClass(element) {
+    /**
+     * Genera el equivalente ShEx dada una clase
+     * @param element   Clase XMI
+     * @returns {string}    Equivalente ShEx
+     */
+    classToShEx(element) {
+        //Si está registrada como subconjunto, no hacemos nada
+        //Se generará dentro de la pertinente clase
         if(this.shm.getSubSet(element.$["xmi:id"]) !== undefined) {
             return "";
         }
@@ -15,9 +25,10 @@ class ShExClass {
         let content = "";
         let brackets = false;
 
+        //Se crea herencia
         if(element.generalization) {
             brackets = true;
-            content += this.shexat.createShExGeneralization(element.generalization);
+            content += this.shexat.generalizationToShEx(element.generalization);
         }
 
         let attributes = element.ownedAttribute;
@@ -25,13 +36,14 @@ class ShExClass {
             brackets = true;
             attributes = [];
         }
-
-        let ats = this.shexat.createShExAttributes(attributes, brackets);
+        //Se crean los atributos de la clase
+        let ats = this.shexat.attributesToShEx(attributes, brackets);
 
         content += ats.content;
         header += ats.header;
+        //Durante la generación de atributos se determina si son necesarias lalves
         brackets = ats.brackets;
-
+        //Añadimos a la cabecera restricciones encontradas
         header += this.shexco.getConstraints(element.$["xmi:id"]);
         if(brackets) {
             return header + " {" + content + "\n}\n\n"
@@ -40,7 +52,6 @@ class ShExClass {
             return header + content + "\n\n"
         }
     }
-
 
 }
 module.exports = ShExClass;
