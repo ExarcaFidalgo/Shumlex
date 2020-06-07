@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Generación de grafo</title>
+<title class="ggen"></title>
 <meta charset="utf-8"/>
 
 <link rel="stylesheet" href="../css/app.css">
@@ -15,58 +15,58 @@
 <script src="../codemirror-5.51.0/mode/shex/shex.js"></script>
 
 <div class="header">
-    <img src="../img/ShexLogo.png" alt="logo" />
-    <h1>Shumlex<img src="../img/weso.png" id="weso" alt="weso" /></h1>
+    <img id="shlogo" src="../img/ShexLogo.png" alt="logo" />
+    <h1>Shumlex<a href="https://www.weso.es/"><img src="../img/weso.png" id="weso" alt="weso" /></a></h1>
 </div>
 <div class="navbar">
-    <a href="./shextoxmi.html">ShEx a XMI</a>
-    <a href="./xmitoshex.html">XMI a ShEx</a>
-    <a href="./uml.html">Generar UML</a>
-    <a href="./grafo.html">Generar grafo</a>
+    <a id="stx" href="./shextoxmi.html"></a>
+    <a id="xts" href="./xmitoshex.html"></a>
+    <a id="guml" href="./uml.html"></a>
+    <a id="ggr" href="./grafo.html"></a>
     <div class="subnav">
-        <button class="subnavbtn">Cargar ejemplos <i class="fa fa-caret-down"></i></button>
+        <button id="cej" class="subnavbtn"><i class="fa fa-caret-down"></i></button>
         <div class="subnav-content">
-            <a href="./shextoxmi.html?basic">ShEx básico</a>
-            <a href="./shextoxmi.html?herencia">Herencia</a>
-            <a href="./shextoxmi.html?resnod">Restr. tipo nodal</a>
-            <a href="./shextoxmi.html?facetas">Facetas</a>
-            <a href="./shextoxmi.html?rexcl">Rangos y exclusiones</a>
-            <a href="./shextoxmi.html?cgen">Conjuntos genéricos</a>
-            <a href="./shextoxmi.html?leng">Etiquetas de lenguaje</a>
-            <a href="./shextoxmi.html?card">Cardinalidad</a>
-            <a href="./shextoxmi.html?oneof">OneOf</a>
-            <a href="./shextoxmi.html?anid">Shapes anidadas</a>
-            <a href="./shextoxmi.html?closed">Shapes cerradas</a>
-            <a href="./shextoxmi.html?rti">Restricción triple inversa</a>
-            <a href="./shextoxmi.html?extra">Extra</a>
-            <a href="./shextoxmi.html?etiq">Expresiones etiquetadas</a>
-            <a href="./shextoxmi.html?conj">Conjunciones</a>
+            <a id="shb" href="./shextoxmi.html?basic"></a>
+            <a id="her" href="./shextoxmi.html?herencia"></a>
+            <a id="rtn" href="./shextoxmi.html?resnod"></a>
+            <a id="fct" href="./shextoxmi.html?facetas"></a>
+            <a id="rex" href="./shextoxmi.html?rexcl"></a>
+            <a id="cgn" href="./shextoxmi.html?cgen"></a>
+            <a id="etq" href="./shextoxmi.html?leng"></a>
+            <a id="crd" href="./shextoxmi.html?card"></a>
+            <a id="one" href="./shextoxmi.html?oneof"></a>
+            <a id="and" href="./shextoxmi.html?anid"></a>
+            <a id="cer" href="./shextoxmi.html?closed"></a>
+            <a id="rti" href="./shextoxmi.html?rti"></a>
+            <a id="ext" href="./shextoxmi.html?extra"></a>
+            <a id="exe" href="./shextoxmi.html?etiq"></a>
+            <a id="cnj" href="./shextoxmi.html?conj"></a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">Configuración
+        <button class="dropbtn" id="cfg">
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a id="cambiarClaro">Tema claro</a>
-            <a id="cambiarOscuro">Tema oscuro</a>
+            <a id="cambiarClaro"></a>
+            <a id="cambiarOscuro"></a>
         </div>
     </div>
     <div>
-        <img src="../img/uk.png" class="bandera" alt="Reino Unido" />
-        <img src="../img/esp.png" class="bandera" alt="España" />
+        <img id="uk" src="../img/uk.png" class="bandera" alt="Reino Unido" />
+        <img id="es" src="../img/esp.png" class="bandera" alt="España" />
     </div>
 </div>
 
 <section id=demo>
-    <h2>Generación de grafo</h2>
+    <h2 class="ggen"></h2>
     <div class="centerdiv">
-        <button id="mostrargrafo" class="btn1">Generar grafo</button>
+        <button id="mostrargrafo" class="btn1"></button>
     </div>
     <div class="centerdiv">
         <div class="icon-bar">
             <a id="borrarshex"><i class="fa fa-trash"></i></a>
-            <a id="cargarShexXMI">Generar XMI</a>
+            <a id="cargarShexXMI"></a>
             <a id="dwnshex-btn"><i class="fa fa-download"></i></a>
         </div>
         <div class="icon-bar">

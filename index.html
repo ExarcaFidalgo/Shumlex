@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Shumlex</title>
+<title></title>
 <meta charset="utf-8"/>
 
 <link rel="stylesheet" href="./css/app.css">
@@ -9,58 +9,56 @@
 
 <body>
 <div class="header">
-    <img src="img/ShexLogo.png" alt="logo" />
-    <h1>Shumlex<img src="img/weso.png" id="weso" alt="weso" /></h1>
+    <img src="img/ShexLogo.png" alt="logo"/>
+    <h1>Shumlex<a href="https://www.weso.es/"><img src="img/weso.png" id="weso" alt="weso" /></a></h1>
 
 </div>
 <div class="navbar">
-    <a href="./html/shextoxmi.html">ShEx a XMI</a>
-    <a href="./html/xmitoshex.html">XMI a ShEx</a>
-    <a href="#">Generar UML</a>
-    <a href="#">Generar grafo</a>
+    <a id="stx" href="./html/shextoxmi.html"></a>
+    <a id="xts" href="./html/xmitoshex.html"></a>
+    <a id="guml" href="./html/uml.html"></a>
+    <a id="ggr" href="./html/grafo.html"></a>
     <div class="subnav">
-        <button class="subnavbtn">Cargar ejemplos <i class="fa fa-caret-down"></i></button>
+        <button id="cej" class="subnavbtn"><i class="fa fa-caret-down"></i></button>
         <div class="subnav-content">
-            <a href="./html/shextoxmi.html?basic">ShEx básico</a>
-            <a href="./html/shextoxmi.html?herencia">Herencia</a>
-            <a href="./html/shextoxmi.html?resnod">Restr. tipo nodal</a>
-            <a href="./html/shextoxmi.html?facetas">Facetas</a>
-            <a href="./html/shextoxmi.html?rexcl">Rangos y exclusiones</a>
-            <a href="./html/shextoxmi.html?cgen">Conjuntos genéricos</a>
-            <a href="./html/shextoxmi.html?leng">Etiquetas de lenguaje</a>
-            <a href="./html/shextoxmi.html?card">Cardinalidad</a>
-            <a href="./html/shextoxmi.html?oneof">OneOf</a>
-            <a href="./html/shextoxmi.html?anid">Shapes anidadas</a>
-            <a href="./html/shextoxmi.html?closed">Shapes cerradas</a>
-            <a href="./html/shextoxmi.html?rti">Restricción triple inversa</a>
-            <a href="./html/shextoxmi.html?extra">Extra</a>
-            <a href="./html/shextoxmi.html?etiq">Expresiones etiquetadas</a>
-            <a href="./html/shextoxmi.html?conj">Conjunciones</a>
+            <a id="shb" href="./html/shextoxmi.html?basic"></a>
+            <a id="her" href="./html/shextoxmi.html?herencia"></a>
+            <a id="rtn" href="./html/shextoxmi.html?resnod"></a>
+            <a id="fct" href="./html/shextoxmi.html?facetas"></a>
+            <a id="rex" href="./html/shextoxmi.html?rexcl"></a>
+            <a id="cgn" href="./html/shextoxmi.html?cgen"></a>
+            <a id="etq" href="./html/shextoxmi.html?leng"></a>
+            <a id="crd" href="./html/shextoxmi.html?card"></a>
+            <a id="one" href="./html/shextoxmi.html?oneof"></a>
+            <a id="and" href="./html/shextoxmi.html?anid"></a>
+            <a id="cer" href="./html/shextoxmi.html?closed"></a>
+            <a id="rti" href="./html/shextoxmi.html?rti"></a>
+            <a id="ext" href="./html/shextoxmi.html?extra"></a>
+            <a id="exe" href="./html/shextoxmi.html?etiq"></a>
+            <a id="cnj" href="./html/shextoxmi.html?conj"></a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">Configuración
+        <button class="dropbtn" id="cfg">
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a id="cambiarClaro">Tema claro</a>
-            <a id="cambiarOscuro">Tema oscuro</a>
+            <a id="cambiarClaro"></a>
+            <a id="cambiarOscuro"></a>
         </div>
     </div>
     <div>
-        <img src="img/uk.png" class="bandera" alt="Reino Unido" />
-        <img src="img/esp.png" class="bandera" alt="España" />
+        <img id="uk" src="img/uk.png" class="bandera" alt="Reino Unido"/>
+        <img id="es" src="img/esp.png" class="bandera" alt="España" />
     </div>
 </div>
 
 <section>
-    <h2>Introducción</h2>
-    <p>Bienvenidos al <span class="pbold">Proyecto Shumlex</span>. El objeto del mismo consiste en elaborar una herramienta que permita
-        llevar a cabo una integración entre las Shape Expressions y UML, otorgando al usuario la capacidad de generar
-        el equivalente en UML del conjunto deseado de ShEx, o viceversa; aportando asimismo características que permitan
-    la visualización in situ de los datos trabajados.</p>
-    <p class="pbold">Obra de D. Jorge Álvarez Fidalgo.</p>
+    <h2 id="int">Introducción</h2>
+    <p id="p1"></p>
+    <p id="p2" class="pbold"></p>
 </section>
+<script src="./main.js"></script>
 
 
 

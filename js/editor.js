@@ -7,6 +7,7 @@ const repo = require('../repo/shexrepository.js');
 
 const grafo = require('./grafo.js');
 const uml = require('./uml.js');
+const lang = require('./idioma.js');
 
 let shExEditor;
 let xmiEditor;
@@ -73,6 +74,7 @@ $(document).ready(function() {
         }
 
     }
+    lang.checkLang();
 });
 
 //Almacenamos el valor de "tema" almacenado en sesión
@@ -303,3 +305,34 @@ if(document.getElementById("dwnxmi-btn")) {
     }, false);
 }
 
+//IDIOMA
+
+$('#uk').click(cambiarIngles);
+$('#es').click(cambiarEsp);
+
+/**
+ * Cambia el idioma de la página a inglés
+ */
+function cambiarIngles() {
+    sessionStorage.setItem("lang", JSON.stringify(lang.en));
+    lang.checkLang();
+}
+
+/**
+ * Cambia el idioma de la página a español
+ */
+function cambiarEsp() {
+    sessionStorage.setItem("lang", JSON.stringify(lang.es));
+    lang.checkLang();
+}
+
+//HOME
+
+$('#shlogo').click(home);
+
+/**
+ * Nos devuelve a la página inicial
+ */
+function home() {
+    window.location = "../index.html";
+}
