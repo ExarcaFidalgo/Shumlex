@@ -208,7 +208,6 @@ class Xmirepository {
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8h3m4fv\" name=\"Any\"/>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8h3m4ft\" name=\":gender\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8h3m4fx\" name=\":Male\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8h3m4fy\" name=\":Female\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8odaidz\" name=\"&quot;Wo&quot;\"/>\n" +
@@ -217,7 +216,6 @@ class Xmirepository {
             "\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8omjpqi\" name=\":country\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8omjpqk\" name=\":Spain\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -469,20 +467,16 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k8op805d\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8op805f\" name=\":status\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8op805n\" name=\"codes:~ - codes:unknown - codes:bad.~ \"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8op805o\" name=\"&quot;111&quot;\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8op805h\" name=\":phone\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8op805p\" name=\"&quot;+34&quot;~ - &quot;+3468031&quot; - &quot;+3467182&quot;~ \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8op805j\" name=\":quantity\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8op805q\" name=\"99~ - 9987 - 991~ \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8op805l\" name=\":url\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8op805r\" name=\"codes:Personal~\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -506,15 +500,12 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k8opvk4l\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8opvk4n\" name=\":status\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8opvk4t\" name=\". - codes:bad \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8opvk4p\" name=\":name\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8opvk4u\" name=\". - &quot;Trademark&quot; \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8opvk4r\" name=\":price\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8opvk4y\" name=\". - 66 \"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -580,19 +571,15 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k8pszql1\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql3\" name=\":frlabel\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8pszqle\" name=\"@fr \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql6\" name=\":enlabel\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8pszqlf\" name=\"@en~ \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszql9\" name=\":splabel\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8pszqlg\" name=\"@es~ - @es-AR - @es-ES \"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8pszqlc\" name=\":label\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k8pszqlh\" name=\". - @kz \"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -862,7 +849,6 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k92pb471\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92pb47a\" name=\":gender\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k92pb47i\" name=\":Male\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k92pb47j\" name=\":Female\"/>\n" +
             "</packagedElement>\n" +
@@ -902,11 +888,9 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k92phahb\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92phahm\" name=\":gender\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k92phahq\" name=\":Male\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92phaho\" name=\":gender\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k92phahr\" name=\":Female\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";
@@ -942,7 +926,6 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k92snpeu\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92snpf0\" name=\"^:gender\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k92snpf7\" name=\":Male\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k92snpf8\" name=\":Female\"/>\n" +
             "</packagedElement>\n" +
@@ -973,7 +956,6 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k92z0c31\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k92z0c39\" name=\":nationality\">\n" +
-            "\n" +
             "\t<ownedLiteral xmi:id=\"k92z0c3b\" name=\":Spain\"/>\n" +
             "</packagedElement>\n" +
             "</uml:Model>";

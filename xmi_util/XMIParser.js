@@ -57,7 +57,7 @@ class XMIParser {
                     shexgen.saveType(pe)
                 }
                 else if (type === "uml:Enumeration" &&
-                    e["$"]["name"] === "Prefixes") {
+                    pe["$"]["name"] === "Prefixes") {
                     shexgen.savePrefixes(pe)
                 }
                 else if (type === "uml:Enumeration") {
