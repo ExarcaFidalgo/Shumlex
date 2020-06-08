@@ -72,7 +72,7 @@ function parseXMIToPUML(xmi) {
             //Guardamos las clases para futuras referencias
             if (type === "uml:Class") {
                 let cn = constraints.get(id);
-                let name = name + (cn === undefined ? "" : " " + cn) ;
+                name = name + (cn === undefined ? "" : " " + cn) ;
                 classes.set(id, name);
             }
             //Guardamos los tipos

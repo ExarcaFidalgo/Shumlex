@@ -52,7 +52,10 @@ class ShExAttributes {
         let header = "";
 
         //Asociación (ShapeRef)
-        if(attr.$.association) {
+        let shape = this.shm.getShape(attr.$.type);
+        let subSet = this.shm.getSubSet(attr.$.type);
+        if(attr.$.association           //Modelio ver.
+            || shape !== undefined || subSet !== undefined) {   //VP ver.
             brackets = true;
             content += this.associationToShEx(attr, header);
         }

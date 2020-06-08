@@ -7,7 +7,7 @@ const XMICardinality = require("./XMICardinality.js");
 const XMIClass = require("./XMIClass.js");
 const XMIConstraints = require("./XMIConstraints.js");
 const XMIEnumerations = require("./XMIEnumerations.js");
-const XMISubclasses = require("./XMISubclasses.js");
+const XMISubclasses = require("./XMIComposition.js");
 const XMITypes = require("./XMITypes.js");
 const XMIAux = require("./XMIAux.js");
 

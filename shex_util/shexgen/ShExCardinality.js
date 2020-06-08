@@ -60,7 +60,7 @@ class ShExCardinality {
             return 0
         }
         //UnlimitedNatural puede ser >1 o Infinito
-        else if (attr[0].$["xmi:type"] === "uml:LiteralUnlimitedNatural") {
+        else {
             let value = attr[0].$.value;
             if(value === "*")
                 return Infinity;

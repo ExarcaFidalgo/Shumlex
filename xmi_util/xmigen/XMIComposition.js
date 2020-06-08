@@ -1,11 +1,11 @@
 /**
  * Genera subclases en XMI
  */
-class XMISubclasses {
+class XMIComposition {
 
     constructor (shm, xmiats, irim, XMIAux) {
-        this.subClassesCounter = new Map();
-        this.subClasses = [];
+        this.componentsCounter = new Map();
+        this.components = [];
 
         this.shm = shm;
         this.xmiats = xmiats;
@@ -18,12 +18,12 @@ class XMISubclasses {
      * fidedigno en UML.
      * @returns {string}    XMI de (sub)clases
      */
-    createDependentSubClasses() {
+    createDependentComponents() {
         let classXMI = "";
-        for(let i = 0; i < this.subClasses.length; i++) {
-            let shape = this.shm.findShape(this.subClasses[i].name);
-            classXMI += this.XMIAux.createPackEl("uml:Class", shape.id, 'name="' + this.subClasses[i].name + '"',
-                this.xmiats.createXMIAttributes(this.subClasses[i].expr, shape.name));
+        for(let i = 0; i < this.components.length; i++) {
+            let shape = this.shm.findShape(this.components[i].name);
+            classXMI += this.XMIAux.createPackEl("uml:Class", shape.id, 'name="' + this.components[i].name + '"',
+                this.xmiats.createXMIAttributes(this.components[i].expr, shape.name));
         }
         //Crear shapes pendientes de realización
         let pendingShapes = this.shm.getPendingShapes();
@@ -33,7 +33,7 @@ class XMISubclasses {
                 "");
         }
         this.shm.clearPendingShapes();
-        this.subClasses = [];
+        this.components = [];
         return classXMI;
     }
 
@@ -42,15 +42,15 @@ class XMISubclasses {
      * @param className Nombre de la clase
      * @returns {string}    Nombre de la clase con número
      */
-    getSubClassNumber(className) {
-        if(this.subClassesCounter.get(className) === undefined) {
-            this.subClassesCounter.set(className, 1);
-            return className + "_" + 1;
+    getComponentNumber(className) {
+        if(this.componentsCounter.get(className) === undefined) {
+            this.componentsCounter.set(className, 1);
+            return "_Blank" + 1;
         }
         else {
-            let sub = this.subClassesCounter.get(className) + 1;
-            this.subClassesCounter.set(className, sub);
-            return className + "_" + sub;
+            let sub = this.componentsCounter.get(className) + 1;
+            this.componentsCounter.set(className, sub);
+            return "_Blank" + sub;
         }
     }
 
@@ -58,17 +58,17 @@ class XMISubclasses {
      * Guarda una subclase en el registro
      * @param sub   Subclase
      */
-    saveSubClass(sub) {
-        this.subClasses.push(sub);
+    saveComponent(sub) {
+        this.components.push(sub);
     }
 
     /**
      * Resetea los registros
      */
     clear() {
-        this.subClassesCounter = new Map();
-        this.subClasses = [];
+        this.componentsCounter = new Map();
+        this.components = [];
     }
 
 }
-module.exports = XMISubclasses;
+module.exports = XMIComposition;

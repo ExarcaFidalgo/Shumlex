@@ -52,7 +52,7 @@ class XMIAttributes {
         }
         //Expresión OneOf.
         else if(expr.type === "OneOf") {
-            let subClassName = this.xmisub.getSubClassNumber(className);
+            let subClassName = this.xmisub.getComponentNumber(className);
             let oneOfExpr = JSON.parse(JSON.stringify(expr));
             oneOfExpr.type = "EachOf";
             attrs = this.createSubClass("OneOf", subClassName, oneOfExpr, expr.min, expr.max);
@@ -63,7 +63,7 @@ class XMIAttributes {
             //Si la profundidad es mayor de 0 - Por ejemplo, es una de las expressiones de un OneOf.
             //Si tiene cardinalidad distinta de 1 - Empleamos el EachOf para indicar la cardinalidad del conjunto de sus expr.
             if( this.depth > 0 || expr.min !== undefined || expr.max !== undefined) {
-                let subClassName = this.xmisub.getSubClassNumber(className);
+                let subClassName = this.xmisub.getComponentNumber(className);
                 let subExpr = JSON.parse(JSON.stringify(expr));
                 attrs = this.createSubClass(subClassName, subClassName, subExpr, expr.min, expr.max);
             }
@@ -169,7 +169,7 @@ class XMIAttributes {
             subClass.expr.max = undefined;
         }
 
-        this.xmisub.saveSubClass(subClass);
+        this.xmisub.saveComponent(subClass);
         return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
     }
 

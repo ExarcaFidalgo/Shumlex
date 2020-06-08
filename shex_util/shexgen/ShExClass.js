@@ -16,7 +16,7 @@ class ShExClass {
      * @returns {string}    Equivalente ShEx
      */
     classToShEx(element) {
-        //Si está registrada como subconjunto, no hacemos nada
+        //Si está registrada como componente, no hacemos nada
         //Se generará dentro de la pertinente clase
         if(this.shm.getSubSet(element.$["xmi:id"]) !== undefined) {
             return "";

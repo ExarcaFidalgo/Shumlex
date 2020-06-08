@@ -83,7 +83,7 @@ class XMIClass {
         //Crear elementos dependientes de esta clase
         classXMI += this.xmicon.createDependentOwnedRules();
         classXMI += this.xmiasoc.createDependentAssociations(sh.id);
-        classXMI += this.xmisub.createDependentSubClasses();
+        classXMI += this.xmisub.createDependentComponents();
 
         return classXMI;
     }

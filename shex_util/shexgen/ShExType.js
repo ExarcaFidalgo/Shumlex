@@ -45,12 +45,16 @@ class ShExType {
 
         }
         else if (attr.$.type) {
+            if(attr.$.type === "Int_id") {
+                return this.irim.findXSDPrefix() + "int";
+            }
             let enumer = this.shexen.getEnum(attr.$.type);
             //Tipo enumeración
             if(enumer) {
                 return this.shexen.enumerationToShEx(enumer);
             }
             let type = this.getType(attr.$.type);
+            console.log(attr.$.type);
             return type.name;
         }
         return "Any";

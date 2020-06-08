@@ -78,13 +78,12 @@ class ShapeManager {
 
     /**
      * Guarda una Shape
-     * Si está marcada como subconjunto, se introduce en el listado de subconjuntos
+     * Si está marcada como componente, se introduce en el listado de componentes
      * En caso contrario, se guarda en el listado de shapes para ShEx
      * @param element   Shape a guardar (formato XMI)
      */
     saveShape(element) {
-        if(/^([$]?[:<]?[a-zA-Z]+(_[0-9]+)+[>]?)$/.test(element.$.name) ||
-            /^([$]:[<]?[a-zA-Z]+[>]?)$/.test(element.$.name)) {
+        if(/^_Blank[0-9]+(_[0-9]+)*$/.test(element.$.name)) {
             this.subSet.set(element.$["xmi:id"], {
                 attributes: element.ownedAttribute
             });
