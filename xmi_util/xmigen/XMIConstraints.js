@@ -67,14 +67,6 @@ class XMIConstraints {
     }
 
     /**
-     * Introduce restricción "Inversa"
-     * @param id    ID Shape
-     */
-    markAsInverse(id) {
-        this.ownedRules.push(this.XMIAux.createXMIOwnedRule("Inverse", id));
-    }
-
-    /**
      * Introduce restricción extra
      * @param id    ID Shape
      * @param values    Valores Extra

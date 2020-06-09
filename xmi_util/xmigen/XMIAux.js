@@ -170,8 +170,8 @@ class XMIAux {
      * @param idgen ID General (Padre)
      * @returns {string}    XMI Generalization
      */
-    static createGen(id, idgen) {
-        return "\n\t<generalization xmi:id=\"" + id + "\" general=\"" + idgen + "\"/>";
+    static createGen(id, idgen, name) {
+        return "\n\t<generalization xmi:id=\"" + id + "\" general=\"" + idgen + "\" name=\"" + name + "\"/>";
     }
 
 }

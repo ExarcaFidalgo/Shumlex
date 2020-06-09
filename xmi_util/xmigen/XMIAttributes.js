@@ -219,10 +219,7 @@ class XMIAttributes {
                 else {
                     let sh = this.shm.findShape(parents[parent].reference, true);
                     let id = this.unid();
-                    gens += this.XMIAux.createGen(id, sh.id);
-                    if(inv === true) {
-                        this.xmicon.markAsInverse(id);
-                    }
+                    gens += this.XMIAux.createGen(id, sh.id, inv ? "^" : "");
                 }
 
             }
