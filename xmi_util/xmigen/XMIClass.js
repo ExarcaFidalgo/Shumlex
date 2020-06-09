@@ -3,7 +3,7 @@
  */
 class XMIClass {
 
-    constructor (shm, xmitype, irim, xmiatt, xmicon, xmiasoc, xmisub, XMIAux) {
+    constructor (shm, xmitype, irim, xmiatt, xmicon, xmiasoc, xmisub, XMIAux, IRIManager) {
         this.shm = shm;
         this.XMITypes = xmitype;
         this.irim = irim;
@@ -12,6 +12,7 @@ class XMIClass {
         this.xmiasoc = xmiasoc;
         this.xmisub = xmisub;
         this.XMIAux = XMIAux;
+        this.IRIManager = IRIManager;
 
     }
 
@@ -31,7 +32,7 @@ class XMIClass {
             shape.datatype);
 
         //Nombre de la clase prefijado
-        let prName = this.irim.getPrefixedTermOfUri(name);
+        let prName = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(name));
         //Shape anónima
         if(prName.includes("_:")) {
             this.shm.incrementBlank();

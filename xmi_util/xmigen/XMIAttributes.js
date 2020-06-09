@@ -5,7 +5,7 @@ const XMIPrimitiveAttributes = require("./XMIPrimitiveAttributes.js");
  */
 class XMIAttributes {
 
-    constructor (unid, xmisub, xmiasoc, xmienum, xmitype, irim, xmicon, shm, sxmit, xmicard, XMIAux) {
+    constructor (unid, xmisub, xmiasoc, xmienum, xmitype, irim, xmicon, shm, sxmit, xmicard, XMIAux, IRIManager) {
         this.unid = unid;
         this.xmienum = xmienum;
         this.xmitype = xmitype;
@@ -17,6 +17,7 @@ class XMIAttributes {
         this.shm = shm;
         this.sxmit = sxmit;
         this.XMIAux = XMIAux;
+        this.IRIManager = IRIManager;
 
         this.depth = 0;
     }
@@ -35,7 +36,7 @@ class XMIAttributes {
         }
         //Si existe un atributo id, se trata de una expresión etiquetada.
         else if(expr.id !== undefined) {
-            let labelRef = "$" + this.irim.getPrefixedTermOfUri(expr.id);
+            let labelRef = "$" + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.id));
             let subExpr = JSON.parse(JSON.stringify(expr));
             //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
             subExpr.id = undefined;
@@ -43,7 +44,7 @@ class XMIAttributes {
         }
         //Si es un tipo Inclusion, se trata de una referencia a una expresión etiquetada.
         else if(expr.type === "Inclusion") {
-            let labelRef = this.irim.getPrefixedTermOfUri(expr.include);
+            let labelRef = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.include));
             attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, "$" + labelRef, expr.min, expr.max);
         }
         //Una TripleConstraint alberga múltiples alternativas. Redigirimos a un método especializado.
@@ -91,7 +92,7 @@ class XMIAttributes {
     determineTypeOfExpression(expr, id) {
         //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
         let inverse = (expr.inverse === true ? "^" : "");
-        let name = inverse + this.irim.getPrefixedTermOfUri(expr.predicate);
+        let name = inverse + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.predicate));
 
         if(!expr.valueExpr) {
             //Cualquier tipo: . (Wildcard)

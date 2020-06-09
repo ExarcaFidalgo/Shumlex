@@ -86,7 +86,7 @@ function parseXMIToPUML(xmi) {
                 //Generamos la enumeración que contiene los prefijos
                 pumlEquivalent += "enum " + name + " {\n";
                 for (let j = 0; j < packagedElements[i].ownedLiteral.length; j++) {
-                    pumlEquivalent += packagedElements[i].ownedLiteral[j].$.name + "\n";
+                    pumlEquivalent +=  packagedElements[i].ownedLiteral[j].$.name + "\n";
                 }
                 pumlEquivalent += "} \n";
 
@@ -94,7 +94,7 @@ function parseXMIToPUML(xmi) {
             //Generamos las enumeraciones corrientes
             else if (type === "uml:Enumeration") {
                 enums.set(id, name);
-                pumlEquivalent += "enum " + name + " {\n";
+                pumlEquivalent += "enum \"" + name + "\" {\n";
                 for (let j = 0; j < packagedElements[i].ownedLiteral.length; j++) {
                     pumlEquivalent += packagedElements[i].ownedLiteral[j].$.name + "\n";
                 }
