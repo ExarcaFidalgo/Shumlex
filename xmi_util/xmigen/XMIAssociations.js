@@ -28,7 +28,33 @@ class XMIAssociations {
         let idasoc = this.unid();
         let card = this.xmicard.createXMICardinality(min, max);
 
-        let content = this.XMIAux.createAsocAt(idatr, name, targetShape.id, idasoc, card);
+        let content = this.XMIAux.createAsocAt(idatr, name, targetShape.id, idasoc, card, "");
+        let asoc = { id: idasoc, idatr: idatr};
+        //Puesto que hemos generado el atributo en la clase, añadimos la asociación a pendientes
+        //Para que genere el elemento asociación tras finalizar la clase actual
+        this.pendingAssociations.push(asoc);
+
+        return content;
+    }
+
+    /**
+     * Crea un atributo asociación de composición para una clase
+     * @param name  Nombre asociación
+     * @param target    Shape referenciada
+     * @param min   Cardinalidad mínima
+     * @param max   Cardinalidad máxima
+     * @returns {*} XMI
+     */
+    createXMICompAsocAttribute(name, target, min, max) {
+        let idatr = this.unid();
+        let targetShape = this.shm.findShape(target);
+
+        //ID Elemento asociación (PackagedElement)
+        let idasoc = this.unid();
+        let card = this.xmicard.createXMICardinality(min, max);
+
+        let content = this.XMIAux.createAsocAt(idatr, name, targetShape.id, idasoc, card,
+            "aggregation=\"composite\"");
         let asoc = { id: idasoc, idatr: idatr};
         //Puesto que hemos generado el atributo en la clase, añadimos la asociación a pendientes
         //Para que genere el elemento asociación tras finalizar la clase actual

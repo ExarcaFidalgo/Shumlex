@@ -86,12 +86,13 @@ class XMIAux {
      * @param type  Tipo
      * @param idas  ID asociación referenciada
      * @param int   Interior Owned Attribute
+     * @param ats   Otros atributos
      * @returns {string}    XMI Owned Attribute para at. asociación
      */
-    static createAsocAt(id, name, type, idas, int) {
+    static createAsocAt(id, name, type, idas, int, ats) {
         return '\n\t<ownedAttribute xmi:id="' + id + '" name="' + name
         + '" visibility="public" ' +
-        'type="' + type + '" association="' + idas + '">'
+        'type="' + type + '" association="' + idas + '" ' + ats + '>'
         + int
         + '</ownedAttribute>';
     }

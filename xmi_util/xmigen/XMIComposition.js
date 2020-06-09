@@ -3,20 +3,21 @@
  */
 class XMIComposition {
 
-    constructor (shm, xmiats, irim, XMIAux) {
-        this.componentsCounter = new Map();
+    constructor (shm, xmiats, irim, XMIAux, xmicon, xmiasoc) {
+        this.componentsCounter = 0;
         this.components = [];
 
         this.shm = shm;
         this.xmiats = xmiats;
         this.irim = irim;
         this.XMIAux = XMIAux;
+        this.xmicon = xmicon;
+        this.xmiasoc = xmiasoc;
     }
 
     /**
-     * Genera subclases dependientes en XMI. Surgen como solución a estructuras ShEx irrepresentables de modo
-     * fidedigno en UML.
-     * @returns {string}    XMI de (sub)clases
+     * Genera componente dependientes en XMI.
+     * @returns {string}    XMI de componentes
      */
     createDependentComponents() {
         let classXMI = "";
@@ -24,6 +25,7 @@ class XMIComposition {
             let shape = this.shm.findShape(this.components[i].name);
             classXMI += this.XMIAux.createPackEl("uml:Class", shape.id, 'name="' + this.components[i].name + '"',
                 this.xmiats.createXMIAttributes(this.components[i].expr, shape.name));
+            classXMI += this.xmiasoc.createDependentAssociations(shape.id);
         }
         //Crear shapes pendientes de realización
         let pendingShapes = this.shm.getPendingShapes();
@@ -38,25 +40,17 @@ class XMIComposition {
     }
 
     /**
-     * Obtiene el número pertinente para una subclase
+     * Obtiene el número pertinente para un componente
      * @param className Nombre de la clase
      * @returns {string}    Nombre de la clase con número
      */
     getComponentNumber(className) {
-        if(this.componentsCounter.get(className) === undefined) {
-            this.componentsCounter.set(className, 1);
-            return "_Blank" + 1;
-        }
-        else {
-            let sub = this.componentsCounter.get(className) + 1;
-            this.componentsCounter.set(className, sub);
-            return "_Blank" + sub;
-        }
+            return "_Blank" + this.componentsCounter++;
     }
 
     /**
-     * Guarda una subclase en el registro
-     * @param sub   Subclase
+     * Guarda un componente en el registro
+     * @param sub   componente
      */
     saveComponent(sub) {
         this.components.push(sub);
@@ -66,7 +60,7 @@ class XMIComposition {
      * Resetea los registros
      */
     clear() {
-        this.componentsCounter = new Map();
+        this.componentsCounter = 0;
         this.components = [];
     }
 

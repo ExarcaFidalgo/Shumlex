@@ -7,7 +7,7 @@ const XMICardinality = require("./XMICardinality.js");
 const XMIClass = require("./XMIClass.js");
 const XMIConstraints = require("./XMIConstraints.js");
 const XMIEnumerations = require("./XMIEnumerations.js");
-const XMISubclasses = require("./XMIComposition.js");
+const XMIComposition = require("./XMIComposition.js");
 const XMITypes = require("./XMITypes.js");
 const XMIAux = require("./XMIAux.js");
 
@@ -24,7 +24,7 @@ class XMIGenerator {
         this.xmicon = new XMIConstraints(uniqid, this.irim, XMIAux);
         this.xmienum = new XMIEnumerations(uniqid, this.irim, this.xmicard, XMIAux);
         this.xmitype = new XMITypes(uniqid, this.irim, XMIAux, IRIManager);
-        this.xmisub = new XMISubclasses(this.shm, null, this.irim, XMIAux);
+        this.xmisub = new XMIComposition(this.shm, null, this.irim, XMIAux, this.xmicon, this.xmiasoc);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,
             this.irim, this.xmicon, this.shm, XMITypes, this.xmicard, XMIAux);
         this.xmisub.xmiats = this.xmiats;

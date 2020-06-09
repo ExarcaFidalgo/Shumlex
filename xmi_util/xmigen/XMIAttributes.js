@@ -39,7 +39,7 @@ class XMIAttributes {
             let subExpr = JSON.parse(JSON.stringify(expr));
             //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
             subExpr.id = undefined;
-            attrs = this.createSubClass(labelRef, labelRef, subExpr, expr.min, expr.max);
+            attrs = this.createComponent(labelRef, labelRef, subExpr, expr.min, expr.max);
         }
         //Si es un tipo Inclusion, se trata de una referencia a una expresión etiquetada.
         else if(expr.type === "Inclusion") {
@@ -55,7 +55,7 @@ class XMIAttributes {
             let subClassName = this.xmisub.getComponentNumber(className);
             let oneOfExpr = JSON.parse(JSON.stringify(expr));
             oneOfExpr.type = "EachOf";
-            attrs = this.createSubClass("OneOf", subClassName, oneOfExpr, expr.min, expr.max);
+            attrs = this.createComponent("OneOf", subClassName, oneOfExpr, expr.min, expr.max);
         }
         //Expresión EachOf.
         else if (expr.type === "EachOf") {
@@ -65,7 +65,7 @@ class XMIAttributes {
             if( this.depth > 0 || expr.min !== undefined || expr.max !== undefined) {
                 let subClassName = this.xmisub.getComponentNumber(className);
                 let subExpr = JSON.parse(JSON.stringify(expr));
-                attrs = this.createSubClass(subClassName, subClassName, subExpr, expr.min, expr.max);
+                attrs = this.createComponent("", subClassName, subExpr, expr.min, expr.max);
             }
             else {
                 for(let attr in expr.expressions) {
@@ -134,7 +134,7 @@ class XMIAttributes {
         else if (expr.valueExpr.type === "Shape") {
             this.shm.incrementBlank();
             let ref = "_:" + this.shm.getCurrentBlank();
-            return this.createSubClass(name, ref, expr.valueExpr.expression, expr.min, expr.max);
+            return this.createComponent(name, ref, expr.valueExpr.expression, expr.min, expr.max);
         }
         //ShapeAnd anidada
         else if (expr.valueExpr.type === "ShapeAnd") {
@@ -159,7 +159,7 @@ class XMIAttributes {
      * @param max   Cardinalidad máxima
      * @returns {*} Subclase XMI
      */
-    createSubClass(asocName, subClassName, expr, min, max) {
+    createComponent(asocName, subClassName, expr, min, max) {
         let subClass = {
             name: subClassName,
             expr: expr
@@ -170,7 +170,7 @@ class XMIAttributes {
         }
 
         this.xmisub.saveComponent(subClass);
-        return this.xmiasoc.createXMIAsocAttribute(asocName, subClassName, min, max);
+        return this.xmiasoc.createXMICompAsocAttribute(asocName, subClassName, min, max);
     }
 
     /**

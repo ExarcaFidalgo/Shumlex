@@ -184,13 +184,20 @@ function createUMLAttributes(ats, name) {
  */
 function createUMLAsoc(at, name) {
 
+    console.log(at)
+
     //Obtenemos la cardinalidad de la asociación
     let card = ShExCardinality.cardinalityOf(at);
     let ccard = card === "" ? "" : "\"" + card + "\"";
 
+    let relation = " --> ";
+    if(at.$.aggregation === "composite") {
+        relation = " *-- ";
+    }
+
     //at.$.type indica el nombre de la clase
     //at.$.name indica el nombre de la relación
-    return name + " --> " + ccard + " \""
+    return name + relation + ccard + " \""
         + classes.get(at.$.type) + "\" : \"" + at.$.name + "\"\n";
 }
 
