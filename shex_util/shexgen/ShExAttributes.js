@@ -3,13 +3,13 @@
  */
 class ShExAttributes {
 
-    constructor(shext, IRIManager, shm, shexco, shexcar) {
+    constructor(shext, IRIManager, shm, shexco, shexcar, shexen) {
         this.shext = shext;
         this.IRIManager = IRIManager;
         this.shm = shm;
         this.shexco = shexco;
         this.shexcar = shexcar;
-
+        this.shexen = shexen;
     }
 
     /**
@@ -81,6 +81,16 @@ class ShExAttributes {
             let dt = this.shext.getAttrType(attr);
             header += " " + dt;
             brackets = false;
+        }
+        else if(attr.$.name.toLowerCase() === "extra") {
+            let values = this.shexen.getEnum(attr.$.type);
+            let extravals = "";
+            for(let value in values.values) {
+                console.log(values.values[value]);
+                extravals += values.values[value].$.name + " ";
+            }
+            header += " EXTRA " + extravals;
+            brackets = true;
         }
         //Otro
         else {

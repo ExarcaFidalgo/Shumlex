@@ -19,7 +19,7 @@ class ShExGenerator {
         this.shexco = new ShExConstraints();
         this.shexen = new ShExEnumerations(IRIManager);
         this.shext = new ShExTypes(this.irim, this.shexen, IRIManager);
-        this.shexat = new ShExAttributes(this.shext, IRIManager, this.shm, this.shexco, ShExCardinality);
+        this.shexat = new ShExAttributes(this.shext, IRIManager, this.shm, this.shexco, ShExCardinality, this.shexen);
         this.shexcl = new ShExClass(IRIManager, this.shexat, this.shexco, this.shm);
     }
 

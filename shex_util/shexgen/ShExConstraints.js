@@ -39,6 +39,5 @@ class ShExConstraints {
         this.constraints = new Map();
     }
 
-
 }
 module.exports = ShExConstraints;
