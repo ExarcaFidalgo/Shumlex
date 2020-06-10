@@ -138,7 +138,14 @@ class ShExAttributes {
                 //Añadimos cada uno de los elementos de la clase subconjunto
                 //Separados por | como elementos del OneOf
                 for(let i = 0; i < subSet.attributes.length; i++) {
+                    console.log(subSet.attributes[i]);
+                    if(subSet.attributes[i].$.aggregation === "composite") {
+                        conj += "\n("
+                    }
                     conj += this.attributeToShEx(subSet.attributes[i]).content;
+                    if(subSet.attributes[i].$.aggregation === "composite") {
+                        conj += " );"
+                    }
                     if(i < subSet.attributes.length - 1) {
                         conj += " |"
                     }

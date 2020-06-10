@@ -367,9 +367,9 @@ class ShExRepository {
             "\n" +
             ":User {\n" +
             "\t:name xsd:string; |\n" +
-            "( \n" +
+            "(\n" +
             "\t:givenName xsd:string +;\n" +
-            "\t:familyName xsd:string; ) ;\n" +
+            "\t:familyName xsd:string; );\n" +
             "}\n" +
             "\n" +
             ":Car {\n" +
@@ -494,9 +494,9 @@ class ShExRepository {
             ":User {\n" +
             "\t$:name (\n" +
             "\t:name .; |\n" +
-            "( \n" +
+            "(\n" +
             "\t:givenName .;\n" +
-            "\t:familyName .; ) ;) ;\n" +
+            "\t:familyName .; );) ;\n" +
             "\t:email IRI;\n" +
             "}\n" +
             "\n" +
