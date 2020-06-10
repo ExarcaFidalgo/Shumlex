@@ -4,11 +4,8 @@
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/managers/irimanager.js" beforeDir="false" afterPath="$PROJECT_DIR$/managers/irimanager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/shexrepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/shexrepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repo/xmirepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/xmirepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/shex-xmi.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/shex-xmi.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/xmi-shex.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/xmi-shex.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,33 +19,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15759">
-              <caret line="927" column="25" selection-start-line="927" selection-start-column="25" selection-end-line="927" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="295" column="16" selection-start-line="295" selection-start-column="16" selection-end-line="303" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shex_util/ShExParser.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="70">
@@ -57,11 +27,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/xmi-shex.test.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1683">
-              <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+            <state relative-caret-position="142">
+              <caret line="482" column="30" lean-forward="true" selection-start-line="482" selection-start-column="30" selection-end-line="482" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="180" column="28" selection-start-line="180" selection-start-column="28" selection-end-line="180" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -88,10 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getLower0</find>
-      <find>Male</find>
-      <find>Female</find>
-      <find>Enumeration</find>
       <find>header</find>
       <find>generar</find>
       <find>window</find>
@@ -118,6 +93,10 @@
       <find>shexco</find>
       <find>generalizationToShEx</find>
       <find>pendingXMIShapes</find>
+      <find>EXTRA</find>
+      <find>parent</find>
+      <find>follow</find>
+      <find>works</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -183,13 +162,13 @@
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExClass.js" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIClass.js" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js" />
-        <option value="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIComposition.js" />
         <option value="$PROJECT_DIR$/test/shex-xmi.test.js" />
-        <option value="$PROJECT_DIR$/repo/shexrepository.js" />
         <option value="$PROJECT_DIR$/repo/xmirepository.js" />
         <option value="$PROJECT_DIR$/test/xmi-shex.test.js" />
         <option value="$PROJECT_DIR$/managers/irimanager.js" />
+        <option value="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" />
+        <option value="$PROJECT_DIR$/repo/shexrepository.js" />
       </list>
     </option>
   </component>
@@ -397,12 +376,12 @@
       <workItem from="1591735898454" duration="6067000" />
       <workItem from="1591785045776" duration="7497000" />
       <workItem from="1591795130772" duration="20779000" />
-      <workItem from="1591819171782" duration="314000" />
+      <workItem from="1591819171782" duration="2129000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="475740000" />
+    <option name="totallyTimeSpent" value="477555000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -420,7 +399,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.23655914" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.29953918" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -626,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
-          <caret line="84" column="56" lean-forward="true" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -710,13 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15759">
-          <caret line="927" column="25" selection-start-line="927" selection-start-column="25" selection-end-line="927" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/xmi-shex.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1683">
@@ -724,24 +689,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex_util/ShExParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIGenerator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -759,10 +710,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/shex-xmi.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="927" column="25" selection-start-line="927" selection-start-column="25" selection-end-line="927" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex_util/ShExParser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="180" column="28" selection-start-line="180" selection-start-column="28" selection-end-line="180" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/repo/shexrepository.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="295" column="16" selection-start-line="295" selection-start-column="16" selection-end-line="303" selection-end-column="34" />
+        <state relative-caret-position="142">
+          <caret line="482" column="30" lean-forward="true" selection-start-line="482" selection-start-column="30" selection-end-line="482" selection-end-column="30" />
         </state>
       </provider>
     </entry>

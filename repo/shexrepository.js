@@ -399,7 +399,7 @@ class ShExRepository {
             "\t:name xsd:string;\n" +
             "\t:worksFor {\t\n" +
             "\ta [:Company];\n" +
-            "}\n" +
+            "};\n" +
             "}\n" +
             "\n" +
             ":Company {\n" +
@@ -410,7 +410,7 @@ class ShExRepository {
             "\t:parent {\n" +
             "\t:parent . +;\n" +
             "}\n" +
-            "}\n" +
+            "};\n" +
             "}\n" +
             "\n" +
             "_:1 {\n" +
@@ -449,7 +449,7 @@ class ShExRepository {
             "};\n" +
             "\t:parent {\n" +
             "\t:gender [:Female ];\n" +
-            "}\n" +
+            "};\n" +
             "}\n" +
             "\n";
     }
@@ -482,8 +482,8 @@ class ShExRepository {
             ":FollowSpaniards EXTRA :follows  {\n" +
             "\t:follows {\n" +
             "\t:nationality [:Spain ];\n" +
-            "}+\n" +
-            "}\n";
+            "} +;\n" +
+            "}\n\n";
     }
 
     static getShex21() {

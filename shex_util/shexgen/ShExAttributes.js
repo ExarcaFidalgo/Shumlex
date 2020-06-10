@@ -168,6 +168,7 @@ class ShExAttributes {
             //Shape anidada
             else if (attr.$.aggregation === "composite" &&
                 /^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
+                let card = this.shexcar.cardinalityOf(attr);
                 //La eliminamos de pendientes, puesto que es anidada
                 this.shm.deletePendingShExShape(attr.$.type);
                 let conj = "\n\t" + attr.$.name +" {";
@@ -177,7 +178,7 @@ class ShExAttributes {
                 if(subSet.gen){
                     conj += "\t" + this.generalizationToShEx(subSet.gen);
                 }
-                conj += "\n}";
+                conj += "\n}" + card + ";";
                 return conj;
             }
             //Referencia a shape anónima
@@ -204,7 +205,7 @@ class ShExAttributes {
                 let card = this.shexcar.cardinalityOf(attr);
                 let conj = "";
                 if(card !== "") {
-                    conj = "\n( ;"
+                    conj = "\n( ";
                 }
                 if(subSet.attributes) {
                     conj += this.attributesToShEx(subSet.attributes).content;
