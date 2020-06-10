@@ -6,6 +6,7 @@ class XMIComposition {
     constructor (shm, xmiats, irim, XMIAux, xmicon, xmiasoc) {
         this.componentsCounter = 0;
         this.components = [];
+        this.labels = new Map();
 
         this.shm = shm;
         this.xmiats = xmiats;
@@ -54,6 +55,14 @@ class XMIComposition {
      */
     saveComponent(sub) {
         this.components.push(sub);
+    }
+
+    saveLabel(labelRef, comp) {
+        this.labels.set(labelRef, comp);
+    }
+
+    getLabelled(labelRef) {
+        return this.labels.get(labelRef);
     }
 
     /**

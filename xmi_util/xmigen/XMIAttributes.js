@@ -40,12 +40,15 @@ class XMIAttributes {
             let subExpr = JSON.parse(JSON.stringify(expr));
             //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
             subExpr.id = undefined;
-            attrs = this.createComponent(labelRef, labelRef, subExpr, expr.min, expr.max);
+            let compName = this.xmisub.getComponentNumber(labelRef);
+            this.xmisub.saveLabel(labelRef, compName);
+            attrs = this.createComponent(labelRef, compName, subExpr, expr.min, expr.max);
         }
         //Si es un tipo Inclusion, se trata de una referencia a una expresión etiquetada.
         else if(expr.type === "Inclusion") {
             let labelRef = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.include));
-            attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, "$" + labelRef, expr.min, expr.max);
+            attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, this.xmisub.getLabelled("$" + labelRef),
+                expr.min, expr.max);
         }
         //Una TripleConstraint alberga múltiples alternativas. Redigirimos a un método especializado.
         else if(expr.type === "TripleConstraint") {
