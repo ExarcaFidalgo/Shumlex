@@ -84,9 +84,19 @@ class ShExRepository {
             "\n" +
             ":User {\n" +
             "\t:name xsd:string;\n" +
+            "\t:age xsd:int ?;\n" +
+            "\t:gender [:Male :Female ];\n" +
             "\t:knows @:User;\n" +
             "\t:worksFor @:Company;\n" +
             "\t:buys @<Product> {1,10};\n" +
+            "}\n" +
+            "\n" +
+            ":Ultrauser {\n" +
+            "\ta [:User];\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser @:User AND {\n" +
+            "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
             ":Company {\n" +
@@ -96,7 +106,8 @@ class ShExRepository {
             "}\n" +
             "\n" +
             "<Product> {\n" +
-            "\t:name xsd:string;\n" +
+            "\t:name .;\n" +
+            "\t:sku xsd:boolean;\n" +
             "\t:manufacturer @<Organization> +;\n" +
             "}\n" +
             "\n" +
@@ -104,25 +115,6 @@ class ShExRepository {
             "\t:name xsd:string;\n" +
             "\t:isPartOf @<Organization> ?;\n" +
             "\t:hasDirectives @:User {5};\n" +
-            "}\n" +
-            "\n"
-    }
-
-
-
-    static getShex4() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "\t:gender [:Male :Female \"Wo\" 99 \"+34\"~ ];\n" +
-            "\t:id .;\n" +
-            "}\n\n" +
-            ":Spanish {\n" +
-            "\t:country [:Spain ];\n" +
             "}\n" +
             "\n";
     }
@@ -165,12 +157,11 @@ class ShExRepository {
             "\ta [:User];\n" +
             "}\n" +
             "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
+            ":Titanuser @:User AND {\n" +
             "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
-            ":VIPUser EXTRA a {\n" +
+            ":VIPUser EXTRA a  {\n" +
             "\ta [:User];\n" +
             "}\n" +
             "\n";
@@ -225,13 +216,11 @@ class ShExRepository {
             "\ta [<Citizen>];\n" +
             "}\n" +
             "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
-            "\ta [<Citizen>];\n" +
+            ":Titanuser @:User AND @<Citizen> AND {\n" +
             "\t:titancode xsd:string;\n" +
             "}\n" +
             "\n" +
-            ":VIPUser EXTRA a {\n" +
+            ":VIPUser EXTRA a  {\n" +
             "\ta [:User];\n" +
             "\ta [<Citizen>];\n" +
             "}\n" +
@@ -239,59 +228,6 @@ class ShExRepository {
     }
 
     static getShex7() {
-        return "prefix : <https://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:aa IRI;\n" +
-            "\t:b Literal ?;\n" +
-            "\t:c BNode;\n" +
-            "\t:d NonLiteral;\n" +
-            "\t:e iri;\n" +
-            "\t:f bnode;\n" +
-            "\t:g nonliteral;\n" +
-            "\t:h literal;\n" +
-            "}\n";
-    }
-
-    static getGenShex7() {
-        return "prefix : <https://schema.org/>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:aa IRI;\n" +
-            "\t:b Literal ?;\n" +
-            "\t:c BNode;\n" +
-            "\t:d NonLiteral;\n" +
-            "\t:e IRI;\n" +
-            "\t:f BNode;\n" +
-            "\t:g NonLiteral;\n" +
-            "\t:h Literal;\n" +
-            "}\n\n";
-    }
-
-    static getShex8() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User IRI {\n" +
-            "  :name xsd:string\n" +
-            "}\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "    a [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Titanuser @:User AND NonLiteral AND{\n" +
-            "}\n" +
-            "\n" +
-            "<Product> BNode\n" +
-            "\n" +
-            "<AThing> IRI\n";
-    }
-
-    static getGenShex8() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "base <http://example.org/>\n" +
@@ -304,8 +240,7 @@ class ShExRepository {
             "\ta [:User];\n" +
             "}\n" +
             "\n" +
-            ":Titanuser NonLiteral AND {\n" +
-            "\ta [:User];\n" +
+            ":Titanuser @:User AND NonLiteral AND {\n" +
             "}\n" +
             "\n" +
             "<Product> BNode AND {\n" +
@@ -364,7 +299,7 @@ class ShExRepository {
             "\n" +
             ":HomePage IRI\n" +
             "\n" +
-            ":CanVoteAge xsd:integer MinInclusive 18 TotalDigits 3\n" +
+            ":CanVoteAge xsd:integer MinInclusive 18 AND TotalDigits 3\n" +
             "\n" +
             ":Special :custom\n" +
             "\n";
@@ -421,7 +356,8 @@ class ShExRepository {
             "}\n" +
             "\n" +
             "<Something> {\n" +
-            "}\n\n";
+            "}\n" +
+            "\n";
     }
 
     static getShex15() {
@@ -451,38 +387,9 @@ class ShExRepository {
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "base <http://example.org/>\n" +
             "\n" +
-            "\n" +
-            ":Car {\n" +
-            "\t:name xsd:string ;\n" +
-            "\t:belongs @_:1\n" +
-            "}\n" +
-            "\n" +
-            "_:1 { a [ :Garage ] }\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string ;\n" +
-            "\t:worksFor {\n" +
-            "\t\ta [ :Company];\n" +
-            "}\n" +
-            "}\n" +
-            "\n" +
-            ":GreatGrandson {\n" +
-            ":parent { :parent { :parent . + } + }+ ;\n" +
-            "}\n";
-    }
-
-    static getGenShex16() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
             ":Car {\n" +
             "\t:name xsd:string;\n" +
             "\t:belongs @_:1;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
-            "\ta [:Garage];\n" +
             "}\n" +
             "\n" +
             ":Garage {\n" +
@@ -490,26 +397,24 @@ class ShExRepository {
             "\n" +
             ":User {\n" +
             "\t:name xsd:string;\n" +
-            "\t:worksFor @_:2;\n" +
-            "}\n" +
-            "\n" +
-            "_:2 {\n" +
+            "\t:worksFor {\t\n" +
             "\ta [:Company];\n" +
+            "}\n" +
             "}\n" +
             "\n" +
             ":Company {\n" +
             "}\n" +
             "\n" +
             ":GreatGrandson {\n" +
-            "\t:parent @_:3 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:3 {\n" +
-            "\t:parent @_:4 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:4 {\n" +
+            "\t:parent {\n" +
+            "\t:parent {\n" +
             "\t:parent . +;\n" +
+            "}\n" +
+            "}\n" +
+            "}\n" +
+            "\n" +
+            "_:1 {\n" +
+            "\ta [:Garage];\n" +
             "}\n" +
             "\n";
     }
@@ -540,32 +445,11 @@ class ShExRepository {
             ":User {\n" +
             "\t:name xsd:string;\n" +
             "\t:parent {\n" +
-            "\t\t:gender [:Male ]\n" +
-            "} ;\n" +
-            "\t:parent {\n" +
-            "\t\t:gender [:Female ]\n" +
-            "} ;\n" +
-            "}\n" +
-            "\n";
-    }
-
-    static getGenShex18() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":User {\n" +
-            "\t:name xsd:string;\n" +
-            "\t:parent @_:1;\n" +
-            "\t:parent @_:2;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
             "\t:gender [:Male ];\n" +
-            "}\n" +
-            "\n" +
-            "_:2 {\n" +
+            "};\n" +
+            "\t:parent {\n" +
             "\t:gender [:Female ];\n" +
+            "}\n" +
             "}\n" +
             "\n";
     }
@@ -595,26 +479,11 @@ class ShExRepository {
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "base <http://example.org/>\n" +
             "\n" +
-            ":FollowSpaniards EXTRA :follows {\n" +
-            "\t:follows { \n" +
-            "      :nationality [:Spain] \n" +
-            "    }+\n" +
-            "}\n";
-    }
-
-    static getGenShex20() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
-            ":FollowSpaniards EXTRA :follows {\n" +
-            "\t:follows @_:1 +;\n" +
-            "}\n" +
-            "\n" +
-            "_:1 {\n" +
+            ":FollowSpaniards EXTRA :follows  {\n" +
+            "\t:follows {\n" +
             "\t:nationality [:Spain ];\n" +
-            "}\n" +
-            "\n";
+            "}+\n" +
+            "}\n";
     }
 
     static getShex21() {
@@ -643,36 +512,16 @@ class ShExRepository {
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "base <http://example.org/>\n" +
             "\n" +
-            ":User { :name xsd:string ; :owns IRI }\n" +
-            "AND { :owns @:Product }\n" +
-            "\n" +
-            ":Titanuser @:User AND {\n" +
-            ":titancode xsd:string;\n" +
-            "} AND { :owns Literal }\n" +
-            "\n" +
-            ":Ultrauser Literal AND {\n" +
-            "a [:User];\n" +
-            "}\n" +
-            "\n" +
-            ":Product {\n" +
-            ":productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10\n" +
-            "}";
-    }
-
-    static getGenShex22() {
-        return "prefix : <https://schema.org/>\n" +
-            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-            "base <http://example.org/>\n" +
-            "\n" +
             ":User {\n" +
             "\t:name xsd:string;\n" +
-            "\t:owns IRI;\n" +
+            "\t:owns IRI; }\n" +
+            "AND {\n" +
             "\t:owns @:Product;\n" +
             "}\n" +
             "\n" +
-            ":Titanuser {\n" +
-            "\ta [:User];\n" +
-            "\t:titancode xsd:string;\n" +
+            ":Titanuser @:User AND {\n" +
+            "\t:titancode xsd:string; }\n" +
+            "AND {\n" +
             "\t:owns Literal;\n" +
             "}\n" +
             "\n" +
@@ -681,12 +530,10 @@ class ShExRepository {
             "}\n" +
             "\n" +
             ":Product {\n" +
-            "\t:productId xsd:string MinLength 5 MaxLength 10;\n" +
+            "\t:productId xsd:string MinLength 5 AND MaxLength 10;\n" +
             "}\n" +
             "\n";
     }
-
-
 
 }
 module.exports = ShExRepository;

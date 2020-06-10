@@ -17,16 +17,10 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI2()));
     });
 
-    test('Relaciones', () => {
+    test('Relaciones y otros atributos', () => {
         let xml = shexparser.parseShExToXMI(ShExRep.getShex3());
         expect(XMIRep.removeUniqueIDs(xml))
             .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI3()));
-    });
-
-    test('Otros atributos', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex4());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI4()));
     });
 
     test('Herencia simple', () => {
@@ -45,12 +39,6 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
         let xml = shexparser.parseShExToXMI(ShExRep.getShex7());
         expect(XMIRep.removeUniqueIDs(xml))
             .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI7()));
-    });
-
-    test('Restricción de tipo nodal como forma de máximo nivel II', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex8());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI8()));
     });
 
     test('Facetas de literales', () => {

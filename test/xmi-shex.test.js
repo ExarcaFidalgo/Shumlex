@@ -16,16 +16,10 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
             .toEqual(ShExRep.getShex2());
     });
 
-    test('Relaciones', () => {
+    test('Relaciones y otros atributos', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI3());
         expect(shex)
             .toEqual(ShExRep.getShex3());
-    });
-
-    test('Otros atributos', () => {
-        let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI4());
-        expect(shex)
-            .toEqual(ShExRep.getShex4());
     });
 
     test('Herencia simple', () => {
@@ -43,13 +37,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('Tipos de Nodo', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI7());
         expect(shex)
-            .toEqual(ShExRep.getGenShex7());
-    });
-
-    test('Restricción de tipo nodal como forma de máximo nivel', () => {
-        let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI8());
-        expect(shex)
-            .toEqual(ShExRep.getGenShex8());
+            .toEqual(ShExRep.getShex7());
     });
 
     test('Facetas de literales', () => {
@@ -97,7 +85,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('Formas anidadas', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI16());
         expect(shex)
-            .toEqual(ShExRep.getGenShex16());
+            .toEqual(ShExRep.getShex16());
     });
 
     test('Formas cerradas', () => {
@@ -109,7 +97,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('Propiedades repetidas', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI18());
         expect(shex)
-            .toEqual(ShExRep.getGenShex18());
+            .toEqual(ShExRep.getShex18());
     });
 
     test('Restricción triple inversa', () => {
@@ -121,7 +109,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('EXTRA', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI20());
         expect(shex)
-            .toEqual(ShExRep.getGenShex20());
+            .toEqual(ShExRep.getShex20());
     });
 
     test('Expresiones etiquetadas', () => {
@@ -133,7 +121,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     test('Conjunciones', () => {
         let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI22());
         expect(shex)
-            .toEqual(ShExRep.getGenShex22());
+            .toEqual(ShExRep.getShex22());
     });
 
 });

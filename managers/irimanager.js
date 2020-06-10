@@ -148,6 +148,9 @@ class IRIManager {
      * @returns {*}
      */
     static checkNodeKind(nk) {
+        if(!nk) {
+            return false;
+        }
         switch(nk.toLowerCase()) {
             case "literal":
                 return "Literal";
