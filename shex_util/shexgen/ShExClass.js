@@ -25,10 +25,18 @@ class ShExClass {
         let content = "";
         let brackets = false;
 
+        console.log(element);
         //Se crea herencia
         if(element.generalization) {
             brackets = true;
-            content += this.shexat.generalizationToShEx(element.generalization);
+            //En el caso de que sea una shapeAnd
+            //Generalizacion con AND
+            if(element.ownedAttribute && element.ownedAttribute[0].$.name === "AND") {
+                header += this.shexat.generalizationToShEx(element.generalization, true);
+            }
+            else {
+                content += this.shexat.generalizationToShEx(element.generalization);
+            }
         }
 
         let attributes = element.ownedAttribute;

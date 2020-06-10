@@ -1,5 +1,5 @@
 /**
- * Genera subclases en XMI
+ * Genera componentes en XMI
  */
 class XMIComposition {
 

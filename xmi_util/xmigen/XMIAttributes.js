@@ -81,6 +81,15 @@ class XMIAttributes {
             }
 
         }
+        //ShapeExprs: atributos de una clase que representa un AND
+        else if(expr.length > 0) {
+            for(let i = 0; i < expr.length; i++) {
+                attrs += this.createComponent("", this.xmisub.getComponentNumber(),
+                    expr[i].expression, expr[i].min,expr[i].max);
+
+            }
+            return attrs;
+        }
         //Reducimos la profundidad antes de ascender en la llamada
         this.decrementDepth();
         return attrs;
@@ -168,7 +177,7 @@ class XMIAttributes {
             name: subClassName,
             expr: expr
         };
-        if(subClass.expr.type !== "TripleConstraint") {
+        if(subClass.expr && subClass.expr.type !== "TripleConstraint") {
             subClass.expr.min = undefined;
             subClass.expr.max = undefined;
         }
@@ -220,10 +229,17 @@ class XMIAttributes {
                         parents[parent].nodeKind)
                 }
                 //Generalización común
-                else {
+                else if(parents[parent].reference){
                     let sh = this.shm.findShape(parents[parent].reference, true);
                     let id = this.unid();
                     gens += this.XMIAux.createGen(id, sh.id, inv ? "^" : "");
+                }
+                else {
+                    for(let i = 0; i < parents[parent].length; i++) {
+                        let sh = this.shm.findShape(parents[parent][i], false);
+                        let id = this.unid();
+                        gens += this.XMIAux.createGen(id, sh.id, inv ? "^" : "");
+                    }
                 }
 
             }

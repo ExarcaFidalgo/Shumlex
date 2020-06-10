@@ -16,7 +16,7 @@ class ShExConstraints {
             this.constraints.set(cst.$.constrainedElement, cst.$.name);
         }
         else {
-            this.constraints.set(cst.$.constrainedElement, this.constraints.get(cst.$.constrainedElement) + " "
+            this.constraints.set(cst.$.constrainedElement, this.constraints.get(cst.$.constrainedElement) + " AND "
                 +cst.$.name);
         }
 

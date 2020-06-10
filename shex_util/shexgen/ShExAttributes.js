@@ -86,7 +86,6 @@ class ShExAttributes {
             let values = this.shexen.getEnum(attr.$.type);
             let extravals = "";
             for(let value in values.values) {
-                console.log(values.values[value]);
                 extravals += values.values[value].$.name + " ";
             }
             header += " EXTRA " + extravals;
@@ -185,17 +184,37 @@ class ShExAttributes {
             else if (/^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
                 this.shm.saveInShExShapes(attr.$.type, subSet.name);
             }
+            //Conjunción
+            else if(attr.$.name === "AND" && attr.$.aggregation === "composite") {
+                console.log(attr);
+                console.log(subSet);
+                let conj = "";
+                if(subSet.attributes) {
+                    //Primera Shape
+                    conj += this.attributeToShEx(subSet.attributes[0]).content;
+                    for(let i = 1; i < subSet.attributes.length; i++) {
+                        conj += " }\nAND {";
+                        conj += this.attributeToShEx(subSet.attributes[i]).content;
+                    }
+                }
+                return conj;
+            }
             //Es una expresión EachOf con cardinalidad
             else {
-                let conj = "\n( ";
+                let card = this.shexcar.cardinalityOf(attr);
+                let conj = "";
+                if(card !== "") {
+                    conj = "\n( ;"
+                }
                 if(subSet.attributes) {
                     conj += this.attributesToShEx(subSet.attributes).content;
                 }
                 if(subSet.generalization){
                     conj += this.generalizationToShEx(subSet.generalization);
                 }
-                conj += " )";
-                conj += this.shexcar.cardinalityOf(attr) + " ;";
+                if(card !== "") {
+                    conj += " )" + card + " ;";
+                }
                 return conj;
             }
 
@@ -215,7 +234,7 @@ class ShExAttributes {
      * @param gen   Generalización
      * @returns {string}    Equivalente en ShEx
      */
-    generalizationToShEx(gen) {
+    generalizationToShEx(gen, and) {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
             //Comprobamos si tiene una restricción Inverse
@@ -226,7 +245,13 @@ class ShExAttributes {
             }
             //Buscamos la Shape padre
             let refClass = this.shm.getShape(gen[i].$.general);
-            generalizations += "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(refClass.name) + "];"
+            if(and) {
+                generalizations += " " + inv + "@" + this.IRIManager.getShexTerm(refClass.name) + " AND"
+            }
+            else {
+                generalizations += "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(refClass.name) + "];"
+            }
+
         }
         return generalizations;
     }
