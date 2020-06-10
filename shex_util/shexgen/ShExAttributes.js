@@ -57,7 +57,7 @@ class ShExAttributes {
         if(attr.$.association           //Modelio ver.
             || shape !== undefined || subSet !== undefined) {   //VP ver.
             brackets = true;
-            content += this.associationToShEx(attr, header);
+            content += this.associationToShEx(attr);
         }
         //Restricción de tipo nodal
         else if(attr.$.name.toLowerCase() === "nodekind") {
@@ -145,9 +145,8 @@ class ShExAttributes {
             else if(attr.$.name.includes("&:")) {
                 return "\n\t" + attr.$.name + ";";
             }
-            //Es una expresión EachOf con cardinalidad
+            //Es una expresión etiquetada
             else if(/^([$]:[<]?[a-zA-Z]+[>]?)$/.test(attr.$.name)) {
-                console.log(subSet);
                 let conj = "\n\t" + attr.$.name +" (";
                 let card = this.shexcar.cardinalityOf(attr);
                 for(let i = 0; i < subSet.attributes.length; i++) {
@@ -157,9 +156,34 @@ class ShExAttributes {
 
                 return conj;
             }
+            //Shape anidada
+            else if (attr.$.aggregation === "composite" &&
+                /^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
+                //La eliminamos de pendientes, puesto que es anidada
+                this.shm.deletePendingShExShape(attr.$.type);
+                let conj = "\n\t" + attr.$.name +" {";
+                if(subSet.attributes) {
+                    conj += this.attributesToShEx(subSet.attributes).content;
+                }
+                if(subSet.gen){
+                    conj += "\t" + this.generalizationToShEx(subSet.gen);
+                }
+                conj += "\n}";
+                return conj;
+            }
+            //Referencia a shape anónima
+            else if (/^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
+                this.shm.saveInShExShapes(attr.$.type, subSet.name);
+            }
+            //Es una expresión EachOf con cardinalidad
             else {
                 let conj = "\n( ";
-                conj += this.attributesToShEx(subSet.attributes).content;
+                if(subSet.attributes) {
+                    conj += this.attributesToShEx(subSet.attributes).content;
+                }
+                if(subSet.generalization){
+                    conj += this.generalizationToShEx(subSet.generalization);
+                }
                 conj += " )";
                 conj += this.shexcar.cardinalityOf(attr) + " ;";
                 return conj;

@@ -91,6 +91,11 @@ class ShExGenerator {
         return this.shexcl.classToShEx(clase);
     }
 
+    getPendingShapes() {
+        this.shm.clearSubSet(); //Puesto que las shapes de tipo _:1 estarán registradas como tal
+        return this.shm.getPendingShExShapes();
+    }
+
     /**
      * Resetea los registros del generador
      */

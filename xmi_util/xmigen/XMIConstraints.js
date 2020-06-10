@@ -3,11 +3,13 @@
  */
 class XMIConstraints {
 
-    constructor (unid, irim, XMIAux) {
+    constructor (unid, irim, XMIAux, xmienum, IRIManager) {
         this.ownedRules = [];
         this.unid = unid;
         this.irim = irim;
         this.XMIAux = XMIAux;
+        this.xmienum = xmienum;
+        this.IRIManager = IRIManager;
     }
 
     /**
@@ -70,17 +72,20 @@ class XMIConstraints {
      * Introduce restricción extra
      * @param id    ID Shape
      * @param values    Valores Extra
+     * @param name  Nombre clase
      */
-    markAsExtra(id, values) {
-        let extra = "EXTRA";
+    markAsExtra(id, values, name) {
+        let vals = [];
         for(let i = 0; i < values.length; i++) {
-            let value = this.irim.getPrefixedTermOfUri(values[i]);
+            let value = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(values[i]));
             if(value === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-                value = "a";
+                vals.push("a");
             }
-            extra += " " + value;
+            else {
+                vals.push(value);
+            }
         }
-        this.ownedRules.push(this.XMIAux.createXMIOwnedRule(extra, id));
+        return this.xmienum.createXMIEnumAttribute("Extra", vals, undefined, undefined, id, name);
     }
 
     /**

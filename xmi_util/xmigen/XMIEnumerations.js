@@ -18,11 +18,13 @@ class XMIEnumerations {
      * @param min   Cardinalidad mínima
      * @param max   Cardinalidad máxima
      * @param id    ID
+     * @param clase Nombre de la clase, por si debe ser referenciada en una enum Extra
      * @returns {string|*}  Owned Attribute de enumeración
      */
-    createXMIEnumAttribute(name, values, min, max, id) {
+    createXMIEnumAttribute(name, values, min, max, id, clase) {
         let card = this.xmicard.createXMICardinality(min, max);
-        let enumer = { id: this.unid(), name: name, values: values};
+        let nom = name === "Extra" ? name + "_" + clase : name;
+        let enumer = { id: this.unid(), name: nom, values: values};
         this.saveEnum(enumer);
         let atId = this.unid();
         if(id !== undefined) {

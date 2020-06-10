@@ -106,7 +106,7 @@ class XMIAttributes {
             }
             //Conjunto de valores -> enumeración
             if(expr.valueExpr.values) {
-                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max, id);
+                return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max, id, "");
             }
             //Tipo de nodo (Literal, IRI...) -> Atributo con tal tipo
             if(expr.valueExpr.nodeKind) {

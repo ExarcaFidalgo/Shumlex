@@ -97,6 +97,12 @@ class XMIParser {
                 }
             }
 
+            //Generamos Shapes pendientes
+            let pending = shexgen.getPendingShapes();
+            for (const [key, value] of pending.entries()) {
+                shExEquivalent += shexgen.classToShEx(value)
+            }
+
             //Añadimos los prefijos
             shExEquivalent = shexgen.createShExHeader() + shExEquivalent;
 

@@ -21,8 +21,8 @@ class XMIGenerator {
         this.irim = new IRIManager();
         this.xmicard = new XMICardinality(uniqid, XMIAux);
         this.xmiasoc = new XMIAssociations(uniqid, this.shm, this.irim, this.xmicard, XMIAux);
-        this.xmicon = new XMIConstraints(uniqid, this.irim, XMIAux);
         this.xmienum = new XMIEnumerations(uniqid, this.irim, this.xmicard, XMIAux);
+        this.xmicon = new XMIConstraints(uniqid, this.irim, XMIAux, this.xmienum, IRIManager);
         this.xmitype = new XMITypes(uniqid, this.irim, XMIAux, IRIManager);
         this.xmisub = new XMIComposition(this.shm, null, this.irim, XMIAux, this.xmicon, this.xmiasoc);
         this.xmiats = new XMIAttributes(uniqid, this.xmisub, this.xmiasoc, this.xmienum, this.xmitype,

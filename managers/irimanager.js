@@ -132,7 +132,7 @@ class IRIManager {
             throw new Error("No se ha encontrado un atributo 'name' para una clase, atributo o tipo.");
         }
         if(term.includes(":") || term.includes("\"") || term.includes("~") ||
-            term.includes(" ") || (!isNaN(term) && (term.length > 0))) {
+            term.includes(" ") || (!isNaN(term) && (term.length > 0)) || /^<[A-Za-z0-9]*>$/.test(term)) {
             return term;
         }
         let nk = IRIManager.checkNodeKind(term);

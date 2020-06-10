@@ -7,9 +7,11 @@ class ShapeManager {
         this.XMIshapes = [];            //Shapes almacenadas para la generación de XMI
         this.ShExshapes = new Map();    //Shapes almacenadas para la generación de ShEx
         this.subSet = new Map();        //Subconjuntos
-        this.pendingShapes = [];        //Shapes pendientes (generación futura)
+        this.pendingXMIShapes = [];        //Shapes pendientes (generación futura)
         this.unid = unid;
         this.blankCounter = 0;          //Contador de nodos anónimos
+        this.pendingShExShapes = new Map();
+
     }
 
     /**
@@ -32,7 +34,7 @@ class ShapeManager {
 
         //Marcar como pendiente
         if(save) {
-            this.pendingShapes.push(shape);
+            this.pendingXMIShapes.push(shape);
         }
         return shape;
     }
@@ -57,14 +59,14 @@ class ShapeManager {
      * @returns {Array}
      */
     getPendingShapes() {
-        return this.pendingShapes;
+        return this.pendingXMIShapes;
     }
 
     /**
      * Limpia el listado de Shapes pendientes
      */
     clearPendingShapes() {
-        this.pendingShapes = [];
+        this.pendingXMIShapes = [];
     }
 
     /**
@@ -72,7 +74,7 @@ class ShapeManager {
      */
     clearXMIShapes() {
         this.XMIshapes = [];
-        this.pendingShapes = [];
+        this.pendingXMIShapes = [];
         this.blankCounter = 0;
     }
 
@@ -85,15 +87,36 @@ class ShapeManager {
     saveShape(element) {
         if(/^_Blank[0-9]+(_[0-9]+)*$/.test(element.$.name)) {
             this.subSet.set(element.$["xmi:id"], {
-                attributes: element.ownedAttribute
+                attributes: element.ownedAttribute,
+                name: element.$.name,
+                gen: element.generalization
             });
+        }
+        else if (/^_:[0-9]+$/.test(element.$.name)) {
+            this.subSet.set(element.$["xmi:id"], {
+                attributes: element.ownedAttribute,
+                name: element.$.name,
+                gen: element.generalization
+            });
+            this.pendingShExShapes.set(element.$["xmi:id"], element);
         }
         else {
-            this.ShExshapes.set(element.$["xmi:id"], {
-                name: element.$.name
-            });
+            this.saveInShExShapes(element.$["xmi:id"], element.$.name);
         }
+    }
 
+    saveInShExShapes(id, name) {
+        this.ShExshapes.set(id, {
+            name: name
+        });
+    }
+
+    deletePendingShExShape(id) {
+        this.pendingShExShapes.delete(id);
+    }
+
+    getPendingShExShapes() {
+        return this.pendingShExShapes;
     }
 
     /**
@@ -119,6 +142,10 @@ class ShapeManager {
      */
     clearSubSet() {
         this.subSet = new Map();
+    }
+
+    clearPendingShExShapes() {
+        this.pendingShExShapes = new Map();
     }
 
     /**

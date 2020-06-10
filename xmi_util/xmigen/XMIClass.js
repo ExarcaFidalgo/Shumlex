@@ -63,22 +63,24 @@ class XMIClass {
         //Comprobar facetas ShEx: restricciones
         this.xmicon.checkFacets(shape, sh.id);
 
+        let extra = "";
+        //Comprobar si tiene Extra
+        if(shape.extra !== undefined) {
+            extra = this.xmicon.markAsExtra(sh.id, shape.extra, prName);
+        }
+
         //El interior de la clase está conformado por:
         let int = ats               //Atributos
             + nk                    //Atributos tipo nodo (IRI, Literal...)
             + dt                    //Atributos datatype
-            + generalizations;      //Generalizaciones
+            + generalizations       //Generalizaciones
+            + extra;
 
         let classXMI = this.XMIAux.createPackEl("uml:Class", sh.id, 'name="' + prName + '"', int);
 
         //Comprobar si es una shape cerrada
         if(shape.closed === true) {
             this.xmicon.markAsClosed(sh.id);
-        }
-
-        //Comprobar si tiene Extra
-        if(shape.extra !== undefined) {
-            this.xmicon.markAsExtra(sh.id, shape.extra);
         }
 
         //Crear elementos dependientes de esta clase
