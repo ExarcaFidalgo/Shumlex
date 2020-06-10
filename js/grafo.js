@@ -161,8 +161,14 @@ function checkExtra(shape, id) {
         elements = elements.concat(createToNode(idn, "EXTRA", "", id));
         //Generamos los hijos de EXTRA: todas las URI del array extra
         for(let i = 0; i < shape.extra.length; i++) {
-            elements = elements.concat(createToNode(getID(),
-                IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape.extra[i])),
+            let nname = shape.extra[i];
+            if(nname === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                nname = "a";
+            }
+            else {
+                nname = IRIManager.getShexTerm(irim.getPrefixedTermOfUri(nname));
+            }
+            elements = elements.concat(createToNode(getID(), nname,
                 "", idn));
         }
     }
@@ -377,8 +383,11 @@ function determineTypeOfExpression(expr, father, fname) {
     let name;
 
     //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
+    console.log(expr);
+    console.log(shExCardinality.cardinalityOf(expr));
     if(expr.predicate) {
-        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate)) + shExCardinality.cardinalityOf(expr);
+        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate))
+            + shExCardinality.cardinalityOf(expr);
     }
 
     if(!expr.valueExpr) {

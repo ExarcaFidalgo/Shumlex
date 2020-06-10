@@ -9,14 +9,16 @@ class ShExCardinality {
      * @returns {string}    Cardinalidad
      */
     static cardinalityOf(attr) {
-        let lowerValue = ShExCardinality.checkCardinalityValue(attr.lowerValue);
-        let upperValue = ShExCardinality.checkCardinalityValue(attr.upperValue);
+        let min = attr.min !== undefined ? attr.min : 1;
+        let max = attr.max !== undefined ? attr.max : 1;
+        let lowerValue = attr.lowerValue !== undefined ? ShExCardinality.checkCardinalityValue(attr.lowerValue) : min;
+        let upperValue = attr.upperValue !== undefined ? ShExCardinality.checkCardinalityValue(attr.upperValue) : max;
         switch(lowerValue){
             case 1:
                 if(upperValue === 1) {
                     return ""
                 }
-                else if (upperValue === Infinity) {
+                else if (upperValue === Infinity || upperValue === -1) {
                     return " +"
                 }
                 else {
@@ -26,7 +28,7 @@ class ShExCardinality {
                 if(upperValue === 1) {
                     return " ?"
                 }
-                else if (upperValue === Infinity) {
+                else if (upperValue === Infinity || upperValue === -1) {
                     return " *"
                 }
                 else {
@@ -36,7 +38,7 @@ class ShExCardinality {
                 if(upperValue === lowerValue) {
                     return " {" + lowerValue + "}"
                 }
-                else if (upperValue === Infinity) {
+                else if (upperValue === Infinity || upperValue === -1) {
                     return " {" + lowerValue + ",}"
                 }
                 else {
