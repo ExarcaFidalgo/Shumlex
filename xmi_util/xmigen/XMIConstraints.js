@@ -30,33 +30,34 @@ class XMIConstraints {
      * @param vex   ValueExpr
      * @param id    ID Shape
      */
-    checkFacets(vex, id) {
+    checkFacets(vex, id, addon) {
+        let add = addon !== undefined ? (addon + " ") : "";
         if(!vex) {
             return;
         }
         if(vex.mininclusive) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinInclusive " + vex.mininclusive, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinInclusive " + vex.mininclusive, id));
         }
         if(vex.minexclusive) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinExclusive " + vex.minexclusive, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinExclusive " + vex.minexclusive, id));
         }
         if(vex.totaldigits) {
             this.ownedRules.push(this.XMIAux.createXMIOwnedRule("TotalDigits " + vex.totaldigits, id));
         }
         if(vex.fractiondigits) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("FractionDigits " + vex.fractiondigits, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "FractionDigits " + vex.fractiondigits, id));
         }
         if(vex.length) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("Length " + vex.length, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "Length " + vex.length, id));
         }
         if(vex.minlength) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MinLength " + vex.minlength, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinLength " + vex.minlength, id));
         }
         if(vex.maxlength) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("MaxLength " + vex.maxlength, id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MaxLength " + vex.maxlength, id));
         }
         if(vex.pattern) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("/" + vex.pattern + "/", id));
+            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "/" + vex.pattern + "/", id));
         }
     }
 

@@ -67,6 +67,35 @@ class XMIClass {
             }
             generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id);
         }
+        else if(shape.type === "ShapeOr") {
+            console.log(shape);
+            let nOfShapes = 0;
+            //Contar el número de Shapes en la conjunción
+            let exprsForGen = [];
+            let exprsForComp = [];
+            for (let i = 0; i < shape.shapeExprs.length; i++) {
+                if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
+                    || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
+                    exprsForGen.push(shape.shapeExprs[i]);
+                }
+                else if (shape.shapeExprs[i].type === "Shape" && shape.shapeExprs[i].expression
+                    && shape.shapeExprs[i].expression.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                    exprsForGen.push(shape.shapeExprs[i].expression.valueExpr.values);
+                }
+                else {
+                    nOfShapes++;
+                    exprsForComp.push(shape.shapeExprs[i]);
+                    //:User IRI CLOSED {...}
+                    if(shape.shapeExprs[i].closed === true) {
+                        this.xmicon.markAsClosed(sh.id);
+                    }
+                }
+            }
+            if(nOfShapes > 0) {
+                ats += this.xmiatt.createComponent("OR", subClassName, exprsForComp);
+            }
+            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id, "OR");
+        }
         //Si no es una ShapeAnd, generar atributos de modo corriente
         else {
             ats = this.xmiatt.createXMIAttributes(expression, prName);

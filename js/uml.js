@@ -135,7 +135,10 @@ function createUMLClass(element) {
     //Relaciones de herencia
     if(element.generalization) {
         for(let i = 0; i < element.generalization.length; i++) {
-            clase += "\"" + classes.get(element.generalization[i].$.general) + "\" <|-- " + name + "\n";
+            let hename = element.generalization[i].$.name !== undefined ?
+                ("\"" + element.generalization[i].$.name + "\"") : "";
+            clase += "\"" + classes.get(element.generalization[i].$.general) + "\" <|-- " + name
+                + " : " + hename + "\n";
         }
     }
 
@@ -183,8 +186,6 @@ function createUMLAttributes(ats, name) {
  * @returns {string}    Asociación en PUML
  */
 function createUMLAsoc(at, name) {
-
-    console.log(at)
 
     //Obtenemos la cardinalidad de la asociación
     let card = ShExCardinality.cardinalityOf(at);

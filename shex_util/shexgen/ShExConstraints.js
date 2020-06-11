@@ -16,8 +16,9 @@ class ShExConstraints {
             this.constraints.set(cst.$.constrainedElement, cst.$.name);
         }
         else {
-            this.constraints.set(cst.$.constrainedElement, this.constraints.get(cst.$.constrainedElement) + " AND "
-                +cst.$.name);
+            let op = cst.$.name.toLowerCase().includes("or ") ? " " : " AND ";
+            this.constraints.set(cst.$.constrainedElement, this.constraints.get(cst.$.constrainedElement) + op
+                + cst.$.name);
         }
 
     }

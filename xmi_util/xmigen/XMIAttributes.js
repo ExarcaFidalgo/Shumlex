@@ -99,9 +99,10 @@ class XMIAttributes {
      * Genera el XMI correspondiente a una expresión de tipo TripleConstraint
      * @param expr  Expresión
      * @param id    ID
+     * @param lop   Si se aplica operación lógica (OR...)
      * @returns {*}
      */
-    determineTypeOfExpression(expr, id) {
+    determineTypeOfExpression(expr, id, lop) {
         //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
         let inverse = (expr.inverse === true ? "^" : "");
         let name = inverse + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.predicate));
@@ -130,7 +131,7 @@ class XMIAttributes {
                     expr.valueExpr, id);
             }
             //Comprobamos las facetas, que generan restricciones
-            this.xmicon.checkFacets(expr.valueExpr, id);
+            this.xmicon.checkFacets(expr.valueExpr, id, lop);
             return "";
         }
         //Referencia a otra Shape
@@ -150,12 +151,17 @@ class XMIAttributes {
             return this.createComponent(name, ref, expr.valueExpr.expression, expr.min, expr.max);
         }
         //ShapeAnd anidada
-        else if (expr.valueExpr.type === "ShapeAnd") {
+        else if (expr.valueExpr.type === "ShapeAnd" || expr.valueExpr.type === "ShapeOr") {
             let and = "";
             let id = this.unid();
             for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
                 let xp = { predicate: expr.predicate, valueExpr: expr.valueExpr.shapeExprs[i]};
-                and += this.determineTypeOfExpression(xp, id);
+                if(expr.valueExpr.type === "ShapeOr") {
+                    and += this.determineTypeOfExpression(xp, id, "OR");
+                }
+                else {
+                    and += this.determineTypeOfExpression(xp, id);
+                }
             }
             return and;
         }
@@ -219,8 +225,9 @@ class XMIAttributes {
      * @param inv   Relación inversa
      * @returns {string}    Generalización XMI
      */
-    createXMIGeneralization(parents, inv, idF) {
+    createXMIGeneralization(parents, inv, idF, nm) {
         let gens = "";
+        let name = (inv ? "^" : "") + (nm === undefined ? "" : nm);
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
                 //Restricción tipo IRI, Literal...
@@ -233,25 +240,26 @@ class XMIAttributes {
                     }
                     //Nodekind: :HomePage IRI
                     else if (parents[parent].nodeKind){
-                        gens += this.createXMIKindAttribute("nodeKind",
+                        let nkName = nm === "OR" ? "OR nodeKind" : "nodeKind";
+                        gens += this.createXMIKindAttribute(nkName,
                             parents[parent].nodeKind)
                     }
                     //Comprobar facetas
                     else {
-                        this.xmicon.checkFacets(parents[parent], idF);
+                        this.xmicon.checkFacets(parents[parent], idF, nm);
                     }
                 }
                 //Generalización común
                 else if(parents[parent].reference){
                     let sh = this.shm.findShape(parents[parent].reference, true);
                     let id = this.unid();
-                    gens += this.XMIAux.createGen(id, sh.id, inv ? "^" : "");
+                    gens += this.XMIAux.createGen(id, sh.id, name);
                 }
                 else {
                     for(let i = 0; i < parents[parent].length; i++) {
                         let sh = this.shm.findShape(parents[parent][i], false);
                         let id = this.unid();
-                        gens += this.XMIAux.createGen(id, sh.id, inv ? "^" : "");
+                        gens += this.XMIAux.createGen(id, sh.id, name);
                     }
                 }
 

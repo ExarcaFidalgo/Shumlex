@@ -76,6 +76,23 @@ class ShExAttributes {
             }
             header += " " + ajustedKind;
         }
+        //Restricción de tipo nodal bajo un OR
+        else if(attr.$.name.toLowerCase() === "or nodekind") {
+            let kind = this.shext.getType(attr.$.type);
+            kind = this.IRIManager.checkNodeKind(kind.name);
+            let ajustedKind = kind + " OR";
+
+            //Si es IRI, no es necesario el AND
+            //La shape no llevará llaves salvo que se haya indicado positivamente
+            if(kind === "IRI") {
+                brackets = brackets || false;
+                ajustedKind = kind;
+            }
+            else {
+                brackets = true;
+            }
+            header += " " + ajustedKind;
+        }
         //Restricción datatype
         else if(attr.$.name.toLowerCase() === "datatype") {
             let dt = this.shext.getAttrType(attr);
@@ -205,6 +222,18 @@ class ShExAttributes {
                 }
                 return conj;
             }
+            else if(attr.$.name === "OR" && attr.$.aggregation === "composite") {
+                let conj = "";
+                if(subSet.attributes) {
+                    //Primera Shape
+                    conj += this.attributeToShEx(subSet.attributes[0]).content;
+                    for(let i = 1; i < subSet.attributes.length; i++) {
+                        conj += " }\nOR {";
+                        conj += this.attributeToShEx(subSet.attributes[i]).content;
+                    }
+                }
+                return conj;
+            }
             //Es una expresión EachOf con cardinalidad
             else {
                 let card = this.shexcar.cardinalityOf(attr);
@@ -240,7 +269,7 @@ class ShExAttributes {
      * @param gen   Generalización
      * @returns {string}    Equivalente en ShEx
      */
-    generalizationToShEx(gen, and) {
+    generalizationToShEx(gen, lop) {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
             //Comprobamos si tiene una restricción Inverse
@@ -251,8 +280,11 @@ class ShExAttributes {
             }
             //Buscamos la Shape padre
             let refClass = this.shm.getShape(gen[i].$.general);
-            if(and) {
+            if(lop === "AND") {
                 generalizations += " " + inv + "@" + this.IRIManager.getShexTerm(refClass.name) + " AND"
+            }
+            else if(lop === "OR") {
+                generalizations += " " + inv + "@" + this.IRIManager.getShexTerm(refClass.name) + " OR"
             }
             else {
                 generalizations += "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(refClass.name) + "];"

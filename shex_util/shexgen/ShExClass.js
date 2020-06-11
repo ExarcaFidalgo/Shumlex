@@ -32,7 +32,10 @@ class ShExClass {
             //En el caso de que sea una shapeAnd
             //Generalizacion con AND
             if(element.ownedAttribute && element.ownedAttribute[0].$.name === "AND") {
-                header += this.shexat.generalizationToShEx(element.generalization, true);
+                header += this.shexat.generalizationToShEx(element.generalization, "AND");
+            }
+            else if(element.ownedAttribute && element.ownedAttribute[0].$.name === "OR") {
+                header += this.shexat.generalizationToShEx(element.generalization, "OR");
             }
             else {
                 content += this.shexat.generalizationToShEx(element.generalization);
