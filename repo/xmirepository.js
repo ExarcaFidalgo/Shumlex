@@ -1132,5 +1132,88 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    static getXMI23() {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
+            " xmi:id=\"kbb4yu3i\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3n\" name=\":User\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu3q\" name=\"OR\" visibility=\"public\" type=\"kbb4yu3r\" association=\"kbb4yu3s\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu3s\" memberEnd=\"kbb4yu3q kbb4yu3t\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu3t\" visibility=\"public\" type=\"kbb4yu3n\" association=\"kbb4yu3s\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3r\" name=\"_Blank0\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu3u\" name=\"\" visibility=\"public\" type=\"kbb4yu3v\" association=\"kbb4yu3w\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu3x\" name=\"\" visibility=\"public\" type=\"kbb4yu3y\" association=\"kbb4yu3z\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu3w\" memberEnd=\"kbb4yu3u kbb4yu40\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu40\" visibility=\"public\" type=\"kbb4yu3r\" association=\"kbb4yu3w\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu3z\" memberEnd=\"kbb4yu3x kbb4yu41\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu41\" visibility=\"public\" type=\"kbb4yu3r\" association=\"kbb4yu3z\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3v\" name=\"_Blank1\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu42\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbb4yu44\" name=\":owns\" visibility=\"public\" type=\"kbb4yu43\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3y\" name=\"_Blank2\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu45\" name=\":owns\" visibility=\"public\" type=\"kbb4yu3p\" association=\"kbb4yu46\" ></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu46\" memberEnd=\"kbb4yu45 kbb4yu47\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu47\" visibility=\"public\" type=\"kbb4yu3y\" association=\"kbb4yu46\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3o\" name=\":Titanuser\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu48\" name=\"OR\" visibility=\"public\" type=\"kbb4yu49\" association=\"kbb4yu4a\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<generalization xmi:id=\"kbb4yu4b\" general=\"kbb4yu3n\" name=\"OR\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu4a\" memberEnd=\"kbb4yu48 kbb4yu4c\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu4c\" visibility=\"public\" type=\"kbb4yu3o\" association=\"kbb4yu4a\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu49\" name=\"_Blank3\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4d\" name=\"\" visibility=\"public\" type=\"kbb4yu4e\" association=\"kbb4yu4f\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4g\" name=\"\" visibility=\"public\" type=\"kbb4yu4h\" association=\"kbb4yu4i\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu4f\" memberEnd=\"kbb4yu4d kbb4yu4j\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu4j\" visibility=\"public\" type=\"kbb4yu49\" association=\"kbb4yu4f\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu4i\" memberEnd=\"kbb4yu4g kbb4yu4k\">\n" +
+            "\t<ownedEnd xmi:id=\"kbb4yu4k\" visibility=\"public\" type=\"kbb4yu49\" association=\"kbb4yu4i\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu4e\" name=\"_Blank4\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4l\" name=\":titancode\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu4h\" name=\"_Blank5\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbb4yu4n\" name=\":owns\" visibility=\"public\" type=\"kbb4yu4m\" isUnique=\"true\">\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3p\" name=\":Product\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4o\" name=\":productId\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
+            "\t\t</type>\n" +
+            "\t</ownedAttribute>\n" +
+            "</packagedElement>\n" +
+            "<ownedRule xmi:id=\"kbb4yu4q\" name=\"OR MinLength 5\" constrainedElement=\"kbb4yu4o\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<ownedRule xmi:id=\"kbb4yu4r\" name=\"OR MaxLength 10\" constrainedElement=\"kbb4yu4o\">\n" +
+            "\n" +
+            "</ownedRule>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kbb4yu3m\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"kbb4yu3j\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbb4yu3k\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbb4yu3l\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbb4yu43\" name=\"IRI\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbb4yu4m\" name=\"Literal\"/>\n" +
+            "</uml:Model>";
+    }
+
 }
 module.exports = Xmirepository;

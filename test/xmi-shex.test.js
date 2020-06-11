@@ -124,4 +124,10 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
             .toEqual(ShExRep.getShex22());
     });
 
+    test('Disyunciones', () => {
+        let shex = xmiparser.parseXMIToShEx(XMIRep.getXMI23());
+        expect(shex)
+            .toEqual(ShExRep.getShex23());
+    });
+
 });

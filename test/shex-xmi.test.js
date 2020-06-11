@@ -125,5 +125,11 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
             .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI22()));
     });
 
+    test('Disyunciones', () => {
+        let xml = shexparser.parseShExToXMI(ShExRep.getShex23());
+        expect(XMIRep.removeUniqueIDs(xml))
+            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI23()));
+    });
+
 
 });

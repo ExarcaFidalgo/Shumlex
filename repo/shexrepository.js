@@ -535,5 +535,29 @@ class ShExRepository {
             "\n";
     }
 
+    static getShex23() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "\t:owns IRI; }\n" +
+            "OR {\n" +
+            "\t:owns @:Product;\n" +
+            "}\n" +
+            "\n" +
+            ":Titanuser @:User OR {\n" +
+            "\t:titancode xsd:string; }\n" +
+            "OR {\n" +
+            "\t:owns Literal;\n" +
+            "}\n" +
+            "\n" +
+            ":Product {\n" +
+            "\t:productId xsd:string OR MinLength 5 OR MaxLength 10;\n" +
+            "}\n" +
+            "\n";
+    }
+
 }
 module.exports = ShExRepository;
