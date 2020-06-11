@@ -20,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/grafo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
+            <state relative-caret-position="116">
+              <caret line="100" column="54" selection-start-line="100" selection-start-column="54" selection-end-line="100" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -39,9 +39,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Term</find>
-      <find>enum</find>
-      <find>markAsExtr</find>
       <find>Enum</find>
       <find>.TEST</find>
       <find>extra</find>
@@ -69,6 +66,9 @@
       <find>generalizationToShEx</find>
       <find>checkShapeAndExprs</find>
       <find>AND</find>
+      <find>ShapeAnd</find>
+      <find>createShapeAnd</find>
+      <find>createInheritance</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -351,12 +351,12 @@
       <workItem from="1591819171782" duration="3004000" />
       <workItem from="1591867502602" duration="2309000" />
       <workItem from="1591869872363" duration="4166000" />
-      <workItem from="1591888677521" duration="10428000" />
+      <workItem from="1591888677521" duration="11454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="495333000" />
+    <option name="totallyTimeSpent" value="496359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -409,7 +409,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/grafo.js</url>
-          <line>443</line>
+          <line>445</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -716,8 +716,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/grafo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
+        <state relative-caret-position="116">
+          <caret line="100" column="54" selection-start-line="100" selection-start-column="54" selection-end-line="100" selection-end-column="54" />
         </state>
       </provider>
     </entry>

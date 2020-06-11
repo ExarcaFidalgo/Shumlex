@@ -98,11 +98,13 @@ function shExAGrafo(text) {
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
                     // Herencia - :User :Person AND {}
                     if (sh.shapeExprs[i].type === "ShapeRef") {
-                        elements = elements.concat(createInheritance(sh.shapeExprs[i], id));
+                        let rname = lop === "OR" ? "OR" : "";
+                        elements = elements.concat(createInheritance(sh.shapeExprs[i], id, rname));
                     }
                     // Restricción tipo nodal - :User Literal AND
                     else if (sh.shapeExprs[i].type === "NodeConstraint") {
-                        elements = elements.concat(createNodeKind(sh.shapeExprs[i], id,""));
+                        let rname = lop === "OR" ? lop : "";
+                        elements = elements.concat(createNodeKind(sh.shapeExprs[i], id, rname));
                     }
                     //Conjunción de formas - :User { ... } AND { ... }
                     else {
@@ -220,7 +222,7 @@ function createNodeKind(shape, id, name) {
  * @param id    ID del nodo correspondiente a la shape padre
  * @returns {Array} Elementos generados
  */
-function createInheritance(shape, id){
+function createInheritance(shape, id, name){
     let elements = [];
     let target = irim.findIri(shape.reference);
     //Si no existe ya, lo generamos en el grafo
@@ -230,7 +232,7 @@ function createInheritance(shape, id){
         irim.saveIri(target, id);
         elements.push(createNode(id, irim.getPrefixedTermOfUri(target)));
     }
-    elements.push(createRelation("a", id, irim.findIri(shape.reference)));
+    elements.push(createRelation((name !== undefined ? name : "a" ), id, irim.findIri(shape.reference)));
     return elements;
 }
 
@@ -444,7 +446,7 @@ function determineTypeOfExpression(expr, father, fname) {
         return attrs;
     }
     //Shape AND anidada
-    else if (expr.valueExpr.type === "ShapeAnd") {
+    else if (expr.valueExpr.type === "ShapeAnd" || expr.valueExpr.type === "ShapeOr") {
         attrs = attrs.concat(createShapeAnd(expr, father));
         return attrs;
     }
