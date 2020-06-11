@@ -261,11 +261,10 @@ p {
     border: double black;
 }
 
-.bandera {
-    height: 50px;
+#uk, #es {
     float: right;
-    margin-right: 10px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 #weso {
