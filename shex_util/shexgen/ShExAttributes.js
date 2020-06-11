@@ -246,7 +246,7 @@ class ShExAttributes {
             //Comprobamos si tiene una restricción Inverse
             let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
             let inv = "";
-            if(con === " Inverse") {
+            if(con === " Inverse" || gen[i].$.name === "^") {
                 inv = "^";
             }
             //Buscamos la Shape padre
