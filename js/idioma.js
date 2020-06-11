@@ -49,7 +49,8 @@ let es = {
     ggen: "Generación de grafo",
     shxm: "ShEx a XMI",
     umlg: "Generación de UML",
-    xmsh: "XMI a ShEx"
+    xmsh: "XMI a ShEx",
+    disy: "Disyunciones"
 };
 
 let en = {
@@ -101,7 +102,8 @@ let en = {
     ggen: "Graph generation",
     shxm: "ShEx to XMI",
     umlg: "UML generation",
-    xmsh: "XMI to ShEx"
+    xmsh: "XMI to ShEx",
+    disy: "Disjunctions"
 };
 
 function checkLang() {
@@ -140,6 +142,7 @@ function localize(lang) {
     setContentByID("ext", lang.ext);
     setContentByID("exe", lang.exe);
     setContentByID("cnj", lang.cnj);
+    setContentByID("disy", lang.disy);
     setContentByID("cfg", lang.cfg);
     setContentByID("cambiarClaro", lang.cambiarClaro);
     setContentByID("cambiarOscuro", lang.cambiarOscuro);

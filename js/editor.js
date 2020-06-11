@@ -63,6 +63,9 @@ $(document).ready(function() {
     else if(ref.includes("?conj")) {
         shExEditor.setValue(repo.getShex22());
     }
+    else if(ref.includes("?disy")) {
+        shExEditor.setValue(repo.getShex23());
+    }
     else if(ref.includes("?load")) {
         let shv = sessionStorage.getItem("shexvalue");
         let xmv = sessionStorage.getItem("xmivalue");
