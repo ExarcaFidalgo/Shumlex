@@ -101,7 +101,7 @@ class ShExGenerator {
      */
     clear() {
         this.irim = new IRIManager();
-        this.shm.clearShExShapes();
+        this.shm.clear();
         this.shexco.clear();
         this.shext.clear();
     }

@@ -31,9 +31,14 @@ class ShExParser {
     let prefixes = this.xmigen.createPrefixes(source.prefixes, source.base);
     for (let shape in source.shapes){
       if(source.shapes.hasOwnProperty(shape)) {
+        this.xmigen.checkAnon(shape);
+        this.xmigen.saveShape(shape);
+      }
+    }
+    for (let shape in source.shapes){
+      if(source.shapes.hasOwnProperty(shape)) {
         xmiEquivalent += this.xmigen.createXMIClass(shape, source.shapes[shape]);
       }
-
     }
 
     xmiEquivalent += prefixes;

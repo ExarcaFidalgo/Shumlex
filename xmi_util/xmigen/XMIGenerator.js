@@ -80,6 +80,16 @@ class XMIGenerator {
         return base;
     }
 
+    checkAnon(shape) {
+        if (/^_:[0-9]+$/.test(shape)) {
+            this.shm.incrementBlank();
+        }
+    }
+
+    saveShape(shape) {
+        this.shm.findShape(shape, false);
+    }
+
     /**
      * Resetea todas las clases empleadas para la generación de XMI
      */

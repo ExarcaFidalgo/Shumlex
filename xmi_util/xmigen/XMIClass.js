@@ -40,7 +40,6 @@ class XMIClass {
         let ats = "";
         let subClassName = this.xmisub.getComponentNumber();
         if(shape.type === "ShapeAnd") {
-            console.log(shape);
             let nOfShapes = 0;
             //Contar el número de Shapes en la conjunción
             let exprsForGen = [];
@@ -57,6 +56,10 @@ class XMIClass {
                 else {
                     nOfShapes++;
                     exprsForComp.push(shape.shapeExprs[i]);
+                    //:User IRI CLOSED {...}
+                    if(shape.shapeExprs[i].closed === true) {
+                        this.xmicon.markAsClosed(sh.id);
+                    }
                 }
             }
             if(nOfShapes > 0) {

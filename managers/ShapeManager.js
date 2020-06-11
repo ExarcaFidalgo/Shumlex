@@ -156,6 +156,12 @@ class ShapeManager {
         this.clearSubSet();
     }
 
+    clear() {
+        this.clearShExShapes();
+        this.clearPendingShExShapes();
+        this.clearXMIShapes();
+    }
+
 
 }
 module.exports = ShapeManager;

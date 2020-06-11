@@ -409,7 +409,7 @@ class ShExRepository {
             "\t:parent {\n" +
             "\t:parent {\n" +
             "\t:parent . +;\n" +
-            "}\n" +
+            "};\n" +
             "};\n" +
             "}\n" +
             "\n" +

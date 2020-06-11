@@ -194,8 +194,6 @@ class ShExAttributes {
             }
             //Conjunción
             else if(attr.$.name === "AND" && attr.$.aggregation === "composite") {
-                console.log(attr);
-                console.log(subSet);
                 let conj = "";
                 if(subSet.attributes) {
                     //Primera Shape
