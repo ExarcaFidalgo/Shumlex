@@ -25,7 +25,7 @@ $(document).ready(function() {
         shExEditor.setValue(repo.getShex5());
     }
     else if(ref.includes("?resnod")) {
-        shExEditor.setValue(repo.getShex8());
+        shExEditor.setValue(repo.getShex7());
     }
     else if(ref.includes("?facetas")) {
         shExEditor.setValue(repo.getShex9());
