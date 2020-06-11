@@ -24,6 +24,8 @@ function getID() {
 let labels = new Map();     //Almacena etiquetas
 let andShs = new Map();    //Almacena las ShapeAnd existentes
 
+let lop = "";   //Operación lógica, si existe
+
 /**
  * Crea un grafo mediante Cytoscape en el <div> "grafo"
  * @param data  Datos del grafo
@@ -79,7 +81,13 @@ function shExAGrafo(text) {
             elements = elements.concat(checkExtra(sh, id));
             elements = elements.concat(checkNodeKind(sh, id, ""));
 
-            if (sh.type === "ShapeAnd") {
+            if (sh.type === "ShapeAnd" || sh.type === "ShapeOr") {
+                if (sh.type === "ShapeAnd") {
+                    lop = "AND"
+                }
+                if (sh.type === "ShapeOr") {
+                    lop = "OR"
+                }
                 let nOfShapes = 0;
                 //Contar el número de Shapes en la conjunción
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
@@ -105,7 +113,7 @@ function shExAGrafo(text) {
                             let andAtr = andShs.get(shapeName);
                             if(!andAtr) {
                                 andAtr = getID();
-                                elements = elements.concat(createToNode(andAtr, 'AND', "", id));
+                                elements = elements.concat(createToNode(andAtr, lop, "", id));
                                 andShs.set(shapeName, andAtr);
                             }
                             elements = elements.concat(createToNode(idMid, '', "", andAtr));
@@ -127,6 +135,7 @@ function shExAGrafo(text) {
             }
         }
     }
+    clear();
     console.log(elements);
     return elements;
 }
@@ -453,7 +462,7 @@ function checkShapeAndExprs(expr, father, fname) {
     let andAtr = andShs.get(fname);
     if(!andAtr) {
         andAtr = getID();
-        attrs = attrs.concat(createToNode(andAtr, 'AND', fname, father));
+        attrs = attrs.concat(createToNode(andAtr, lop, fname, father));
         andShs.set(fname, andAtr);
     }
 
@@ -787,6 +796,14 @@ function createNode(id, nname) {
  */
 function createRelation(rname, source, target) {
     return {data: { id: getID(), name: rname, source: source, target: target }};
+}
+
+function clear() {
+    irim.clear();
+    id = 0;
+    labels = new Map();     //Almacena etiquetas
+    andShs = new Map();    //Almacena las ShapeAnd existentes
+    lop = "";   //Operación lógica, si existe
 }
 
 let style = [ //Hoja de estilo para el grafo

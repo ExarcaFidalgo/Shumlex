@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/uml.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/uml.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/grafo.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/grafo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shex_util/shexgen/ShExClass.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex_util/shexgen/ShExClass.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js" beforeDir="false" afterPath="$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi_util/xmigen/XMIClass.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi_util/xmigen/XMIClass.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,29 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2934">
-              <caret line="78" column="46" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js">
+        <entry file="file://$PROJECT_DIR$/js/grafo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExClass.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-483">
-              <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+            <state relative-caret-position="225">
+              <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -64,8 +39,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>createGen</find>
-      <find>&lt;</find>
       <find>Term</find>
       <find>enum</find>
       <find>markAsExtr</find>
@@ -94,6 +67,8 @@
       <find>datatype</find>
       <find>Extra</find>
       <find>generalizationToShEx</find>
+      <find>checkShapeAndExprs</find>
+      <find>AND</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -146,7 +121,6 @@
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIEnumerations.js" />
         <option value="$PROJECT_DIR$/xmi_util/XMIParser.js" />
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExCardinality.js" />
-        <option value="$PROJECT_DIR$/js/grafo.js" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIComposition.js" />
         <option value="$PROJECT_DIR$/test/shex-xmi.test.js" />
         <option value="$PROJECT_DIR$/test/xmi-shex.test.js" />
@@ -166,6 +140,7 @@
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExClass.js" />
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" />
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js" />
+        <option value="$PROJECT_DIR$/js/grafo.js" />
       </list>
     </option>
   </component>
@@ -376,12 +351,12 @@
       <workItem from="1591819171782" duration="3004000" />
       <workItem from="1591867502602" duration="2309000" />
       <workItem from="1591869872363" duration="4166000" />
-      <workItem from="1591888677521" duration="9229000" />
+      <workItem from="1591888677521" duration="10428000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="494134000" />
+    <option name="totallyTimeSpent" value="495333000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -434,7 +409,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/grafo.js</url>
-          <line>434</line>
+          <line>443</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -582,13 +557,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/grafo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11734">
-          <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIComposition.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
@@ -725,10 +693,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExClass.js">
+    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-483">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        <state relative-caret-position="207">
+          <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -739,10 +707,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExConstraints.js">
+    <entry file="file://$PROJECT_DIR$/shex_util/shexgen/ShExClass.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
+        <state relative-caret-position="-483">
+          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/grafo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
         </state>
       </provider>
     </entry>
