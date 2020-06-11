@@ -535,34 +535,34 @@ class Xmirepository {
     static getXMI12() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
-            " xmi:id=\"k8orwyht\" name=\"ShExGeneratedXMI\">\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi0\" name=\":HomePage\">\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8orwyi1\" name=\"nodeKind\" visibility=\"public\" type=\"k8orwyi2\" isUnique=\"true\">\n" +
+            " xmi:id=\"kbaoidci\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidcn\" name=\":HomePage\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbaoidcr\" name=\"nodeKind\" visibility=\"public\" type=\"kbaoidcq\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi3\" name=\":CanVoteAge\">\n" +
-            "\t<ownedAttribute xmi:id=\"k8orwyi4\" name=\"datatype\" visibility=\"public\" isUnique=\"false\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidco\" name=\":CanVoteAge\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbaoidco\" name=\"datatype\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<ownedRule xmi:id=\"k8orwyi5\" name=\"MinInclusive 18\" constrainedElement=\"k8orwyi3\">\n" +
+            "<ownedRule xmi:id=\"kbaoidct\" name=\"MinInclusive 18\" constrainedElement=\"kbaoidco\">\n" +
             "\n" +
             "</ownedRule>\n" +
-            "<ownedRule xmi:id=\"k8orwyi6\" name=\"TotalDigits 3\" constrainedElement=\"k8orwyi3\">\n" +
+            "<ownedRule xmi:id=\"kbaoidcu\" name=\"TotalDigits 3\" constrainedElement=\"kbaoidco\">\n" +
             "\n" +
             "</ownedRule>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8orwyi7\" name=\":Special\">\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"k8orwyi8\" name=\"datatype\" visibility=\"public\" type=\"k8orwyi9\" isUnique=\"true\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidcp\" name=\":Special\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbaoidcv\" name=\"datatype\" visibility=\"public\" type=\"kbaoidcw\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8orwyhw\" name=\"Prefixes\">\n" +
-            "\t<ownedLiteral xmi:id=\"k8orwyhx\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8orwyhy\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"k8orwyhz\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kbaoidcm\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"kbaoidcj\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbaoidck\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbaoidcl\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi9\" name=\":custom\"/>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8orwyi2\" name=\"IRI\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbaoidcw\" name=\":custom\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbaoidcq\" name=\"IRI\"/>\n" +
             "</uml:Model>";
     }
 

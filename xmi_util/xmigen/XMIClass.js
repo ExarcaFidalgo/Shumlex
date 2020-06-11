@@ -65,7 +65,7 @@ class XMIClass {
             if(nOfShapes > 0) {
                 ats += this.xmiatt.createComponent("AND", subClassName, exprsForComp);
             }
-            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen);
+            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id);
         }
         //Si no es una ShapeAnd, generar atributos de modo corriente
         else {

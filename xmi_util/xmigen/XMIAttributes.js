@@ -219,14 +219,27 @@ class XMIAttributes {
      * @param inv   Relación inversa
      * @returns {string}    Generalización XMI
      */
-    createXMIGeneralization(parents, inv) {
+    createXMIGeneralization(parents, inv, idF) {
         let gens = "";
         for(let parent in parents) {
             if(parents.hasOwnProperty(parent)) {
                 //Restricción tipo IRI, Literal...
                 if(parents[parent].type === "NodeConstraint"){
-                    gens += this.createXMIKindAttribute("nodeKind",
-                        parents[parent].nodeKind)
+                    //:CanVoteAge xsd:integer
+                    if(parents[parent].datatype) {
+                        gens += this.createXMIPrimAttribute("datatype", parents[parent].datatype,
+                            undefined, undefined,
+                            parents[parent], idF);
+                    }
+                    //Nodekind: :HomePage IRI
+                    else if (parents[parent].nodeKind){
+                        gens += this.createXMIKindAttribute("nodeKind",
+                            parents[parent].nodeKind)
+                    }
+                    //Comprobar facetas
+                    else {
+                        this.xmicon.checkFacets(parents[parent], idF);
+                    }
                 }
                 //Generalización común
                 else if(parents[parent].reference){
