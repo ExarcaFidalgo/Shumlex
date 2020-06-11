@@ -1,6 +1,6 @@
 # Shumlex
 [![Build Status](https://travis-ci.org/jorgealvarezfidalgo/Shumlex.svg?branch=master)](https://travis-ci.org/jorgealvarezfidalgo/Shumlex)
-
+[![Coverage Status](https://coveralls.io/repos/github/jorgealvarezfidalgo/Shumlex/badge.svg?branch=master)](https://coveralls.io/github/jorgealvarezfidalgo/Shumlex?branch=master)
 
 
 Bienvenidos al Proyecto Shumlex. 
