@@ -12,6 +12,14 @@ El objeto del mismo consiste en elaborar una herramienta que permita llevar a ca
 
 Obra de D. Jorge Álvarez Fidalgo.
 
+## English ver.
+
+Given the sudden surge in visits that has blessed this humble repository, a need has arisen to increase its usability by any foreign visitors, which I presume are the vast majority and may not speak Cervantes' language.
+
+This is a Spanish project intended to be defended before a Spanish University. Hence, Spanish shall be kept as the main language of this project, not only because of the academic requirements, i might add. Since it is my conviction that it is my responsibility to contribute to the conservation and further development of our language.
+
+Nonetheless, there is no harm in enabling alternatives. Therefore, [there is an English version of this README available.](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/README_EN.md)
+
 ## Instalación
 
 Si usted sólo desea probar la aplicación, la instalación no es necesaria. Puede acceder a ella  [en GitHub Pages](https://jorgealvarezfidalgo.github.io/Shumlex), o bien clonar el repositorio si desea probar localmente.
