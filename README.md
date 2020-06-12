@@ -4,9 +4,73 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f7a79a92342844138f7fa6f8095f12a7)](https://app.codacy.com/manual/jorgealvarezfidalgo/Shumlex?utm_source=github.com&utm_medium=referral&utm_content=jorgealvarezfidalgo/Shumlex&utm_campaign=Badge_Grade_Dashboard)
 [![Version Status](https://img.shields.io/badge/version-1.0.0-green.svg)](https://jorgealvarezfidalgo.github.io/Shumlex/)
 
+## Introducción
 Bienvenidos al Proyecto Shumlex. 
 https://jorgealvarezfidalgo.github.io/Shumlex
 
 El objeto del mismo consiste en elaborar una herramienta que permita llevar a cabo una integración entre las Shape Expressions y UML, otorgando al usuario la capacidad de generar el equivalente en UML del conjunto deseado de ShEx, o viceversa; aportando asimismo características que permitan la visualización in situ de los datos trabajados.
 
 Obra de D. Jorge Álvarez Fidalgo.
+
+## Instalación
+
+Si usted sólo desea probar la aplicación, la instalación no es necesaria. Puede acceder a ella  [en GitHub Pages](https://jorgealvarezfidalgo.github.io/Shumlex), o bien clonar el repositorio si desea probar localmente.
+> git clone https://github.com/jorgealvarezfidalgo/Shumlex.git
+
+Se emplea _Browserify_ para resolver las dependencias en el script main.js. Gracias a lo cual, sin necesidad de realizar labores ulteriores, al clonar ya se dispone de la funcionalidad completa: accediendo navegador mediante a cualquiera de los HTML.
+
+Si, por otra parte, desea realizar cambios al código o recompilar por cualesquiera otros motivos, sólo requiere:
+
+* Instalar node_modules, si aún no se ha llevado a cabo.
+> npm install
+
+* Compilar mediante browserify.
+> npm run-script build
+
+## Test
+
+Puede realizar las pruebas del sistema mediante:
+> npm test
+
+Se prueban sendas transformaciones ShEx a XMI y viceversa, tomando como base los ejemplos propuestos en la aplicación y algún añadido más.
+
+## Uso
+
+La aplicación web consta de las siguientes secciones, a las cuales se accede mediante la barra de navegación:
+
+### ShEx a XMI
+Consiste de dos editores, de ShEx y XMI, respectivamente. Cada editor dispone de las siguientes opciones en la barra de tareas:
+* Borrar el contenido.
+* Intercambiar los editores. En este caso, nos llevaría a la ventana XMI a ShEx.
+* Representación gráfica. Grafo y UML, respectivamente.
+* Descargar. Descarga un archivo con el contenido del editor.
+
+El botón Generar XMI establece el XMI obtenido como valor del editor derecho, a partir del ShEx introducido.
+
+### XMI a ShEx
+Igual que el anterior, en inverso. 
+El botón Generar ShEx establece el ShEx obtenido como valor del editor derecho, a partir del XMI introducido.
+
+### Generación de grafo
+Accesible desde la barra de navegación (sin contenido) o desde _Grafo_ en el editor de ShEx (traslada el contenido).
+Dispone de un editor de ShEx y un elemento Cytoscape.
+El botón "Generar grafo" representa el contenido del editor como un grafo mediante la herramienta Cytoscape. Para ello, parseamos las Shape Expressions y generamos el grafo pertinente en la notación de Cytoscape.
+
+Se incluye una funcionalidad de movimiento y zoom. El botón de doble flecha permite restituir el grafo a su tamaño original.
+
+Asimismo, se permite el movimiento de los nodos a gusto del usuario, de cara a modificar la presentación del grafo.
+
+### Generación de UML
+Accesible desde la barra de navegación (sin contenido) o desde _UML_ en el editor de XMI (traslada el contenido).
+Dispone de un editor de XMI.
+El botón "Generar UML" representa el contenido del editor como UML mediante la herramienta PlantUML. Para ello, parseamos el XMI y generamos el UML pertinente en la notación de PlantUML, el cual codificamos y enviamos a la API de PlantUML para obtener la imagen.
+
+### Cargar ejemplos
+Se ofrece una serie de ejemplos ShEx a cargar en el sistema para una rápida comprobación de las posibilidades que ofrece la aplicación. Seleccionar cualquiera de ellos nos lleva a la ventana ShEx a XMI, cargando en el editor de ShEx el ejemplo correspondiente.
+
+### Configuración.
+Muy básica por el momento. Permite cambiar el tema de los editores.
+
+### Idioma
+La aplicación web se ofrece, además de en la insigne lengua de Cervantes, en inglés.
+
