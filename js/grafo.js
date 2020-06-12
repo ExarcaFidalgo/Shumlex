@@ -116,7 +116,7 @@ function shExAGrafo(text) {
                         let idMid = getID();
                         //Comprobar si hay solo una Shape, en cuyo caso no representaremos el AND,
                         // puesto que solo habría 1 hijo
-                        if(nOfShapes > 1) {
+                        if(nOfShapes > 0) {
                             let andAtr = andShs.get(shapeName);
                             if(!andAtr) {
                                 andAtr = getID();
@@ -126,7 +126,7 @@ function shExAGrafo(text) {
                             elements = elements.concat(createToNode(idMid, '', "", andAtr));
                         }
 
-                        let expFather = nOfShapes > 1 ? idMid : id;
+                        let expFather = nOfShapes > 0 ? idMid : id;
 
                         elements = elements.concat(checkClosed(sh.shapeExprs[i], expFather));
                         //Generar los elementos del grafo correspondientes a la expresión actual de la ShapeAnd
