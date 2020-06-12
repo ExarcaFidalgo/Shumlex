@@ -38,6 +38,8 @@ Se prueban sendas transformaciones ShEx a XMI y viceversa, tomando como base los
 
 La aplicación web consta de las siguientes secciones, a las cuales se accede mediante la barra de navegación:
 
+![Barra de navegación](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/navbar.PNG)
+
 ### ShEx a XMI
 Consiste de dos editores, de ShEx y XMI, respectivamente. Cada editor dispone de las siguientes opciones en la barra de tareas:
 * Borrar el contenido.
@@ -47,30 +49,51 @@ Consiste de dos editores, de ShEx y XMI, respectivamente. Cada editor dispone de
 
 El botón Generar XMI establece el XMI obtenido como valor del editor derecho, a partir del ShEx introducido.
 
+
+![ShEx a XMI](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/shexxmi.PNG)
+
 ### XMI a ShEx
 Igual que el anterior, en inverso. 
 El botón Generar ShEx establece el ShEx obtenido como valor del editor derecho, a partir del XMI introducido.
+
+
+![XMI a ShEx](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/xmishex.PNG)
 
 ### Generación de grafo
 Accesible desde la barra de navegación (sin contenido) o desde _Grafo_ en el editor de ShEx (traslada el contenido).
 Dispone de un editor de ShEx y un elemento Cytoscape.
 El botón "Generar grafo" representa el contenido del editor como un grafo mediante la herramienta Cytoscape. Para ello, parseamos las Shape Expressions y generamos el grafo pertinente en la notación de Cytoscape.
 
+![Generar Grafo](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/grafo1.PNG)
+
 Se incluye una funcionalidad de movimiento y zoom. El botón de doble flecha permite restituir el grafo a su tamaño original.
 
+![Zoom del grafo](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/grafo2.PNG)
+
 Asimismo, se permite el movimiento de los nodos a gusto del usuario, de cara a modificar la presentación del grafo.
+
+![Modificar grafo](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/grafo3.PNG)
 
 ### Generación de UML
 Accesible desde la barra de navegación (sin contenido) o desde _UML_ en el editor de XMI (traslada el contenido).
 Dispone de un editor de XMI.
 El botón "Generar UML" representa el contenido del editor como UML mediante la herramienta PlantUML. Para ello, parseamos el XMI y generamos el UML pertinente en la notación de PlantUML, el cual codificamos y enviamos a la API de PlantUML para obtener la imagen.
 
+![Generar UML](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/uml.PNG)
+
 ### Cargar ejemplos
 Se ofrece una serie de ejemplos ShEx a cargar en el sistema para una rápida comprobación de las posibilidades que ofrece la aplicación. Seleccionar cualquiera de ellos nos lleva a la ventana ShEx a XMI, cargando en el editor de ShEx el ejemplo correspondiente.
+
+![Cargar ejemplos](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/Ejemplos.PNG)
 
 ### Configuración.
 Muy básica por el momento. Permite cambiar el tema de los editores.
 
+![Configuración](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/conf1.PNG)
+![Configuración: Tema Claro](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/conf2.PNG)
+
 ### Idioma
 La aplicación web se ofrece, además de en la insigne lengua de Cervantes, en inglés.
+
+![Idioma](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/idioma.PNG)
 
