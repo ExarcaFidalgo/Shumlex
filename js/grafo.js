@@ -50,6 +50,11 @@ function generarGrafo(data) {
     cy.panzoom( defaults );
 }
 
+function getShExTerm(term) {
+    let tm = IRIManager.getShexTerm(term);
+    return tm.replace("&lt;", "<").replace("&gt;", ">");
+}
+
 /**
  * Crea la información necesaria para generar un grafo a partir de un ShEx
  * @param text  ShEx
@@ -74,7 +79,7 @@ function shExAGrafo(text) {
             //Extraemos el ID generado anteriormente
             let id = irim.findIri(shape);
             let sh = source.shapes[shape];
-            let shapeName = IRIManager.getShexTerm(irim.getPrefixedTermOfUri(shape));
+            let shapeName = getShExTerm(irim.getPrefixedTermOfUri(shape));
             elements.push(createNode(id, shapeName));
 
             elements = elements.concat(checkClosed(sh, id));
@@ -177,7 +182,7 @@ function checkExtra(shape, id) {
                 nname = "a";
             }
             else {
-                nname = IRIManager.getShexTerm(irim.getPrefixedTermOfUri(nname));
+                nname = getShExTerm(irim.getPrefixedTermOfUri(nname));
             }
             elements = elements.concat(createToNode(getID(), nname,
                 "", idn));
@@ -397,7 +402,7 @@ function determineTypeOfExpression(expr, father, fname) {
     console.log(expr);
     console.log(shExCardinality.cardinalityOf(expr));
     if(expr.predicate) {
-        name = inverse + IRIManager.getShexTerm(irim.getPrefixedTermOfUri(expr.predicate))
+        name = inverse + getShExTerm(irim.getPrefixedTermOfUri(expr.predicate))
             + shExCardinality.cardinalityOf(expr);
     }
 
@@ -534,7 +539,7 @@ function createEnumeration(expr, name, father) {
             //IRIStem - wo:~
             else if(vl.type === "IriStem") {
                 attrs = attrs.concat(createToNode(ide,
-                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~", "", idv));
+                    getShExTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~", "", idv));
             }
             //IRIStemRange - wo:~ - wo:lo
             else if(vl.type === "IriStemRange") {
@@ -559,7 +564,7 @@ function createEnumeration(expr, name, father) {
             //vl de tipo IRI
             else {
                 attrs = attrs.concat(createToNode(ide,
-                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl)), "", idv));
+                    getShExTerm(irim.getPrefixedTermOfUri(vl)), "", idv));
             }
         }
     }
@@ -585,7 +590,7 @@ function checkStemRange(vl, ide, idv, type) {
             //Obtenemos el término prefijado de la IRI
             case "IriStem":
                 attrs = attrs.concat(createToNode(ide,
-                    IRIManager.getShexTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~ ", "", idv));
+                    getShExTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~ ", "", idv));
                 break;
             //Representamos el literal sin cambios
             case "LiteralStem":
@@ -611,7 +616,7 @@ function checkStemRange(vl, ide, idv, type) {
             switch(type) {
                 case "IriStem":
                     attrs = attrs.concat(createToNode(idx,
-                        IRIManager.getShexTerm(irim.getPrefixedTermOfUri(excl.stem)) + "~",
+                        getShExTerm(irim.getPrefixedTermOfUri(excl.stem)) + "~",
                         "-", ide));
                     break;
                 case "LiteralStem":
@@ -626,7 +631,7 @@ function checkStemRange(vl, ide, idv, type) {
         else {
             switch(type) {
                 case "IriStem":
-                    attrs = attrs.concat(createToNode(idx, IRIManager.getShexTerm(irim.getPrefixedTermOfUri(excl))
+                    attrs = attrs.concat(createToNode(idx, getShExTerm(irim.getPrefixedTermOfUri(excl))
                         , "-", ide));
                     break;
                 case "LiteralStem":

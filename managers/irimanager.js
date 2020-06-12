@@ -139,7 +139,7 @@ class IRIManager {
         if(nk) {
             return nk;
         }
-        return "<" + term + ">"
+        return "&lt;" + term + "&gt;"
     }
 
     /**

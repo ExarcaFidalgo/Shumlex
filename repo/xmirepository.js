@@ -14,7 +14,7 @@ class Xmirepository {
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
             " xmi:id=\"k8fsti2n\" name=\"ShExGeneratedXMI\">\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8fsti2r\" name=\":User\"/>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8fsti2s\" name=\"<TypeTest>\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8fsti2s\" name=\"&lt;TypeTest&gt;\"/>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"k8fsti2o\" name=\"Prefixes\">\n" +
             "\t<ownedLiteral xmi:id=\"k8fsti2p\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8fsti2q\" name=\"base &lt;http://example.org/>\"/>\n" +
@@ -36,7 +36,7 @@ class Xmirepository {
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8ftbvow\" name=\"<TypeTest>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8ftbvow\" name=\"&lt;TypeTest&gt;\">\n" +
             "\t<ownedAttribute xmi:id=\"k8ftbvox\" name=\":z\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
@@ -171,7 +171,7 @@ class Xmirepository {
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qewrz\" memberEnd=\"kb9qewry kb9qews3\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qews3\" visibility=\"public\" type=\"kb9qewr7\" association=\"kb9qewrz\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qewra\" name=\"<Product>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qewra\" name=\"&lt;Product&gt;\">\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9qews4\" name=\":name\" visibility=\"public\" type=\"kb9qews5\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "\t<ownedAttribute xmi:id=\"kb9qews6\" name=\":sku\" visibility=\"public\" isUnique=\"false\">\n" +
@@ -184,7 +184,7 @@ class Xmirepository {
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qews9\" memberEnd=\"kb9qews7 kb9qewsb\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qewsb\" visibility=\"public\" type=\"kb9qewra\" association=\"kb9qews9\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qews8\" name=\"<Organization>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qews8\" name=\"&lt;Organization&gt;\">\n" +
             "\t<ownedAttribute xmi:id=\"kb9qewsc\" name=\":name\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
@@ -282,7 +282,7 @@ class Xmirepository {
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qmyio\" />\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qmyiq\" name=\"<Citizen>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qmyiq\" name=\"&lt;Citizen&gt;\">\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9qmyir\" name=\":id\" visibility=\"public\" type=\"kb9qmyis\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
@@ -373,7 +373,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9rb135\" visibility=\"public\" type=\"kb9rb12w\" association=\"kb9rb134\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb133\" name=\"_Blank4\"/>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb136\" name=\"<Product>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb136\" name=\"&lt;Product&gt;\">\n" +
             "\t<ownedAttribute xmi:id=\"kb9rb137\" name=\"AND\" visibility=\"public\" type=\"kb9rb138\" association=\"kb9rb139\" aggregation=\"composite\"></ownedAttribute>\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9rb13b\" name=\"nodeKind\" visibility=\"public\" type=\"kb9rb13a\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
@@ -388,7 +388,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9rb13g\" visibility=\"public\" type=\"kb9rb138\" association=\"kb9rb13f\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb13e\" name=\"_Blank6\"/>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb13h\" name=\"<AThing>\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb13h\" name=\"&lt;AThing&gt;\">\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9rb13i\" name=\"nodeKind\" visibility=\"public\" type=\"kb9rb12i\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
@@ -661,7 +661,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qw4x6\" visibility=\"public\" type=\"kb9qw4wo\" association=\"kb9qw4x4\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4x3\" name=\"_Blank4\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4x7\" name=\"<AE86>\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4x7\" name=\"&lt;AE86&gt;\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
@@ -677,26 +677,26 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qw4xh\" visibility=\"public\" type=\"kb9qw4x3\" association=\"kb9qw4xe\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4x9\" name=\"_Blank5\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4xi\" name=\"<Levin>\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4xi\" name=\"&lt;Levin&gt;\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4xj\" name=\"<Cilinders>\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4xj\" name=\"&lt;Cilinders&gt;\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4xd\" name=\"_Blank6\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4xk\" name=\"<Trueno>\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4xk\" name=\"&lt;Trueno&gt;\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4xl\" name=\"<Cilinders>\" visibility=\"public\" isUnique=\"false\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4xl\" name=\"&lt;Cilinders&gt;\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4ww\" name=\"<Something>\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4ww\" name=\"&lt;Something&gt;\"/>\n" +
             "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kb9qw4wb\" name=\"Prefixes\">\n" +
             "\t<ownedLiteral xmi:id=\"kb9qw4w8\" name=\"prefix : &lt;https://schema.org/>\"/>\n" +
             "\t<ownedLiteral xmi:id=\"kb9qw4w9\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
