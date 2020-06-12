@@ -86,7 +86,7 @@ class XMIConstraints {
                 vals.push(value);
             }
         }
-        return this.xmienum.createXMIEnumAttribute("Extra", vals, undefined, undefined, id, name);
+        return this.xmienum.createXMIEnumAttribute("Extra", vals, undefined, undefined, undefined, name);
     }
 
     /**

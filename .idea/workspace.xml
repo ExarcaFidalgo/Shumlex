@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e515e6a-688a-49e3-a5eb-83e5cc9c80b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/grafo.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/grafo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/managers/irimanager.js" beforeDir="false" afterPath="$PROJECT_DIR$/managers/irimanager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repo/xmirepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repo/xmirepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" beforeDir="false" afterPath="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,16 +46,34 @@
         <entry file="file://$PROJECT_DIR$/js/grafo.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="186">
-              <caret line="55" column="1" lean-forward="true" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+              <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
+        <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="82" selection-start-line="16" selection-start-column="82" selection-end-line="16" selection-end-column="82" />
+            <state relative-caret-position="351">
+              <caret line="88" column="97" selection-start-line="88" selection-start-column="97" selection-end-line="88" selection-end-column="97" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIEnumerations.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="32" column="76" selection-start-line="32" selection-start-column="74" selection-end-line="32" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -77,7 +91,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.TEST</find>
       <find>extra</find>
       <find>Enumerations</find>
       <find>enumerationTo</find>
@@ -106,6 +119,7 @@
       <find>ShapeAnd</find>
       <find>createShapeAnd</find>
       <find>createInheritance</find>
+      <find>TypeTest</find>
       <find>Term</find>
     </findStrings>
     <replaceStrings>
@@ -160,7 +174,6 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIClass.js" />
         <option value="$PROJECT_DIR$/js/uml.js" />
-        <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" />
         <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js" />
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExClass.js" />
         <option value="$PROJECT_DIR$/shex_util/shexgen/ShExAttributes.js" />
@@ -179,6 +192,7 @@
         <option value="$PROJECT_DIR$/managers/irimanager.js" />
         <option value="$PROJECT_DIR$/js/grafo.js" />
         <option value="$PROJECT_DIR$/repo/xmirepository.js" />
+        <option value="$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js" />
       </list>
     </option>
   </component>
@@ -401,12 +415,12 @@
       <workItem from="1591869872363" duration="4166000" />
       <workItem from="1591888677521" duration="14726000" />
       <workItem from="1591904387116" duration="877000" />
-      <workItem from="1591952558785" duration="557000" />
+      <workItem from="1591952558785" duration="2148000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="501065000" />
+    <option name="totallyTimeSpent" value="502656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -503,13 +517,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
           <caret line="42" column="52" lean-forward="true" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIEnumerations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="21" column="55" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -616,20 +623,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="346">
           <caret line="139" column="96" selection-start-line="139" selection-start-column="96" selection-end-line="139" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-847">
-          <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -757,17 +750,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/grafo.js">
+    <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="55" column="1" lean-forward="true" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+        <state relative-caret-position="238">
+          <caret line="38" column="82" selection-start-line="38" selection-start-column="82" selection-end-line="38" selection-end-column="82" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repo/xmirepository.js">
+    <entry file="file://$PROJECT_DIR$/js/grafo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="82" selection-start-line="16" selection-start-column="82" selection-end-line="16" selection-end-column="82" />
+        <state relative-caret-position="186">
+          <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIAttributes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIEnumerations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="32" column="76" selection-start-line="32" selection-start-column="74" selection-end-line="32" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmi_util/xmigen/XMIConstraints.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="88" column="97" selection-start-line="88" selection-start-column="97" selection-end-line="88" selection-end-column="97" />
         </state>
       </provider>
     </entry>
