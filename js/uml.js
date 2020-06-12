@@ -1,4 +1,4 @@
-const plantumlEncoder = require('plantuml-encoder');
+const plantumlEncoder = require('../modules/plantuml-encoder');
 const $ = require('./jquery-3.4.1.min.js');
 
 const IRIManager = require("../managers/irimanager.js");
