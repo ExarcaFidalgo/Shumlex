@@ -14,7 +14,7 @@ Obra de D. Jorge Álvarez Fidalgo.
 
 ## English ver.
 
-Given the sudden surge in visits that has blessed this humble repository, a need has arisen to increase its usability by any foreign visitors, which I presume are the vast majority and may not speak Cervantes' language.
+Given the sudden surge in visits that has blessed this humble repository, a need has arisen to increase its usability by any foreign visitors, which I presume are the vast majority and may not speak the language of Cervantes.
 
 This is a Spanish project intended to be defended before a Spanish University. Hence, Spanish shall be kept as the main language of this project, not only because of the academic requirements, i might add. Since it is my conviction that it is my responsibility to contribute to the conservation and further development of our language.
 
