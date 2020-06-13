@@ -25,11 +25,11 @@ class ShExConstraints {
 
     /**
      * Devuelve una restricción por el ID del elemento restringido
-     * @param id    ID del elemento restringido
+     * @param element    Elemento restringido
      * @returns {string}    Restricción o vacío
      */
-    getConstraints(id) {
-        let cst = this.constraints.get(id);
+    getConstraints(element) {
+        let cst = this.constraints.get(element.$["xmi:id"]);
         return cst === undefined ? "" : (" " + cst);
     }
 

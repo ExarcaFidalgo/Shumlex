@@ -130,7 +130,7 @@ class ShExAttributes {
         let type = this.shext.getAttrType(attr);
         return "\n\t" + this.IRIManager.getShexTerm(attr.$.name)    //Nombre de la tripleta
             + this.shext.typeToShEx(type)                       //Tipo (xsd:string...)
-            + this.shexco.getConstraints(attr.$["xmi:id"])          //Restricciones
+            + this.shexco.getConstraints(attr)          //Restricciones
             + this.shexcar.cardinalityOf(attr) + ";";               //Cardinalidad
     }
 
@@ -273,7 +273,7 @@ class ShExAttributes {
         let generalizations = "";
         for(let i = 0; i < gen.length; i++) {
             //Comprobamos si tiene una restricción Inverse
-            let con = this.shexco.getConstraints(gen[i].$["xmi:id"]);
+            let con = this.shexco.getConstraints(gen[i]);
             let inv = "";
             if(con === " Inverse" || gen[i].$.name === "^") {
                 inv = "^";

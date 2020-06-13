@@ -55,7 +55,7 @@ class ShExClass {
         //Durante la generación de atributos se determina si son necesarias lalves
         brackets = ats.brackets;
         //Añadimos a la cabecera restricciones encontradas
-        header += this.shexco.getConstraints(element.$["xmi:id"]);
+        header += this.shexco.getConstraints(element);
         if(brackets) {
             return header + " {" + content + "\n}\n\n"
         }

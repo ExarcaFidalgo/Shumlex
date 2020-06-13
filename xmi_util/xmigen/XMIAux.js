@@ -20,8 +20,8 @@ class XMIAux {
      * @param comment   Comentario
      * @returns {string}    Comentario XMI
      */
-    static createXMIOwnedComment(comment) {
-        return '<ownedComment xmi:id="' + unid() + '">\n' +
+    static createXMIOwnedComment(comment, anEl) {
+        return '<ownedComment annotatedElement="' + anEl + '" xmi:id="' + unid() + '" xmi:type="uml:Comment">\n' +
             '<body>' + comment + '</body>\n' +
             '</ownedComment>\n'
     }
@@ -149,8 +149,11 @@ class XMIAux {
      * @returns {string}    XMI Owned Rule
      */
     static createXMIOwnedRule(name, id) {
+        let orid = unid();
         return "\n<ownedRule xmi:id=\"" + unid() + "\" name=\"" + name + "\" " +
             "constrainedElement=\"" + id + "\">\n" +
+            "<specification body=\"" + name + "\" xmi:type=\"uml:OpaqueExpression\"/>\n" +
+            XMIAux.createXMIOwnedComment(id, orid) +
             "\n</ownedRule>"
     }
 

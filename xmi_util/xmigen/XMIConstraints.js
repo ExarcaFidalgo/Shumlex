@@ -12,6 +12,10 @@ class XMIConstraints {
         this.IRIManager = IRIManager;
     }
 
+    createConstraint(name, id) {
+        this.ownedRules.push(this.XMIAux.createXMIOwnedRule(name, id));
+    }
+
     /**
      * Genera el XMI correspondiente a las restricciones pendientes en el estado actual
      * @returns {string}
@@ -36,28 +40,28 @@ class XMIConstraints {
             return;
         }
         if(vex.mininclusive) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinInclusive " + vex.mininclusive, id));
+            this.createConstraint(add + "MinInclusive " + vex.mininclusive, id);
         }
         if(vex.minexclusive) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinExclusive " + vex.minexclusive, id));
+            this.createConstraint(add + "MinExclusive " + vex.minexclusive, id);
         }
         if(vex.totaldigits) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule("TotalDigits " + vex.totaldigits, id));
+            this.createConstraint("TotalDigits " + vex.totaldigits, id);
         }
         if(vex.fractiondigits) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "FractionDigits " + vex.fractiondigits, id));
+            this.createConstraint(add + "FractionDigits " + vex.fractiondigits, id);
         }
         if(vex.length) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "Length " + vex.length, id));
+            this.createConstraint(add + "Length " + vex.length, id);
         }
         if(vex.minlength) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MinLength " + vex.minlength, id));
+            this.createConstraint(add + "MinLength " + vex.minlength, id);
         }
         if(vex.maxlength) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "MaxLength " + vex.maxlength, id));
+            this.createConstraint(add + "MaxLength " + vex.maxlength, id);
         }
         if(vex.pattern) {
-            this.ownedRules.push(this.XMIAux.createXMIOwnedRule(add + "/" + vex.pattern + "/", id));
+            this.createConstraint(add + "/" + vex.pattern + "/", id);
         }
     }
 
@@ -66,7 +70,7 @@ class XMIConstraints {
      * @param id    ID Shape
      */
     markAsClosed(id) {
-        this.ownedRules.push(this.XMIAux.createXMIOwnedRule("CLOSED", id));
+        this.createConstraint("CLOSED", id);
     }
 
     /**
