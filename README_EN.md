@@ -32,7 +32,7 @@ Furthermore, if you'd like to change its code or recompile for whichever reasons
 You may run the available tests:
 > npm test
 
-Both ShEx-XMI and XMI-ShEX conversions are tested, including all of the proposed examples in the application, as well as a few addons.
+Both ShEx-XMI and XMI-ShEX conversions are tested, including all of the proposed examples in the application, as well as a few addons. Graph generation is tested as well.
 
 ## How to use
 
