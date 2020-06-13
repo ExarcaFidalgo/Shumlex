@@ -103,7 +103,7 @@ function shExAGrafo(text) {
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
                     // Herencia - :User :Person AND {}
                     if (sh.shapeExprs[i].type === "ShapeRef") {
-                        let rname = lop === "OR" ? "OR" : "";
+                        let rname = lop === "OR" ? "OR" : "a";
                         elements = elements.concat(createInheritance(sh.shapeExprs[i], id, rname));
                     }
                     // Restricción tipo nodal - :User Literal AND
@@ -865,3 +865,4 @@ let defaults = {
     resetIcon: 'fa fa-expand'
 };
 exports.generarGrafo = generarGrafo;
+exports.shExAGrafo = shExAGrafo;
