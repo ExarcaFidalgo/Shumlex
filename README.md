@@ -40,7 +40,7 @@ Si, por otra parte, desea realizar cambios al código o recompilar por cualesqui
 Puede realizar las pruebas del sistema mediante:
 > npm test
 
-Se prueban sendas transformaciones ShEx a XMI y viceversa, tomando como base los ejemplos propuestos en la aplicación y algún añadido más.
+Se prueban sendas transformaciones ShEx a XMI y viceversa, tomando como base los ejemplos propuestos en la aplicación y algún añadido más. Se prueban también las generaciones de grafo a partir de dichos ejemplos.
 
 ## Uso
 
