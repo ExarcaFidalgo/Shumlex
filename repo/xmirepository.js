@@ -142,7 +142,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qewrn\" visibility=\"public\" type=\"kb9qewri\" association=\"kb9qewrl\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qewrk\" name=\"_Blank2\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qewro\" name=\"\" visibility=\"public\" type=\"kb9qewrp\" association=\"kb9qewrq\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qewro\" name=\"Shape\" visibility=\"public\" type=\"kb9qewrp\" association=\"kb9qewrq\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qewrq\" memberEnd=\"kb9qewro kb9qewrr\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qewrr\" visibility=\"public\" type=\"kb9qewrk\" association=\"kb9qewrq\"/>\n" +
@@ -240,7 +240,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qj59r\" visibility=\"public\" type=\"kb9qj59m\" association=\"kb9qj59p\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qj59o\" name=\"_Blank2\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qj59s\" name=\"\" visibility=\"public\" type=\"kb9qj59t\" association=\"kb9qj59u\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qj59s\" name=\"Shape\" visibility=\"public\" type=\"kb9qj59t\" association=\"kb9qj59u\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qj59u\" memberEnd=\"kb9qj59s kb9qj59v\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qj59v\" visibility=\"public\" type=\"kb9qj59o\" association=\"kb9qj59u\"/>\n" +
@@ -299,7 +299,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qmyj2\" visibility=\"public\" type=\"kb9qmyiw\" association=\"kb9qmyiz\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qmyiy\" name=\"_Blank3\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qmyj3\" name=\"\" visibility=\"public\" type=\"kb9qmyj4\" association=\"kb9qmyj5\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qmyj3\" name=\"Shape\" visibility=\"public\" type=\"kb9qmyj4\" association=\"kb9qmyj5\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qmyj5\" memberEnd=\"kb9qmyj3 kb9qmyj6\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qmyj6\" visibility=\"public\" type=\"kb9qmyiy\" association=\"kb9qmyj5\"/>\n" +
@@ -341,7 +341,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9rb12k\" visibility=\"public\" type=\"kb9rb12e\" association=\"kb9rb12h\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb12g\" name=\"_Blank0\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9rb12l\" name=\"\" visibility=\"public\" type=\"kb9rb12m\" association=\"kb9rb12n\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9rb12l\" name=\"Shape\" visibility=\"public\" type=\"kb9rb12m\" association=\"kb9rb12n\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9rb12n\" memberEnd=\"kb9rb12l kb9rb12o\">\n" +
             "\t<ownedEnd xmi:id=\"kb9rb12o\" visibility=\"public\" type=\"kb9rb12g\" association=\"kb9rb12n\"/>\n" +
@@ -367,7 +367,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9rb131\" visibility=\"public\" type=\"kb9rb12u\" association=\"kb9rb12x\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb12w\" name=\"_Blank3\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9rb132\" name=\"\" visibility=\"public\" type=\"kb9rb133\" association=\"kb9rb134\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9rb132\" name=\"Shape\" visibility=\"public\" type=\"kb9rb133\" association=\"kb9rb134\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9rb134\" memberEnd=\"kb9rb132 kb9rb135\">\n" +
             "\t<ownedEnd xmi:id=\"kb9rb135\" visibility=\"public\" type=\"kb9rb12w\" association=\"kb9rb134\"/>\n" +
@@ -382,7 +382,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9rb13c\" visibility=\"public\" type=\"kb9rb136\" association=\"kb9rb139\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9rb138\" name=\"_Blank5\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9rb13d\" name=\"\" visibility=\"public\" type=\"kb9rb13e\" association=\"kb9rb13f\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9rb13d\" name=\"Shape\" visibility=\"public\" type=\"kb9rb13e\" association=\"kb9rb13f\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9rb13f\" memberEnd=\"kb9rb13d kb9rb13g\">\n" +
             "\t<ownedEnd xmi:id=\"kb9rb13g\" visibility=\"public\" type=\"kb9rb138\" association=\"kb9rb13f\"/>\n" +
@@ -615,9 +615,9 @@ class Xmirepository {
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4we\" name=\"\" visibility=\"public\" type=\"kb9qw4wf\" association=\"kb9qw4wg\" aggregation=\"composite\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4we\" name=\"EachOf\" visibility=\"public\" type=\"kb9qw4wf\" association=\"kb9qw4wg\" aggregation=\"composite\">\n" +
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qw4wh\" /></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4wi\" name=\"\" visibility=\"public\" type=\"kb9qw4wj\" association=\"kb9qw4wk\" aggregation=\"composite\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4wi\" name=\"EachOf\" visibility=\"public\" type=\"kb9qw4wj\" association=\"kb9qw4wk\" aggregation=\"composite\">\n" +
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qw4wl\" />\n" +
             "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"kb9qw4wm\" value=\"*\"/></ownedAttribute>\n" +
             "\t<ownedAttribute xmi:id=\"kb9qw4wn\" name=\":owns\" visibility=\"public\" type=\"kb9qw4wo\" association=\"kb9qw4wp\" ></ownedAttribute>\n" +
@@ -654,7 +654,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kb9qw4x1\" visibility=\"public\" type=\"kb9qw4wj\" association=\"kb9qw4wx\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kb9qw4wo\" name=\":Garage\">\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4x2\" name=\"\" visibility=\"public\" type=\"kb9qw4x3\" association=\"kb9qw4x4\" aggregation=\"composite\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4x2\" name=\"EachOf\" visibility=\"public\" type=\"kb9qw4x3\" association=\"kb9qw4x4\" aggregation=\"composite\">\n" +
             "\t\t<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"kb9qw4x5\" value=\"*\"/></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qw4x4\" memberEnd=\"kb9qw4x2 kb9qw4x6\">\n" +
@@ -665,9 +665,9 @@ class Xmirepository {
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4x8\" name=\"\" visibility=\"public\" type=\"kb9qw4x9\" association=\"kb9qw4xa\" aggregation=\"composite\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4x8\" name=\"EachOf\" visibility=\"public\" type=\"kb9qw4x9\" association=\"kb9qw4xa\" aggregation=\"composite\">\n" +
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qw4xb\" /></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qw4xc\" name=\"\" visibility=\"public\" type=\"kb9qw4xd\" association=\"kb9qw4xe\" aggregation=\"composite\">\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qw4xc\" name=\"EachOf\" visibility=\"public\" type=\"kb9qw4xd\" association=\"kb9qw4xe\" aggregation=\"composite\">\n" +
             "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qw4xf\" /></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qw4xa\" memberEnd=\"kb9qw4x8 kb9qw4xg\">\n" +
@@ -720,7 +720,7 @@ class Xmirepository {
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kb9qy9my\" name=\"\" visibility=\"public\" type=\"kb9qy9mz\" association=\"kb9qy9n0\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kb9qy9my\" name=\"EachOf\" visibility=\"public\" type=\"kb9qy9mz\" association=\"kb9qy9n0\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kb9qy9n0\" memberEnd=\"kb9qy9my kb9qy9n1\">\n" +
             "\t<ownedEnd xmi:id=\"kb9qy9n1\" visibility=\"public\" type=\"kb9qy9mu\" association=\"kb9qy9n0\"/>\n" +
@@ -843,7 +843,7 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kbamopdg\" visibility=\"public\" type=\"kbamopd8\" association=\"kbamopdd\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbamopdc\" name=\"_Blank0\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbamopdh\" name=\"\" visibility=\"public\" type=\"kbamopdi\" association=\"kbamopdj\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamopdh\" name=\"Shape\" visibility=\"public\" type=\"kbamopdi\" association=\"kbamopdj\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbamopdj\" memberEnd=\"kbamopdh kbamopdk\">\n" +
             "\t<ownedEnd xmi:id=\"kbamopdk\" visibility=\"public\" type=\"kbamopdc\" association=\"kbamopdj\"/>\n" +
@@ -1015,7 +1015,7 @@ class Xmirepository {
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbamkh1k\" name=\"_Blank2\">\n" +
             "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbamkh1n\" name=\":name\" visibility=\"public\" type=\"kbamkh1o\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kbamkh1p\" name=\"\" visibility=\"public\" type=\"kbamkh1q\" association=\"kbamkh1r\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamkh1p\" name=\"EachOf\" visibility=\"public\" type=\"kbamkh1q\" association=\"kbamkh1r\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbamkh1r\" memberEnd=\"kbamkh1p kbamkh1s\">\n" +
             "\t<ownedEnd xmi:id=\"kbamkh1s\" visibility=\"public\" type=\"kbamkh1k\" association=\"kbamkh1r\"/>\n" +
@@ -1055,8 +1055,8 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kbamjwts\" visibility=\"public\" type=\"kbamjwtl\" association=\"kbamjwtr\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbamjwtq\" name=\"_Blank0\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbamjwtt\" name=\"\" visibility=\"public\" type=\"kbamjwtu\" association=\"kbamjwtv\" aggregation=\"composite\"></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kbamjwtw\" name=\"\" visibility=\"public\" type=\"kbamjwtx\" association=\"kbamjwty\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamjwtt\" name=\"Shape\" visibility=\"public\" type=\"kbamjwtu\" association=\"kbamjwtv\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamjwtw\" name=\"Shape\" visibility=\"public\" type=\"kbamjwtx\" association=\"kbamjwty\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbamjwtv\" memberEnd=\"kbamjwtt kbamjwtz\">\n" +
             "\t<ownedEnd xmi:id=\"kbamjwtz\" visibility=\"public\" type=\"kbamjwtq\" association=\"kbamjwtv\"/>\n" +
@@ -1086,8 +1086,8 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kbamjwub\" visibility=\"public\" type=\"kbamjwtm\" association=\"kbamjwu9\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbamjwu8\" name=\"_Blank3\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbamjwuc\" name=\"\" visibility=\"public\" type=\"kbamjwud\" association=\"kbamjwue\" aggregation=\"composite\"></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kbamjwuf\" name=\"\" visibility=\"public\" type=\"kbamjwug\" association=\"kbamjwuh\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamjwuc\" name=\"Shape\" visibility=\"public\" type=\"kbamjwud\" association=\"kbamjwue\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbamjwuf\" name=\"Shape\" visibility=\"public\" type=\"kbamjwug\" association=\"kbamjwuh\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbamjwue\" memberEnd=\"kbamjwuc kbamjwui\">\n" +
             "\t<ownedEnd xmi:id=\"kbamjwui\" visibility=\"public\" type=\"kbamjwu8\" association=\"kbamjwue\"/>\n" +
@@ -1143,8 +1143,8 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kbb4yu3t\" visibility=\"public\" type=\"kbb4yu3n\" association=\"kbb4yu3s\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu3r\" name=\"_Blank0\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbb4yu3u\" name=\"\" visibility=\"public\" type=\"kbb4yu3v\" association=\"kbb4yu3w\" aggregation=\"composite\"></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kbb4yu3x\" name=\"\" visibility=\"public\" type=\"kbb4yu3y\" association=\"kbb4yu3z\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu3u\" name=\"Shape\" visibility=\"public\" type=\"kbb4yu3v\" association=\"kbb4yu3w\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu3x\" name=\"Shape\" visibility=\"public\" type=\"kbb4yu3y\" association=\"kbb4yu3z\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu3w\" memberEnd=\"kbb4yu3u kbb4yu40\">\n" +
             "\t<ownedEnd xmi:id=\"kbb4yu40\" visibility=\"public\" type=\"kbb4yu3r\" association=\"kbb4yu3w\"/>\n" +
@@ -1174,8 +1174,8 @@ class Xmirepository {
             "\t<ownedEnd xmi:id=\"kbb4yu4c\" visibility=\"public\" type=\"kbb4yu3o\" association=\"kbb4yu4a\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbb4yu49\" name=\"_Blank3\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbb4yu4d\" name=\"\" visibility=\"public\" type=\"kbb4yu4e\" association=\"kbb4yu4f\" aggregation=\"composite\"></ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:id=\"kbb4yu4g\" name=\"\" visibility=\"public\" type=\"kbb4yu4h\" association=\"kbb4yu4i\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4d\" name=\"Shape\" visibility=\"public\" type=\"kbb4yu4e\" association=\"kbb4yu4f\" aggregation=\"composite\"></ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:id=\"kbb4yu4g\" name=\"Shape\" visibility=\"public\" type=\"kbb4yu4h\" association=\"kbb4yu4i\" aggregation=\"composite\"></ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Association\" xmi:id=\"kbb4yu4f\" memberEnd=\"kbb4yu4d kbb4yu4j\">\n" +
             "\t<ownedEnd xmi:id=\"kbb4yu4j\" visibility=\"public\" type=\"kbb4yu49\" association=\"kbb4yu4f\"/>\n" +

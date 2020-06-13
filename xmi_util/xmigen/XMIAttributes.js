@@ -69,7 +69,7 @@ class XMIAttributes {
             if( this.depth > 0 || expr.min !== undefined || expr.max !== undefined) {
                 let subClassName = this.xmisub.getComponentNumber(className);
                 let subExpr = JSON.parse(JSON.stringify(expr));
-                attrs = this.createComponent("", subClassName, subExpr, expr.min, expr.max);
+                attrs = this.createComponent("EachOf", subClassName, subExpr, expr.min, expr.max);
             }
             else {
                 for(let attr in expr.expressions) {
@@ -84,7 +84,7 @@ class XMIAttributes {
         //ShapeExprs: atributos de una clase que representa un AND
         else if(expr.length > 0) {
             for(let i = 0; i < expr.length; i++) {
-                attrs += this.createComponent("", this.xmisub.getComponentNumber(),
+                attrs += this.createComponent("Shape", this.xmisub.getComponentNumber(),
                     expr[i].expression, expr[i].min,expr[i].max);
 
             }

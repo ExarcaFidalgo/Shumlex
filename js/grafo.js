@@ -72,7 +72,7 @@ function shExAGrafo(text) {
             irim.saveIri(shape, getID());
         }
     }
-    console.log(source.shapes);
+    //console.log(source.shapes);
 
     for (let shape in source.shapes) {
         if (source.shapes.hasOwnProperty(shape)) {
@@ -143,7 +143,7 @@ function shExAGrafo(text) {
         }
     }
     clear();
-    console.log(elements);
+    //console.log(elements);
     return elements;
 }
 
@@ -252,7 +252,6 @@ function createInheritance(shape, id, name){
 function checkExpression(expr, father, dep) {
     //Si no se recibe profundidad como parámetro, estamos en el primer nivel
     let depth = dep ? dep : 1;
-    console.log(expr);
     let attrs = [];
     //Si no hay expresión, no se genera nada
     if(!expr) {
@@ -399,8 +398,6 @@ function determineTypeOfExpression(expr, father, fname) {
     let name;
 
     //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
-    console.log(expr);
-    console.log(shExCardinality.cardinalityOf(expr));
     if(expr.predicate) {
         name = inverse + getShExTerm(irim.getPrefixedTermOfUri(expr.predicate))
             + shExCardinality.cardinalityOf(expr);
