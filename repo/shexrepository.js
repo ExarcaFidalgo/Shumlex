@@ -1,5 +1,9 @@
 class ShExRepository {
 
+    /**
+     * Ejemplo base
+     * @returns {string}
+     */
     static getShex0() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -41,6 +45,10 @@ class ShExRepository {
             "}";
     }
 
+    /**
+     * Shape
+     * @returns {string}
+     */
     static getShex1() {
         return "prefix : <https://schema.org/>\n" +
             "base <http://example.org/>\n\n"
@@ -50,6 +58,10 @@ class ShExRepository {
             "}\n\n";
     }
 
+    /**
+     * Atributos básicos
+     * @returns {string}
+     */
     static getShex2() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -77,6 +89,10 @@ class ShExRepository {
             "}\n\n";
     }
 
+    /**
+     * Relaciones y otros atributos
+     * @returns {string}
+     */
     static getShex3() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -119,6 +135,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Herencia simple
+     * @returns {string}
+     */
     static getShex5() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -143,6 +163,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Herencia simple, ShEx generado
+     * @returns {string}
+     */
     static getGenShex5() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -167,6 +191,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Herencia múltiple
+     * @returns {string}
+     */
     static getShex6() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -197,6 +225,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Herencia múltiple, ShEx generado
+     * @returns {string}
+     */
     static getGenShex6() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -227,6 +259,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Tipos de nodo
+     * @returns {string}
+     */
     static getShex7() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -249,6 +285,10 @@ class ShExRepository {
             "<AThing> IRI\n\n";
     }
 
+    /**
+     * Facetas de literales
+     * @returns {string}
+     */
     static getShex9() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -265,6 +305,10 @@ class ShExRepository {
             "}\n\n";
     }
 
+    /**
+     * Rangos y exclusiones
+     * @returns {string}
+     */
     static getShex10() {
         return "prefix : <https://schema.org/>\n" +
             "prefix codes: <http://example.codes/>\n" +
@@ -279,6 +323,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Conjuntos genéricos con exclusiones
+     * @returns {string}
+     */
     static getShex11() {
         return "prefix codes: <http://example.codes/>\n" +
             "prefix : <http://schema.org/>\n" +
@@ -292,6 +340,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Restricciones nodales como forma de máximo nivel
+     * @returns {string}
+     */
     static getShex12() {
         return "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "prefix : <http://schema.org/>\n" +
@@ -305,6 +357,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Etiquetas de lenguaje
+     * @returns {string}
+     */
     static getShex13() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -328,6 +384,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Cardinalidades aplicadas a conjuntos
+     * @returns {string}
+     */
     static getShex14() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -360,6 +420,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * OneOf
+     * @returns {string}
+     */
     static getShex15() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -382,6 +446,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Formas anidadas
+     * @returns {string}
+     */
     static getShex16() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -419,6 +487,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Formas cerradas
+     * @returns {string}
+     */
     static getShex17() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -437,6 +509,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Propiedades repetidas
+     * @returns {string}
+     */
     static getShex18() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -454,6 +530,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Restricción triple inversa
+     * @returns {string}
+     */
     static getShex19() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -474,6 +554,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * EXTRA
+     * @returns {string}
+     */
     static getShex20() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -486,7 +570,12 @@ class ShExRepository {
             "}\n\n";
     }
 
+    /**
+     * Expresiones etiquetadas
+     * @returns {string}
+     */
     static getShex21() {
+        // noinspection CheckDtdRefs
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
             "base <http://example.org/>\n" +
@@ -507,6 +596,10 @@ class ShExRepository {
             "\n"
     }
 
+    /**
+     * Conjunciones
+     * @returns {string}
+     */
     static getShex22() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
@@ -535,6 +628,10 @@ class ShExRepository {
             "\n";
     }
 
+    /**
+     * Disyunciones
+     * @returns {string}
+     */
     static getShex23() {
         return "prefix : <https://schema.org/>\n" +
             "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +

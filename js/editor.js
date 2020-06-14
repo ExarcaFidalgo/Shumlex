@@ -1,4 +1,4 @@
-const $ = require('./jquery-3.4.1.min.js');
+const $ = require('jquery');
 
 const shexparser = require('../shex_util/ShExParser.js');
 const xmiparser = require('../xmi_util/XMIParser.js');

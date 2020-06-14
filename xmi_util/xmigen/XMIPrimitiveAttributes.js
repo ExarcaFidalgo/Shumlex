@@ -45,7 +45,7 @@ class XMIPrimitiveAttributes {
         }
 
         //Datatype
-        let dtype = this.xmitype.findDataType(xmiType.name, xmiType.uri);
+        let dtype = this.xmitype.findDataType(xmiType.name, xmiType.iri);
         return this.XMIAux.createOwnAt(atId, name, "uml:Property", dtype.id, card);
     }
 

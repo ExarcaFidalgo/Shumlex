@@ -1,5 +1,5 @@
 const uniqid = require("uniqid");
-const IRIManager = require ("../../managers/irimanager.js");
+const IRIManager = require ("../../managers/IRIManager.js");
 const ShExAttributes = require("./ShExAttributes.js");
 const ShExCardinality = require("./ShExCardinality.js");
 const ShExClass = require("./ShExClass.js");
@@ -32,7 +32,7 @@ class ShExGenerator {
         let prefixes = this.irim.getPrefixesList();
         for(let prefix in prefixes) {
             if(prefixes.hasOwnProperty(prefix)) {
-                header += "prefix " + prefixes[prefix].prefix + " " + prefixes[prefix].uri + "\n";
+                header += "prefix " + prefixes[prefix].prefix + " " + prefixes[prefix].iri + "\n";
             }
         }
         header += this.irim.getBase();

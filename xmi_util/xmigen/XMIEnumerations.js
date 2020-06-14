@@ -75,7 +75,7 @@ class XMIEnumerations {
         //Comprobamos cada uno de los valores
         for(let j = 0; j < enm.values.length; j++) {
             let value = "";
-            //Valor común: "1453", 12, URI
+            //Valor común: "1453", 12, IRI
             if(enm.values[j].value !== undefined) {
                 if(enm.values[j].type === undefined) {
                     value = "&quot;" + enm.values[j].value + "&quot;";
@@ -91,7 +91,7 @@ class XMIEnumerations {
             }
             //IRIStem - wo:~
             else if(enm.values[j].type === "IriStem") {
-                value =  this.irim.getPrefixedTermOfUri(enm.values[j].stem) + "~";
+                value =  this.irim.getPrefixedTermOfIRI(enm.values[j].stem) + "~";
             }
             //IRIStemRange - wo:~ - wo:lo
             else if(enm.values[j].type === "IriStemRange") {
@@ -99,16 +99,16 @@ class XMIEnumerations {
                     value = ". "
                 }
                 else {
-                    value =  this.irim.getPrefixedTermOfUri(enm.values[j].stem) + "~ ";
+                    value =  this.irim.getPrefixedTermOfIRI(enm.values[j].stem) + "~ ";
                 }
 
                 for(let k = 0; k < enm.values[j].exclusions.length; k++) {
                     let excl = enm.values[j].exclusions[k];
                     if(excl.type === "IriStem") {
-                        value += "- " + this.irim.getPrefixedTermOfUri(excl.stem) + "~ ";
+                        value += "- " + this.irim.getPrefixedTermOfIRI(excl.stem) + "~ ";
                     }
                     else {
-                        value += "- " + this.irim.getPrefixedTermOfUri(excl) + " ";
+                        value += "- " + this.irim.getPrefixedTermOfIRI(excl) + " ";
                     }
                 }
             }
@@ -158,12 +158,12 @@ class XMIEnumerations {
             }
             //vl de tipo IRI
             else {
-                value = this.irim.getPrefixedTermOfUri(enm.values[j]);
+                value = this.irim.getPrefixedTermOfIRI(enm.values[j]);
             }
             int += this.XMIAux.createOwnLit(value);
         }
         return this.XMIAux.createPackEl("uml:Enumeration", enm.id,
-            'name="' + this.irim.getPrefixedTermOfUri(enm.name) + '"', int);
+            'name="' + this.irim.getPrefixedTermOfIRI(enm.name) + '"', int);
     }
 
     /**

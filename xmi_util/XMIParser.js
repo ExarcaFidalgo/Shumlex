@@ -107,7 +107,6 @@ class XMIParser {
             shExEquivalent = shexgen.createShExHeader() + shExEquivalent;
 
         } catch (ex) {
-            console.log(ex);
             alert("Se ha producido un error durante la generación de las Shape Expressions.\n" +
                 "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
                 + ex);

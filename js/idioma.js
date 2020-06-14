@@ -1,5 +1,6 @@
-const $ = require('./jquery-3.4.1.min.js');
+const $ = require('jquery');
 
+//Contenido Español
 let es = {
     stx: "ShEx a XMI",
     xts: "XMI a ShEx",
@@ -53,6 +54,7 @@ let es = {
     disy: "Disyunciones"
 };
 
+//Contenido inglés
 let en = {
     stx: "ShEx to XMI",
     xts: "XMI to ShEx",
@@ -106,6 +108,10 @@ let en = {
     disy: "Disjunctions"
 };
 
+/**
+ * Comprueba el idioma establecido en sesión. Por defecto, se toma español.
+ * Llama a la función localizadora con el conjunto linguístico apropiado.
+ */
 function checkLang() {
     let lang = sessionStorage.getItem("lang");
     if(!lang) {
@@ -116,11 +122,12 @@ function checkLang() {
     else {
         localize(JSON.parse(lang));
     }
-
-
-
 }
 
+/**
+ * Localiza la aplicación web al idioma deseado.
+ * @param lang  JSON con los recursos linguísticos necesarios.
+ */
 function localize(lang) {
     setContentByID("stx", lang.stx);
     setContentByID("xts", lang.xts);
@@ -172,24 +179,44 @@ function localize(lang) {
     setContentByClass("xmsh", lang.xmsh);
 }
 
+/**
+ * Busca un elemento HTML por id y establece su contenido.
+ * @param id    ID del elemento.
+ * @param co    Contenido.
+ */
 function setContentByID(id, co) {
     if(document.getElementById(id)) {
         $("#"+id).html(co);
     }
 }
 
+/**
+ * Busca un elemento HTML por id y establece su título.
+ * @param id    ID del elemento.
+ * @param co    Título.
+ */
 function setTitleByID(id, co) {
     if(document.getElementById(id)) {
         $("#"+id).attr("title", co);
     }
 }
 
+/**
+ * Busca un elemento HTML por clase y establece su contenido.
+ * @param id    ID del elemento.
+ * @param co    Contenido
+ */
 function setContentByClass(id, co) {
     if(document.getElementsByClassName(id).length > 0) {
         $("."+id).text(co);
     }
 }
 
+/**
+ * Busca un elemento HTML por clase y establece su título.
+ * @param id    ID del elemento.
+ * @param co    Título
+ */
 function setTitleByClass(id, co) {
     if(document.getElementsByClassName(id).length > 0) {
         $("."+id).attr("title", co);

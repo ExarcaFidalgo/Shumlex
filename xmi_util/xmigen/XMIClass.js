@@ -32,7 +32,7 @@ class XMIClass {
             shape.datatype);
 
         //Nombre de la clase prefijado
-        let prName = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(name));
+        let prName = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfIRI(name));
         //Shape anónima
         if(prName.includes("_:")) {
             this.shm.incrementBlank();
@@ -68,7 +68,6 @@ class XMIClass {
             generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id);
         }
         else if(shape.type === "ShapeOr") {
-            console.log(shape);
             let nOfShapes = 0;
             //Contar el número de Shapes en la conjunción
             let exprsForGen = [];

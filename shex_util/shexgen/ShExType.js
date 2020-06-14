@@ -54,7 +54,6 @@ class ShExType {
                 return this.shexen.enumerationToShEx(enumer);
             }
             let type = this.getType(attr.$.type);
-            console.log(attr.$.type);
             return type.name;
         }
         return "Any";

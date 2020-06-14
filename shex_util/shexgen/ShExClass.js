@@ -25,7 +25,6 @@ class ShExClass {
         let content = "";
         let brackets = false;
 
-        console.log(element);
         //Se crea herencia
         if(element.generalization) {
             brackets = true;

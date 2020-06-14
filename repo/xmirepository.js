@@ -1,5 +1,10 @@
 class Xmirepository {
 
+    /**
+     * Elimina los IDs únicos de cara a las comparaciones
+     * @param text  Texto a procesar
+     * @returns {*} Texto sin dichos IDs
+     */
     static removeUniqueIDs(text) {
         return text.replace(/xmi:id="[0-9a-zA-Z]+"/g, "xmi:id=\"\"")
             .replace(/type="[0-9a-zA-Z]+"/g, "type=\"\"")
@@ -11,6 +16,10 @@ class Xmirepository {
             .replace(/<body>[0-9a-zA-Z]+(<\/body>)/g, "<body></body>");
     }
 
+    /**
+     * Shape
+     * @returns {string}
+     */
     static getXMI1() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -24,6 +33,10 @@ class Xmirepository {
             "</uml:Model>"
     }
 
+    /**
+     * Atributos básicos
+     * @returns {string}
+     */
     static getXMI2() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -103,6 +116,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Relaciones y otros atributos
+     * @returns {string}
+     */
     static getXMI3() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -216,6 +233,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Herencia simple
+     * @returns {string}
+     */
     static getXMI5() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -269,6 +290,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Herencia múltiple
+     * @returns {string}
+     */
     static getXMI6() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -330,6 +355,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Tipos de nodo
+     * @returns {string}
+     */
     static getXMI7() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -406,6 +435,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Facetas de literales
+     * @returns {string}
+     */
     static getXMI9() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -498,6 +531,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Rangos y exclusiones
+     * @returns {string}
+     */
     static getXMI10() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -533,6 +570,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Conjuntos genéricos con exclusiones
+     * @returns {string}
+     */
     static getXMI11() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -562,6 +603,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Restricciones nodales como forma de máximo nivel
+     * @returns {string}
+     */
     static getXMI12() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -604,6 +649,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Etiquetas de lenguaje
+     * @returns {string}
+     */
     static getXMI13() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -644,6 +693,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Cardinalidades aplicadas a conjuntos
+     * @returns {string}
+     */
     static getXMI14() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -743,6 +796,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * OneOf
+     * @returns {string}
+     */
     static getXMI15() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -807,6 +864,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Formas anidadas
+     * @returns {string}
+     */
     static getXMI16() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -865,6 +926,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Formas cerradas
+     * @returns {string}
+     */
     static getXMI17() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -940,6 +1005,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Propiedades repetidas
+     * @returns {string}
+     */
     static getXMI18() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -980,6 +1049,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Restricción triple inversa
+     * @returns {string}
+     */
     static getXMI19() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1013,6 +1086,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * EXTRA
+     * @returns {string}
+     */
     static getXMI20() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1044,6 +1121,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Expresiones etiquetadas
+     * @returns {string}
+     */
     static getXMI21() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1094,6 +1175,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Conjunciones
+     * @returns {string}
+     */
     static getXMI22() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
@@ -1190,6 +1275,10 @@ class Xmirepository {
             "</uml:Model>";
     }
 
+    /**
+     * Disyunciones
+     * @returns {string}
+     */
     static getXMI23() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +

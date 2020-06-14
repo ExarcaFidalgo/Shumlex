@@ -61,37 +61,15 @@ class ShExAttributes {
         }
         //Restricción de tipo nodal
         else if(attr.$.name.toLowerCase() === "nodekind") {
-            let kind = this.shext.getType(attr.$.type);
-            kind = this.IRIManager.checkNodeKind(kind.name);
-            let ajustedKind = kind + " AND";
-
-            //Si es IRI, no es necesario el AND
-            //La shape no llevará llaves salvo que se haya indicado positivamente
-            if(kind === "IRI") {
-                brackets = brackets || false;
-                ajustedKind = kind;
-            }
-            else {
-                brackets = true;
-            }
-            header += " " + ajustedKind;
+            let nk = this.createNodeKind(attr, "AND", brackets);
+            header += nk.header;
+            brackets = nk.brackets;
         }
         //Restricción de tipo nodal bajo un OR
         else if(attr.$.name.toLowerCase() === "or nodekind") {
-            let kind = this.shext.getType(attr.$.type);
-            kind = this.IRIManager.checkNodeKind(kind.name);
-            let ajustedKind = kind + " OR";
-
-            //Si es IRI, no es necesario el AND
-            //La shape no llevará llaves salvo que se haya indicado positivamente
-            if(kind === "IRI") {
-                brackets = brackets || false;
-                ajustedKind = kind;
-            }
-            else {
-                brackets = true;
-            }
-            header += " " + ajustedKind;
+            let nk = this.createNodeKind(attr, "OR", brackets);
+            header += nk.header;
+            brackets = nk.brackets;
         }
         //Restricción datatype
         else if(attr.$.name.toLowerCase() === "datatype") {
@@ -103,7 +81,9 @@ class ShExAttributes {
             let values = this.shexen.getEnum(attr.$.type);
             let extravals = "";
             for(let value in values.values) {
-                extravals += values.values[value].$.name + " ";
+                if(values.values.hasOwnProperty(value)) {
+                    extravals += values.values[value].$.name + " ";
+                }
             }
             header += " EXTRA " + extravals;
             brackets = true;
@@ -118,6 +98,34 @@ class ShExAttributes {
             brackets: brackets,
             content: content,
             header: header
+        };
+    }
+
+    /**
+     * Añade una restricción nodeKind
+     * @param attr  Atributo XMI que especifica el nodeKind
+     * @param lop   Operación lógica aplicada (AND, OR)
+     * @param bks   Indica si se abren llaves
+     * @returns {{header: string, brackets: (boolean|*)}}
+     */
+    createNodeKind(attr, lop, bks) {
+        let brackets = bks;
+        let kind = this.shext.getType(attr.$.type);
+        kind = this.IRIManager.checkNodeKind(kind.name);
+        let ajustedKind = kind + " " + lop;
+
+        //Si es IRI, no es necesario el AND
+        //La shape no llevará llaves salvo que se haya indicado positivamente
+        if(kind === "IRI") {
+            brackets = brackets || false;
+            ajustedKind = kind;
+        }
+        else {
+            brackets = true;
+        }
+        return {
+            header: " " + ajustedKind,
+            brackets: brackets
         };
     }
 
@@ -147,32 +155,7 @@ class ShExAttributes {
         if(subSet !== undefined) {
             //La clase a la que señala abarca el contenido de un OneOf
             if(attr.$.name === "OneOf") {
-                let conj = "";
-                let card = this.shexcar.cardinalityOf(attr);
-                if(card !== "") {
-                    conj = "\n (";
-                }
-                //Añadimos cada uno de los elementos de la clase subconjunto
-                //Separados por | como elementos del OneOf
-                for(let i = 0; i < subSet.attributes.length; i++) {
-                    console.log(subSet.attributes[i]);
-                    if(subSet.attributes[i].$.aggregation === "composite") {
-                        conj += "\n("
-                    }
-                    conj += this.attributeToShEx(subSet.attributes[i]).content;
-                    if(subSet.attributes[i].$.aggregation === "composite") {
-                        conj += " );"
-                    }
-                    if(i < subSet.attributes.length - 1) {
-                        conj += " |"
-                    }
-                }
-                //Se añaden paréntesis si posee cardinalidad
-                if(card !== "") {
-                    conj += ") " + card + ";";
-                }
-
-                return conj;
+                return this.createOneOf(attr, subSet);
             }
             //Es una referencia a una expresión etiquetada
             else if(attr.$.name.includes("&:")) {
@@ -180,30 +163,12 @@ class ShExAttributes {
             }
             //Es una expresión etiquetada
             else if(/^([$]:[<]?[a-zA-Z]+[>]?)$/.test(attr.$.name)) {
-                let conj = "\n\t" + attr.$.name +" (";
-                let card = this.shexcar.cardinalityOf(attr);
-                for(let i = 0; i < subSet.attributes.length; i++) {
-                    conj += this.attributeToShEx(subSet.attributes[i]).content;
-                }
-                conj += ") " + card + ";";
-
-                return conj;
+                return this.createLabelled(attr, subSet);
             }
             //Shape anidada
             else if (attr.$.aggregation === "composite" &&
                 /^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
-                let card = this.shexcar.cardinalityOf(attr);
-                //La eliminamos de pendientes, puesto que es anidada
-                this.shm.deletePendingShExShape(attr.$.type);
-                let conj = "\n\t" + attr.$.name +" {";
-                if(subSet.attributes) {
-                    conj += this.attributesToShEx(subSet.attributes).content;
-                }
-                if(subSet.gen){
-                    conj += "\t" + this.generalizationToShEx(subSet.gen);
-                }
-                conj += "\n}" + card + ";";
-                return conj;
+                return this.createNestedShape(attr, subSet);
             }
             //Referencia a shape anónima
             else if (/^_:[0-9]+(_[0-9]+)*$/.test(subSet.name)) {
@@ -211,48 +176,15 @@ class ShExAttributes {
             }
             //Conjunción
             else if(attr.$.name === "AND" && attr.$.aggregation === "composite") {
-                let conj = "";
-                if(subSet.attributes) {
-                    //Primera Shape
-                    conj += this.attributeToShEx(subSet.attributes[0]).content;
-                    for(let i = 1; i < subSet.attributes.length; i++) {
-                        conj += " }\nAND {";
-                        conj += this.attributeToShEx(subSet.attributes[i]).content;
-                    }
-                }
-                return conj;
+                return this.createLogicOperation(subSet, "AND");
             }
             else if(attr.$.name === "OR" && attr.$.aggregation === "composite") {
-                let conj = "";
-                if(subSet.attributes) {
-                    //Primera Shape
-                    conj += this.attributeToShEx(subSet.attributes[0]).content;
-                    for(let i = 1; i < subSet.attributes.length; i++) {
-                        conj += " }\nOR {";
-                        conj += this.attributeToShEx(subSet.attributes[i]).content;
-                    }
-                }
-                return conj;
+                return this.createLogicOperation(subSet, "OR");
             }
             //Es una expresión EachOf con cardinalidad
             else {
-                let card = this.shexcar.cardinalityOf(attr);
-                let conj = "";
-                if(card !== "") {
-                    conj = "\n( ";
-                }
-                if(subSet.attributes) {
-                    conj += this.attributesToShEx(subSet.attributes).content;
-                }
-                if(subSet.generalization){
-                    conj += this.generalizationToShEx(subSet.generalization);
-                }
-                if(card !== "") {
-                    conj += " )" + card + " ;";
-                }
-                return conj;
+                return this.createEachOf(attr, subSet);
             }
-
         }
 
         let shape = this.shm.getShape(attr.$.type);
@@ -265,8 +197,124 @@ class ShExAttributes {
     }
 
     /**
+     * Crea un OneOf
+     * @param attr  Atributo XMI que referencia al componente OneOf
+     * @param subSet    Componente XMI que representa el OneOf
+     * @returns {string}    ShEx OneOf
+     */
+    createOneOf(attr, subSet) {
+        let conj = "";
+        let card = this.shexcar.cardinalityOf(attr);
+        if(card !== "") {
+            conj = "\n (";
+        }
+        //Añadimos cada uno de los elementos de la clase subconjunto
+        //Separados por | como elementos del OneOf
+        for(let i = 0; i < subSet.attributes.length; i++) {
+            if(subSet.attributes[i].$.aggregation === "composite") {
+                conj += "\n("
+            }
+            conj += this.attributeToShEx(subSet.attributes[i]).content;
+            if(subSet.attributes[i].$.aggregation === "composite") {
+                conj += " );"
+            }
+            if(i < subSet.attributes.length - 1) {
+                conj += " |"
+            }
+        }
+        //Se añaden paréntesis si posee cardinalidad
+        if(card !== "") {
+            conj += ") " + card + ";";
+        }
+
+        return conj;
+    }
+
+    /**
+     * Crea un EachOf
+     * @param attr  Atributo XMI que referencia al componente EachOf
+     * @param subSet    Componente XMI que representa el EachOf
+     * @returns {string}    ShEx EachOf
+     */
+    createEachOf(attr, subSet) {
+        let card = this.shexcar.cardinalityOf(attr);
+        let conj = "";
+        if(card !== "") {
+            conj = "\n( ";
+        }
+        if(subSet.attributes) {
+            conj += this.attributesToShEx(subSet.attributes, true).content;
+        }
+        if(subSet.generalization){
+            conj += this.generalizationToShEx(subSet.generalization, true);
+        }
+        if(card !== "") {
+            conj += " )" + card + " ;";
+        }
+        return conj;
+    }
+
+    /**
+     * Crea una expresión etiquetada
+     * @param attr  Atributo XMI que referencia al componente etiquetado
+     * @param subSet    Componente XMI que representa la expresión etiquetada
+     * @returns {string}    ShEx Labelled Expr
+     */
+    createLabelled(attr, subSet) {
+        let conj = "\n\t" + attr.$.name +" (";
+        let card = this.shexcar.cardinalityOf(attr);
+        for(let i = 0; i < subSet.attributes.length; i++) {
+            conj += this.attributeToShEx(subSet.attributes[i]).content;
+        }
+        conj += ") " + card + ";";
+        return conj;
+    }
+
+    /**
+     * Crea una shape Anidada
+     * @param attr  Atributo XMI que referencia al componente
+     * @param subSet    Componente XMI que representa la shape anidada
+     * @returns {string}    ShEx Nested Shape
+     */
+    createNestedShape(attr, subSet) {
+        let card = this.shexcar.cardinalityOf(attr);
+        //La eliminamos de pendientes, puesto que es anidada
+        this.shm.deletePendingShExShape(attr.$.type);
+        let conj = "\n\t" + attr.$.name +" {";
+        if(subSet.attributes) {
+            conj += this.attributesToShEx(subSet.attributes, true).content;
+        }
+        if(subSet.gen){
+            conj += "\t" + this.generalizationToShEx(subSet.gen, true);
+        }
+        conj += "\n}" + card + ";";
+        return conj;
+    }
+
+    /**
+     * Crea una operación lógica, conjunción/disyunción de shapes
+     * @param subSet    Componente XMI que aúna las shapes
+     * @param lop   Operación lógica, AND/OR
+     * @returns {string}
+     */
+    createLogicOperation(subSet, lop) {
+        let conj = "";
+        if(subSet.attributes) {
+            //Primera Shape
+            conj += this.attributeToShEx(subSet.attributes[0]).content;
+            //El resto son precedidas por la OPLog
+            for(let i = 1; i < subSet.attributes.length; i++) {
+                conj += " }\n" + lop + " {";
+                conj += this.attributeToShEx(subSet.attributes[i]).content;
+            }
+        }
+        return conj;
+    }
+
+    /**
      * Crea una relación de herencia
      * @param gen   Generalización
+     * @param lop   Operación lógica: si es OR, se indica así en la gen.
      * @returns {string}    Equivalente en ShEx
      */
     generalizationToShEx(gen, lop) {
@@ -280,18 +328,27 @@ class ShExAttributes {
             }
             //Buscamos la Shape padre
             let refClass = this.shm.getShape(gen[i].$.general);
-            if(lop === "AND") {
-                generalizations += " " + inv + "@" + this.IRIManager.getShexTerm(refClass.name) + " AND"
-            }
-            else if(lop === "OR") {
-                generalizations += " " + inv + "@" + this.IRIManager.getShexTerm(refClass.name) + " OR"
-            }
-            else {
-                generalizations += "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(refClass.name) + "];"
-            }
-
+            generalizations += this.createGeneralization(refClass.name, inv, lop);
         }
         return generalizations;
+    }
+
+    /**
+     * Adapta una generalización XMI a ShEx
+     * @param name  Nombre de clase referenciada (shape)
+     * @param inv   Si es inversa
+     * @param lop   Operación lógica
+     * @returns {string}
+     */
+    createGeneralization(name, inv, lop) {
+        switch(lop){
+            case "AND":
+                return " " + inv + "@" + this.IRIManager.getShexTerm(name) + " AND";
+            case "OR":
+                return " " + inv + "@" + this.IRIManager.getShexTerm(name) + " OR";
+            default:
+                return "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(name) + "];";
+        }
     }
 
 }

@@ -82,7 +82,7 @@ class XMIConstraints {
     markAsExtra(id, values, name) {
         let vals = [];
         for(let i = 0; i < values.length; i++) {
-            let value = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(values[i]));
+            let value = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfIRI(values[i]));
             if(value === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 vals.push("a");
             }

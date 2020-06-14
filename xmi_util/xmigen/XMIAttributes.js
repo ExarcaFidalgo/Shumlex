@@ -36,7 +36,7 @@ class XMIAttributes {
         }
         //Si existe un atributo id, se trata de una expresión etiquetada.
         else if(expr.id !== undefined) {
-            let labelRef = "$" + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.id));
+            let labelRef = "$" + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfIRI(expr.id));
             let subExpr = JSON.parse(JSON.stringify(expr));
             //Eliminamos el id para que no lo identifique como expresión etiquetada de nuevo
             subExpr.id = undefined;
@@ -46,13 +46,13 @@ class XMIAttributes {
         }
         //Si es un tipo Inclusion, se trata de una referencia a una expresión etiquetada.
         else if(expr.type === "Inclusion") {
-            let labelRef = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.include));
+            let labelRef = this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfIRI(expr.include));
             attrs = this.xmiasoc.createXMIAsocAttribute("&#38;" + labelRef, this.xmisub.getLabelled("$" + labelRef),
                 expr.min, expr.max);
         }
-        //Una TripleConstraint alberga múltiples alternativas. Redigirimos a un método especializado.
+        //Una TripleConstraint alberga múltiples alternativas. Redirigimos a un método especializado.
         else if(expr.type === "TripleConstraint") {
-            attrs = this.determineTypeOfExpression(expr);
+            attrs = this.determineTypeOfExpression(expr, null);
         }
         //Expresión OneOf.
         else if(expr.type === "OneOf") {
@@ -105,7 +105,7 @@ class XMIAttributes {
     determineTypeOfExpression(expr, id, lop) {
         //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
         let inverse = (expr.inverse === true ? "^" : "");
-        let name = inverse + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfUri(expr.predicate));
+        let name = inverse + this.IRIManager.getShexTerm(this.irim.getPrefixedTermOfIRI(expr.predicate));
 
         if(!expr.valueExpr) {
             //Cualquier tipo: . (Wildcard)
@@ -223,6 +223,8 @@ class XMIAttributes {
      * Crea una generalización -relación de herencia- en XMI
      * @param parents   Padres de la clase
      * @param inv   Relación inversa
+     * @param idF   ID del padre
+     * @param nm   Nombre de la generalización
      * @returns {string}    Generalización XMI
      */
     createXMIGeneralization(parents, inv, idF, nm) {
@@ -251,21 +253,23 @@ class XMIAttributes {
                 }
                 //Generalización común
                 else if(parents[parent].reference){
-                    let sh = this.shm.findShape(parents[parent].reference, true);
-                    let id = this.unid();
-                    gens += this.XMIAux.createGen(id, sh.id, name);
+                    gens += this.createGenGivenShape(parents[parent].reference, true, name);
                 }
                 else {
                     for(let i = 0; i < parents[parent].length; i++) {
-                        let sh = this.shm.findShape(parents[parent][i], false);
-                        let id = this.unid();
-                        gens += this.XMIAux.createGen(id, sh.id, name);
+                        gens += this.createGenGivenShape(parents[parent][i], false, name);
                     }
                 }
 
             }
         }
         return gens;
+    }
+
+    createGenGivenShape(shape, save, name) {
+        let sh = this.shm.findShape(shape, false);
+        let id = this.unid();
+        return this.XMIAux.createGen(id, sh.id, name);
     }
 
     /**

@@ -1,6 +1,6 @@
 const uniqid = require("uniqid");
 const ShapeManager = require("../../managers/ShapeManager.js");
-const IRIManager = require("../../managers/irimanager");
+const IRIManager = require("../../managers/IRIManager");
 const XMIAssociations = require("./XMIAssociations.js");
 const XMIAttributes = require("./XMIAttributes.js");
 const XMICardinality = require("./XMICardinality.js");

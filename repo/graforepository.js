@@ -1,5 +1,8 @@
 class GrafoRepository {
 
+    /**
+     * Caso "relaciones y otros atributos"
+     */
     static getGrafo1() {
         return [
             {
@@ -289,6 +292,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "herencia simple"
+     */
     static getGrafo2() {
         return [
             {
@@ -440,6 +446,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "tipos de nodo"
+     */
     static getGrafo3() {
         return [
             {
@@ -687,6 +696,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "facetas de literales"
+     */
     static getGrafo4() {
         return [
             {
@@ -894,6 +906,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "rangos y exclusiones"
+     */
     static getGrafo5() {
         return [
             {
@@ -1115,6 +1130,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "conjuntos genéricos con exclusiones"
+     */
     static getGrafo6() {
         return [
             {
@@ -1252,6 +1270,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "etiquetas de lenguaje"
+     */
     static getGrafo7() {
         return [
             {
@@ -1435,6 +1456,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "cardinalidades aplicadas a conjuntos"
+     */
     static getGrafo8() {
         return [
             {
@@ -1670,6 +1694,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "OneOf"
+     */
     static getGrafo9() {
         return [
             {
@@ -1827,6 +1854,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "formas anidadas"
+     */
     static getGrafo10() {
         return [
             {
@@ -1976,6 +2006,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "formas cerradas"
+     */
     static getGrafo11() {
         return [
             {
@@ -2169,6 +2202,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "restricción triple inversa"
+     */
     static getGrafo12() {
         return [
             {
@@ -2264,6 +2300,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "EXTRA"
+     */
     static getGrafo13() {
         return [
             {
@@ -2345,6 +2384,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "expresiones etiquetadas"
+     */
     static getGrafo14() {
         return [
             {
@@ -2482,6 +2524,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "conjunciones"
+     */
     static getGrafo15() {
         return [
             {
@@ -2773,6 +2818,9 @@ class GrafoRepository {
         ];
     }
 
+    /**
+     * Caso "disyunciones"
+     */
     static getGrafo16() {
         return [
             {

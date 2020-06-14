@@ -1,7 +1,7 @@
 const plantumlEncoder = require('../modules/plantuml-encoder');
-const $ = require('./jquery-3.4.1.min.js');
+const $ = require('jquery');
 
-const IRIManager = require("../managers/irimanager.js");
+const IRIManager = require("../managers/IRIManager.js");
 const xmiparser = require('../xmi_util/XMIParser.js');
 const irim = new IRIManager();
 
@@ -43,7 +43,7 @@ function parseXMIToPUML(xmi) {
     let pumlEquivalent = "";
 
     let source = xmiparser.parseXMI(xmi);
-    console.log(source);
+    //console.log(source);
 
     let ownedRules = source["uml:Model"]["ownedRule"];
     //Guardar en constraints las restricciones
@@ -110,7 +110,6 @@ function parseXMIToPUML(xmi) {
         }
 
     } catch (ex) {
-        console.log(ex);
         alert("Se ha producido un error durante la generación de UML.\n" +
             "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
             + ex);

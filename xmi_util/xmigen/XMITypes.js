@@ -27,28 +27,28 @@ class XMITypes {
                     name: "Any"
                 };
             case this.getXSDTypes(type):
-                let last = this.irim.getPrefixedTermOfUri(type);
+                let last = this.irim.getPrefixedTermOfIRI(type);
                 return {
                     primitive: true,
                     name: last === "int" ? "integer" : last,
-                    uri: type
+                    iri: type
                 };
             default:
                 return {
                     primitive: false,
-                    name: this.irim.getPrefixedTermOfUri(type),
-                    uri: type
+                    name: this.irim.getPrefixedTermOfIRI(type),
+                    iri: type
                 };
         }
     }
 
     /**
      * Indica si la IRI coincide con uno de los tipos XSD reconocidos
-     * @param uri   IRI
+     * @param iri   IRI
      * @returns {string}    Tipo XSD si coincide, o vacío
      */
-    getXSDTypes(uri) {
-        let type = this.irim.getPrefixedTermOfUri(uri).split(":").pop();
+    getXSDTypes(iri) {
+        let type = this.irim.getPrefixedTermOfIRI(iri).split(":").pop();
         let xsdtypes = [];
         xsdtypes.push("string", "date",     //Dates
             "byte", "int", "integer", "long", "short",    //Numeric
@@ -56,23 +56,23 @@ class XMITypes {
         if(xsdtypes.includes(type)) {
             return "http://www.w3.org/2001/XMLSchema#" + type;
         }
-        return ""
+        return "";
     }
 
     /**
      * Busca un Datatype por nombre, o lo guarda si no existe
      * @param name  Nombre DT
-     * @param uri   IRI DT
+     * @param iri   IRI DT
      * @returns {*} Datatype
      */
-    findDataType(name, uri) {
+    findDataType(name, iri) {
         for(let i = 0; i < this.datatypes.length; i++) {
             if(name === this.datatypes[i].name) {
                 return this.datatypes[i];
             }
         }
 
-        let dt = {id: this.unid(), name: name, uri: uri};
+        let dt = {id: this.unid(), name: name, iri: iri};
         this.datatypes.push((dt));
         return dt;
     }

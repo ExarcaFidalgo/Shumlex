@@ -4,7 +4,7 @@ let dagre = require('cytoscape-dagre');
 const panzoom = require('cytoscape-panzoom');
 cyto.use( dagre );
 panzoom( cyto );
-const IRIManager = require("../managers/irimanager.js");
+const IRIManager = require("../managers/IRIManager.js");
 const shexparser = require('../shex_util/ShExParser.js');
 const shExCardinality = require('../shex_util/shexgen/ShExCardinality.js');
 
@@ -79,7 +79,7 @@ function shExAGrafo(text) {
             //Extraemos el ID generado anteriormente
             let id = irim.findIri(shape);
             let sh = source.shapes[shape];
-            let shapeName = getShExTerm(irim.getPrefixedTermOfUri(shape));
+            let shapeName = getShExTerm(irim.getPrefixedTermOfIRI(shape));
             elements.push(createNode(id, shapeName));
 
             elements = elements.concat(checkClosed(sh, id));
@@ -94,7 +94,7 @@ function shExAGrafo(text) {
                     lop = "OR"
                 }
                 let nOfShapes = 0;
-                //Contar el número de Shapes en la conjunción
+                //Contar el número de Shapes en la operación
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
                     if (sh.shapeExprs[i].type === "Shape") {
                         nOfShapes++;
@@ -103,39 +103,44 @@ function shExAGrafo(text) {
                 for (let i = 0; i < sh.shapeExprs.length; i++) {
                     // Herencia - :User :Person AND {}
                     if (sh.shapeExprs[i].type === "ShapeRef") {
+                        //Si es una ShapeOr, marcamos la herencia como opcional, OR
                         let rname = lop === "OR" ? "OR" : "a";
                         elements = elements.concat(createInheritance(sh.shapeExprs[i], id, rname));
                     }
                     // Restricción tipo nodal - :User Literal AND
                     else if (sh.shapeExprs[i].type === "NodeConstraint") {
+                        //Si es una ShapeOr, marcamos la restricción como opcional.
                         let rname = lop === "OR" ? lop : "";
                         elements = elements.concat(createNodeKind(sh.shapeExprs[i], id, rname));
                     }
-                    //Conjunción de formas - :User { ... } AND { ... }
+                    //Conjunción o disyunción de formas - :User { ... } AND { ... }
                     else {
                         let idMid = getID();
-                        //Comprobar si hay solo una Shape, en cuyo caso no representaremos el AND,
-                        // puesto que solo habría 1 hijo
+                        //Comprobar si hay shapes. Si solo hay herencia/tipo de nodo no se genera nodo intermedio.
                         if(nOfShapes > 0) {
+                            //Comprobar si el nodo intermedio ya existe
                             let andAtr = andShs.get(shapeName);
+                            //Crearlo si no
                             if(!andAtr) {
                                 andAtr = getID();
+                                //El nodo intermedio tiene como nombre AND/OR
                                 elements = elements.concat(createToNode(andAtr, lop, "", id));
                                 andShs.set(shapeName, andAtr);
                             }
                             elements = elements.concat(createToNode(idMid, '', "", andAtr));
                         }
 
+                        //Creamos los elementos restantes como hijos de la shape o del nodo intermedio, si existe.
                         let expFather = nOfShapes > 0 ? idMid : id;
 
                         elements = elements.concat(checkClosed(sh.shapeExprs[i], expFather));
-                        //Generar los elementos del grafo correspondientes a la expresión actual de la ShapeAnd
+                        //Generar los elementos del grafo correspondientes a la expresión actual
                         let ats = checkExpression(sh.shapeExprs[i].expression, expFather);
                         elements = elements.concat(ats);
                     }
                 }
             }
-            //No es ShapeAnd, sino Shape
+            //No es ShapeAnd/ShapeOr, sino Shape
             else {
                 let ats = checkExpression(sh.expression, id);
                 elements = elements.concat(ats);
@@ -165,7 +170,7 @@ function checkClosed(shape, id) {
 
 /**
  * Comprueba si es una Shape con EXTRA.
- * En caso afirmativo añade una asociación a un nodo EXTRA, cuyos hijos serán las respectivas URIs
+ * En caso afirmativo añade una asociación a un nodo EXTRA, cuyos hijos serán las respectivas IRIs
  * @param shape Shape
  * @param id    ID padre
  * @returns {Array} Elementos del grafo generados
@@ -175,14 +180,14 @@ function checkExtra(shape, id) {
     if (shape.extra) {
         let idn = getID();
         elements = elements.concat(createToNode(idn, "EXTRA", "", id));
-        //Generamos los hijos de EXTRA: todas las URI del array extra
+        //Generamos los hijos de EXTRA: todas las IRI del array extra
         for(let i = 0; i < shape.extra.length; i++) {
             let nname = shape.extra[i];
             if(nname === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
                 nname = "a";
             }
             else {
-                nname = getShExTerm(irim.getPrefixedTermOfUri(nname));
+                nname = getShExTerm(irim.getPrefixedTermOfIRI(nname));
             }
             elements = elements.concat(createToNode(getID(), nname,
                 "", idn));
@@ -225,6 +230,7 @@ function createNodeKind(shape, id, name) {
  * Crea una relación de herencia
  * @param shape Shape hija
  * @param id    ID del nodo correspondiente a la shape padre
+ * @param name    Nombre de la relación. P.e., si es :Princeps :User OR
  * @returns {Array} Elementos generados
  */
 function createInheritance(shape, id, name){
@@ -235,7 +241,7 @@ function createInheritance(shape, id, name){
         target = shape.reference;
         let id = getID();
         irim.saveIri(target, id);
-        elements.push(createNode(id, irim.getPrefixedTermOfUri(target)));
+        elements.push(createNode(id, irim.getPrefixedTermOfIRI(target)));
     }
     elements.push(createRelation((name !== undefined ? name : "a" ), id, irim.findIri(shape.reference)));
     return elements;
@@ -293,7 +299,7 @@ function checkExpression(expr, father, dep) {
 function createLabel(expr, father, depth) {
     let attrs = [];
     //La etiqueta de la expresión es el ID
-    let label = irim.getPrefixedTermOfUri(expr.id);
+    let label = irim.getPrefixedTermOfIRI(expr.id);
     //La referencia se crea añadiendo $
     let labelRef = "$" + label;
     let id = getID();
@@ -321,8 +327,8 @@ function createLabelRef(expr, father) {
     //Se crea relación entre el padre y el nodo anónimo que abarca la expresión etiquetada, cuyo id obtenemos
     // a partir de la etiqueta.
     //El nombre de la relación es &<etiqueta>
-    attrs.push(createRelation('&' + irim.getPrefixedTermOfUri(expr.include) + ' ' + shExCardinality.cardinalityOf(expr),
-        father, labels.get(irim.getPrefixedTermOfUri(expr.include))));
+    attrs.push(createRelation('&' + irim.getPrefixedTermOfIRI(expr.include) + ' ' + shExCardinality.cardinalityOf(expr),
+        father, labels.get(irim.getPrefixedTermOfIRI(expr.include))));
     return attrs;
 }
 
@@ -399,13 +405,13 @@ function determineTypeOfExpression(expr, father, fname) {
 
     //Si tiene predicado, lo prefijamos, añadimos inverso -si existe- y cardinalidad
     if(expr.predicate) {
-        name = inverse + getShExTerm(irim.getPrefixedTermOfUri(expr.predicate))
+        name = inverse + getShExTerm(irim.getPrefixedTermOfIRI(expr.predicate))
             + shExCardinality.cardinalityOf(expr);
     }
 
     if(!expr.valueExpr) {
         if(expr.type === "NodeConstraint") {
-            attrs = attrs.concat(checkShapeAndExprs(expr, father, fname));
+            attrs = attrs.concat(createDTFromShapeLOPExprs(expr, father, fname));
         }
         else {
             //Cualquier tipo: . (Wildcard)
@@ -455,13 +461,13 @@ function determineTypeOfExpression(expr, father, fname) {
 }
 
 /**
- * Genera un nodo AND y añade la expresión como su hija
- * @param expr  Expresión
+ * Genera un nodo operación lógica, AND/OR y añade la expresión como su hija Datatype
+ * @param expr  Expresión de la ShapeAnd/ShapeOr
  * @param father    ID nodo padre
  * @param fname Nombre del padre
  * @returns {Array} Elementos del grafo generados
  */
-function checkShapeAndExprs(expr, father, fname) {
+function createDTFromShapeLOPExprs(expr, father, fname) {
     let attrs = [];
     let andAtr = andShs.get(fname);
     if(!andAtr) {
@@ -502,7 +508,7 @@ function createNCType(expr, father) {
         target = expr.valueExpr.values[0];
         let id = getID();
         irim.saveIri(target, id);
-        attrs.push(createNode(id, irim.getPrefixedTermOfUri(target)));
+        attrs.push(createNode(id, irim.getPrefixedTermOfIRI(target)));
     }
     let inverse = (expr.inverse === true ? "^" : "");
     attrs.push(createRelation(inverse + "a", father, irim.findIri(expr.valueExpr.values[0])));
@@ -536,7 +542,7 @@ function createEnumeration(expr, name, father) {
             //IRIStem - wo:~
             else if(vl.type === "IriStem") {
                 attrs = attrs.concat(createToNode(ide,
-                    getShExTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~", "", idv));
+                    getShExTerm(irim.getPrefixedTermOfIRI(vl.stem)) + "~", "", idv));
             }
             //IRIStemRange - wo:~ - wo:lo
             else if(vl.type === "IriStemRange") {
@@ -561,7 +567,7 @@ function createEnumeration(expr, name, father) {
             //vl de tipo IRI
             else {
                 attrs = attrs.concat(createToNode(ide,
-                    getShExTerm(irim.getPrefixedTermOfUri(vl)), "", idv));
+                    getShExTerm(irim.getPrefixedTermOfIRI(vl)), "", idv));
             }
         }
     }
@@ -587,7 +593,7 @@ function checkStemRange(vl, ide, idv, type) {
             //Obtenemos el término prefijado de la IRI
             case "IriStem":
                 attrs = attrs.concat(createToNode(ide,
-                    getShExTerm(irim.getPrefixedTermOfUri(vl.stem)) + "~ ", "", idv));
+                    getShExTerm(irim.getPrefixedTermOfIRI(vl.stem)) + "~ ", "", idv));
                 break;
             //Representamos el literal sin cambios
             case "LiteralStem":
@@ -613,7 +619,7 @@ function checkStemRange(vl, ide, idv, type) {
             switch(type) {
                 case "IriStem":
                     attrs = attrs.concat(createToNode(idx,
-                        getShExTerm(irim.getPrefixedTermOfUri(excl.stem)) + "~",
+                        getShExTerm(irim.getPrefixedTermOfIRI(excl.stem)) + "~",
                         "-", ide));
                     break;
                 case "LiteralStem":
@@ -628,7 +634,7 @@ function checkStemRange(vl, ide, idv, type) {
         else {
             switch(type) {
                 case "IriStem":
-                    attrs = attrs.concat(createToNode(idx, getShExTerm(irim.getPrefixedTermOfUri(excl))
+                    attrs = attrs.concat(createToNode(idx, getShExTerm(irim.getPrefixedTermOfIRI(excl))
                         , "-", ide));
                     break;
                 case "LiteralStem":
@@ -657,7 +663,7 @@ function createDatatype(expr, name, father) {
         let id = getID();
         let facets = checkFacets(expr.valueExpr, id);
         attrs = attrs.concat(facets);
-        attrs = attrs.concat(createToNode(id, irim.getPrefixedTermOfUri(expr.valueExpr.datatype), name, father));
+        attrs = attrs.concat(createToNode(id, irim.getPrefixedTermOfIRI(expr.valueExpr.datatype), name, father));
     }
     //Es parte de un AND, por ejemplo (:productId xsd:string AND MINLENGTH 5 AND MAXLENGTH 10)
     else {
@@ -667,7 +673,7 @@ function createDatatype(expr, name, father) {
         if(expr.datatype) {
             let idd = getID();
             //En este caso no se recibe nombre de relación, asignamos datatype
-            attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfUri(expr.datatype), "datatype", father));
+            attrs = attrs.concat(createToNode(idd, irim.getPrefixedTermOfIRI(expr.datatype), "datatype", father));
         }
     }
     return attrs;
@@ -722,7 +728,7 @@ function createShapeAnd(expr, father) {
     //Generamos cada uno de ellos
     for(let i = 0; i < expr.valueExpr.shapeExprs.length; i++) {
         attrs = attrs.concat(
-            determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfUri(expr.predicate)));
+            determineTypeOfExpression(expr.valueExpr.shapeExprs[i], father, irim.getPrefixedTermOfIRI(expr.predicate)));
     }
     return attrs;
 }

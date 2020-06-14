@@ -32,7 +32,7 @@ class XMIComposition {
         let pendingShapes = this.shm.getPendingShapes();
         for(let i = 0; i < pendingShapes.length; i++) {
             let ps = pendingShapes[i];
-            classXMI += this.XMIAux.createPackEl("uml:Class", ps.id, 'name="' + this.irim.getPrefixedTermOfUri(ps.name)+ '"',
+            classXMI += this.XMIAux.createPackEl("uml:Class", ps.id, 'name="' + this.irim.getPrefixedTermOfIRI(ps.name)+ '"',
                 "");
         }
         this.shm.clearPendingShapes();
