@@ -565,41 +565,42 @@ class Xmirepository {
     static getXMI12() {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<uml:Model xmi:version=\"2.1\" xmlns:xmi=\"http://schema.omg.org/spec/XMI/2.1\" xmlns:uml=\"http://www.eclipse.org/uml2/3.0.0/UML\"\n" +
-            " xmi:id=\"kbaoidci\" name=\"ShExGeneratedXMI\">\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidcn\" name=\":HomePage\">\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbaoidcr\" name=\"nodeKind\" visibility=\"public\" type=\"kbaoidcq\" isUnique=\"true\">\n" +
+            " xmi:id=\"kbeb8bdg\" name=\"ShExGeneratedXMI\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbeb8bdl\" name=\":HomePage\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbeb8bdp\" name=\"nodeKind\" visibility=\"public\" type=\"kbeb8bdo\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidco\" name=\":CanVoteAge\">\n" +
-            "\t<ownedAttribute xmi:id=\"kbaoidco\" name=\"datatype\" visibility=\"public\" isUnique=\"false\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbeb8bdm\" name=\":CanVoteAge\">\n" +
+            "\t<ownedAttribute xmi:id=\"kbeb8bdm\" name=\"datatype\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer\">\n" +
             "\t\t</type>\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<ownedRule xmi:id=\"kbaoidct\" name=\"MinInclusive 18\" constrainedElement=\"kbaoidco\">\n" +
+            "<ownedRule xmi:id=\"kbeb8bds\" name=\"MinInclusive 18\" constrainedElement=\"kbeb8bdm\">\n" +
             "<specification body=\"MinInclusive 18\" xmi:type=\"uml:OpaqueExpression\"/>\n" +
-            "<ownedComment annotatedElement=\"n1894kbe94plm\" xmi:id=\"\" xmi:type=\"uml:Comment\">\n" +
-            "<body>n1894kbe94plh</body>\n" +
+            "<ownedComment annotatedElement=\"kbeb8bdr\" xmi:id=\"kbeb8bdt\" xmi:type=\"uml:Comment\">\n" +
+            "<body>kbeb8bdm</body>\n" +
             "</ownedComment>\n" +
             "\n" +
             "</ownedRule>\n" +
-            "<ownedRule xmi:id=\"\" name=\"TotalDigits 3\" constrainedElement=\"kbaoidco\">\n" +
+            "<ownedRule xmi:id=\"kbeb8bdv\" name=\"TotalDigits 3\" constrainedElement=\"kbeb8bdm\">\n" +
             "<specification body=\"TotalDigits 3\" xmi:type=\"uml:OpaqueExpression\"/>\n" +
-            "<ownedComment annotatedElement=\"n1894kbe94plp\" xmi:id=\"\" xmi:type=\"uml:Comment\">\n" +
-            "<body>n1894kbe94plh</body>\n" +
-            "</ownedComment>\n\n" +
+            "<ownedComment annotatedElement=\"kbeb8bdu\" xmi:id=\"kbeb8bdw\" xmi:type=\"uml:Comment\">\n" +
+            "<body>kbeb8bdm</body>\n" +
+            "</ownedComment>\n" +
+            "\n" +
             "</ownedRule>\n" +
-            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbaoidcp\" name=\":Special\">\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbaoidcv\" name=\"datatype\" visibility=\"public\" type=\"kbaoidcw\" isUnique=\"true\">\n" +
+            "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"kbeb8bdn\" name=\":Special\">\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kbeb8bdx\" name=\"datatype\" visibility=\"public\" type=\"kbeb8bdy\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kbaoidcm\" name=\"Prefixes\">\n" +
-            "\t<ownedLiteral xmi:id=\"kbaoidcj\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"kbaoidck\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"kbaoidcl\" name=\"base &lt;http://example.org/>\"/>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kbeb8bdk\" name=\"Prefixes\">\n" +
+            "\t<ownedLiteral xmi:id=\"kbeb8bdh\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbeb8bdi\" name=\"prefix : &lt;http://schema.org/>\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kbeb8bdj\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbaoidcw\" name=\":custom\"/>\n" +
-            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbaoidcq\" name=\"IRI\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbeb8bdy\" name=\":custom\"/>\n" +
+            "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kbeb8bdo\" name=\"IRI\"/>\n" +
             "</uml:Model>";
     }
 
