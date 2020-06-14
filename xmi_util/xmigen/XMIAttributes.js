@@ -267,7 +267,7 @@ class XMIAttributes {
     }
 
     createGenGivenShape(shape, save, name) {
-        let sh = this.shm.findShape(shape, false);
+        let sh = this.shm.findShape(shape, save);
         let id = this.unid();
         return this.XMIAux.createGen(id, sh.id, name);
     }
