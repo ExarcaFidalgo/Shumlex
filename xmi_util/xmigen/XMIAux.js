@@ -18,6 +18,7 @@ class XMIAux {
     /**
      * Genera un comentario en XMI
      * @param comment   Comentario
+     * @param anEl   AnnotatedElement
      * @returns {string}    Comentario XMI
      */
     static createXMIOwnedComment(comment, anEl) {
@@ -171,6 +172,7 @@ class XMIAux {
      * Crea una Generalization
      * @param id    XMI:ID
      * @param idgen ID General (Padre)
+     * @param name Nombre de la generalización
      * @returns {string}    XMI Generalization
      */
     static createGen(id, idgen, name) {

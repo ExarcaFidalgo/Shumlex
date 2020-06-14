@@ -38,62 +38,16 @@ class XMIClass {
             this.shm.incrementBlank();
         }
         let ats = "";
-        let subClassName = this.xmisub.getComponentNumber();
+
         if(shape.type === "ShapeAnd") {
-            let nOfShapes = 0;
-            //Contar el número de Shapes en la conjunción
-            let exprsForGen = [];
-            let exprsForComp = [];
-            for (let i = 0; i < shape.shapeExprs.length; i++) {
-                if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
-                    || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
-                    exprsForGen.push(shape.shapeExprs[i]);
-                }
-                else if (shape.shapeExprs[i].type === "Shape" && shape.shapeExprs[i].expression
-                    && shape.shapeExprs[i].expression.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-                    exprsForGen.push(shape.shapeExprs[i].expression.valueExpr.values);
-                }
-                else {
-                    nOfShapes++;
-                    exprsForComp.push(shape.shapeExprs[i]);
-                    //:User IRI CLOSED {...}
-                    if(shape.shapeExprs[i].closed === true) {
-                        this.xmicon.markAsClosed(sh.id);
-                    }
-                }
-            }
-            if(nOfShapes > 0) {
-                ats += this.xmiatt.createComponent("AND", subClassName, exprsForComp);
-            }
-            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id);
+            let shAnAt = this.checkLOPShape(shape, sh, "AND");
+            ats = shAnAt.ats;
+            generalizations = shAnAt.generalizations;
         }
         else if(shape.type === "ShapeOr") {
-            let nOfShapes = 0;
-            //Contar el número de Shapes en la conjunción
-            let exprsForGen = [];
-            let exprsForComp = [];
-            for (let i = 0; i < shape.shapeExprs.length; i++) {
-                if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
-                    || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
-                    exprsForGen.push(shape.shapeExprs[i]);
-                }
-                else if (shape.shapeExprs[i].type === "Shape" && shape.shapeExprs[i].expression
-                    && shape.shapeExprs[i].expression.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-                    exprsForGen.push(shape.shapeExprs[i].expression.valueExpr.values);
-                }
-                else {
-                    nOfShapes++;
-                    exprsForComp.push(shape.shapeExprs[i]);
-                    //:User IRI CLOSED {...}
-                    if(shape.shapeExprs[i].closed === true) {
-                        this.xmicon.markAsClosed(sh.id);
-                    }
-                }
-            }
-            if(nOfShapes > 0) {
-                ats += this.xmiatt.createComponent("OR", subClassName, exprsForComp);
-            }
-            generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id, "OR");
+            let shOrAt = this.checkLOPShape(shape, sh, "OR");
+            ats = shOrAt.ats;
+            generalizations = shOrAt.generalizations;
         }
         //Si no es una ShapeAnd, generar atributos de modo corriente
         else {
@@ -131,6 +85,57 @@ class XMIClass {
         return classXMI;
     }
 
+    /**
+     * Genera XMI para Shapes de tipo And o OR
+     * @param shape Shape
+     * @param sh    Shape recuperada
+     * @param lop   Operación lógica, AND o OR
+     * @returns {{ats: string, generalizations: string}}
+     */
+    checkLOPShape(shape, sh, lop) {
+        let nOfShapes = 0;
+        //Contar el número de Shapes en la conjunción
+        let exprsForGen = [];
+        let exprsForComp = [];
+
+        let ats = "";
+        let generalizations = "";
+        for (let i = 0; i < shape.shapeExprs.length; i++) {
+            if(shape.shapeExprs[i].type === "ShapeRef"      // Herencia - :User :Person AND {}
+                || shape.shapeExprs[i].type === "NodeConstraint") { // Restricción Nodal - :Thing Literal AND {}
+                exprsForGen.push(shape.shapeExprs[i]);
+            }
+            else if (shape.shapeExprs[i].type === "Shape" && shape.shapeExprs[i].expression
+                && shape.shapeExprs[i].expression.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                exprsForGen.push(shape.shapeExprs[i].expression.valueExpr.values);
+            }
+            else {
+                nOfShapes++;
+                exprsForComp.push(shape.shapeExprs[i]);
+                //:User IRI CLOSED {...}
+                if(shape.shapeExprs[i].closed === true) {
+                    this.xmicon.markAsClosed(sh.id);
+                }
+            }
+        }
+        if(nOfShapes > 0) {
+            let subClassName = this.xmisub.getComponentNumber();
+            ats = this.xmiatt.createComponent(lop, subClassName, exprsForComp);
+        }
+        switch(lop) {
+            case "AND":
+                generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id);
+                break;
+            case "OR":
+                generalizations = this.xmiatt.createXMIGeneralization(exprsForGen, false, sh.id, "OR");
+                break;
+        }
+
+        return {
+            ats: ats,
+            generalizations: generalizations
+        };
+    }
 
 }
 module.exports = XMIClass;

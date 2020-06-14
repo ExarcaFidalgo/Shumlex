@@ -4,7 +4,7 @@
 class XMIComposition {
 
     constructor (shm, xmiats, irim, XMIAux, xmicon, xmiasoc) {
-        this.componentsCounter = 0;
+        this.componentsCounter = 1;
         this.components = [];
         this.labels = new Map();
 
@@ -42,10 +42,9 @@ class XMIComposition {
 
     /**
      * Obtiene el número pertinente para un componente
-     * @param className Nombre de la clase
      * @returns {string}    Nombre de la clase con número
      */
-    getComponentNumber(className) {
+    getComponentNumber() {
             return "_Blank" + this.componentsCounter++;
     }
 
@@ -57,10 +56,20 @@ class XMIComposition {
         this.components.push(sub);
     }
 
+    /**
+     * Guarda una referencia a expresión etiquetada
+     * @param labelRef  Referencia
+     * @param comp  Componente referenciado
+     */
     saveLabel(labelRef, comp) {
         this.labels.set(labelRef, comp);
     }
 
+    /**
+     * Retorna un componente etiquetado según referencia
+     * @param labelRef  Etiqueta
+     * @returns {any}
+     */
     getLabelled(labelRef) {
         return this.labels.get(labelRef);
     }
@@ -69,7 +78,7 @@ class XMIComposition {
      * Resetea los registros
      */
     clear() {
-        this.componentsCounter = 0;
+        this.componentsCounter = 1;
         this.components = [];
     }
 

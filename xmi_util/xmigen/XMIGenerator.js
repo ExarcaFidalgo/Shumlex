@@ -80,12 +80,20 @@ class XMIGenerator {
         return base;
     }
 
+    /**
+     * Comprueba si una shape es anónima e incrementa el correspondiente contador
+     * @param shape Shape
+     */
     checkAnon(shape) {
         if (/^_:[0-9]+$/.test(shape)) {
             this.shm.incrementBlank();
         }
     }
 
+    /**
+     * Guarda una shape
+     * @param shape Shape
+     */
     saveShape(shape) {
         this.shm.findShape(shape, false);
     }

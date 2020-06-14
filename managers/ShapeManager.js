@@ -18,10 +18,10 @@ class ShapeManager {
      * Dado un nombre de Shape, la devuelve si existe.
      * Para las shapes almacenadas de cara a generar XMI.
      * @param name  Nombre de la Shape
-     * @param save  Indica si debe marcarse como pendiente, en caso de que no existe
+     * @param pending  Indica si debe marcarse como pendiente, en caso de que no existe
      * @returns {*}
      */
-    findShape(name, save) {
+    findShape(name, pending) {
         for(let i = 0; i < this.XMIshapes.length; i++) {
             if(name === this.XMIshapes[i].name) {
                 return this.XMIshapes[i];
@@ -33,7 +33,7 @@ class ShapeManager {
         this.XMIshapes.push(shape);
 
         //Marcar como pendiente
-        if(save) {
+        if(pending) {
             this.pendingXMIShapes.push(shape);
         }
         return shape;

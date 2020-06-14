@@ -95,40 +95,11 @@ class XMIEnumerations {
             }
             //IRIStemRange - wo:~ - wo:lo
             else if(enm.values[j].type === "IriStemRange") {
-                if(enm.values[j].stem.type === "Wildcard") {
-                    value = ". "
-                }
-                else {
-                    value =  this.irim.getPrefixedTermOfIRI(enm.values[j].stem) + "~ ";
-                }
-
-                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
-                    let excl = enm.values[j].exclusions[k];
-                    if(excl.type === "IriStem") {
-                        value += "- " + this.irim.getPrefixedTermOfIRI(excl.stem) + "~ ";
-                    }
-                    else {
-                        value += "- " + this.irim.getPrefixedTermOfIRI(excl) + " ";
-                    }
-                }
+                value = this.checkStemRange(enm.values[j], "IriStem");
             }
             //LiteralStemRange - "aa"~ - "aab"
             else if(enm.values[j].type === "LiteralStemRange") {
-                if(enm.values[j].stem.type === "Wildcard") {
-                    value = ". "
-                }
-                else {
-                    value = XMIEnumerations.checkLiteralStem(enm.values[j].stem) + "~ ";
-                }
-                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
-                    let excl = enm.values[j].exclusions[k];
-                    if(excl.type === "LiteralStem") {
-                        value += "- " + XMIEnumerations.checkLiteralStem(excl.stem) + "~ ";
-                    }
-                    else {
-                        value += "- " + XMIEnumerations.checkLiteralStem(excl) + " ";
-                    }
-                }
+                value = this.checkStemRange(enm.values[j], "LiteralStem");
             }
             //Etiqueta de lenguaje: @es
             else if(enm.values[j].type === "Language") {
@@ -140,21 +111,7 @@ class XMIEnumerations {
             }
             //LanguageStemRange: @es~ - @es-AR
             else if(enm.values[j].type === "LanguageStemRange") {
-                if(enm.values[j].stem.type === "Wildcard") {
-                    value = ". "
-                }
-                else {
-                    value = "@" + enm.values[j].stem + "~ ";
-                }
-                for(let k = 0; k < enm.values[j].exclusions.length; k++) {
-                    let excl = enm.values[j].exclusions[k];
-                    if(excl.type === "LanguageStem") {
-                        value += "- @" +excl.stem + "~ ";
-                    }
-                    else {
-                        value += "- @" + excl + " ";
-                    }
-                }
+                value = this.checkStemRange(enm.values[j], "LanguageStem");
             }
             //vl de tipo IRI
             else {
@@ -164,6 +121,72 @@ class XMIEnumerations {
         }
         return this.XMIAux.createPackEl("uml:Enumeration", enm.id,
             'name="' + this.irim.getPrefixedTermOfIRI(enm.name) + '"', int);
+    }
+
+    /**
+     * Genera el XMI correspondiente a un StemRange
+     * @param vl    Valor del Enum
+     * @param type  Tipo de Stem: IriStem, LiteralStem, LanguageStem
+     * @returns {string}    Equivalente XMI
+     */
+    checkStemRange(vl, type) {
+        let value = "";
+        // Stem del tipo . - wo:lolo "14"
+        if(vl.stem.type === "Wildcard") {
+            value = ". ";
+        }
+        else {
+            switch(type) {
+                //Obtenemos el término prefijado de la IRI
+                case "IriStem":
+                    value =  this.irim.getPrefixedTermOfIRI(vl.stem) + "~ ";
+                    break;
+                //Representamos el literal sin cambios
+                case "LiteralStem":
+                    value = XMIEnumerations.checkLiteralStem(vl.stem) + "~ ";
+                    break;
+                //Añadimos @
+                case "LanguageStem":
+                    value = "@" + vl.stem + "~ ";
+                    break;
+            }
+        }
+
+        //Generamos las exclusiones, como nodos hijos del stem
+        //La relación se llama "-"
+        for(let k = 0; k < vl.exclusions.length; k++) {
+            let excl = vl.exclusions[k];
+            //La exclusión es asimismo un stem (- codes:bad.~)
+            //El valor está en excl.stem y se añade un ~
+            if(excl.type === type) {
+                switch(type) {
+                    case "IriStem":
+                        value += "- " + this.irim.getPrefixedTermOfIRI(excl.stem) + "~ ";
+                        break;
+                    case "LiteralStem":
+                        value += "- " + XMIEnumerations.checkLiteralStem(excl.stem) + "~ ";
+                        break;
+                    case "LanguageStem":
+                        value += "- @" +excl.stem + "~ ";
+                        break;
+                }
+            }
+            //La exclusión es un valor simple; el valor es excl
+            else {
+                switch(type) {
+                    case "IriStem":
+                        value += "- " + this.irim.getPrefixedTermOfIRI(excl) + " ";
+                        break;
+                    case "LiteralStem":
+                        value += "- " + XMIEnumerations.checkLiteralStem(excl) + " ";
+                        break;
+                    case "LanguageStem":
+                        value += "- @" + excl + " ";
+                        break;
+                }
+            }
+        }
+        return value;
     }
 
     /**

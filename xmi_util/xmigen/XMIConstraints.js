@@ -33,6 +33,7 @@ class XMIConstraints {
      * Comprueba si existen facetas y genera las restricciones pertinentes
      * @param vex   ValueExpr
      * @param id    ID Shape
+     * @param addon    Añadido a la faceta: OR...
      */
     checkFacets(vex, id, addon) {
         let add = addon !== undefined ? (addon + " ") : "";
