@@ -29,14 +29,22 @@ class ShExClass {
         if(element.generalization) {
             brackets = true;
             //En el caso de que sea una shapeAnd
-            //Generalizacion con AND
-            if(element.ownedAttribute && element.ownedAttribute[0].$.name === "AND") {
-                header += this.shexat.generalizationToShEx(element.generalization, "AND");
+            let created = false;
+            if(element.ownedAttribute) {
+                for(let i = 0; i < element.ownedAttribute.length; i++) {
+                    if(element.ownedAttribute[i].$.name === "AND") {
+                        header += this.shexat.generalizationToShEx(element.generalization, "AND");
+                        created = true;
+                        break;
+                    }
+                    else if(element.ownedAttribute[i].$.name === "OR") {
+                        header += this.shexat.generalizationToShEx(element.generalization, "OR");
+                        created = true;
+                        break;
+                    }
+                }
             }
-            else if(element.ownedAttribute && element.ownedAttribute[0].$.name === "OR") {
-                header += this.shexat.generalizationToShEx(element.generalization, "OR");
-            }
-            else {
+            if(!element.ownedAttribute || !created) {
                 content += this.shexat.generalizationToShEx(element.generalization);
             }
         }

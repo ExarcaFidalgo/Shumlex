@@ -108,8 +108,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
     });
 
     test('VP: Tipos de Nodo', () => {
-        //Pendiente de arreglo
-        //checkGen(XMIRep.getXMI7VP(), ShExRep.getShex7());
+        checkGen(XMIRep.getXMI7VP(), ShExRep.getShex7());
     });
 
     test('VP: Facetas de literales', () => {
