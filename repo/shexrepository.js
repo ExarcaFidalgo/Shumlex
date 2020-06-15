@@ -420,6 +420,38 @@ class ShExRepository {
             "\n";
     }
 
+    static getGenShex14() {
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:name xsd:string;\n" +
+            "( \n" +
+            "\t:givenName xsd:string;\n" +
+            "\t:familyName xsd:string; ) ? ;\n" +
+            "( \n" +
+            "\t:c xsd:string;\n" +
+            "\t:has @<Something> {2,}; ) * ;\n" +
+            "\t:owns @:Garage;\n" +
+            "}\n" +
+            "\n" +
+            ":Garage {\n" +
+            "( \n" +
+            "\t<AE86> xsd:string;\n" +
+            "( \n" +
+            "\t<Levin> xsd:string;\n" +
+            "\t<Cilinders> xsd:int; ) ? ;\n" +
+            "( \n" +
+            "\t<Trueno> xsd:string;\n" +
+            "\t<Cilinders> xsd:int; ) ? ; ) + ;\n" +
+            "}\n" +
+            "\n" +
+            "<Something> {\n" +
+            "}\n" +
+            "\n";
+    }
+
     /**
      * OneOf
      * @returns {string}
@@ -592,6 +624,28 @@ class ShExRepository {
             ":Employee {\n" +
             "\t&:name;\n" +
             "\t:employeeId .;\n" +
+            "}\n" +
+            "\n"
+    }
+
+    static getGenShex21() {
+        // noinspection CheckDtdRefs
+        return "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "\n" +
+            ":User {\n" +
+            "\t:email IRI;\n" +
+            "\t$:name (\n" +
+            "\t:name .; |\n" +
+            "(\n" +
+            "\t:givenName .;\n" +
+            "\t:familyName .; );) ;\n" +
+            "}\n" +
+            "\n" +
+            ":Employee {\n" +
+            "\t:employeeId .;\n" +
+            "\t&:name;\n" +
             "}\n" +
             "\n"
     }

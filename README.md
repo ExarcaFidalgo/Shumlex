@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/jorgealvarezfidalgo/Shumlex.svg?branch=master)](https://travis-ci.org/jorgealvarezfidalgo/Shumlex)
 [![Coverage Status](https://coveralls.io/repos/github/jorgealvarezfidalgo/Shumlex/badge.svg?branch=master)](https://coveralls.io/github/jorgealvarezfidalgo/Shumlex?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f7a79a92342844138f7fa6f8095f12a7)](https://app.codacy.com/manual/jorgealvarezfidalgo/Shumlex?utm_source=github.com&utm_medium=referral&utm_content=jorgealvarezfidalgo/Shumlex&utm_campaign=Badge_Grade_Dashboard)
-[![Version Status](https://img.shields.io/badge/version-1.0.1-green.svg)](https://jorgealvarezfidalgo.github.io/Shumlex/)
+[![Version Status](https://img.shields.io/badge/version-1.0.2-green.svg)](https://jorgealvarezfidalgo.github.io/Shumlex/)
 
 ## Introducción
 Bienvenidos al Proyecto Shumlex. 
