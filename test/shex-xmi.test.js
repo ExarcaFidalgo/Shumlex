@@ -2,133 +2,111 @@ const shexparser = require('../shex_util/ShExParser.js');
 const XMIRep = require('../repo/xmirepository.js');
 const ShExRep = require('../repo/shexrepository.js');
 
+/**
+ * Comprueba que no se generen ID null
+ * @param xmi
+ * @returns {boolean}
+ */
+function checkId(xmi) {
+    return !xmi.includes("xmi:id=\"null\"");
+}
+
+/**
+ * Realiza las comprobaciones estándar para los test
+ * @param shex
+ * @param xmi
+ */
+function checkGen(shex, xmi) {
+    let xml = shexparser.parseShExToXMI(shex);
+    expect(checkId(xml)).toBe(true);
+    expect(XMIRep.removeUniqueIDs(xml))
+        .toEqual(XMIRep.removeUniqueIDs(xmi));
+}
+
 describe('Pruebas de la transformación ShEx-XMI', () => {
 
     test('Shape', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex1());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI1()));
+        checkGen(ShExRep.getShex1(), XMIRep.getXMI1());
     });
 
     test('Atributos básicos', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex2());
-
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI2()));
+        checkGen(ShExRep.getShex2(), XMIRep.getXMI2());
     });
 
     test('Relaciones y otros atributos', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex3());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI3()));
+        checkGen(ShExRep.getShex3(), XMIRep.getXMI3());
     });
 
     test('Herencia simple', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex5());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI5()));
+        checkGen(ShExRep.getShex5(), XMIRep.getXMI5());
     });
 
     test('Herencia múltiple', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex6());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI6()));
+        checkGen(ShExRep.getShex6(), XMIRep.getXMI6());
     });
 
     test('Tipos de Nodo', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex7());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI7()));
+        checkGen(ShExRep.getShex7(), XMIRep.getXMI7());
     });
 
     test('Facetas de literales', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex9());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI9()));
+        checkGen(ShExRep.getShex9(), XMIRep.getXMI9());
     });
 
     test('Rangos y exclusiones', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex10());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI10()));
+        checkGen(ShExRep.getShex10(), XMIRep.getXMI10());
     });
 
     test('Conjuntos genéricos con exclusiones', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex11());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI11()));
+        checkGen(ShExRep.getShex11(), XMIRep.getXMI11());
     });
 
     test('Restricciones nodales como formas de máximo nivel', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex12());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI12()));
+        checkGen(ShExRep.getShex12(), XMIRep.getXMI12());
     });
 
     test('Etiquetas de lenguaje', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex13());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI13()));
+        checkGen(ShExRep.getShex13(), XMIRep.getXMI13());
     });
 
     test('Cardinalidades aplicadas a conjuntos', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex14());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI14()));
+        checkGen(ShExRep.getShex14(), XMIRep.getXMI14());
     });
 
     test('Operador OneOf', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex15());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI15()));
+        checkGen(ShExRep.getShex15(), XMIRep.getXMI15());
     });
 
     test('Formas anidadas', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex16());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI16()));
+        checkGen(ShExRep.getShex16(), XMIRep.getXMI16());
     });
 
     test('Formas cerradas', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex17());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI17()));
+        checkGen(ShExRep.getShex17(), XMIRep.getXMI17());
     });
 
     test('Propiedades repetidas', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex18());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI18()));
+        checkGen(ShExRep.getShex18(), XMIRep.getXMI18());
     });
 
     test('Restricción triple inversa', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex19());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI19()));
+        checkGen(ShExRep.getShex19(), XMIRep.getXMI19());
     });
 
     test('EXTRA', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex20());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI20()));
+        checkGen(ShExRep.getShex20(), XMIRep.getXMI20());
     });
 
     test('Expresiones etiquetadas', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex21());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI21()));
+        checkGen(ShExRep.getShex21(), XMIRep.getXMI21());
     });
 
     test('Conjunciones', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex22());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI22()));
+        checkGen(ShExRep.getShex22(), XMIRep.getXMI22());
     });
 
     test('Disyunciones', () => {
-        let xml = shexparser.parseShExToXMI(ShExRep.getShex23());
-        expect(XMIRep.removeUniqueIDs(xml))
-            .toEqual(XMIRep.removeUniqueIDs(XMIRep.getXMI23()));
+        checkGen(ShExRep.getShex23(), XMIRep.getXMI23());
     });
 
 

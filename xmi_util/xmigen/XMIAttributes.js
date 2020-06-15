@@ -44,7 +44,7 @@ class XMIAttributes {
         }
         //Una TripleConstraint alberga múltiples alternativas. Redirigimos a un método especializado.
         else if(expr.type === "TripleConstraint") {
-            attrs = this.determineTypeOfExpression(expr, null);
+            attrs = this.determineTypeOfExpression(expr, undefined);
         }
         //Expresión OneOf.
         else if(expr.type === "OneOf") {
