@@ -51,7 +51,8 @@ let es = {
     shxm: "ShEx a XMI",
     umlg: "Generación de UML",
     xmsh: "XMI a ShEx",
-    disy: "Disyunciones"
+    disy: "Disyunciones",
+    fullSize: "Tamaño comp<span class='ak'>l</span>eto"
 };
 
 //Contenido inglés
@@ -105,7 +106,8 @@ let en = {
     shxm: "ShEx to XMI",
     umlg: "UML generation",
     xmsh: "XMI to ShEx",
-    disy: "Disjunctions"
+    disy: "Disjunctions",
+    fullSize: "Ful<span class='ak'>l</span> size"
 };
 
 /**
@@ -170,6 +172,7 @@ function localize(lang) {
     setTitleByID("dwnxmi-btn", lang["dwnxmi-btn"]);
     setContentByID("mostraruml", lang.mostraruml);
     setContentByID("cargarXMIShex", lang.cargarXMIShex);
+    setContentByID("fullSize", lang.fullSize);
 
     setTitleByClass("intercambiarsx", lang.intercambiarsx);
     setTitleByClass("intercambiarxs", lang.intercambiarxs);

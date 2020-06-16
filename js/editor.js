@@ -339,3 +339,6 @@ $('#shlogo').click(home);
 function home() {
     window.location = "../index.html";
 }
+
+
+

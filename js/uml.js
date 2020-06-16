@@ -19,7 +19,8 @@ let constraints = new Map();
 function generarUML(xmi) {
     let puml = generarCodigoPUML(xmi);
     let encoded = plantumlEncoder.encode(puml);
-    $('#umlimg').attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
+    let img = $('#umlimg');
+    img.attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
 }
 
 /**
@@ -243,6 +244,21 @@ function getType(attr) {
             return types.get(attr.$.type);
         }
         return ".";
+}
+
+//Tamaño completo
+
+$('#fullSize').click(fullSize);
+
+/**
+ * Abre la imagen
+ */
+function fullSize() {
+    let src = $('#umlimg').attr("src");
+    if(src) {
+        window.location = src;
+    }
+
 }
 
 exports.generarUML = generarUML;
