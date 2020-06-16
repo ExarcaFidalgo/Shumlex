@@ -105,3 +105,18 @@ La aplicación web se ofrece, además de en la insigne lengua de Cervantes, en i
 
 ![Idioma](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/idioma.PNG)
 
+## Importar y exportar nuestro XMI en Visual Paradigm
+
+### Importar
+No requiere mayor complicación que escoger la opción de importación XMI y seleccionar nuestro archivo con el XMI que Shumlex ha generado, dejando las opciones por defecto.
+
+![Importar](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/importxmi.PNG)
+
+En la pestaña de Exploración del Modelo (Model Explorer) aparecerán los elementos UML de nuestro XMI importado. Al arrastrarlos a un diagrama, se situarán automáticamente.
+
+![Cargar VP](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/cargarvp.PNG)
+
+### Exportar
+En la opción "Exportar XMI", seleccionar las siguientes opciones para que el formato sea reconocible por Shumlex.
+
+![Export](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/exportxmi.PNG)

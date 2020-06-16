@@ -95,3 +95,19 @@ Shumlex is available not only in the distinguished language of Cervantes, but in
 
 ![Language](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/idioma.PNG)
 
+## Importing and exporting our XMI in Visual Paradigm
+
+### Import
+There are no further complications beyond clicking "Import XMI" and choosing our file with the Shumlex generated XMI, with the default options.
+
+![Import](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/importxmi.PNG)
+
+The UML elements corresponding to our imported XMI will be available at the Model Explorer. They will be automatically located by dropping them on a class diagram.
+
+![Load VP](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/cargarvp.PNG)
+
+### Export
+When clicking "Export XMI", select the following options so that it exports in a Shumlex compatible format.
+
+![Export](https://github.com/jorgealvarezfidalgo/Shumlex/blob/master/docs/img/exportxmi.PNG)
+
