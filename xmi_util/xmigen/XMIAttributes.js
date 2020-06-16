@@ -175,13 +175,13 @@ class XMIAttributes {
      * @returns {*} Equivalente XMI
      */
     checkNCValueExpr(expr, name, id, lop) {
-        //Relación de tipo "a" ( a [:User]) -> generalización XMI
-        if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-            let list = [{reference: expr.valueExpr.values[0]}];
-            return this.createXMIGeneralization(list, expr.inverse);
-        }
         //Conjunto de valores -> enumeración
         if(expr.valueExpr.values) {
+            //Relación de tipo "a" ( a [:User]) -> generalización XMI
+            if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                let list = [{reference: expr.valueExpr.values[0]}];
+                return this.createXMIGeneralization(list, expr.inverse);
+            }
             return this.xmienum.createXMIEnumAttribute(name, expr.valueExpr.values, expr.min, expr.max, id, "");
         }
         //Tipo de nodo (Literal, IRI...) -> Atributo con tal tipo

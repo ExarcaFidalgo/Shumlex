@@ -422,13 +422,13 @@ function determineTypeOfExpression(expr, father, fname) {
 
     //Si tiene ValueExpr
     else if(expr.valueExpr.type === "NodeConstraint") {
-        //Relación de tipo "a" ( a [:User])
-        if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
-            attrs = attrs.concat(createNCType(expr, father));
-            return attrs;
-        }
         //Conjunto de valores - [:Male :Female]
         if(expr.valueExpr.values) {
+            //Relación de tipo "a" ( a [:User])
+            if(expr.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type") {
+                attrs = attrs.concat(createNCType(expr, father));
+                return attrs;
+            }
             attrs = attrs.concat(createEnumeration(expr, name, father));
             return attrs;
         }
