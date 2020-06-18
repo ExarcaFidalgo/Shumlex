@@ -1,7 +1,7 @@
-const shexparser = require('../shex_util/ShExParser.js');
-const xmiparser = require('../xmi_util/XMIParser.js');
-const XMIRep = require('../repo/xmirepository.js');
-const ShExRep = require('../repo/shexrepository.js');
+const shexparser = require('../src/shex_util/ShExParser.js');
+const xmiparser = require('../src/xmi_util/XMIParser.js');
+const XMIRep = require('../src/repo/xmirepository.js');
+const ShExRep = require('../src/repo/shexrepository.js');
 
 /**
  * Comprueba que no se generen ID null

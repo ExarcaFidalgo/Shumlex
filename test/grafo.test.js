@@ -1,6 +1,6 @@
-const gr = require('../js/grafo.js');
-const ShExRep = require('../repo/shexrepository.js');
-const GrafoRep = require('../repo/graforepository.js');
+const gr = require('../web/js/grafo.js');
+const ShExRep = require('../src/repo/shexrepository.js');
+const GrafoRep = require('../src/repo/graforepository.js');
 
 describe('Pruebas de la representación de ShEx como grafo', () => {
 
