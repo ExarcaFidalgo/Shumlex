@@ -2,6 +2,7 @@ const xmlparser = require('xml2js');
 const shexgen = require ("../shex_util/shexgen/ShExGenerator.js");
 let XMISources = {0: "VisualParadigm", 1: "Modelio"};
 let XMISource = XMISources[0];
+const idioma = require("../../web/js/idioma.js");
 
 /**
  * Parsea XMI para la generación de UML o ShEx
@@ -22,7 +23,8 @@ class XMIParser {
         xmlparser.parseString(xmi, function (err, result) {
             self.source = result;
             if(err) {
-                alert("Error al parsear XMI:\n" + err.toString().replace("Error: ", ""));
+                alert(idioma.getLocalizedAlert("xmierror1")
+                    + err.toString().replace("Error: ", ""));
             }
         });
 
@@ -107,8 +109,7 @@ class XMIParser {
             shExEquivalent = shexgen.createShExHeader() + shExEquivalent;
 
         } catch (ex) {
-            alert("Se ha producido un error durante la generación de las Shape Expressions.\n" +
-                "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
+            alert(idioma.getLocalizedAlert("xmierror2")
                 + ex);
             return "";
         } finally {

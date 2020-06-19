@@ -52,7 +52,12 @@ let es = {
     umlg: "Generación de UML",
     xmsh: "XMI a ShEx",
     disy: "Disyunciones",
-    fullSize: "Tamaño comp<span class='ak'>l</span>eto"
+    fullSize: "Tamaño comp<span class='ak'>l</span>eto",
+    shexerror1: "Error al parsear ShEx:\n",
+    shexerror2: "\nPor favor, revise la gramática.",
+    xmierror1: "Error al parsear XMI:\n",
+    xmierror2: "Se ha producido un error durante la generación de las Shape Expressions.\n" +
+        "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
 };
 
 //Contenido inglés
@@ -107,7 +112,12 @@ let en = {
     umlg: "UML generation",
     xmsh: "XMI to ShEx",
     disy: "Disjunctions",
-    fullSize: "Ful<span class='ak'>l</span> size"
+    fullSize: "Ful<span class='ak'>l</span> size",
+    shexerror1: "Error when parsing ShEx:\n",
+    shexerror2: "\nPlease, check its grammar.",
+    xmierror1: "Error when parsing XMI:\n",
+    xmierror2: "An error has taken place while generating Shape Expressions.\n" +
+        "XMI is well formed, but it is lacking key elements or attributes for the generation.\n"
 };
 
 /**
@@ -182,6 +192,18 @@ function localize(lang) {
     setContentByClass("xmsh", lang.xmsh);
 }
 
+function getLocalizedAlert(alert) {
+    let lang = sessionStorage.getItem("lang");
+    if(!lang) {
+        lang = es;
+        sessionStorage.setItem("lang", JSON.stringify(lang));
+        return lang[alert];
+    }
+    else {
+        return JSON.parse(lang)[alert];
+    }
+}
+
 /**
  * Busca un elemento HTML por id y establece su contenido.
  * @param id    ID del elemento.
@@ -227,5 +249,6 @@ function setTitleByClass(id, co) {
 }
 
 exports.checkLang = checkLang;
+exports.getLocalizedAlert = getLocalizedAlert;
 exports.en = en;
 exports.es = es;
