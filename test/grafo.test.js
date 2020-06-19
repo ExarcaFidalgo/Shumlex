@@ -1,6 +1,7 @@
-const gr = require('../web/js/grafo.js');
+const GrafoGen = require('../src/visual/GrafoGen.js');
 const ShExRep = require('../src/repo/shexrepository.js');
 const GrafoRep = require('../src/repo/graforepository.js');
+let gr = new GrafoGen();
 
 describe('Pruebas de la representación de ShEx como grafo', () => {
 

@@ -32,6 +32,7 @@ function generarCodigoPUML(xmi) {
     let puml = "@startuml\n";
     puml += parseXMIToPUML(xmi);
     puml += "@enduml";
+    console.log(puml);
     return puml;
 }
 
@@ -262,3 +263,4 @@ function fullSize() {
 }
 
 exports.generarUML = generarUML;
+exports.generarCodigoPUML = generarCodigoPUML;
