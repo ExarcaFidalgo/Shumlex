@@ -7,7 +7,7 @@ const repo = require('../../src/repo/shexrepository.js');
 
 const grafo = require('./grafo.js');
 const uml = require('./uml.js');
-const lang = require('./idioma.js');
+const lang = require('./lang/webloc.js');
 
 let shExEditor;
 let xmiEditor;

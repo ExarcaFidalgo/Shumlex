@@ -2,7 +2,7 @@ const xmlparser = require('xml2js');
 const shexgen = require ("../shex_util/shexgen/ShExGenerator.js");
 let XMISources = {0: "VisualParadigm", 1: "Modelio"};
 let XMISource = XMISources[0];
-const idioma = require("../../web/js/idioma.js");
+const idioma = require("../../web/js/lang/alertloc.js");
 
 /**
  * Parsea XMI para la generación de UML o ShEx
