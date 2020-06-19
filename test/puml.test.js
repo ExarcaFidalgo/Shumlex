@@ -1,6 +1,7 @@
-const um = require('../web/js/uml.js');
+const UMLGen = require('../src/visual/UMLGen.js');
 const XMIRep = require('../src/repo/xmirepository.js');
 const PUMLRep = require('../src/repo/pumlrepository.js');
+let um = new UMLGen();
 
 describe('Pruebas de la representación de UML como diagrama PlantUML', () => {
 
