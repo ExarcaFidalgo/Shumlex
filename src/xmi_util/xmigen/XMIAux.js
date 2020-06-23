@@ -151,7 +151,7 @@ class XMIAux {
      */
     static createXMIOwnedRule(name, id) {
         let orid = unid();
-        return "\n<ownedRule xmi:id=\"" + unid() + "\" name=\"" + name + "\" " +
+        return "\n<ownedRule xmi:id=\"" + orid + "\" name=\"" + name + "\" " +
             "constrainedElement=\"" + id + "\">\n" +
             "<specification body=\"" + name + "\" xmi:type=\"uml:OpaqueExpression\"/>\n" +
             XMIAux.createXMIOwnedComment(id, orid) +
