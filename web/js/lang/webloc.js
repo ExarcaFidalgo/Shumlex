@@ -8,8 +8,6 @@ const en = require('./langrepo.js').en;
  */
 function checkLang() {
     let lang = sessionStorage.getItem("lang");
-    console.log(es);
-    console.log(sessionStorage);
     if(!lang) {
         console.log(es);
         lang = es;

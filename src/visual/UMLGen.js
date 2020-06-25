@@ -1,11 +1,16 @@
+const uniqid = require("uniqid");
 const IRIManager = require("../../src/managers/IRIManager.js");
 const xmiparser = require('../../src/xmi_util/XMIParser.js');
 const ShExCardinality = require("../../src/shex_util/shexgen/ShExCardinality.js");
+const ShapeManager = require("../managers/ShapeManager.js");
+let XMISources = {0: "VisualParadigm", 1: "Modelio"};
+let XMISource = XMISources[0];
 
 class UMLGen {
 
     constructor() {
         this.irim = new IRIManager();
+        this.shm = new ShapeManager(uniqid);
 
         this.classes = new Map();
         this.types = new Map();
@@ -34,26 +39,64 @@ class UMLGen {
         let pumlEquivalent = "";
 
         let source = xmiparser.parseXMI(xmi);
-        //console.log(source);
+        console.log(source);
 
-        let ownedRules = source["uml:Model"]["ownedRule"];
+        let ownedRules;
+        //Generado por Modelio
+        if(source["uml:Model"]) {
+            XMISource = XMISources[1];
+            ownedRules = source["uml:Model"]["ownedRule"];
+        }
+        //Generado por VisualParadigm
+        else if(source["xmi:XMI"]) {
+            XMISource = XMISources[0];
+            ownedRules = source["xmi:XMI"]["uml:Model"][0]["ownedRule"];
+        }
+
+
         //Guardar en constraints las restricciones
         if(ownedRules !== undefined) {
             for (let i = 0; i < ownedRules.length; i++) {
-                let o = ownedRules[i].$;
-                if(this.constraints.get(o.constrainedElement) === undefined) {
-                    this.constraints.set(o.constrainedElement, o.name);
+                let idInComment = null;
+                let consElement = ownedRules[i].$.constrainedElement;
+                let oName = ownedRules[i].$.name;
+                //Si hay comentario, buscamos el ID que guardamos
+                if(ownedRules[i].ownedComment) {
+                    idInComment = ownedRules[i].ownedComment[0].body[0];
+                }
+                //Si el id guardado en comentario es distinto del que se señala en constrained,
+                //Es un error de exportación. Tomamos el del comentario.
+                if(idInComment && idInComment !== consElement) {
+                    consElement = idInComment;
+                }
+                if(this.constraints.get(consElement) === undefined) {
+                    this.constraints.set(consElement, oName);
                 }
                 else {
-                    this.constraints.set(o.constrainedElement, this.constraints.get(o.constrainedElement) + " "
-                        + o.name);
+                    this.constraints.set(consElement, this.constraints.get(consElement) + " "
+                        + oName);
                 }
             }
         }
 
-        let packagedElements = source["uml:Model"]["packagedElement"];
+        let packagedElements = [];
+
+        if(XMISource === XMISources[0]) {
+            packagedElements = source["xmi:XMI"]["uml:Model"][0]["packagedElement"];
+        } else {
+            packagedElements = source["uml:Model"]["packagedElement"];
+        }
 
         try {
+
+            for (let i = 0; i < packagedElements.length; i++) {
+                let pe = packagedElements[i];
+                let type = pe["$"]["xmi:type"];
+                if (type === "uml:Class") {
+                    this.shm.saveShape(pe);
+                }
+            }
+
             //Revisar cada PackagedElement
             for (let i = 0; i < packagedElements.length; i++) {
                 let pe = packagedElements[i]["$"];
@@ -152,8 +195,11 @@ class UMLGen {
     createUMLAttributes(ats, name) {
         let content = "";
         for(let i = 0; i < ats.length; i++) {
+            let shape = this.shm.getShape(ats[i].$.type);
+            let subSet = this.shm.getSubSet(ats[i].$.type);
             //Asociación entre clases
-            if(ats[i].$.association) {
+            if(ats[i].$.association                                 //Modelio ver.
+                || shape !== undefined || subSet !== undefined) {   //VP ver.
                 content += this.createUMLAsoc(ats[i], name);
             }
             //Restricción de tipo de nodo
@@ -226,6 +272,9 @@ class UMLGen {
             }
         }
         else if (attr.$.type) {
+            if(attr.$.type === "Int_id") {
+                return this.irim.findXSDPrefix() + "int";
+            }
             let enumer = this.enums.get(attr.$.type);
             //Tipo enumeración
             if(enumer) {

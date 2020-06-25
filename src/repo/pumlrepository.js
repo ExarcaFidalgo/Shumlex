@@ -105,6 +105,41 @@ class PUMLRepository {
             "@enduml";
     }
 
+    static getPUML3VP() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "class \":User\"\n" +
+            "\":User\" : nodeKind: IRI \n" +
+            "\":User\" *--  \"_Blank1\" : \"AND\"\n" +
+            "class \"_Blank1\"\n" +
+            "\"_Blank1\" *--  \"_Blank2\" : \"Shape\"\n" +
+            "class \"_Blank2\"\n" +
+            "\"_Blank2\" : :name xsd:string  \n" +
+            "class \":Ultrauser\"\n" +
+            "\":User\" <|-- \":Ultrauser\" : \"\"\n" +
+            "\":Ultrauser\" : nodeKind: Literal \n" +
+            "class \":Titanuser\"\n" +
+            "\":User\" <|-- \":Titanuser\" : \"\"\n" +
+            "\":Titanuser\" : nodeKind: NonLiteral \n" +
+            "\":Titanuser\" *--  \"_Blank3\" : \"AND\"\n" +
+            "class \"_Blank3\"\n" +
+            "\"_Blank3\" *--  \"_Blank4\" : \"Shape\"\n" +
+            "class \"_Blank4\"\n" +
+            "class \"<Product>\"\n" +
+            "\"<Product>\" : nodeKind: BNode \n" +
+            "\"<Product>\" *--  \"_Blank5\" : \"AND\"\n" +
+            "class \"_Blank5\"\n" +
+            "\"_Blank5\" *--  \"_Blank6\" : \"Shape\"\n" +
+            "class \"_Blank6\"\n" +
+            "class \"<AThing>\"\n" +
+            "\"<AThing>\" : nodeKind: IRI \n" +
+            "@enduml";
+    }
+
     static getPUML4() {
         return "@startuml\n" +
             "enum Prefixes {\n" +
@@ -238,6 +273,40 @@ class PUMLRepository {
             "@enduml";
     }
 
+    static getPUML8VP() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "class \":User\"\n" +
+            "\":User\" : :name xsd:string  \n" +
+            "\":User\" *-- \" ?\" \"_Blank1\" : \"EachOf\"\n" +
+            "\":User\" *-- \" *\" \"_Blank2\" : \"EachOf\"\n" +
+            "\":User\" -->  \":Garage\" : \":owns\"\n" +
+            "class \"_Blank1\"\n" +
+            "\"_Blank1\" : :givenName xsd:string  \n" +
+            "\"_Blank1\" : :familyName xsd:string  \n" +
+            "class \"_Blank2\"\n" +
+            "\"_Blank2\" : :c xsd:string  \n" +
+            "\"_Blank2\" --> \" {2,}\" \"<Something>\" : \":has\"\n" +
+            "class \":Garage\"\n" +
+            "\":Garage\" *-- \" +\" \"_Blank3\" : \"EachOf\"\n" +
+            "class \"_Blank3\"\n" +
+            "\"_Blank3\" : <AE86> xsd:string  \n" +
+            "\"_Blank3\" *-- \" ?\" \"_Blank4\" : \"EachOf\"\n" +
+            "\"_Blank3\" *-- \" ?\" \"_Blank5\" : \"EachOf\"\n" +
+            "class \"_Blank4\"\n" +
+            "\"_Blank4\" : <Levin> xsd:string  \n" +
+            "\"_Blank4\" : <Cilinders> xsd:int  \n" +
+            "class \"_Blank5\"\n" +
+            "\"_Blank5\" : <Trueno> xsd:string  \n" +
+            "\"_Blank5\" : <Cilinders> xsd:int  \n" +
+            "class \"<Something>\"\n" +
+            "@enduml";
+    }
+
     static getPUML9() {
         return "@startuml\n" +
             "enum Prefixes {\n" +
@@ -317,6 +386,32 @@ class PUMLRepository {
             "@enduml";
     }
 
+    static getPUML11VP() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "enum \":gender\" {\n" +
+            ":Male\n" +
+            ":Female\n" +
+            "} \n" +
+            "class \":User CLOSED\"\n" +
+            "\":User CLOSED\" : nodeKind: IRI \n" +
+            "\":User CLOSED\" *--  \"_Blank1\" : \"AND\"\n" +
+            "class \"_Blank1\"\n" +
+            "\"_Blank1\" *--  \"_Blank2\" : \"Shape\"\n" +
+            "class \"_Blank2\"\n" +
+            "\"_Blank2\" : :name xsd:string MaxLength 3 \n" +
+            "\"_Blank2\" : :age xsd:int  ? \n" +
+            "\"_Blank2\" : :gender :gender  \n" +
+            "\"_Blank2\" -->  \":User CLOSED\" : \":knows\"\n" +
+            "class \":Company CLOSED\"\n" +
+            "\":Company CLOSED\" : :name xsd:string  \n" +
+            "@enduml";
+    }
+
     static getPUML12() {
         return "@startuml\n" +
             "enum Prefixes {\n" +
@@ -359,6 +454,27 @@ class PUMLRepository {
             "@enduml";
     }
 
+    static getPUML13VP() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "enum \"Extra_:FollowSpaniards\" {\n" +
+            ":follows\n" +
+            "} \n" +
+            "enum \":nationality\" {\n" +
+            ":Spain\n" +
+            "} \n" +
+            "class \":FollowSpaniards\"\n" +
+            "\":FollowSpaniards\" : Extra Extra_:FollowSpaniards  \n" +
+            "\":FollowSpaniards\" *-- \" +\" \"_:1\" : \":follows\"\n" +
+            "class \"_:1\"\n" +
+            "\"_:1\" : :nationality :nationality  \n" +
+            "@enduml";
+    }
+
     static getPUML14() {
         return "@startuml\n" +
             "enum Prefixes {\n" +
@@ -380,6 +496,30 @@ class PUMLRepository {
             "class \":Employee\"\n" +
             "\":Employee\" -->  \"_Blank1\" : \"&:name\"\n" +
             "\":Employee\" : :employeeId Any  \n" +
+            "@enduml";
+    }
+
+    static getPUML14VP() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "class \":User\"\n" +
+            "\":User\" : :email IRI  \n" +
+            "\":User\" *--  \"_Blank1\" : \"$:name\"\n" +
+            "class \"_Blank1\"\n" +
+            "\"_Blank1\" *--  \"_Blank2\" : \"OneOf\"\n" +
+            "class \"_Blank2\"\n" +
+            "\"_Blank2\" : :name Any  \n" +
+            "\"_Blank2\" *--  \"_Blank3\" : \"EachOf\"\n" +
+            "class \"_Blank3\"\n" +
+            "\"_Blank3\" : :givenName Any  \n" +
+            "\"_Blank3\" : :familyName Any  \n" +
+            "class \":Employee\"\n" +
+            "\":Employee\" : :employeeId Any  \n" +
+            "\":Employee\" -->  \"_Blank1\" : \"&:name\"\n" +
             "@enduml";
     }
 
