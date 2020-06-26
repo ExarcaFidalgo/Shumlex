@@ -1,9 +1,11 @@
+const XMIAux = require("./XMIAux.js");
+const unid = require("uniqid");
 /**
  * Gestiona la cardinalidad de los elementos XMI
  */
 class XMICardinality {
 
-    constructor(unid, XMIAux) {
+    constructor() {
         this.unid = unid;
         this.XMIAux = XMIAux;
     }

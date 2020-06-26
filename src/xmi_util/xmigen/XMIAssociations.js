@@ -1,14 +1,17 @@
+const XMICardinality = require("./XMICardinality.js");
+const XMIAux = require("./XMIAux.js");
+const unid = require("uniqid");
 /**
  * Genera asociaciones en XMI
  */
 class XMIAssociations {
 
-    constructor (unid, shm, irim, xmicard, XMIAux) {
+    constructor (shm, irim) {
         this.pendingAssociations = [];
         this.unid = unid;
         this.shm = shm;
         this.irim = irim;
-        this.xmicard = xmicard;
+        this.xmicard = new XMICardinality();
         this.XMIAux = XMIAux;
     }
 

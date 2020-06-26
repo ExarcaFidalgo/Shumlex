@@ -1,13 +1,13 @@
+const IRIManager = require ("../../managers/IRIManager.js");
 /**
  * Genera el equivalente ShEx a los tipos UML
  */
 class ShExType {
 
-    constructor (irim, shexen, IRIManager) {
+    constructor (irim, shexen) {
         this.irim = irim;
         this.types = new Map();
         this.shexen = shexen;
-        this.IRIManager = IRIManager;
     }
 
     /**
@@ -68,7 +68,7 @@ class ShExType {
         if(type === "Any") {
             return " .";
         } else {
-            return " " + this.IRIManager.getShexTerm(type);
+            return " " + IRIManager.getShexTerm(type);
         }
     }
 

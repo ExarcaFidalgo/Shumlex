@@ -1,18 +1,17 @@
+const XMIAux = require("./XMIAux.js");
 /**
  * Genera componentes en XMI
  */
 class XMIComposition {
 
-    constructor (shm, xmiats, irim, XMIAux, xmicon, xmiasoc) {
+    constructor (shm, irim, xmiasoc) {
         this.componentsCounter = 1;
         this.components = [];
         this.labels = new Map();
-
+        this.xmiats = null;
         this.shm = shm;
-        this.xmiats = xmiats;
         this.irim = irim;
         this.XMIAux = XMIAux;
-        this.xmicon = xmicon;
         this.xmiasoc = xmiasoc;
     }
 
@@ -80,6 +79,7 @@ class XMIComposition {
     clear() {
         this.componentsCounter = 1;
         this.components = [];
+        this.labels = new Map();
     }
 
 }

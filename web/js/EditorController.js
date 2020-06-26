@@ -5,8 +5,8 @@ const xmiparser = require('../../src/xmi_util/XMIParser.js');
 
 const repo = require('../../src/repo/shexrepository.js');
 
-const grafo = require('./grafo.js');
-const uml = require('./uml.js');
+const grafo = require('./GrafoController.js');
+const uml = require('./UMLController.js');
 const lang = require('./lang/webloc.js');
 
 let shExEditor;

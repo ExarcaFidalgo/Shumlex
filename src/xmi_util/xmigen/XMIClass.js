@@ -1,19 +1,21 @@
+const XMIAux = require("./XMIAux.js");
+const XMITypes = require("./XMITypes.js");
+const XMIAttributes = require("./XMIAttributes.js");
+const IRIManager = require("../../managers/IRIManager");
 /**
  * Genera el XMI correspondiente a una clase UML
  */
 class XMIClass {
 
-    constructor (shm, xmitype, irim, xmiatt, xmicon, xmiasoc, xmisub, XMIAux, IRIManager) {
+    constructor (shm, xmitype, irim, xmicon, xmienum) {
         this.shm = shm;
-        this.XMITypes = xmitype;
+        this.XMITypes = XMITypes;
         this.irim = irim;
-        this.xmiatt = xmiatt;
+        this.xmiatt = new XMIAttributes(xmienum, xmitype,
+            this.irim, xmicon, this.shm);
         this.xmicon = xmicon;
-        this.xmiasoc = xmiasoc;
-        this.xmisub = xmisub;
         this.XMIAux = XMIAux;
         this.IRIManager = IRIManager;
-
     }
 
     /**
@@ -79,8 +81,8 @@ class XMIClass {
 
         //Crear elementos dependientes de esta clase
         classXMI += this.xmicon.createDependentOwnedRules();
-        classXMI += this.xmiasoc.createDependentAssociations(sh.id);
-        classXMI += this.xmisub.createDependentComponents();
+        classXMI += this.xmiatt.createDependentAssociations(sh.id);
+        classXMI += this.xmiatt.createDependentComponents();
 
         return classXMI;
     }
@@ -119,7 +121,7 @@ class XMIClass {
             }
         }
         if(nOfShapes > 0) {
-            let subClassName = this.xmisub.getComponentNumber();
+            let subClassName = this.xmiatt.getComponentNumber();
             ats = this.xmiatt.createComponent(lop, subClassName, exprsForComp);
         }
         switch(lop) {
@@ -135,6 +137,10 @@ class XMIClass {
             ats: ats,
             generalizations: generalizations
         };
+    }
+
+    clear() {
+        this.xmiatt.clear();
     }
 
 }

@@ -1,14 +1,15 @@
+const IRIManager = require ("../../managers/IRIManager.js");
+const ShExCardinality = require("./ShExCardinality.js");
 /**
  * Genera el equivalente a los atributos de UML en ShEx (TripleConstraint)
  */
 class ShExAttributes {
 
-    constructor(shext, IRIManager, shm, shexco, shexcar, shexen) {
+    constructor(shext, shm, shexco, shexen) {
         this.shext = shext;
-        this.IRIManager = IRIManager;
         this.shm = shm;
         this.shexco = shexco;
-        this.shexcar = shexcar;
+        this.shexcar = ShExCardinality;
         this.shexen = shexen;
     }
 
@@ -111,7 +112,7 @@ class ShExAttributes {
     createNodeKind(attr, lop, bks) {
         let brackets = bks;
         let kind = this.shext.getType(attr.$.type);
-        kind = this.IRIManager.checkNodeKind(kind.name);
+        kind = IRIManager.checkNodeKind(kind.name);
         let ajustedKind = kind + " " + lop;
 
         //Si es IRI, no es necesario el AND
@@ -136,7 +137,7 @@ class ShExAttributes {
      */
     basicAttrToShex(attr) {
         let type = this.shext.getAttrType(attr);
-        return "\n\t" + this.IRIManager.getShexTerm(attr.$.name)    //Nombre de la tripleta
+        return "\n\t" + IRIManager.getShexTerm(attr.$.name)    //Nombre de la tripleta
             + this.shext.typeToShEx(type)                       //Tipo (xsd:string...)
             + this.shexco.getConstraints(attr)          //Restricciones
             + this.shexcar.cardinalityOf(attr) + ";";               //Cardinalidad
@@ -189,7 +190,7 @@ class ShExAttributes {
 
         let shape = this.shm.getShape(attr.$.type);
         //ShapeRef
-        let shExName = this.IRIManager.getShexTerm(shape.name);
+        let shExName = IRIManager.getShexTerm(shape.name);
 
         return "\n\t" + attr.$.name + " @" + shExName
             + this.shexcar.cardinalityOf(attr)
@@ -343,11 +344,11 @@ class ShExAttributes {
     createGeneralization(name, inv, lop) {
         switch(lop){
             case "AND":
-                return " " + inv + "@" + this.IRIManager.getShexTerm(name) + " AND";
+                return " " + inv + "@" + IRIManager.getShexTerm(name) + " AND";
             case "OR":
-                return " " + inv + "@" + this.IRIManager.getShexTerm(name) + " OR";
+                return " " + inv + "@" + IRIManager.getShexTerm(name) + " OR";
             default:
-                return "\n\t" + inv + "a [" + this.IRIManager.getShexTerm(name) + "];";
+                return "\n\t" + inv + "a [" + IRIManager.getShexTerm(name) + "];";
         }
     }
 

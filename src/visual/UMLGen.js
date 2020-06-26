@@ -39,7 +39,6 @@ class UMLGen {
         let pumlEquivalent = "";
 
         let source = xmiparser.parseXMI(xmi);
-        console.log(source);
 
         let ownedRules;
         //Generado por Modelio

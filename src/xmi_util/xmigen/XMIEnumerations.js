@@ -1,13 +1,16 @@
+const uniqid = require("uniqid");
+const XMICardinality = require("./XMICardinality.js");
+const XMIAux = require("./XMIAux.js");
 /**
  * Genera enumeraciones en XMI
  */
 class XMIEnumerations {
 
-    constructor (unid, irim, xmicard, XMIAux) {
+    constructor (irim) {
         this.enumerations = [];
-        this.unid = unid;
+        this.unid = uniqid;
         this.irim = irim;
-        this.xmicard = xmicard;
+        this.xmicard = new XMICardinality();
         this.XMIAux = XMIAux;
     }
 

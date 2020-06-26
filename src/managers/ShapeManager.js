@@ -1,14 +1,15 @@
+const uniqid = require("uniqid");
 /**
  * Gestor de shapes.
  */
 class ShapeManager {
 
-    constructor (unid) {
+    constructor () {
         this.XMIshapes = [];            //Shapes almacenadas para la generación de XMI
         this.ShExshapes = new Map();    //Shapes almacenadas para la generación de ShEx
         this.subSet = new Map();        //Subconjuntos
         this.pendingXMIShapes = [];        //Shapes pendientes (generación futura)
-        this.unid = unid;
+        this.unid = uniqid;
         this.blankCounter = 0;          //Contador de nodos anónimos
         this.pendingShExShapes = new Map();
 

@@ -1,11 +1,11 @@
+const IRIManager = require ("../../managers/IRIManager.js");
 /**
  * Genera el equivalente en ShEx a una enumeración UML
  */
 class ShExEnumerations {
 
-    constructor (IRIManager) {
+    constructor () {
         this.enumerations = new Map();
-        this.IRIManager = IRIManager;
     }
 
     /**
@@ -36,7 +36,7 @@ class ShExEnumerations {
     enumerationToShEx(enumer) {
         let base = "[";
         for(let i = 0; i < enumer.values.length; i++) {
-            base += this.IRIManager.getShexTerm(enumer.values[i].$.name) + " ";
+            base += IRIManager.getShexTerm(enumer.values[i].$.name) + " ";
         }
         return base + "]";
     }

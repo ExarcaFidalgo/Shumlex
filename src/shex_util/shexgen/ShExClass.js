@@ -1,13 +1,14 @@
+const IRIManager = require ("../../managers/IRIManager.js");
+const ShExAttributes = require("./ShExAttributes.js");
 /**
  * Genera el equivalente en ShEx de una clase UML (Shape)
  */
 class ShExClass {
 
-    constructor (IRIManager, shexat, shexco, shm) {
-        this.IRIManager = IRIManager;
-        this.shexat = shexat;
+    constructor (shexco, shm, shext, shexen) {
         this.shexco = shexco;
         this.shm = shm;
+        this.shexat = new ShExAttributes(shext, this.shm, this.shexco, shexen);
     }
 
     /**
@@ -21,7 +22,7 @@ class ShExClass {
         if(this.shm.getSubSet(element.$["xmi:id"]) !== undefined) {
             return "";
         }
-        let header = this.IRIManager.getShexTerm(element.$.name);
+        let header = IRIManager.getShexTerm(element.$.name);
         let content = "";
         let brackets = false;
 

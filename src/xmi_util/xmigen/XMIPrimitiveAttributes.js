@@ -1,14 +1,17 @@
+const XMICardinality = require("./XMICardinality.js");
+const unid = require("uniqid");
+const XMIAux = require("./XMIAux.js");
 /**
  * Genera atributos XMI de carácter simple
  */
 class XMIPrimitiveAttributes {
 
-    constructor (unid, xmitype, irim, xmicon, xmicard, XMIAux) {
+    constructor (xmitype, irim, xmicon) {
         this.unid = unid;
         this.xmitype = xmitype;
         this.irim = irim;
         this.xmicon = xmicon;
-        this.xmicard = xmicard;
+        this.xmicard = new XMICardinality();
         this.XMIAux = XMIAux;
     }
 

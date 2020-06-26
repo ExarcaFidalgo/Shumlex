@@ -1,11 +1,14 @@
+const uniqid = require("uniqid");
+const XMIAux = require("./XMIAux.js");
+const IRIManager = require("../../managers/IRIManager");
 /**
  * Genera restricciones XMI
  */
 class XMIConstraints {
 
-    constructor (unid, irim, XMIAux, xmienum, IRIManager) {
+    constructor (irim, xmienum) {
         this.ownedRules = [];
-        this.unid = unid;
+        this.unid = uniqid;
         this.irim = irim;
         this.XMIAux = XMIAux;
         this.xmienum = xmienum;

@@ -1,23 +1,27 @@
 const XMIPrimitiveAttributes = require("./XMIPrimitiveAttributes.js");
-
+const XMIComposition = require("./XMIComposition.js");
+const XMIAssociations = require("./XMIAssociations.js");
+const XMIAux = require("./XMIAux.js");
+const IRIManager = require("../../managers/IRIManager");
+const unid = require("uniqid");
 /**
  * Genera los atributos XMI a partir del JSON de ShEx
  */
 class XMIAttributes {
 
-    constructor (unid, xmisub, xmiasoc, xmienum, xmitype, irim, xmicon, shm, sxmit, xmicard, XMIAux, IRIManager) {
+    constructor (xmienum, xmitype, irim, xmicon, shm) {
         this.unid = unid;
-        this.xmienum = xmienum;
-        this.xmitype = xmitype;
-        this.xmiasoc = xmiasoc;
-        this.xmisub = xmisub;
-        this.xmicon = xmicon;
-        this.xmiprim = new XMIPrimitiveAttributes(unid, xmitype, irim, xmicon, xmicard, XMIAux);
         this.irim = irim;
         this.shm = shm;
-        this.sxmit = sxmit;
+        this.xmienum = xmienum;
+        this.xmiasoc = new XMIAssociations(this.shm, this.irim);
+        this.xmicon = xmicon;
+        this.xmiprim = new XMIPrimitiveAttributes(xmitype, irim, xmicon);
+
         this.XMIAux = XMIAux;
         this.IRIManager = IRIManager;
+        this.xmisub = new XMIComposition(this.shm, this.irim, this.xmiasoc);
+        this.xmisub.xmiats = this;
 
         this.depth = 0;
     }
@@ -370,6 +374,39 @@ class XMIAttributes {
         if(this.depth > 0) {
             this.depth--;
         }
+    }
+
+    /**
+     * Genera componente dependientes en XMI.
+     * @returns {string}    XMI de componentes
+     */
+    createDependentComponents() {
+        return this.xmisub.createDependentComponents();
+    }
+
+    /**
+     * Obtiene el número pertinente para un componente
+     * @returns {string}    Nombre de la clase con número
+     */
+    getComponentNumber() {
+        return this.xmisub.getComponentNumber();
+    }
+
+    /**
+     * Resetea los registros
+     */
+    clear() {
+        this.xmisub.clear();
+    }
+
+    /**
+     * Crea las asociaciones pendientes para la clase que se acaba de generar
+     * Acto seguido, resetea las pendientes
+     * @param idcl  ID Clase actual
+     * @returns {string}    Asociaciones XMI
+     */
+    createDependentAssociations(id) {
+        return this.xmiasoc.createDependentAssociations(id);
     }
 
 }

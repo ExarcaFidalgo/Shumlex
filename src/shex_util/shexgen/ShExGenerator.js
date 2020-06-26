@@ -1,7 +1,4 @@
-const uniqid = require("uniqid");
 const IRIManager = require ("../../managers/IRIManager.js");
-const ShExAttributes = require("./ShExAttributes.js");
-const ShExCardinality = require("./ShExCardinality.js");
 const ShExClass = require("./ShExClass.js");
 const ShExConstraints = require("./ShExConstraints.js");
 const ShExEnumerations = require("./ShExEnumerations.js");
@@ -14,13 +11,12 @@ const ShapeManager = require("../../managers/ShapeManager.js");
 class ShExGenerator {
 
     constructor () {
-        this.shm = new ShapeManager(uniqid);
+        this.shm = new ShapeManager();
         this.irim = new IRIManager();
         this.shexco = new ShExConstraints();
-        this.shexen = new ShExEnumerations(IRIManager);
-        this.shext = new ShExTypes(this.irim, this.shexen, IRIManager);
-        this.shexat = new ShExAttributes(this.shext, IRIManager, this.shm, this.shexco, ShExCardinality, this.shexen);
-        this.shexcl = new ShExClass(IRIManager, this.shexat, this.shexco, this.shm);
+        this.shexen = new ShExEnumerations();
+        this.shext = new ShExTypes(this.irim, this.shexen);
+        this.shexcl = new ShExClass(this.shexco, this.shm, this.shext, this.shexen);
     }
 
     /**

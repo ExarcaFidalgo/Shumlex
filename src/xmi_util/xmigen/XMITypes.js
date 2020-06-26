@@ -1,14 +1,17 @@
+const uniqid = require("uniqid");
+const XMIAux = require("./XMIAux.js");
+const IRIManager = require("../../managers/IRIManager");
 /**
  * Gestiona los tipos en XMI
  */
 class XMITypes {
 
-    constructor (unid, irim, XMIAux, IRIManager) {
+    constructor (irim) {
         this.datatypes = [];
         this.anyTypeId = null;
         this.nodeKinds = [];
 
-        this.unid = unid;
+        this.unid = uniqid;
         this.irim = irim;
         this.XMIAux = XMIAux;
         this.IRIManager = IRIManager;
