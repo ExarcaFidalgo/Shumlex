@@ -1,6 +1,9 @@
 const shexparser = require('../src/shex_util/ShExParser.js');
 const XMIRep = require('../src/repo/xmirepository.js');
 const ShExRep = require('../src/repo/shexrepository.js');
+const idioma = require("../web/js/lang/alertloc.js");
+const es = require('../web/js/lang/langrepo.js').es;
+const en = require('../web/js/lang/langrepo.js').en;
 
 /**
  * Comprueba que no se generen ID null
@@ -107,6 +110,19 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
 
     test('Disyunciones', () => {
         checkGen(ShExRep.getShex23(), XMIRep.getXMI23());
+    });
+
+    test('Alertas', () => {
+        expect(idioma.getLocalizedAlert("shexerror1"))
+            .toEqual(es.shexerror1);
+        expect(idioma.getLocalizedAlert("shexerror2"))
+            .toEqual(es.shexerror2);
+        sessionStorage.setItem("lang", JSON.stringify(en));
+        expect(idioma.getLocalizedAlert("shexerror1"))
+            .toEqual(en.shexerror1);
+        expect(idioma.getLocalizedAlert("shexerror2"))
+            .toEqual(en.shexerror2);
+        sessionStorage.clear();
     });
 
 

@@ -1,6 +1,9 @@
 const xmiparser = require('../src/xmi_util/XMIParser.js');
 const XMIRep = require('../src/repo/xmirepository.js');
 const ShExRep = require('../src/repo/shexrepository.js');
+const idioma = require("../web/js/lang/alertloc.js");
+const es = require('../web/js/lang/langrepo.js').es;
+const en = require('../web/js/lang/langrepo.js').en;
 
 /**
  * Realiza las comprobaciones estándar para los test
@@ -161,6 +164,19 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
 
     test('VP: Disyunciones', () => {
         checkGen(XMIRep.getXMI23VP(), ShExRep.getShex23());
+    });
+
+    test('Alertas', () => {
+        expect(idioma.getLocalizedAlert("xmierror1"))
+            .toEqual(es.xmierror1);
+        expect(idioma.getLocalizedAlert("xmierror2"))
+            .toEqual(es.xmierror2);
+        sessionStorage.setItem("lang", JSON.stringify(en));
+        expect(idioma.getLocalizedAlert("xmierror1"))
+            .toEqual(en.xmierror1);
+        expect(idioma.getLocalizedAlert("xmierror2"))
+            .toEqual(en.xmierror2);
+        sessionStorage.clear();
     });
 
 });
