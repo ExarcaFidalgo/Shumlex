@@ -5,7 +5,7 @@ let gr = new GrafoGen();
 
 describe('Pruebas de la representación de ShEx como grafo', () => {
 
-    test('Relaciones y otros atributos', () => {
+    test('ShEx básico', () => {
         let grafo = gr.shExAGrafo(ShExRep.getShex0());
         let grafoObj = GrafoRep.getGrafo1();
         expect(grafo.length)

@@ -56,6 +56,31 @@ class XMIComposition {
     }
 
     /**
+     * Crea una subclase que contiene parte de la clase actual.
+     * Esto puede ser necesario si hemos de asignar cardinalidad a un oonjunto de elementos,
+     * o aplicar operaciones como OneOf.
+     * @param asocName  Nombre de la asociación
+     * @param subClassName  Nombre de la subclase
+     * @param expr  Expresión
+     * @param min   Cardinalidad mínima
+     * @param max   Cardinalidad máxima
+     * @returns {*} Subclase XMI
+     */
+    createComponent(asocName, subClassName, expr, min, max) {
+        let subClass = {
+            name: subClassName,
+            expr: expr
+        };
+        if(subClass.expr && subClass.expr.type !== "TripleConstraint") {
+            subClass.expr.min = undefined;
+            subClass.expr.max = undefined;
+        }
+
+        this.saveComponent(subClass);
+        return this.xmiasoc.createXMICompAsocAttribute(asocName, subClassName, min, max);
+    }
+
+    /**
      * Guarda una referencia a expresión etiquetada
      * @param labelRef  Referencia
      * @param comp  Componente referenciado
