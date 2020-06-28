@@ -26,7 +26,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         checkGen(XMIRep.getXMI2(), ShExRep.getShex2());
     });
 
-    test('Relaciones y otros atributos', () => {
+    test('ShapeRef', () => {
         checkGen(XMIRep.getXMI3(), ShExRep.getShex3());
     });
 
@@ -102,7 +102,7 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         checkGen(XMIRep.getXMI23(), ShExRep.getShex23());
     });
 
-    test('VP: Relaciones y otros atributos', () => {
+    test('VP: ShapeRef', () => {
         checkGen(XMIRep.getXMI3VP(), ShExRep.getShex3());
     });
 

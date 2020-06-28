@@ -5,7 +5,13 @@ let um = new UMLGen();
 
 describe('Pruebas de la representación de UML como diagrama PlantUML', () => {
 
-    test('Relaciones y otros atributos', () => {
+    test('Atributos básicos', () => {
+        let puml = um.generarCodigoPUML(XMIRep.getXMI2());
+        expect(puml)
+            .toEqual(PUMLRep.getPUML0());
+    });
+
+    test('ShapeRef', () => {
         let puml = um.generarCodigoPUML(XMIRep.getXMI3());
         expect(puml)
             .toEqual(PUMLRep.getPUML1());
@@ -101,7 +107,13 @@ describe('Pruebas de la representación de UML como diagrama PlantUML', () => {
             .toEqual(PUMLRep.getPUML16());
     });
 
-    test('VP: Relaciones y otros atributos', () => {
+    test('VP: Atributos básicos', () => {
+        let puml = um.generarCodigoPUML(XMIRep.getXMI2());
+        expect(puml)
+            .toEqual(PUMLRep.getPUML0());
+    });
+
+    test('VP: ShapeRef', () => {
         let puml = um.generarCodigoPUML(XMIRep.getXMI3VP());
         expect(puml)
             .toEqual(PUMLRep.getPUML1());

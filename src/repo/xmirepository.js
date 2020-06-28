@@ -49,6 +49,9 @@ class Xmirepository {
             "\t<ownedAttribute xmi:id=\"k8ftbvov\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
+            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qewr0\" />\n" +
+            "\t</ownedAttribute>\n" +
+            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9qewr3\" name=\":gender\" visibility=\"public\" type=\"kb9qewr2\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:Class\" xmi:id=\"k8ftbvow\" name=\"&lt;TypeTest&gt;\">\n" +
@@ -108,6 +111,10 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"k8ftbvor\" name=\"prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>\"/>\n" +
             "\t<ownedLiteral xmi:id=\"k8ftbvos\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
+            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kb9qewr2\" name=\":gender\">\n" +
+            "\t<ownedLiteral xmi:id=\"kb9qewsm\" name=\":Male\"/>\n" +
+            "\t<ownedLiteral xmi:id=\"kb9qewsn\" name=\":Female\"/>\n" +
+            "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8ftbvoz\" name=\"xsd:time\"/>\n" +
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8ftbvp1\" name=\"xsd:dateTime\"/>\n" +
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"k8ftbvp3\" name=\"xsd:duration\"/>\n" +
@@ -132,9 +139,6 @@ class Xmirepository {
             "\t<ownedAttribute xmi:id=\"kb9qewr1\" name=\":age\" visibility=\"public\" isUnique=\"false\">\n" +
             "\t\t<type xmi:type=\"uml:PrimitiveType\" href=\"pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Int\">\n" +
             "\t\t</type>\n" +
-            "\t\t<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"kb9qewr0\" />\n" +
-            "\t</ownedAttribute>\n" +
-            "\t<ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"kb9qewr3\" name=\":gender\" visibility=\"public\" type=\"kb9qewr2\" isUnique=\"true\">\n" +
             "\t</ownedAttribute>\n" +
             "\t<ownedAttribute xmi:id=\"kb9qewr4\" name=\":knows\" visibility=\"public\" type=\"kb9qewqy\" association=\"kb9qewr5\" ></ownedAttribute>\n" +
             "\t<ownedAttribute xmi:id=\"kb9qewr6\" name=\":worksFor\" visibility=\"public\" type=\"kb9qewr7\" association=\"kb9qewr8\" ></ownedAttribute>\n" +
@@ -226,10 +230,6 @@ class Xmirepository {
             "\t<ownedLiteral xmi:id=\"kb9qewqw\" name=\"base &lt;http://example.org/>\"/>\n" +
             "</packagedElement>\n" +
             "<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"kb9qews5\" name=\"Any\"/>\n" +
-            "<packagedElement xmi:type=\"uml:Enumeration\" xmi:id=\"kb9qewr2\" name=\":gender\">\n" +
-            "\t<ownedLiteral xmi:id=\"kb9qewsm\" name=\":Male\"/>\n" +
-            "\t<ownedLiteral xmi:id=\"kb9qewsn\" name=\":Female\"/>\n" +
-            "</packagedElement>\n" +
             "</uml:Model>";
     }
 
@@ -248,13 +248,8 @@ class Xmirepository {
             "\t\t\t</ownedAttribute>\n" +
             "\t\t\t<ownedAttribute aggregation=\"none\" isDerived=\"false\" isDerivedUnion=\"false\" isID=\"false\" isLeaf=\"false\" isOrdered=\"false\" isReadOnly=\"false\" isStatic=\"false\" isUnique=\"false\" name=\":age\" type=\"Int_id\" visibility=\"public\" xmi:id=\"kbgxig79\" xmi:type=\"uml:Property\">\n" +
             "\t\t\t\t\n" +
-            "\t\t\t\t<lowerValue value=\"0\" xmi:id=\"ObGZnU6GAqACHQWQ_multiplicity_lowerValue\" xmi:type=\"uml:LiteralString\"/>\n" +
+            "\t\t\t\t<lowerValue value=\"1\" xmi:id=\"ObGZnU6GAqACHQWQ_multiplicity_lowerValue\" xmi:type=\"uml:LiteralString\"/>\n" +
             "\t\t\t\t<upperValue value=\"1\" xmi:id=\"ObGZnU6GAqACHQWQ_multiplicity_upperValue\" xmi:type=\"uml:LiteralString\"/>\n" +
-            "\t\t\t</ownedAttribute>\n" +
-            "\t\t\t<ownedAttribute aggregation=\"none\" isDerived=\"false\" isDerivedUnion=\"false\" isID=\"false\" isLeaf=\"false\" isOrdered=\"false\" isReadOnly=\"false\" isStatic=\"false\" isUnique=\"true\" name=\":gender\" type=\"kbgxig7a\" visibility=\"public\" xmi:id=\"kbgxig7b\" xmi:type=\"uml:Property\">\n" +
-            "\t\t\t\t\n" +
-            "\t\t\t\t<lowerValue value=\"1\" xmi:id=\"ZbGZnU6GAqACHQWS_multiplicity_lowerValue\" xmi:type=\"uml:LiteralString\"/>\n" +
-            "\t\t\t\t<upperValue value=\"1\" xmi:id=\"ZbGZnU6GAqACHQWS_multiplicity_upperValue\" xmi:type=\"uml:LiteralString\"/>\n" +
             "\t\t\t</ownedAttribute>\n" +
             "\t\t\t<ownedAttribute aggregation=\"none\" isDerived=\"false\" isDerivedUnion=\"false\" isLeaf=\"false\" isNavigable=\"true\" isReadOnly=\"false\" isStatic=\"false\" name=\":knows\" type=\"kbgxig71\" visibility=\"public\" xmi:id=\"kbgxig7c\" xmi:type=\"uml:Property\">\n" +
             "\t\t\t\t\n" +
@@ -387,15 +382,6 @@ class Xmirepository {
             "\t\t</packagedElement>\n" +
             "\t\t<packagedElement isAbstract=\"false\" isActive=\"false\" isLeaf=\"false\" name=\"Any\" visibility=\"public\" xmi:id=\"kbgxig89\" xmi:type=\"uml:PrimitiveType\">\n" +
             "\t\t\t\n" +
-            "\t\t</packagedElement>\n" +
-            "\t\t<packagedElement isAbstract=\"false\" isActive=\"false\" isLeaf=\"false\" name=\":gender\" visibility=\"public\" xmi:id=\"kbgxig7a\" xmi:type=\"uml:Enumeration\">\n" +
-            "\t\t\t\n" +
-            "\t\t\t<ownedLiteral name=\":Male\" visibility=\"public\" xmi:id=\"kbgxig8p\" xmi:type=\"uml:EnumerationLiteral\">\n" +
-            "\t\t\t\t\n" +
-            "\t\t\t</ownedLiteral>\n" +
-            "\t\t\t<ownedLiteral name=\":Female\" visibility=\"public\" xmi:id=\"kbgxig8q\" xmi:type=\"uml:EnumerationLiteral\">\n" +
-            "\t\t\t\t\n" +
-            "\t\t\t</ownedLiteral>\n" +
             "\t\t</packagedElement>\n" +
             "\t\t<packagedElement isAbstract=\"false\" isDerived=\"false\" isLeaf=\"false\" memberEnd=\"kbgxig7j kbgxig7c\" name=\"\" xmi:id=\"kbgxig7d\" xmi:type=\"uml:Association\">\n" +
             "\t\t\t<ownedEnd aggregation=\"none\" isDerived=\"false\" isDerivedUnion=\"false\" isLeaf=\"false\" isReadOnly=\"false\" isStatic=\"false\" name=\"\" type=\"kbgxig71\" visibility=\"public\" xmi:id=\"kbgxig7j\" xmi:type=\"uml:Property\">\n" +

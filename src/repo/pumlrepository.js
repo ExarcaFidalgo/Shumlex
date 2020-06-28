@@ -1,5 +1,39 @@
 class PUMLRepository {
 
+    static getPUML0() {
+        return "@startuml\n" +
+            "enum Prefixes {\n" +
+            "prefix : <https://schema.org/>\n" +
+            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "base <http://example.org/>\n" +
+            "} \n" +
+            "enum \":gender\" {\n" +
+            ":Male\n" +
+            ":Female\n" +
+            "} \n" +
+            "class \":User\"\n" +
+            "\":User\" : :name xsd:string  \n" +
+            "\":User\" : :age xsd:int  ? \n" +
+            "\":User\" : :gender :gender  \n" +
+            "class \"<TypeTest>\"\n" +
+            "\"<TypeTest>\" : :z xsd:string  \n" +
+            "\"<TypeTest>\" : :b xsd:date  \n" +
+            "\"<TypeTest>\" : :c xsd:time  \n" +
+            "\"<TypeTest>\" : :d xsd:dateTime  \n" +
+            "\"<TypeTest>\" : :e xsd:duration  \n" +
+            "\"<TypeTest>\" : :f xsd:byte  \n" +
+            "\"<TypeTest>\" : :g xsd:decimal  \n" +
+            "\"<TypeTest>\" : :h xsd:int  \n" +
+            "\"<TypeTest>\" : :i xsd:integer  \n" +
+            "\"<TypeTest>\" : :j xsd:long  \n" +
+            "\"<TypeTest>\" : :k xsd:short  \n" +
+            "\"<TypeTest>\" : :l xsd:boolean  \n" +
+            "\"<TypeTest>\" : :m xsd:double  \n" +
+            "\"<TypeTest>\" : :n xsd:float  \n" +
+            "\"<TypeTest>\" : :xyz xsd:invent  \n" +
+            "@enduml";
+    }
+
    static getPUML1() {
        return "@startuml\n" +
            "enum Prefixes {\n" +
@@ -7,14 +41,9 @@ class PUMLRepository {
            "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
            "base <http://example.org/>\n" +
            "} \n" +
-           "enum \":gender\" {\n" +
-           ":Male\n" +
-           ":Female\n" +
-           "} \n" +
            "class \":User\"\n" +
            "\":User\" : :name xsd:string  \n" +
-           "\":User\" : :age xsd:int  ? \n" +
-           "\":User\" : :gender :gender  \n" +
+           "\":User\" : :age xsd:int  \n" +
            "\":User\" -->  \":User\" : \":knows\"\n" +
            "\":User\" -->  \":Company\" : \":worksFor\"\n" +
            "\":User\" --> \" {1,10}\" \"<Product>\" : \":buys\"\n" +

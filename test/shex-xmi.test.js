@@ -36,7 +36,7 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
         checkGen(ShExRep.getShex2(), XMIRep.getXMI2());
     });
 
-    test('Relaciones y otros atributos', () => {
+    test('ShapeRef', () => {
         checkGen(ShExRep.getShex3(), XMIRep.getXMI3());
     });
 

@@ -68,7 +68,8 @@ class ShExRepository {
             "base <http://example.org/>\n\n"
             + ":User {\n" +
             "\t:name xsd:string;\n" +
-            "\t:age xsd:int;\n" +
+            "\t:age xsd:int ?;\n" +
+            "\t:gender [:Male :Female ];\n" +
             "}\n\n"
             + "<TypeTest> {\n" +
             "\t:z xsd:string;\n" +
@@ -90,7 +91,7 @@ class ShExRepository {
     }
 
     /**
-     * Relaciones y otros atributos
+     * ShapeRef
      * @returns {string}
      */
     static getShex3() {
@@ -100,8 +101,7 @@ class ShExRepository {
             "\n" +
             ":User {\n" +
             "\t:name xsd:string;\n" +
-            "\t:age xsd:int ?;\n" +
-            "\t:gender [:Male :Female ];\n" +
+            "\t:age xsd:int;\n" +
             "\t:knows @:User;\n" +
             "\t:worksFor @:Company;\n" +
             "\t:buys @<Product> {1,10};\n" +
