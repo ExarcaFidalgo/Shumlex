@@ -166,17 +166,4 @@ describe('Pruebas de la transformación XMI-ShEx', () => {
         checkGen(XMIRep.getXMI23VP(), ShExRep.getShex23());
     });
 
-    test('Alertas', () => {
-        expect(idioma.getLocalizedAlert("xmierror1"))
-            .toEqual(es.xmierror1);
-        expect(idioma.getLocalizedAlert("xmierror2"))
-            .toEqual(es.xmierror2);
-        sessionStorage.setItem("lang", JSON.stringify(en));
-        expect(idioma.getLocalizedAlert("xmierror1"))
-            .toEqual(en.xmierror1);
-        expect(idioma.getLocalizedAlert("xmierror2"))
-            .toEqual(en.xmierror2);
-        sessionStorage.clear();
-    });
-
 });

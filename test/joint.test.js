@@ -40,7 +40,7 @@ describe('Pruebas de la transformación conjunta', () => {
         checkGen(ShExRep.getShex2(), XMIRep.getXMI2(), ShExRep.getShex2());
     });
 
-    test('Relaciones y otros atributos', () => {
+    test('ShapeRef', () => {
         checkGen(ShExRep.getShex3(), XMIRep.getXMI3(), ShExRep.getShex3());
     });
 

@@ -112,18 +112,4 @@ describe('Pruebas de la transformación ShEx-XMI', () => {
         checkGen(ShExRep.getShex23(), XMIRep.getXMI23());
     });
 
-    test('Alertas', () => {
-        expect(idioma.getLocalizedAlert("shexerror1"))
-            .toEqual(es.shexerror1);
-        expect(idioma.getLocalizedAlert("shexerror2"))
-            .toEqual(es.shexerror2);
-        sessionStorage.setItem("lang", JSON.stringify(en));
-        expect(idioma.getLocalizedAlert("shexerror1"))
-            .toEqual(en.shexerror1);
-        expect(idioma.getLocalizedAlert("shexerror2"))
-            .toEqual(en.shexerror2);
-        sessionStorage.clear();
-    });
-
-
 });
