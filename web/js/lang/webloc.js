@@ -48,8 +48,6 @@ function localize(lang) {
     setContentByID("cfg", lang.cfg);
     setContentByID("cambiarClaro", lang.cambiarClaro);
     setContentByID("cambiarOscuro", lang.cambiarOscuro);
-    setTitleByID("uk", lang.uk);
-    setTitleByID("es", lang.es);
     setContentByID("int", lang.int);
     setContentByID("p1", lang.p1);
     setContentByID("p2", lang.p2);

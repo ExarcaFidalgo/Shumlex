@@ -60,7 +60,7 @@ p {
 
 /* Add a red background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
+    background-color: darkred;
 }
 
 /* Dropdown content (hidden by default) */
@@ -148,10 +148,9 @@ p {
 }
 .btn1 {
     box-shadow: 0px 1px 0px 0px #f0f7fa;
-    background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
-    background-color:#33bdef;
+    background-color:#333;
     border-radius:6px;
-    border:1px solid #057fd0;
+    border:1px solid darkred;
     cursor:pointer;
     color:#ffffff;
     font-family: CaslonAntique, serif;
@@ -163,8 +162,7 @@ p {
     display: inline-block;
 }
 .btn1:hover {
-    background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
-    background-color:#019ad2;
+    background-color: darkred;
 }
 .btn1:active {
     position:relative;
@@ -190,7 +188,8 @@ p {
 
 /* Add a red background color to navigation links on hover */
 .navbar a:hover, .subnav:hover .subnavbtn {
-    background-color: red;
+    background-color: darkred;
+    color: white;
 }
 
 /* Style the subnav content - positioned absolute */
@@ -214,7 +213,7 @@ p {
 
 /* Add a grey background color on hover */
 .subnav-content a:hover {
-    background-color: red;
+    background-color: darkred;
 }
 
 /* When you move the mouse over the subnav container, open the subnav content */
