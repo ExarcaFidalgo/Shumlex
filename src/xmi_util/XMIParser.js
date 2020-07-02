@@ -95,7 +95,6 @@ class XMIParser {
             //Generamos el equivalente a las clases y su contenido
             for (let i = 0; i < packagedElements.length; i++) {
                 if (packagedElements[i]["$"]["xmi:type"] === "uml:Class") {
-                    console.log(packagedElements[i]["$"].name);
                     shExEquivalent += shexgen.classToShEx(packagedElements[i])
                 }
             }
