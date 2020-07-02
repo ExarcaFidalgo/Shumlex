@@ -25,7 +25,7 @@ class XMIAssociations {
      */
     createXMIAsocAttribute(name, target, min, max) {
         let idatr = this.unid();
-        let targetShape = this.shm.findShape(target);
+        let targetShape = this.shm.findShape(target, true);
 
         //ID Elemento asociación (PackagedElement)
         let idasoc = this.unid();

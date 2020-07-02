@@ -33,6 +33,7 @@ class ShExClass {
             let created = false;
             if(element.ownedAttribute) {
                 for(let i = 0; i < element.ownedAttribute.length; i++) {
+                    console.log(element.ownedAttribute[i].$.name);
                     if(element.ownedAttribute[i].$.name === "AND") {
                         header += this.shexat.generalizationToShEx(element.generalization, "AND");
                         created = true;
