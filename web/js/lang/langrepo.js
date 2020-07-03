@@ -55,7 +55,8 @@ let es = {
     shexerror2: "\nPor favor, revise la gramática.",
     xmierror1: "Error al parsear XMI:\n",
     xmierror2: "Se ha producido un error durante la generación de las Shape Expressions.\n" +
-        "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n"
+        "El XMI está bien formado, pero faltan elementos o atributos clave para la generación.\n",
+    umlerror: "El diagrama UML ha tardado demasiado en cargar. Generalmente, esto se debe a que el UML a generar es excesivo para PlantUML. No obstante, puede deberse asimismo a problemas de conexión, en cuyo caso lo más probable es que el diagrama aparezca mientras usted lee este mensaje."
 };
 
 //Contenido inglés
@@ -115,7 +116,8 @@ let en = {
     shexerror2: "\nPlease, check its grammar.",
     xmierror1: "Error when parsing XMI:\n",
     xmierror2: "An error has taken place while generating Shape Expressions.\n" +
-        "XMI is well formed, but it is lacking key elements or attributes for the generation.\n"
+        "XMI is well formed, but it is lacking key elements or attributes for the generation.\n",
+    umlerror: "The UML diagram has taken too much time to load. Usually, this happens because of an excessive size that PlantUML cannot bear. Nevertheless, there may be connection issues; in that case, the diagram is likely to appear while you are reading this message."
 };
 
 exports.en = en;
