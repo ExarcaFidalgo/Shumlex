@@ -24,7 +24,7 @@ async function checkLoadedImage(img) {
             alert(lang.getLocalizedAlert("umlerror"));
             img.attr("src", "none");
         }
-        }, 2000);
+        }, 5000);
 }
 
 //Tamaño completo
