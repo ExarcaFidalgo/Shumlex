@@ -400,41 +400,45 @@ window.onload = function() {
     let shexInput = document.getElementById('shexInput');
 	let xmiInput = document.getElementById('xmiInput');
 
-    shexInput.addEventListener('change', function(e) {
-		console.log('Oi');
-        let file = shexInput.files[0];
-        var regex = /^(.)+(.shex)$/;
+	if(shexInput) {
+		shexInput.addEventListener('change', function(e) {
+			console.log('Oi');
+			let file = shexInput.files[0];
+			var regex = /^(.)+(.shex)$/;
 
-        if (regex.test(file.name)) {
-			console.log(file.name);
-            let reader = new FileReader();
+			if (regex.test(file.name)) {
+				console.log(file.name);
+				let reader = new FileReader();
 
-            reader.onload = function(e) {
-                shExEditor.setValue(reader.result);
-            }
-            reader.readAsText(file)
+				reader.onload = function(e) {
+					shExEditor.setValue(reader.result);
+				}
+				reader.readAsText(file)
 
-        } else {
-            alert("Por favor, cargue un archivo .shex válido.");
-        }
-    });
+			} else {
+				alert("Por favor, cargue un archivo .shex válido.");
+			}
+		});
+	}
 	
-	xmiInput.addEventListener('change', function(e) {
-        let file = xmiInput.files[0];
-        var regex = /^(.)+(.xmi)$/;
+	if(xmiInput) {
+		xmiInput.addEventListener('change', function(e) {
+			let file = xmiInput.files[0];
+			var regex = /^(.)+(.xmi)$/;
 
-        if (regex.test(file.name)) {
-            let reader = new FileReader();
+			if (regex.test(file.name)) {
+				let reader = new FileReader();
 
-            reader.onload = function(e) {
-                xmiEditor.setValue(reader.result);
-            }
-            reader.readAsText(file)
+				reader.onload = function(e) {
+					xmiEditor.setValue(reader.result);
+				}
+				reader.readAsText(file)
 
-        } else {
-            alert("Por favor, cargue un archivo .xmi válido.");
-        }
-    });
+			} else {
+				alert("Por favor, cargue un archivo .xmi válido.");
+			}
+		});
+	}
 }
 
 
