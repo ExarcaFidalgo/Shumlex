@@ -175,8 +175,8 @@ function borrarXMI() {
     xmiEditor.setValue("");
 }
 
-let insx = $('.intercambiarsx');
-let inxs = $('.intercambiarxs');
+let insx = $('#isx');
+let inxs = $('#ixs');
 insx.click(intercambiarsx);
 inxs.click(intercambiarxs);
 insx.keypress(function (e) {
@@ -185,6 +185,7 @@ insx.keypress(function (e) {
         insx.click();
     }
 });
+
 inxs.keypress(function (e) {
     if(e.which === 13)
     {
@@ -392,6 +393,49 @@ if(document.getElementById("dwnxmi-btn")) {
 }
 
 let dwnxmibtn = $('#dwnxmi-btn');
+
+//Carga
+
+window.onload = function() {
+    let shexInput = document.getElementById('shexInput');
+	let xmiInput = document.getElementById('xmiInput');
+
+    shexInput.addEventListener('change', function(e) {
+		console.log('Oi');
+        let file = shexInput.files[0];
+        var regex = /^(.)+(.shex)$/;
+
+        if (regex.test(file.name)) {
+			console.log(file.name);
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                shExEditor.setValue(reader.result);
+            }
+            reader.readAsText(file)
+
+        } else {
+            alert("Por favor, cargue un archivo .shex válido.");
+        }
+    });
+	
+	xmiInput.addEventListener('change', function(e) {
+        let file = xmiInput.files[0];
+        var regex = /^(.)+(.xmi)$/;
+
+        if (regex.test(file.name)) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                xmiEditor.setValue(reader.result);
+            }
+            reader.readAsText(file)
+
+        } else {
+            alert("Por favor, cargue un archivo .xmi válido.");
+        }
+    });
+}
 
 
 //IDIOMA

@@ -18,6 +18,10 @@ p {
     font-size: 20px;
 }
 
+input {
+	display: none;
+}
+
 .CodeMirror {
     border: 1px solid #eee;
     height: auto;
@@ -232,7 +236,7 @@ p {
     margin-top: 2em;
 }
 
-.icon-bar a {
+.icon-bar a, .icon-bar label {
     float: left; /* Float links side by side */
     text-align: center; /* Center-align text */
     width: 25%; /* Equal width (5 icons with 20% width each = 100%) */
@@ -244,7 +248,7 @@ p {
     cursor: pointer;
 }
 
-.icon-bar a:hover {
+.icon-bar a:hover, .icon-bar label:hover {
     background-color: #000; /* Add a hover color */
 }
 
@@ -290,4 +294,8 @@ p {
 
 #umlib2 {
     margin-left: 1.4em;
+}
+
+#isx, #ixs {
+    margin-top: 1em;
 }

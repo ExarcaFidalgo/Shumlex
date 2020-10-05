@@ -55,18 +55,20 @@ function localize(lang) {
     setTitleByID("borrarshex", lang.borrarshex);
     setContentByID("cargarShexXMI", lang.cargarShexXMI);
     setTitleByID("dwnshex-btn", lang["dwnshex-btn"]);
+    setTitleByID("upshex-btn", lang["upshex-btn"]);
     setContentByID("shextoxmi", lang.shextoxmi);
+    setTitleByID("isx", lang.isx);
+    setTitleByID("ixs", lang.isx);
     setContentByID("xmitoshex", lang.xmitoshex);
     setContentByID("cargarGrafo", lang.cargarGrafo);
     setTitleByID("borrarxmi", lang.borrarxmi);
     setContentByID("cargarUML", lang.cargarUML);
     setTitleByID("dwnxmi-btn", lang["dwnxmi-btn"]);
+    setTitleByID("upxmi-btn", lang["upxmi-btn"]);
     setContentByID("mostraruml", lang.mostraruml);
     setContentByID("cargarXMIShex", lang.cargarXMIShex);
     setContentByID("fullSize", lang.fullSize);
 
-    setTitleByClass("intercambiarsx", lang.intercambiarsx);
-    setTitleByClass("intercambiarxs", lang.intercambiarxs);
     setContentByClass("ggen", lang.ggen);
     setContentByClass("shxm", lang.shxm);
     setContentByClass("umlg", lang.umlg);
