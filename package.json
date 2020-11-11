@@ -4,7 +4,8 @@
   "description": "ShEx - Uml integration",
   "main": "main.js",
   "scripts": {
-    "build": "browserify web/js/EditorController.js > main.js"
+    "build": "browserify web/js/EditorController.js > main.js",
+	"test": ""
   },
   "bin": {},
   "repository": {
