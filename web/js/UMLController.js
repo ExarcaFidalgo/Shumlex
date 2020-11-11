@@ -1,8 +1,6 @@
-const plantumlEncoder = require('../../lib/plantuml-encoder');
 const $ = require('jquery');
 
-const UMLGen = require("../../src/visual/UMLGen.js");
-let umlgen = new UMLGen();
+const shumlex = require('shumlex');
 
 const lang = require('./lang/alertloc.js');
 
@@ -11,10 +9,9 @@ const lang = require('./lang/alertloc.js');
  * @param xmi   XMI empleado para generar UML
  */
 function generarUML(xmi) {
-    let puml = umlgen.generarCodigoPUML(xmi);
-    let encoded = plantumlEncoder.encode(puml);
+    let puml = shumlex.crearDiagramaUML(xmi);
     let img = $('#umlimg');
-    img.attr("src", "http://www.plantuml.com/plantuml/img/" + encoded);
+    img.attr("src", puml);
     checkLoadedImage(img);
 }
 

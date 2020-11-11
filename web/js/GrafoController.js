@@ -4,8 +4,7 @@ const panzoom = require('cytoscape-panzoom');
 cyto.use( dagre );
 panzoom( cyto );
 
-const GrafoGen = require("../../src/visual/GrafoGen.js");
-let grgen = new GrafoGen();
+const shumlex = require('shumlex');
 
 /**
  * Crea un grafo mediante Cytoscape en el <div> "grafo"
@@ -16,7 +15,7 @@ function generarGrafo(data) {
 
         container: document.getElementById('grafo'), // Contenedor
 
-        elements: grgen.shExAGrafo(data),
+        elements: shumlex.crearGrafo(data),
 
         style: style,
 

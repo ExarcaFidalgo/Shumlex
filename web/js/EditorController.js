@@ -1,12 +1,10 @@
 const $ = require('jquery');
-
-const shexparser = require('../../src/shex_util/ShExParser.js');
-const xmiparser = require('../../src/xmi_util/XMIParser.js');
-
-const repo = require('../../src/repo/shexrepository.js');
+const shumlex = require('shumlex');
 
 const grafo = require('./GrafoController.js');
 const uml = require('./UMLController.js');
+const repo = require('../../src/repo/shexrepository.js');
+
 const lang = require('./lang/webloc.js');
 
 let shExEditor;
@@ -132,7 +130,7 @@ xmtsh.keypress(function (e) {
 function shExToXMI() {
 	let text = shExEditor.getValue();
 
-    let parsedToXML = shexparser.parseShExToXMI(text);
+    let parsedToXML = shumlex.shExToXMI(text);
     xmiEditor.setValue(parsedToXML);
 }
 
@@ -142,7 +140,7 @@ function shExToXMI() {
  */
 function XMIToShEx() {
     let text = xmiEditor.getValue();
-    shExEditor.setValue(xmiparser.parseXMIToShEx(text));
+    shExEditor.setValue(shumlex.XMIToShEx(text));
 }
 let borrarshex = $('#borrarshex');
 borrarshex.click(borrarShex);
