@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "browserify web/js/EditorController.js > main.js",
-	"test": ""
+    "test": "echo \"No hay tests.\""
   },
   "bin": {},
   "repository": {
