@@ -1,7 +1,7 @@
 {
   "name": "Shumlex",
-  "version": "1.1.0",
-  "description": "ShEx - Uml integration",
+  "version": "1.1.1",
+  "description": "ShEx - Uml integration WebApp",
   "main": "main.js",
   "scripts": {
     "build": "browserify web/js/EditorController.js > main.js",
@@ -26,6 +26,6 @@
     "cytoscape-dagre": "^2.2.2",
     "cytoscape-panzoom": "^2.5.3",
     "jquery": "^3.5.1",
-    "shumlex": "^0.3.0"
+    "shumlex": "^0.3.3"
   }
 }
