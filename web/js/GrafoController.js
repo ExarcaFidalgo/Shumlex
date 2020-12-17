@@ -1,17 +1,23 @@
+const $ = require('jquery');
 const cyto = require('cytoscape');
 let dagre = require('cytoscape-dagre');
 const panzoom = require('cytoscape-panzoom');
+let svg = require('cytoscape-svg');
 cyto.use( dagre );
+cyto.use( svg );
 panzoom( cyto );
 
 const shumlex = require('shumlex');
+
+let cy = null;
+
 
 /**
  * Crea un grafo mediante Cytoscape en el <div> "grafo"
  * @param data  Datos del grafo
  */
 function generarGrafo(data) {
-    let cy = cyto({
+    cy = cyto({
 
         container: document.getElementById('grafo'), // Contenedor
 
@@ -28,6 +34,14 @@ function generarGrafo(data) {
 
     });
     cy.panzoom( defaults );
+	$("#dwnsvg-btn").attr("download", `shumlex-graph.svg`);
+}
+
+function grafoASVG() {
+	var svgContent = cy.svg({scale: 1, full: true});
+	let bs = btoa(svgContent);
+	$("#dwnsvg-btn").attr("href", `data:image/svg+xml;base64,${bs}`);
+	window.location.href = `data:image/svg+xml;base64,${bs}`;
 }
 
 let style = [ //Hoja de estilo para el grafo
@@ -81,4 +95,7 @@ let defaults = {
     zoomOutIcon: 'fa fa-minus',
     resetIcon: 'fa fa-expand'
 };
-exports.generarGrafo = generarGrafo;
+module.exports = {
+    generarGrafo,
+	grafoASVG
+}

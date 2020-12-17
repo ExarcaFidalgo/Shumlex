@@ -10,6 +10,8 @@ const lang = require('./lang/webloc.js');
 let shExEditor;
 let xmiEditor;
 
+$("#dwnsvg-btn").click(grafo.grafoASVG);
+
 /**
  * Comprueba la existencia de parámetros en la URL y actúa en consecuencia.
  * Concretamente, permite cargar diversos ejemplos en el editor, o el último código generado por el usuario.
