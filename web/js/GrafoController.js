@@ -41,7 +41,6 @@ function grafoASVG() {
 	var svgContent = cy.svg({scale: 1, full: true});
 	let bs = btoa(svgContent);
 	$("#dwnsvg-btn").attr("href", `data:image/svg+xml;base64,${bs}`);
-	window.location.href = `data:image/svg+xml;base64,${bs}`;
 }
 
 let style = [ //Hoja de estilo para el grafo
