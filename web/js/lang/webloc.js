@@ -45,6 +45,7 @@ function localize(lang) {
     setContentByID("exe", lang.exe);
     setContentByID("cnj", lang.cnj);
     setContentByID("disy", lang.disy);
+    setContentByID("neg", lang.neg);
     setContentByID("cfg", lang.cfg);
     setContentByID("cambiarClaro", lang.cambiarClaro);
     setContentByID("cambiarOscuro", lang.cambiarOscuro);

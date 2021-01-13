@@ -709,6 +709,24 @@ class ShExRepository {
             "}\n" +
             "\n";
     }
+	
+	static getShex24() {
+		return `prefix : <https://schema.org/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+base <http://example.org/>
+
+:User {
+	:name xsd:string;
+	:birthDate xsd:date ?;
+}
+
+:NoUser Not @:User
+
+:NoName Not {
+	:name xsd:string;
+}
+`;
+	}
 
 }
 module.exports = ShExRepository;
