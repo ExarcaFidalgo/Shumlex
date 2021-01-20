@@ -27,6 +27,6 @@
     "cytoscape-panzoom": "^2.5.3",
     "cytoscape-svg": "^0.3.1",
     "jquery": "^3.5.1",
-    "shumlex": "^0.4.0"
+    "shumlex": "^0.4.1"
   }
 }
