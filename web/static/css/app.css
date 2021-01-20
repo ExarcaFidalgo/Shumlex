@@ -284,7 +284,7 @@ p {
     max-height: 100%;
 }
 
-#uml {
+#umlcontainer {
     width: 44.6%;
 }
 
@@ -298,4 +298,14 @@ p {
 
 #isx, #ixs {
     margin-top: 1em;
+}
+
+.fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1100;
+	background-color: white;
 }
