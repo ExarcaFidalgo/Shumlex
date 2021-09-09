@@ -20,54 +20,71 @@ $(document).ready(function() {
     let ref = window.location.href;
     if(ref.includes("?basic")) {
         shExEditor.setValue(repo.getShex0());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?herencia")) {
         shExEditor.setValue(repo.getShex5());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?resnod")) {
         shExEditor.setValue(repo.getShex7());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?facetas")) {
         shExEditor.setValue(repo.getShex9());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?rexcl")) {
         shExEditor.setValue(repo.getShex10());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?cgen")) {
         shExEditor.setValue(repo.getShex11());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?leng")) {
         shExEditor.setValue(repo.getShex13());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?card")) {
         shExEditor.setValue(repo.getShex14());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?oneof")) {
         shExEditor.setValue(repo.getShex15());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?anid")) {
         shExEditor.setValue(repo.getShex16());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?closed")) {
         shExEditor.setValue(repo.getShex17());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?rti")) {
         shExEditor.setValue(repo.getShex19());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?extra")) {
         shExEditor.setValue(repo.getShex20());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?etiq")) {
         shExEditor.setValue(repo.getShex21());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?conj")) {
         shExEditor.setValue(repo.getShex22());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?disy")) {
         shExEditor.setValue(repo.getShex23());
+        xmiEditor.setValue("");
     }
 	else if(ref.includes("?neg")) {
         shExEditor.setValue(repo.getShex24());
+        xmiEditor.setValue("");
     }
     else if(ref.includes("?load")) {
         let shv = sessionStorage.getItem("shexvalue");
@@ -80,6 +97,18 @@ $(document).ready(function() {
         }
 
     }
+    if(ref.includes("shextoxmi.html")) {
+        xmiEditor.setValue("");
+    }
+    else if(ref.includes("xmitoshex.html")) {
+        shExEditor.setValue("");
+    }
+    else if(ref.includes("grafo.html")) {
+        shExEditor.setValue("");
+    }
+    else if(ref.includes("uml.html")) {
+        xmiEditor.setValue("");
+    }
     lang.checkLang();
 });
 
@@ -90,24 +119,22 @@ let theme = sessionStorage.getItem("theme");
  * Creamos el editor de ShEx
  */
 if(document.getElementById("shextext") !== null) {
-    shExEditor = CodeMirror.fromTextArea(document.getElementById("shextext"), {
+    shExEditor = YASHE.fromTextArea(document.getElementById("shextext"), {
         mode: "shex",
         lineNumbers: true
     });
     let theme = sessionStorage.getItem("theme");
     //Si el tema no se ha indicado, por defecto toma el oscuro
-    shExEditor.setOption("theme", theme === null ? "ayu-mirage" : theme);
 }
 
 /**
  * Creamos el editor de XMI (XML)
  */
 if(document.getElementById("xmitext") !== null) {
-    xmiEditor = CodeMirror.fromTextArea(document.getElementById("xmitext"), {
+    xmiEditor = YASHE.fromTextArea(document.getElementById("xmitext"), {
         mode: "xml",
         lineNumbers: true
     });
-    xmiEditor.setOption("theme", theme === null ? "ayu-mirage" : theme);
 }
 
 let xmtsh = $('#xmitoshex');

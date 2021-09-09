@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="../../lib/codemirror-5.51.0/theme/xq-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="16x16" href="../static/img/favicon-16x16.png">
-
+    <link href='https://cdn.jsdelivr.net/npm/yashe/dist/yashe.min.css' rel='stylesheet' type='text/css'/>
+    
+    <script src='https://cdn.jsdelivr.net/npm/yashe/dist/yashe.bundled.min.js'></script>
     <script src="../../lib/codemirror-5.51.0/lib/codemirror.js"></script>
     <script src="../../lib/codemirror-5.51.0/mode/xml/xml.js"></script>
     <script src="../../lib/codemirror-5.51.0/mode/shex/shex.js"></script>
@@ -67,26 +69,7 @@
     <div class="centerdiv">
         <button id="xmitoshex" class="btn1" tabindex="29"></button>
     </div>
-	<div class="centerdiv">
-		<button id="ixs" class="btn1" tabindex="30"><i class="fa fa-arrows-h"></i></button>
-    </div>
-    <div class="centerdiv">
-        <div class="icon-bar">
-			<label for="xmiInput" id="upxmi-btn" tabindex="31"><i class="fa fa-upload"></i></label>
-			<input type="file" id="xmiInput"/>
-            <a id="borrarxmi" tabindex="32"><i class="fa fa-trash"></i></a>
-            <a id="cargarUML" tabindex="33"></a>
-            <a id="dwnxmi-btn" tabindex="34"><i class="fa fa-download"></i></a>
-        </div>
-        <div class="icon-bar">
-			<label for="shexInput" id="upshex-btn"  tabindex="35"><i class="fa fa-upload"></i></label>
-			<input type="file" id="shexInput"/>
-            <a id="borrarshex" tabindex="36"><i class="fa fa-trash"></i></a>
-            <a id="cargarGrafo" tabindex="37"></a>
-            <a id="dwnshex-btn" tabindex="38"><i class="fa fa-download"></i></a>
-        </div>
-    </div>
-    <div class="centerdiv">
+    <div class="centerdiv" style="margin-top: 1em;">
         <label for="xmitext"></label><textarea id="xmitext" tabindex="39"></textarea>
         <label for="shextext"></label><textarea id="shextext" tabindex="40"></textarea>
     </div>
