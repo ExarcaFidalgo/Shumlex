@@ -13,6 +13,7 @@ function generarUML(xmi) {
 	let svg64 = shumlex.base64SVG("uml");
 	$("#dwnsvg-btn").attr("href", svg64);
 	$("#dwnsvg-btn").attr("download", `shumlex-class-diagram.svg`);
+	shumlex.asignarEventos("uml");
 }
 
 $("#fullscreen").click(fullscreen);
