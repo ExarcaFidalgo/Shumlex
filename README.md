@@ -1,1 +1,1 @@
-Shumlex is now hosted in https://github.com/weso/shumlex .
+While Shumlex was created here, it is now hosted in https://github.com/weso/shumlex. Back in the day, this repo became a testing ground for the NPM package of Shumlex. Having fulfilled its obligations, it is archived.
